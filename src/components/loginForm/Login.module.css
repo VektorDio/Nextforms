@@ -1,0 +1,170 @@
+.mainContainer{
+    background-color: #010409;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding-top: 24px;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    flex-grow: 1;
+    z-index: 9;
+}
+
+.mainContainer h1 {
+    letter-spacing: -1px;
+}
+
+.mainContainer a {
+    color: #ffffff;
+    text-decoration: unset;
+}
+
+.mainContainer span {
+    font-size: 20px;
+    line-height: 28px;
+    color: #ffffff;
+}
+
+.mainContainer label {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.resetPass a {
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+}
+
+.resetPassText {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.field{
+    padding-bottom: 24px;
+}
+
+.field input {
+    font-size: 16px;
+    line-height: 28px;
+    padding: 8px 16px;
+    width: 100%;
+    min-height: 44px;
+    border: unset;
+    border-radius: 6px;
+    outline-color: #365688;
+    background-color: #353f4f;
+}
+
+.field input:focus {
+    outline: #365688 solid 4px;
+}
+
+.mainContainer input[type="submit"] {
+    background-color: rgb(84, 105, 212);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.mainContainer input[type="submit"]:hover {background-color: rgb(43, 58, 136);}
+
+.ssolink {
+    display: block;
+    text-align: center;
+    font-weight: 600;
+}
+
+.siteName{
+    padding-top: 48px;
+    padding-bottom: 24px;
+    box-sizing: border-box;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.formBody{
+    margin: 0px auto;
+    width: 100%;
+    max-width: 448px;
+    background-color: #161b22;
+    border-radius: 8px;
+    padding: 24px 48px;
+}
+
+.copyRight{
+    padding-top: 24px;
+    padding-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copyRight a {
+    color: #7d8590;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+.footerLink{
+    padding-top: 24px;
+}
+
+.footerText{
+    display: block;
+}
+
+.footerLink span {
+    font-size: 14px;
+    text-align: center;
+}
+
+.passwordGrid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+}
+
+.signInText{
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.fieldCheckbox {
+    display: flex;
+    align-items: center;
+    padding-bottom: 24px;
+}
+
+.checkBoxText {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+}
+
+.fieldCheckbox input {
+    width: 20px;
+    height: 15px;
+    margin-right: 5px;
+    box-shadow: unset;
+    min-height: unset;
+}
+
+.signUpLink {
+    color: #3564ad !important;
+}
+
+.fieldCheckbox label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
