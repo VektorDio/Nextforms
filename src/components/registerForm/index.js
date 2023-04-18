@@ -39,7 +39,7 @@ const RegisterForm = () => {
             </div>
             <div className={styles.footerLink}>
                 <span className={styles.footerText}>
-                      Have an account? <Link className={styles.signUpLink} href="">Sign in</Link>
+                      Have an account? <Link className={styles.signUpLink} href="/login">Sign in</Link>
                     </span>
                 <div className={styles.copyRight}>
                     <span><Link href="#">©2023 TEST, Inc.</Link></span>

@@ -1,5 +1,6 @@
 import styles from "./Header.module.css"
 import Icon from "@/components/icon";
+import Link from "next/link";
 
 export default function Header() {
     return (
@@ -11,12 +12,16 @@ export default function Header() {
                 </div>
             </div>
             <div className={styles.loginBlock}>
-                <button className={styles.signInBtn}>
-                    Sign Up
-                </button>
-                <button className={styles.signInBtn}>
-                    Sign In
-                </button>
+                <Link href={"/login"}>
+                    <button className={styles.signInBtn}>
+                        Sign In
+                    </button>
+                </Link>
+                <Link href={"/register"}>
+                    <button className={styles.signInBtn}>
+                        Sign Up
+                    </button>
+                </Link>
             </div>
         </div>
     )

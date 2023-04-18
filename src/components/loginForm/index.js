@@ -44,7 +44,7 @@ const LoginForm = () => {
             </div>
             <div className={styles.footerLink}>
                     <span className={styles.footerText}>
-                      Don`t have an account? <Link className={styles.signUpLink} href="">Sign up</Link>
+                      Don`t have an account? <Link className={styles.signUpLink} href="/register">Sign up</Link>
                     </span>
                 <div className={styles.copyRight}>
                     <span><Link href="#">©2023 TEST, Inc.</Link></span>
