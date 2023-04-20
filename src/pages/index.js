@@ -1,9 +1,9 @@
 import Head from 'next/head'
-import Header from "@/components/header";
-import Main from "@/components/main";
-import Footer from "@/components/footer";
+import Header from "@/components/pageWraper/header";
+import Main from "@/components/pageWraper/main";
+import Footer from "@/components/pageWraper/footer";
 import About from "@/components/about";
-export default function Home() {
+export default function Welcome() {
   return (
     <>
       <Head>

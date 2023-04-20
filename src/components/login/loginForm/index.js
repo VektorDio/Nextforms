@@ -20,7 +20,7 @@ const LoginForm = () => {
                         <div className={styles.passwordGrid}>
                             <label htmlFor="password">Password</label>
                             <div className={styles.resetPass}>
-                                <Link className={styles.resetPassText} href="#">Forgot your password?</Link>
+                                <Link className={styles.resetPassText} href="/login">Forgot your password?</Link>
                             </div>
                         </div>
                         <input type="password" name="password"/>

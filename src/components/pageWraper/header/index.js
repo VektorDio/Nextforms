@@ -1,5 +1,5 @@
 import styles from "./Header.module.css"
-import Icon from "@/components/icon";
+import Icon from "@/components/pageWraper/icon";
 import Link from "next/link";
 
 export default function Header() {

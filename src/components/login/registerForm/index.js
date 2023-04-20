@@ -12,10 +12,12 @@ const RegisterForm = () => {
             <div className={styles.formBody}>
                 <span className={styles.signInText}>Register your account</span>
                 <form id="stripe-login">
+
                     <div className={styles.field}>
                         <label htmlFor="email">Email</label>
                         <input type="email" name="email"/>
                     </div>
+
                     <div className={styles.field}>
                         <label htmlFor="password">Password</label>
                         <input type="password" name="password"/>
@@ -24,6 +26,11 @@ const RegisterForm = () => {
                     <div className={styles.field}>
                         <label htmlFor="password">Confirm password</label>
                         <input type="password" name="password"/>
+                    </div>
+
+                    <div className={styles.field}>
+                        <label htmlFor="email">Organisation</label>
+                        <input type="organisation" name="organisation"/>
                     </div>
 
                     <div className={styles.registerButton}>
