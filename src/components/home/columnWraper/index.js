@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from './columnWraper.module.css'
 
-const ColumnWrapper = () => {
+const ColumnWrapper = ({children}) => {
     return (
-        <div>
-
+        <div className={styles.columnWrapper}>
+            {children}
         </div>
     );
 };

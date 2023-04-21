@@ -1,9 +1,11 @@
 import React from 'react';
-
+import styles from './right.module.css'
 const RightColumn = () => {
     return (
-        <div>
-
+        <div className={styles.mainColumn}>
+            <div>
+                Some information
+            </div>
         </div>
     );
 };

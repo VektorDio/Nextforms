@@ -1,0 +1,8 @@
+.mainColumn{
+    background-color: #0d1117;
+    min-height: 92vh;
+    width: 30%;
+    display: block;
+    padding: 20px 20px;
+    float: left;
+}
