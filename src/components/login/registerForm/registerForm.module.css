@@ -35,15 +35,17 @@
     display: block;
 }
 
-.resetPass a {
+.showText {
+    text-align: right;
+    margin-bottom: 10px;
     font-size: 14px;
     font-weight: 600;
     display: block;
+    user-select: none;
 }
 
-.resetPassText {
-    text-align: right;
-    margin-bottom: 10px;
+.showText:hover {
+    color: #195cc4;
 }
 
 .field{
@@ -91,7 +93,7 @@
 }
 
 .formBody{
-    margin: 0px auto;
+    margin: 0 auto;
     width: 100%;
     max-width: 448px;
     background-color: #161b22;
@@ -169,4 +171,10 @@
 
 .registerButton{
     padding-top: 8px;
+}
+
+.passwordGrid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
 }

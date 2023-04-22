@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Link from "next/link";
 import styles from "./registerForm.module.css"
 const RegisterForm = () => {
+    const [showPassword, setShowPassword] = useState(true)
+
+    function handleShowPassword(){
+        setShowPassword(!showPassword)
+    }
+
     return (
         <div className={styles.mainContainer}>
             <div className={styles.siteName}>
@@ -19,13 +25,18 @@ const RegisterForm = () => {
                     </div>
 
                     <div className={styles.field}>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password"/>
+                        <div className={styles.passwordGrid}>
+                            <label htmlFor="password">Password</label>
+                            <div className={styles.showText} onClick={handleShowPassword}>
+                                {(showPassword) ? "Show password" : "Hide password"}
+                            </div>
+                        </div>
+                        <input type={(showPassword) ? "password" : "text"} name="password"/>
                     </div>
 
                     <div className={styles.field}>
                         <label htmlFor="password">Confirm password</label>
-                        <input type="password" name="password"/>
+                        <input type={(showPassword) ? "password" : "text"} name="password"/>
                     </div>
 
                     <div className={styles.field}>
