@@ -2,9 +2,6 @@ import React from 'react';
 import Head from "next/head";
 import Header from "@/components/pageWraper/header";
 import ColumnWrapper from "@/components/home/columnWraper";
-import LeftColumn from "@/components/home/leftColumn";
-import CentralColumn from "@/components/home/centralColumn";
-import RightColumn from "@/components/home/rightColumn";
 
 const Home = () => {
     return (
@@ -16,11 +13,7 @@ const Home = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header></Header>
-            <ColumnWrapper>
-                <LeftColumn></LeftColumn>
-                <CentralColumn></CentralColumn>
-                <RightColumn></RightColumn>
-            </ColumnWrapper>
+            <ColumnWrapper></ColumnWrapper>
         </>
     );
 };

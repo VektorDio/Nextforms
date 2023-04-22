@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './formEntry.module.css'
-import ActivityButton from "@/components/home/formEntry/activityButton";
-import GenerateLinkButton from "@/components/home/formEntry/generateLinkButton";
-import ReductButton from "@/components/home/formEntry/reductButton";
-import ReportButton from "@/components/home/formEntry/reportButton";
-import DeleteButton from "@/components/home/formEntry/deleteButton";
+import ActivityButton from "@/components/home/formColumn/formEntry/activityButton";
+import GenerateLinkButton from "@/components/home/formColumn/formEntry/generateLinkButton";
+import ReductButton from "@/components/home/formColumn/formEntry/reductButton";
+import ReportButton from "@/components/home/formColumn/formEntry/reportButton";
+import DeleteButton from "@/components/home/formColumn/formEntry/deleteButton";
 const FormEntry = () => {
     const formName = "Some form #1"
 
