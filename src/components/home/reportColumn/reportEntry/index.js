@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './reportEntry.module.css'
-import ReductButton from "@/components/home/formColumn/formEntry/reductButton";
-import ReportButton from "@/components/home/formColumn/formEntry/reportButton";
-import DeleteButton from "@/components/home/formColumn/formEntry/deleteButton";
+import ReductButton from "@/components/buttons/reductButton";
+import ReportButton from "@/components/buttons/reportButton";
+import DeleteButton from "@/components/buttons/deleteButton";
 const ReportEntry = () => {
     const reportName = "Some report #1"
 

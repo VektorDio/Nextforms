@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import styles from './columnWraper.module.css'
-import LeftColumn from "@/components/home/leftColumn";
-import CentralColumn from "@/components/home/centralColumn";
-import RightColumn from "@/components/home/rightColumn";
+import LeftColumn from "@/components/home/columnWraper/leftColumn";
+import CentralColumn from "@/components/home/columnWraper/centralColumn";
+import RightColumn from "@/components/home/columnWraper/rightColumn";
 
 const ColumnWrapper = () => {
     const [centralColumnContent, setCentralColumnContent] = useState(true);

@@ -1,13 +1,16 @@
 .formEntry{
-    padding: 10px 15px;
+    padding: 5px 10px;
+    margin: 5px;
     font-size: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #1a212d;
+    border-radius: 4px;
 }
 
 .formEntry:hover{
-    background-color: #19212d
+    background-color: #1f2a3a;
 }
 
 .buttons{

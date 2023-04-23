@@ -12,10 +12,12 @@ const LoginForm = () => {
             <div className={styles.formBody}>
                 <span className={styles.signInText}>Sign in to your account</span>
                 <form id="stripe-login">
+
                     <div className={styles.field}>
                         <label htmlFor="email">Email</label>
                         <input type="email" name="email"/>
                     </div>
+
                     <div className={styles.field}>
                         <div className={styles.passwordGrid}>
                             <label htmlFor="password">Password</label>

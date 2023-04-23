@@ -1,4 +1,66 @@
 .profileContainer{
-    padding: 15px;
-    font-size: 18px;
+    margin: 15px 100px;
+    padding: 20px;
+    font-size: 22px;
+    border-radius: 10px;
+    background-color: #1a212d;
+}
+
+.firstNameInput{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.generalInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.generalBlock{
+    padding-bottom: 12px;
+}
+
+.generalInfo p{
+    padding: 4px 8px;
+}
+
+.inputFieldsContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.field{
+    width: 100%;
+    padding: 8px 8px;
+}
+
+.field input {
+    font-size: 16px;
+    line-height: 28px;
+    padding: 8px 16px;
+    width: 100%;
+    min-height: 44px;
+    border: unset;
+    border-radius: 6px;
+    outline-color: #365688;
+    background-color: #353f4f;
+}
+
+.field label{
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.field input:focus {
+    outline: #365688 solid 4px;
+}
+
+.buttonGroup{
+    display: flex;
+    justify-content: end;
 }
