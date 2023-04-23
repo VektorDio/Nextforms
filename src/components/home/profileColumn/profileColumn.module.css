@@ -1,5 +1,5 @@
 .profileContainer{
-    margin: 15px 100px;
+    margin: 12px 100px;
     padding: 20px;
     font-size: 22px;
     border-radius: 10px;
@@ -24,6 +24,7 @@
 
 .generalInfo p{
     padding: 4px 8px;
+    font-weight: 600;
 }
 
 .inputFieldsContainer{
@@ -63,4 +64,11 @@
 .buttonGroup{
     display: flex;
     justify-content: end;
+}
+
+.centeredText{
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 21px;
 }
