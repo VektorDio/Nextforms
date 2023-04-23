@@ -62,6 +62,11 @@
     border-radius: 6px;
     outline-color: #365688;
     background-color: #353f4f;
+
+}
+
+.field input:invalid {
+    outline: red solid 3px;
 }
 
 .field input:focus {
@@ -73,6 +78,12 @@
     color: #fff;
     font-weight: 600;
     cursor: pointer;
+}
+
+.mainContainer input[type="submit"]:disabled {
+    background-color: rgb(49, 64, 140);
+    color: #b0afaf;
+    font-weight: 600;
 }
 
 .mainContainer input[type="submit"]:hover {background-color: rgb(43, 58, 136);}

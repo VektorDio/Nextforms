@@ -3,9 +3,32 @@ import Link from "next/link";
 import styles from "./registerForm.module.css"
 const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(true)
-
+    const [passwordValidity, setPasswordValidity] = useState(true)
     function handleShowPassword(){
         setShowPassword(!showPassword)
+    }
+
+    function handlePasswordValidity(e){
+        let lowerCaseLetters = /[a-z]/g;
+        let upperCaseLetters = /[A-Z]/g;
+        let numbers = /[0-9]/g;
+        let inputValue = e.target.value
+        setPasswordValidity(false)
+        if(!inputValue.match(lowerCaseLetters)) {
+            setPasswordValidity(true)
+        }
+        // Validate capital letters
+        if(!inputValue.match(upperCaseLetters)) {
+            setPasswordValidity(true)
+        }
+        // Validate numbers
+        if(!inputValue.match(numbers)) {
+            setPasswordValidity(true)
+        }
+        // Validate length
+        if(inputValue.length < 8) {
+            setPasswordValidity(true)
+        }
     }
 
     return (
@@ -31,12 +54,21 @@ const RegisterForm = () => {
                                 {(showPassword) ? "Show password" : "Hide password"}
                             </div>
                         </div>
-                        <input type={(showPassword) ? "password" : "text"} name="password"/>
+                        <input
+                            type={(showPassword) ? "password" : "text"}
+                            name="password"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            onChange={handlePasswordValidity}
+                        />
                     </div>
 
                     <div className={styles.field}>
                         <label htmlFor="password">Confirm password</label>
-                        <input type={(showPassword) ? "password" : "text"} name="password"/>
+                        <input
+                            type={(showPassword) ? "password" : "text"}
+                            name="password"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        />
                     </div>
 
                     <div className={styles.field}>
@@ -46,7 +78,7 @@ const RegisterForm = () => {
 
                     <div className={styles.registerButton}>
                         <div className={styles.field}>
-                            <input type="submit" name="submit" value="Register"/>
+                            <input type="submit" name="submit" value="Register" disabled={passwordValidity}/>
                         </div>
                     </div>
 
