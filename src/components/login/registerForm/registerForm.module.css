@@ -65,10 +65,6 @@
 
 }
 
-.field input:invalid {
-    outline: red solid 3px;
-}
-
 .field input:focus {
     outline: #365688 solid 4px;
 }
@@ -113,8 +109,8 @@
 }
 
 .copyRight{
-    padding-top: 24px;
-    padding-bottom: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,4 +184,16 @@
     display: grid;
     grid-template-columns: 50% 50%;
     align-items: center;
+}
+
+.inputInvalid {
+    outline: red solid 3px !important;
+}
+
+.error{
+    color: red;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
 }
