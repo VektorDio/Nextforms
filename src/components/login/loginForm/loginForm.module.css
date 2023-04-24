@@ -76,6 +76,12 @@
 
 .mainContainer input[type="submit"]:hover {background-color: rgb(43, 58, 136);}
 
+.mainContainer input[type="submit"]:disabled {
+    background-color: rgb(49, 64, 140);
+    color: #b0afaf;
+    font-weight: 600;
+}
+
 .ssolink {
     display: block;
     text-align: center;
@@ -170,24 +176,4 @@
     margin: 0;
 }
 
-.inputInvalid {
-    outline: red solid 3px !important;
-}
 
-.error{
-    color: red;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 10px;
-    display: block;
-}
-
-.mainContainer input[type="submit"]:disabled {
-    background-color: rgb(49, 64, 140);
-    color: #b0afaf;
-    font-weight: 600;
-}
-
-.test{
-    background-color: black;
-}

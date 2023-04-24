@@ -185,15 +185,3 @@
     grid-template-columns: 50% 50%;
     align-items: center;
 }
-
-.inputInvalid {
-    outline: red solid 3px !important;
-}
-
-.error{
-    color: red;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 10px;
-    display: block;
-}

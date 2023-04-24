@@ -1,36 +1,10 @@
 import React from 'react';
-import { Formik, Form, useField } from 'formik';
+import { Formik, Form} from 'formik';
 import * as Yup from 'yup';
 import styles from './loginForm.module.css'
 import Link from "next/link";
-
-const MyTextInput = ({ label, ...props }) => {
-    const [field, meta] = useField(props);
-    return (
-        <div>
-            <input {...field} {...props} className={(meta.touched && meta.error) ? styles.inputInvalid : null} />
-            {meta.touched && meta.error ? (
-                <div className={styles.error}>{meta.error}</div>
-            ) : null}
-        </div>
-    );
-};
-
-const MyCheckbox = ({ children, ...props }) => {
-    const [field, meta] = useField({ ...props, type: 'checkbox' });
-    return (
-        <div>
-            <label className="checkbox-input">
-                <input type="checkbox" {...field} {...props} />
-                {children}
-            </label>
-            {meta.touched && meta.error ? (
-                <div className="error">{meta.error}</div>
-            ) : null}
-        </div>
-    );
-};
-
+import MyTextInput from "@/components/forms/textInput";
+import MyCheckbox from "@/components/forms/checkbox";
 
 // And now we can use these
 const LoginForm = () => {
@@ -72,7 +46,6 @@ const LoginForm = () => {
                     <div className={styles.field}>
                         <label htmlFor="email">Email</label>
                         <MyTextInput
-                            label="Email Address"
                             name="email"
                             type="email"
                             placeholder="jane@formik.com"
@@ -87,7 +60,6 @@ const LoginForm = () => {
                             </div>
                         </div>
                         <MyTextInput
-                            label="Password"
                             name="password"
                             type="password"
                             placeholder="********"
@@ -95,11 +67,9 @@ const LoginForm = () => {
                     </div>
 
                     <div className={styles.fieldCheckbox}>
-                        <label htmlFor="checkbox">
-                            <MyCheckbox name="staySignedIn">
-                                Stay signed in
-                            </MyCheckbox>
-                        </label>
+                        <MyCheckbox name="staySignedIn">
+                            Stay signed in
+                        </MyCheckbox>
                     </div>
 
                     <div className={styles.field}>
