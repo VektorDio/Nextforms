@@ -71,6 +71,7 @@
     color: #fff;
     font-weight: 600;
     cursor: pointer;
+    outline: none;
 }
 
 .mainContainer input[type="submit"]:hover {background-color: rgb(43, 58, 136);}
@@ -91,7 +92,7 @@
 }
 
 .formBody{
-    margin: 0px auto;
+    margin: 0 auto;
     width: 100%;
     max-width: 448px;
     background-color: #161b22;
@@ -167,4 +168,26 @@
     display: flex;
     align-items: center;
     margin: 0;
+}
+
+.inputInvalid {
+    outline: red solid 3px !important;
+}
+
+.error{
+    color: red;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+}
+
+.mainContainer input[type="submit"]:disabled {
+    background-color: rgb(49, 64, 140);
+    color: #b0afaf;
+    font-weight: 600;
+}
+
+.test{
+    background-color: black;
 }
