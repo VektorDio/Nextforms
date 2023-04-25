@@ -26,13 +26,13 @@ const LeftColumn = ({setCentralColumnContent}) => {
                 <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
                 Reports
             </div>
-            <Link href={"/formConstructor"}>
+            <Link href={"/home/formConstructor"}>
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
                     Form constructor
                 </div>
             </Link>
-            <Link href={"/reportConstructor"}>
+            <Link href={"/home/reportConstructor"}>
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
                     Report constructor

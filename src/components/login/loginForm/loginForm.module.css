@@ -176,4 +176,11 @@
     margin: 0;
 }
 
+.error{
+    color: red;
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 12px;
+}
+
 

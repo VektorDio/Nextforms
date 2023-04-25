@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Formik, Form} from 'formik';
 import * as Yup from 'yup';
 import styles from './loginForm.module.css'
 import Link from "next/link";
 import MyTextInput from "@/components/forms/textInput";
-import MyCheckbox from "@/components/forms/checkbox";
+import {signIn} from "next-auth/react";
+import {useRouter} from "next/router";
 
-// And now we can use these
 const LoginForm = () => {
+    const router = useRouter()
+    const [submissionError, setSubmissionError] = useState(null)
     return (
         <div className={styles.mainContainer}>
             <div className={styles.siteName}>
@@ -32,13 +34,22 @@ const LoginForm = () => {
                         .matches(/[a-z]/, 'Password requires a lowercase letter')
                         .matches(/[A-Z]/, 'Password requires an uppercase letter')
                         .required('Required'),
-                    staySignedIn: Yup.boolean(),
+                    //staySignedIn: Yup.boolean(),
                 })}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 400);
+                onSubmit={ async (values, { setSubmitting }) => {
+                    const {email, password} = values
+                    setSubmitting(false);
+                    const {ok, error} = await signIn('credentials', {
+                        email: email,
+                        password: password,
+                        redirect: false
+                    })
+
+                    if (ok){
+                        await router.push('/home')
+                    } else {
+                        setSubmissionError(error)
+                    }
                 }}
                 validateOnBlur={false}
             >{(formik) => (
@@ -66,10 +77,14 @@ const LoginForm = () => {
                         />
                     </div>
 
-                    <div className={styles.fieldCheckbox}>
-                        <MyCheckbox name="staySignedIn">
-                            Stay signed in
-                        </MyCheckbox>
+                    {/*<div className={styles.fieldCheckbox}>*/}
+                    {/*    <MyCheckbox name="staySignedIn">*/}
+                    {/*        Stay signed in*/}
+                    {/*    </MyCheckbox>*/}
+                    {/*</div>*/}
+
+                    <div className={styles.error} style={{display: (submissionError) ? "block" : "none"}}>
+                        {submissionError}
                     </div>
 
                     <div className={styles.field}>
@@ -85,7 +100,7 @@ const LoginForm = () => {
             </div>
             <div className={styles.footerLink}>
                     <span className={styles.footerText}>
-                      Don`t have an account? <Link className={styles.signUpLink} href="register">Sign up</Link>
+                      Don`t have an account? <Link className={styles.signUpLink} href="/register">Sign up</Link>
                     </span>
                 <div className={styles.copyRight}>
                     <span><Link href="#">©2023 TEST, Inc.</Link></span>

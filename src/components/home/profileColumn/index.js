@@ -8,6 +8,7 @@ const ProfileColumn = () => {
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
+
     const firstName = "TestName"
     const lastName = "TestLastName"
     const phone = "(+000) - 000 - 000 - 000"
