@@ -1,8 +1,16 @@
 import React from 'react';
 import Head from "next/head";
 import RegisterForm from "@/components/login/registerForm";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 const Register = () => {
+    const {status} = useSession()
+    const router = useRouter()
+    if (status === "authenticated") {
+        router.push("/home")
+    }
+
     return (
         <>
             <Head>

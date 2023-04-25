@@ -2,8 +2,16 @@ import React from 'react';
 import Head from "next/head";
 import Header from "@/components/pageWraper/header";
 import ColumnWrapper from "@/components/home/columnWraper";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 const Home = () => {
+    const {status} = useSession()
+    const router = useRouter()
+
+    if (status === "unauthenticated") {
+        router.push("/")
+    }
     return (
         <>
             <Head>
