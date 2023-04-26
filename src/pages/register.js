@@ -10,7 +10,6 @@ const Register = () => {
     if (status === "authenticated") {
         router.push("/home")
     }
-
     return (
         <>
             <Head>

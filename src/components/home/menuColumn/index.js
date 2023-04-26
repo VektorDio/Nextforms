@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './left.module.css'
+import styles from './menuColumn.module.css'
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -9,7 +9,7 @@ import {
     faWindowMaximize,
     faWindowRestore
 } from "@fortawesome/free-solid-svg-icons";
-const LeftColumn = ({setCentralColumnContent}) => {
+const MenuColumn = ({setCentralColumnContent}) => {
     return (
         <div className={styles.mainColumn}>
             <div className={styles.menuButton} onClick={() => setCentralColumnContent("profile")}>
@@ -43,4 +43,4 @@ const LeftColumn = ({setCentralColumnContent}) => {
     );
 };
 
-export default LeftColumn;
+export default MenuColumn;

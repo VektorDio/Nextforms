@@ -7,7 +7,6 @@ import {useRouter} from "next/router";
 const Login = () => {
     const {status} = useSession()
     const router = useRouter()
-
     if (status === "authenticated") {
         router.push("/home")
     }

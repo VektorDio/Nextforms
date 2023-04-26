@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './right.module.css'
-const RightColumn = () => {
+import styles from './infoColumn.module.css'
+const InfoColumn = () => {
     return (
         <div className={styles.mainColumn}>
             <div>
@@ -10,4 +10,4 @@ const RightColumn = () => {
     );
 };
 
-export default RightColumn;
+export default InfoColumn;

@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import styles from './columnWraper.module.css'
-import LeftColumn from "@/components/home/columnWraper/leftColumn";
-import CentralColumn from "@/components/home/columnWraper/centralColumn";
-import RightColumn from "@/components/home/columnWraper/rightColumn";
+import MenuColumn from "@/components/home/menuColumn";
+import CentralColumn from "@/components/home/centralColumn";
+import InfoColumn from "@/components/home/infoColumn";
 
 const ColumnWrapper = ({session}) => {
     const [centralColumnContent, setCentralColumnContent] = useState(true);
     return (
         <div className={styles.columnWrapper}>
-            <LeftColumn setCentralColumnContent={setCentralColumnContent}></LeftColumn>
+            <MenuColumn setCentralColumnContent={setCentralColumnContent}></MenuColumn>
             <CentralColumn centralColumnContent={centralColumnContent} session={session}></CentralColumn>
-            <RightColumn></RightColumn>
+            <InfoColumn></InfoColumn>
         </div>
     );
 };
