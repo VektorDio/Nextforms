@@ -4,7 +4,7 @@ import ReportColumn from "@/components/home/reportColumn";
 import FormColumn from "@/components/home/formColumn";
 import ProfileColumn from "@/components/home/profileColumn";
 
-const CentralColumn = ({centralColumnContent}) => {
+const CentralColumn = ({centralColumnContent, session}) => {
     let columnToRender
     switch (centralColumnContent){
         case "form":
@@ -14,7 +14,7 @@ const CentralColumn = ({centralColumnContent}) => {
             columnToRender = <ReportColumn></ReportColumn>
             break
         case "profile":
-            columnToRender = <ProfileColumn></ProfileColumn>
+            columnToRender = <ProfileColumn session={session}></ProfileColumn>
             break
         default:
             columnToRender = <FormColumn></FormColumn>
