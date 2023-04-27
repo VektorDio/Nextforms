@@ -5,6 +5,7 @@ import {signOut, useSession} from "next-auth/react";
 import SettingsButton from "@/components/buttons/settingsButton";
 import SignInButton from "@/components/buttons/signInButton";
 import LogOutButton from "@/components/buttons/logOutButton";
+import SignUpButton from "@/components/buttons/signUpButton";
 
 export default function Header() {
     const {status} = useSession()
@@ -26,10 +27,10 @@ export default function Header() {
                 ):(
                     <div className={styles.sideBlock}>
                         <Link href={"/login"}>
-                            <SignInButton></SignInButton>
+                            <SignInButton>Sign In</SignInButton>
                         </Link>
                         <Link href={"/register"}>
-                            <SignInButton></SignInButton>
+                            <SignUpButton>Sign Up</SignUpButton>
                         </Link>
                     </div>
                 )
