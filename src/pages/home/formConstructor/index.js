@@ -4,6 +4,7 @@ import Main from "@/components/pageWraper/main";
 import ConstructorHeader from "@/components/constructorElements/constructorHeader";
 import ConstructorColumn from "@/components/constructorElements/constructorColumn";
 import ConstructorNameBlock from "@/components/constructorElements/constructorNameBlock";
+import ConstructorBlock from "@/components/constructorElements/constructorBlock";
 
 const FormConstructor = () => {
     return (
@@ -18,6 +19,7 @@ const FormConstructor = () => {
             <Main>
                 <ConstructorColumn>
                     <ConstructorNameBlock/>
+                    <ConstructorBlock/>
                 </ConstructorColumn>
             </Main>
         </>
