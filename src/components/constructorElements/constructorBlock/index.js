@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import styles from './constructorBlock.module.css'
 import DeleteButton from "@/components/buttons/deleteButton";
 import MultiInput from "@/components/forms/multiInput";
+import ToggleButton from "@/components/buttons/toggleButton";
+import AddButton from "@/components/buttons/addButton";
 const ConstructorBlock = () => {
     const [selected, setSelected] = useState(true)
     const [selectValue, setSelectValue] = useState("oneList");
@@ -11,8 +13,9 @@ const ConstructorBlock = () => {
     }
 
     return (
-        <div className={styles.container}>
-            {(selected) ? (
+        <div className={styles.outerContainer}>
+            <div className={styles.container}>
+                {(selected) ? (
                     <>
                         <div className={styles.blockHeader}>
                             <div className={styles.mainQuestion}
@@ -30,10 +33,12 @@ const ConstructorBlock = () => {
                                 <option value="time">Time </option>
                             </select>
                         </div>
-                        <div className={styles.blockBody}>
+                        <div>
                             <MultiInput type={selectValue}></MultiInput>
                         </div>
                         <div className={styles.blockFooter}>
+                            <ToggleButton text={"Required Field"}></ToggleButton>
+
                             <DeleteButton></DeleteButton>
                         </div>
                     </>
@@ -47,7 +52,11 @@ const ConstructorBlock = () => {
                         />
                     </>
                 )
-            }
+                }
+            </div>
+            <div className={styles.addButton}>
+                <AddButton></AddButton>
+            </div>
         </div>
     );
 };
