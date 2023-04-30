@@ -60,6 +60,7 @@
 }
 
 .blockFooter{
+    margin-left: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -72,7 +73,7 @@
 }
 
 .addButton{
-    padding-left: 10px;
+    padding-left: 8px;
     display: block;
 }
 

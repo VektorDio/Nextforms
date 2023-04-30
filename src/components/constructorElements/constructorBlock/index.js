@@ -38,7 +38,6 @@ const ConstructorBlock = () => {
                         </div>
                         <div className={styles.blockFooter}>
                             <ToggleButton text={"Required Field"}></ToggleButton>
-
                             <DeleteButton></DeleteButton>
                         </div>
                     </>
