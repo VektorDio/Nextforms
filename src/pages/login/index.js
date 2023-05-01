@@ -7,6 +7,7 @@ import Link from "next/link";
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/forms/textInput";
+import SubmitButton from "@/components/inputs/submitButton";
 
 const Login = () => {
     const {status} = useSession()
@@ -27,9 +28,9 @@ const Login = () => {
             </Head>
             <div className={styles.mainContainer}>
                 <div className={styles.siteName}>
-                    <h1>
-                        <Link href="/" rel="dofollow">ReportGenerator.js</Link>
-                    </h1>
+                    <Link href="/" rel="dofollow">
+                        <h1> ReportGenerator.js </h1>
+                    </Link>
                 </div>
                 <div className={styles.formBody}>
                     <span className={styles.signInText}>Sign in to your account</span>
@@ -80,8 +81,8 @@ const Login = () => {
                             <div className={styles.field}>
                                 <div className={styles.passwordGrid}>
                                     <label htmlFor="password">Password</label>
-                                    <div className={styles.resetPass}>
-                                        <Link className={styles.resetPassText} href="/login">Forgot your password?</Link>
+                                    <div className={styles.resetPassText}>
+                                        <Link href="/login">Forgot your password?</Link>
                                     </div>
                                 </div>
                                 <MyTextInput
@@ -91,18 +92,17 @@ const Login = () => {
                                 />
                             </div>
 
-                            {/*<div className={styles.fieldCheckbox}>*/}
-                            {/*    <MyCheckbox name="staySignedIn">*/}
-                            {/*        Stay signed in*/}
-                            {/*    </MyCheckbox>*/}
-                            {/*</div>*/}
-
                             <div className={styles.error} style={{display: (submissionError) ? "block" : "none"}}>
                                 {submissionError}
                             </div>
 
                             <div className={styles.field}>
-                                <input type="submit" name="submit" value="Continue" disabled={!(formik.isValid && formik.dirty)}/>
+                                <SubmitButton
+                                    type="submit"
+                                    name="submit"
+                                    value="Continue"
+                                    disabled={!(formik.isValid && formik.dirty)}
+                                />
                             </div>
 
                             <div className={styles.ssolink}>

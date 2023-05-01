@@ -24,7 +24,7 @@ const ProfileColumn = ({session}) => {
                     firstName: firstName,
                     lastName: lastName,
                     phone: phoneNumber,
-                    organization: organisation
+                    organisation: organisation
                 }}
                         validationSchema={Yup.object({
                             firstName: Yup.string()
@@ -46,8 +46,7 @@ const ProfileColumn = ({session}) => {
                         <Form>
                             <div className={styles.generalInfo}>
                                 <p>General Info</p>
-                                {
-                                    (editGeneral) ? (
+                                {(editGeneral) ? (
                                         <div className={styles.buttonGroup}>
                                             <ConfirmButton onClick={() => {
                                                 formik.handleSubmit()

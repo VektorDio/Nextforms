@@ -14,49 +14,7 @@
     align-items: center;
     justify-content: space-between;
     min-height: 4vh;
-    padding: 0 8px 8px 10px;
-}
-
-.mainQuestion{
-    font-size: 16px;
-    line-height: 28px;
-    padding: 8px 16px;
-    width: 45%;
-    min-height: 44px;
-    border: unset;
-    border-radius: 6px;
-    outline-color: #365688;
-    background-color: #353f4f;
-    overflow: visible;
-}
-
-.mainQuestion:focus {
-    outline: #365688 solid 3px;
-}
-
-.mainQuestion:empty:before {
-    content: attr(placeholder);
-    pointer-events: none;
-    display: block;
-    color: grey;
-}
-
-.typeSelect{
-    font-size: 16px;
-    line-height: 28px;
-    padding: 8px 10px;
-    width: 45%;
-    min-height: 44px;
-    border-right: solid #353f4f 12px;
-    border-left: solid #353f4f;
-    border-top: solid #353f4f;
-    border-bottom: solid #353f4f;
-    border-radius: 6px;
-    background-color: #353f4f;
-}
-
-.typeSelect:focus {
-    outline: none;
+    padding: 0 8px 10px 8px;
 }
 
 .blockFooter{

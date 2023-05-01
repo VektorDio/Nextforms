@@ -3,33 +3,15 @@
     height:1%;
     width: 80vh;
     border-radius: 12px;
-    padding: 25px;
+    padding: 29px;
     overflow:hidden;
 }
 
 .formName{
     font-weight: 600;
     font-size: 24px;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #3a4557;
-    transition: 0.5s;
-}
-
-.formName:focus{
-    border-bottom-color: #2b64c2;
-    outline: none;
 }
 
 .formDescription{
     font-size: 16px;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #3a4557;
-    transition: 0.5s;
-}
-
-.formDescription:focus{
-    border-bottom-color: #2b64c2;
-    outline: none;
 }

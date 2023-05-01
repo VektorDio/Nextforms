@@ -8,9 +8,9 @@ const ColumnWrapper = ({session}) => {
     const [centralColumnContent, setCentralColumnContent] = useState(true);
     return (
         <div className={styles.columnWrapper}>
-            <MenuColumn setCentralColumnContent={setCentralColumnContent}></MenuColumn>
-            <CentralColumn centralColumnContent={centralColumnContent} session={session}></CentralColumn>
-            <InfoColumn></InfoColumn>
+            <MenuColumn setCentralColumnContent={setCentralColumnContent}/>
+            <CentralColumn centralColumnContent={centralColumnContent} session={session}/>
+            <InfoColumn/>
         </div>
     );
 };

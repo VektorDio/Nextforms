@@ -7,6 +7,7 @@ import Link from "next/link";
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/forms/textInput";
+import SubmitButton from "@/components/inputs/submitButton";
 
 const Register = () => {
     const {status} = useSession()
@@ -31,9 +32,9 @@ const Register = () => {
             </Head>
             <div className={styles.mainContainer}>
                 <div className={styles.siteName}>
-                    <h1>
-                        <Link href="/" rel="dofollow">ReportGenerator.js</Link>
-                    </h1>
+                    <Link href="/" rel="dofollow">
+                        <h1>ReportGenerator.js</h1>
+                    </Link>
                 </div>
                 <div className={styles.formBody}>
                     <span className={styles.signInText}>Register your account</span>
@@ -112,7 +113,12 @@ const Register = () => {
 
 
                             <div className={styles.field}>
-                                <input type="submit" name="submit" value="Register" disabled={!(formik.isValid && formik.dirty)}/>
+                                <SubmitButton
+                                    type="submit"
+                                    name="submit"
+                                    value="Register"
+                                    disabled={!(formik.isValid && formik.dirty)}
+                                />
                             </div>
 
                             <div className={styles.ssolink}>

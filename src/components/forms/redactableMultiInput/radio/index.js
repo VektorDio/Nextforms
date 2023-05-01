@@ -6,8 +6,7 @@ const Radio = ({deletable, handleDelete, addNewOption, handleAdd}) => {
     return (
         <>
             <label className={styles.radioContainer}>
-                {
-                    (addNewOption) ? (
+                {(addNewOption) ? (
                         <div className={styles.addText} onClick={handleAdd}>Add new option</div>
                     ) : (
                         <input className={styles.oneLineText}

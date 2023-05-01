@@ -12,7 +12,7 @@
     justify-content: space-between;
 }
 
-/* Hide the browser's default radio button */
+/* Hide the browser's default radioInput button */
 .radioContainerInput {
     position: absolute;
     opacity: 0;
@@ -21,7 +21,7 @@
     width: 0;
 }
 
-/* Create a custom radio button */
+/* Create a custom radioInput button */
 .checkmark {
     position: absolute;
     top: 5px;

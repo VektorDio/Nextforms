@@ -10,13 +10,13 @@ const FormEntry = () => {
 
     return (
         <div  className={styles.formEntry}>
-            <div className={styles.formName}>{formName}</div>
+            <div>{formName}</div>
             <div className={styles.buttons}>
-                <ActivityButton></ActivityButton>
-                <GenerateLinkButton></GenerateLinkButton>
-                <ReductButton></ReductButton>
-                <ReportButton></ReportButton>
-                <DeleteButton></DeleteButton>
+                <ActivityButton/>
+                <GenerateLinkButton/>
+                <ReductButton/>
+                <ReportButton/>
+                <DeleteButton/>
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ConstructorHeader from "@/components/constructorElements/constructorHeader";
@@ -12,9 +13,8 @@ const FormConstructor = () => {
         formName: "",
         formDescription: "",
     }
-    const [idCounter, setIdCounter] = useState(0)
     const [questions, setQuestions] = useState([{
-        id: 0,
+        id: uuidv4(),
         required: false,
         type: "",
         question:"",
@@ -40,8 +40,6 @@ const FormConstructor = () => {
                                 key={q.id}
                                 array={questions}
                                 updater={setQuestions}
-                                idCounter={idCounter}
-                                setIdCounter={setIdCounter}
                                 />
                         ))
                     }

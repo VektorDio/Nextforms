@@ -8,11 +8,11 @@ const ReportEntry = () => {
 
     return (
         <div  className={styles.reportEntry}>
-            <div className={styles.reportName}>{reportName}</div>
+            <div>{reportName}</div>
             <div className={styles.buttons}>
-                <ReductButton></ReductButton>
-                <ReportButton></ReportButton>
-                <DeleteButton></DeleteButton>
+                <ReductButton/>
+                <ReportButton/>
+                <DeleteButton/>
             </div>
         </div>
     );

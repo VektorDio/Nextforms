@@ -1,14 +1,12 @@
 import React from 'react';
 import styles from './date.module.css'
-const Date = () => {
-    return (
-        <>
-            <input
+const Date = ({disabled, defaultValue}) => {
+    return (<input
                 className={styles.dateField}
                 type="date"
-                defaultValue={"2000-01-01"}
+                defaultValue={defaultValue}
+                disabled={disabled}
             />
-        </>
     );
 };
 

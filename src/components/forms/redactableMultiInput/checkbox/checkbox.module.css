@@ -11,7 +11,7 @@
     align-items: center;
 }
 
-/* Hide the browser's default checkbox */
+/* Hide the browser's default checkboxInput */
 .manyContainer input {
     position: absolute;
     opacity: 0;
@@ -20,7 +20,7 @@
     width: 0;
 }
 
-/* Create a custom checkbox */
+/* Create a custom checkboxInput */
 .checkmark {
     position: absolute;
     top: 0;
@@ -36,7 +36,7 @@
     background-color: #455369;
 }
 
-/* When the checkbox is checked, add a blue background */
+/* When the checkboxInput is checked, add a blue background */
 .manyContainer input:checked ~ .checkmark {
     background-color: #2b64c2;
 }

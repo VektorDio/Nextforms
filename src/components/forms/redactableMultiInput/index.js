@@ -2,25 +2,34 @@ import React, {useState} from 'react';
 import styles from './multiinput.module.css'
 import Checkbox from "@/components/forms/redactableMultiInput/checkbox";
 import Radio from "@/components/forms/redactableMultiInput/radio";
-import Select from "@/components/forms/redactableMultiInput/select";
-import Date from "@/components/forms/redactableMultiInput/date";
-import Time from "@/components/forms/redactableMultiInput/time";
+import InlineInput from "@/components/inputs/inlineInput";
+import TextParagraph from "@/components/inputs/textParagraph";
+import DateInput from "@/components/inputs/dateInput";
+import TimeInput from "@/components/inputs/timeInput";
+import Select from "@/components/inputs/selectInput";
 
 const RedactableMultiInput = ({type, updater}) => {
     const [options, setOptions] = useState([])
+
     let component
     switch (type){
         case "oneLineText":
-            component = (<input className={styles.oneLineText}
-                                type="text"
-                                placeholder={"Answer"}
-                                disabled={true}
-            />)
+            component = (
+                <div className={styles.oneLineText}>
+                    <InlineInput
+                        placeholder={"Answer"}
+                        disabled={true}
+                    />
+                </div>
+            )
             break;
         case "paragraphText":
             component = (
-                <div className={styles.paragraphText} disabled={true}>
-                    Answer
+                <div className={styles.paragraphText}>
+                    <TextParagraph
+                        placeholder={"Answer"}
+                        disabled={true}
+                    />
                 </div>
             )
             break;
@@ -28,7 +37,7 @@ const RedactableMultiInput = ({type, updater}) => {
             component = (
                 <>
                     <Radio deletable={false}></Radio>
-                    {options.map(e =>
+                    {options.map(() =>
                         <Radio deletable={true}></Radio>
                     )}
                     <Radio deletable={false} addNewOption={true}></Radio>
@@ -38,22 +47,22 @@ const RedactableMultiInput = ({type, updater}) => {
         case "manyList":
             component = (
                 <>
-                    <Checkbox></Checkbox>
+                    <Checkbox/>
                 </>
             )
             break;
         case "selectList":
             component = (
-                <>
-                    <Select></Select>
-                </>
+                <Select disabled={true}>
+                    <option>Answer</option>
+                </Select>
             )
             break;
         case "date":
-            component = (<><Date></Date></>)
+            component = (<DateInput disabled={true} defaultValue={"2000-01-01"}/>)
             break;
         case "time":
-            component = (<><Time></Time></>)
+            component = (<TimeInput disabled={true} defaultValue={"20:00"}/>)
             break;
         default:
             component = (<></>)

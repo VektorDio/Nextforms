@@ -1,16 +1,14 @@
 import React from 'react';
 import styles from './time.module.css'
-const Time = () => {
+const TimeInput = ({disabled, defaultValue}) => {
     return (
-        <>
             <input
                 className={styles.timeField}
                 type="time"
-                defaultValue={"20:00"}
-                disabled={true}
+                defaultValue={defaultValue}
+                disabled={disabled}
             />
-        </>
     );
 };
 
-export default Time;
+export default TimeInput;

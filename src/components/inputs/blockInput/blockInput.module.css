@@ -1,0 +1,23 @@
+.mainQuestion{
+    font-size: 16px;
+    line-height: 28px;
+    padding: 8px 16px;
+    width: 45%;
+    min-height: 46px;
+    border: unset;
+    border-radius: 6px;
+    outline-color: #365688;
+    background-color: #353f4f;
+    overflow: visible;
+}
+
+.mainQuestion:focus {
+    outline: #365688 solid 3px;
+}
+
+.mainQuestion:empty:before {
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block;
+    color: grey;
+}

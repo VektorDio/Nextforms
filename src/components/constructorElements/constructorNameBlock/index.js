@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './nameBlock.module.css'
+import LongText from "@/components/inputs/textParagraph";
 const ConstructorNameBlock = ({formName}) => {
+
     function handleNameChange(e){
         formName.formName = e.currentTarget.textContent
     }
@@ -10,11 +12,11 @@ const ConstructorNameBlock = ({formName}) => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.formName} contentEditable={true} onBlur={handleNameChange}>
-                New Form
+            <div className={styles.formName}>
+                <LongText onBlur={handleNameChange} placeholder={"New Form"}/>
             </div>
-            <div className={styles.formDescription} contentEditable={true} onBlur={handleDescriptionChange}>
-                Description
+            <div className={styles.formDescription}>
+                <LongText onBlur={handleDescriptionChange} placeholder={"Description"}/>
             </div>
         </div>
     );

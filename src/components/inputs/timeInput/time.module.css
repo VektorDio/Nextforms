@@ -1,19 +1,22 @@
-.dateField {
+.timeField {
     font-size: 16px;
     line-height: 28px;
     padding: 8px 16px;
     width: 45%;
-    min-height: 44px;
+    min-height: 46px;
     border: unset;
     border-radius: 6px;
     outline-color: #365688;
     background-color: #353f4f;
+    display: flex;
+    justify-content: space-between;
 }
 
-.dateField:focus {
-    outline: #365688 solid 4px;
+.placeholder{
+    color: grey;
 }
 
-.dateField::-webkit-calendar-picker-indicator {
-    filter: invert(1);
+.placeholderIcon{
+    width: 20px;
+    color: grey;
 }

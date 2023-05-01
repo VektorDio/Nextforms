@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import styles from './constructorBlock.module.css'
 import DeleteButton from "@/components/buttons/deleteButton";
 import ToggleButton from "@/components/buttons/toggleButton";
 import AddButton from "@/components/buttons/addButton";
 import RedactableMultiInput from "@/components/forms/redactableMultiInput";
-const ConstructorBlock = ({id, updater, array, idCounter, setIdCounter}) => {
+import Select from "@/components/inputs/selectInput";
+import BlockInput from "@/components/inputs/blockInput";
+const ConstructorBlock = ({id, updater, array}) => {
     const [selectValue, setSelectValue] = useState("oneList");
     const handleSelectChange = (e) => {
         array.find(e => e.id === id).type = e.target.value
@@ -24,11 +27,9 @@ const ConstructorBlock = ({id, updater, array, idCounter, setIdCounter}) => {
     }
 
     const handleAddQuestionBlock = () => {
-        let newId = idCounter + 1
-        setIdCounter(newId)
         let buf = [...array]
         buf.splice((array.findIndex(e => e.id === id)+1), 0, {
-            id: newId,
+            id: uuidv4(),
             required: false,
             type: "",
             question:"",
@@ -49,14 +50,12 @@ const ConstructorBlock = ({id, updater, array, idCounter, setIdCounter}) => {
         <div className={styles.outerContainer}>
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
-                    <div className={styles.mainQuestion}
-                         contentEditable={true}
-                         placeholder="Question"
-                         onBlur={handleQuestionChange}
-                    >
-                    </div>
+                    <BlockInput
+                        placeholder="Question"
+                        onBlur={handleQuestionChange}
+                    />
 
-                    <select className={styles.typeSelect} defaultValue={"oneList"} onChange={handleSelectChange}>
+                    <Select defaultValue={"oneList"} onChange={handleSelectChange}>
                         <option value="oneLineText">Text (One Line) </option>
                         <option value="paragraphText">Text (Paragraph) </option>
                         <option value="oneList">One from List </option>
@@ -64,7 +63,7 @@ const ConstructorBlock = ({id, updater, array, idCounter, setIdCounter}) => {
                         <option value="selectList">Select List </option>
                         <option value="date">Date </option>
                         <option value="time">Time </option>
-                    </select>
+                    </Select>
                 </div>
                 <div>
                     <RedactableMultiInput

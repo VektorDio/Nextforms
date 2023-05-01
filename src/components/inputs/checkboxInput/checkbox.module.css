@@ -1,5 +1,4 @@
-
-.manyContainer {
+.checkboxContainer {
     display: flex;
     position: relative;
     padding-left: 40px;
@@ -11,8 +10,8 @@
     align-items: center;
 }
 
-/* Hide the browser's default checkbox */
-.manyContainer input {
+/* Hide the browser's default checkboxInput */
+.checkboxContainer input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -20,7 +19,7 @@
     width: 0;
 }
 
-/* Create a custom checkbox */
+/* Create a custom checkboxInput */
 .checkmark {
     position: absolute;
     top: 0;
@@ -32,12 +31,12 @@
 }
 
 /* On mouse-over, add a grey background color */
-.manyContainer:hover input ~ .checkmark {
+.checkboxContainer:hover input ~ .checkmark {
     background-color: #455369;
 }
 
-/* When the checkbox is checked, add a blue background */
-.manyContainer input:checked ~ .checkmark {
+/* When the checkboxInput is checked, add a blue background */
+.checkboxContainer input:checked ~ .checkmark {
     background-color: #2b64c2;
 }
 
@@ -49,12 +48,12 @@
 }
 
 /* Show the checkmark when checked */
-.manyContainer input:checked ~ .checkmark:after {
+.checkboxContainer input:checked ~ .checkmark:after {
     display: block;
 }
 
 /* Style the checkmark/indicator */
-.manyContainer .checkmark:after {
+.checkboxContainer .checkmark:after {
     left: 9px;
     top: 5px;
     width: 8px;
@@ -62,4 +61,22 @@
     border: solid white;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
+}
+
+.checkmarkDisabled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #2a313d;
+    border-radius: 4px;
+}
+
+.text{
+    color: white;
+}
+
+.textDisabled{
+    color: grey;
 }

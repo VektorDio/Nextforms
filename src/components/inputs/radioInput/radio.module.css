@@ -11,7 +11,7 @@
     align-items: center;
 }
 
-/* Hide the browser's default radio button */
+/* Hide the browser's default radioInput button */
 .radioContainer input {
     position: absolute;
     opacity: 0;
@@ -20,7 +20,7 @@
     width: 0;
 }
 
-/* Create a custom radio button */
+/* Create a custom radioInput button */
 .checkmark {
     position: absolute;
     top: 0;
@@ -36,7 +36,7 @@
     background-color: #455369;
 }
 
-/* When the radio button is checked, add a blue background */
+/* When the radioInput button is checked, add a blue background */
 .radioContainer input:checked ~ .checkmark {
     background-color: #2b64c2;
 }
@@ -61,4 +61,22 @@
     height: 12px;
     border-radius: 50%;
     background: white;
+}
+
+.checkmarkDisabled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #2a313d;
+    border-radius: 50%;
+}
+
+.text{
+    color: white;
+}
+
+.textDisabled{
+    color: grey;
 }

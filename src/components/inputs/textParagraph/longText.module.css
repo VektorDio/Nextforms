@@ -1,0 +1,18 @@
+.formName{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #3a4557;
+    transition: 0.5s;
+}
+
+.formName:focus{
+    border-bottom-color: #2b64c2;
+    outline: none;
+}
+
+.formName:empty:before {
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block;
+    color: white;
+}

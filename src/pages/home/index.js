@@ -12,6 +12,7 @@ const Home = () => {
     if (status === "unauthenticated") {
         router.push("/")
     }
+
     return (
         <>
             <Head>
@@ -20,8 +21,8 @@ const Home = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header></Header>
-            <ColumnWrapper session={session}></ColumnWrapper>
+            <Header/>
+            <ColumnWrapper session={session}/>
         </>
     );
 };

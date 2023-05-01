@@ -1,0 +1,27 @@
+.submitButton {
+    font-size: 16px;
+    line-height: 28px;
+    padding: 8px 16px;
+    width: 100%;
+    min-height: 46px;
+    border: unset;
+    border-radius: 6px;
+    background-color: rgb(84, 105, 212);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+
+.submitButton:hover {
+    user-select: none;
+    background-color: rgb(43, 58, 136);
+}
+
+.submitButton:disabled {
+    background-color: rgb(49, 64, 140);
+    color: #b0afaf;
+    font-weight: 600;
+    user-select: none;
+}
