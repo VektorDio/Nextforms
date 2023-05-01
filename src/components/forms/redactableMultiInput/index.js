@@ -1,20 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './multiinput.module.css'
-import Checkbox from "@/components/forms/multiInput/checkbox";
-import Radio from "@/components/forms/multiInput/radio";
-import Select from "@/components/forms/multiInput/select";
-import Date from "@/components/forms/multiInput/date";
-import Time from "@/components/forms/multiInput/time";
+import Checkbox from "@/components/forms/redactableMultiInput/checkbox";
+import Radio from "@/components/forms/redactableMultiInput/radio";
+import Select from "@/components/forms/redactableMultiInput/select";
+import Date from "@/components/forms/redactableMultiInput/date";
+import Time from "@/components/forms/redactableMultiInput/time";
 
-const MultiInput = ({type}) => {
+const RedactableMultiInput = ({type, updater}) => {
+    const [options, setOptions] = useState([])
     let component
     switch (type){
         case "oneLineText":
-            component = (<input className={styles.oneLineText} type="text" placeholder={"Answer"}/>)
+            component = (<input className={styles.oneLineText}
+                                type="text"
+                                placeholder={"Answer"}
+                                disabled={true}
+            />)
             break;
         case "paragraphText":
             component = (
-                <div className={styles.paragraphText} contentEditable={true}>
+                <div className={styles.paragraphText} disabled={true}>
                     Answer
                 </div>
             )
@@ -22,7 +27,11 @@ const MultiInput = ({type}) => {
         case "oneList":
             component = (
                 <>
-                    <Radio></Radio>
+                    <Radio deletable={false}></Radio>
+                    {options.map(e =>
+                        <Radio deletable={true}></Radio>
+                    )}
+                    <Radio deletable={false} addNewOption={true}></Radio>
                 </>
             )
             break;
@@ -58,4 +67,5 @@ const MultiInput = ({type}) => {
     );
 };
 
-export default MultiInput;
+export default RedactableMultiInput;
+

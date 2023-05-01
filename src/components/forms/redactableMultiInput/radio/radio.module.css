@@ -1,0 +1,63 @@
+/* Customize the label (the container) */
+.radioContainer {
+    display: flex;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    min-height: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Hide the browser's default radio button */
+.radioContainerInput {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #353f4f;
+    border-radius: 50%;
+    display: block;
+}
+
+.oneLineText {
+    font-size: 16px;
+    line-height: 28px;
+    padding: 8px 16px;
+    width: 42%;
+    min-height: 44px;
+    border: unset;
+    border-radius: 6px;
+    outline-color: #365688;
+    background-color: #353f4f;
+}
+
+.oneLineText:focus {
+    outline: #365688 solid 4px;
+}
+
+.close{
+    width: 35px;
+    height: 35px;
+}
+
+.addText{
+    font-size: 16px;
+    line-height: 28px;
+    padding: 8px;
+    min-height: 44px;
+    font-weight: 600;
+}

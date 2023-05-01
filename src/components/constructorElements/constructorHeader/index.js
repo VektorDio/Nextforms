@@ -7,7 +7,12 @@ import ReductButton from "@/components/buttons/reductButton";
 import ReportButton from "@/components/buttons/reportButton";
 import SettingsButton from "@/components/buttons/settingsButton";
 
-export default function ConstructorHeader() {
+export default function ConstructorHeader({formObject}) {
+
+    function submitForm(){
+        console.log(formObject)
+    }
+
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
@@ -30,7 +35,7 @@ export default function ConstructorHeader() {
             </div>
 
             <div className={styles.sideBlock}>
-                <ConfirmButton></ConfirmButton>
+                <ConfirmButton onClick={submitForm}></ConfirmButton>
                 <Link href={"/home"}>
                     <DeleteButton></DeleteButton>
                 </Link>

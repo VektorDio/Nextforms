@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ConstructorHeader from "@/components/constructorElements/constructorHeader";
@@ -7,6 +7,20 @@ import ConstructorNameBlock from "@/components/constructorElements/constructorNa
 import ConstructorBlock from "@/components/constructorElements/constructorBlock";
 
 const FormConstructor = () => {
+
+    const formName = {
+        formName: "",
+        formDescription: "",
+    }
+    const [idCounter, setIdCounter] = useState(0)
+    const [questions, setQuestions] = useState([{
+        id: 0,
+        required: false,
+        type: "",
+        question:"",
+        options:[]
+    }])
+
     return (
         <>
             <Head>
@@ -15,11 +29,22 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader/>
+            <ConstructorHeader formObject={questions}/>
             <Main>
                 <ConstructorColumn>
-                    <ConstructorNameBlock/>
-                    <ConstructorBlock/>
+                    <ConstructorNameBlock formName={formName}/>
+                    {
+                        questions.map((q) => (
+                            <ConstructorBlock
+                                id={q.id}
+                                key={q.id}
+                                array={questions}
+                                updater={setQuestions}
+                                idCounter={idCounter}
+                                setIdCounter={setIdCounter}
+                                />
+                        ))
+                    }
                 </ConstructorColumn>
             </Main>
         </>
