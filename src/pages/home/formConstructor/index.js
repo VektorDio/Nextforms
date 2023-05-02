@@ -9,16 +9,23 @@ import ConstructorBlock from "@/components/constructorElements/constructorBlock"
 
 const FormConstructor = () => {
 
-    const formName = {
+    const formCredentials = {
+        id: uuidv4(),
+        creator: "test",
+        active: true,
         formName: "",
         formDescription: "",
     }
+
     const [questions, setQuestions] = useState([{
         id: uuidv4(),
         required: false,
-        type: "",
+        type: "radio",
         question:"",
-        options:[]
+        options:[{
+            id: uuidv4(),
+            text: ""
+        }]
     }])
 
     return (
@@ -29,16 +36,16 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader formObject={questions}/>
+            <ConstructorHeader formObject={formCredentials}/>
             <Main>
                 <ConstructorColumn>
-                    <ConstructorNameBlock formName={formName}/>
+                    <ConstructorNameBlock formName={formCredentials}/>
                     {
                         questions.map((q) => (
                             <ConstructorBlock
                                 id={q.id}
                                 key={q.id}
-                                array={questions}
+                                questionsObject={questions}
                                 updater={setQuestions}
                                 />
                         ))

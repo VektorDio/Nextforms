@@ -4,7 +4,7 @@ const InfoColumn = () => {
     return (
         <div className={styles.mainColumn}>
             <div>
-                Some information
+
             </div>
         </div>
     );

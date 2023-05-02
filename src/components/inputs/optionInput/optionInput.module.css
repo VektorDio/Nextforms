@@ -41,7 +41,7 @@
 
 .text{
     color: white;
-    width: 98%;
+    width: 95%;
 }
 
 .disabled{
@@ -50,4 +50,8 @@
 
 .addOptionText{
     font-weight: 600;
+}
+
+.enabled{
+    width: 15px;
 }
