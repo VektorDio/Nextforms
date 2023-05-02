@@ -1,15 +1,25 @@
 import React, {useState} from 'react';
 import styles from './multiinput.module.css'
-import Checkbox from "@/components/forms/redactableMultiInput/checkbox";
-import Radio from "@/components/forms/redactableMultiInput/radio";
 import InlineInput from "@/components/inputs/inlineInput";
 import TextParagraph from "@/components/inputs/textParagraph";
 import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
-import Select from "@/components/inputs/selectInput";
+import OptionInput from "@/components/inputs/optionInput";
+import {v4 as uuidv4} from "uuid";
 
-const RedactableMultiInput = ({type, updater}) => {
-    const [options, setOptions] = useState([])
+const RedactableMultiInput = ({type}) => {
+    const [options, setOptions] = useState([{id: uuidv4(), text: ""}])
+
+    function handleAddOption() {
+        setOptions([...options, {
+            id: uuidv4(),
+            text: ""
+        }])
+    }
+
+    function handleOptionRedacted(e, id) {
+        options.find(e => e.id === id).text = e.currentTarget.textContent
+    }
 
     let component
     switch (type){
@@ -36,26 +46,50 @@ const RedactableMultiInput = ({type, updater}) => {
         case "oneList":
             component = (
                 <>
-                    <Radio deletable={false}></Radio>
-                    {options.map(() =>
-                        <Radio deletable={true}></Radio>
-                    )}
-                    <Radio deletable={false} addNewOption={true}></Radio>
+                    {options.map((e) =>
+                            <OptionInput id={e.id} type={"radio"}/>
+                        )}
+                    <OptionInput type={"radio"} addOption={true} onAdd={handleAddOption}/>
                 </>
             )
             break;
         case "manyList":
             component = (
                 <>
-                    <Checkbox/>
+                    {(options.length > 1) ? (
+                            options.map(() =>
+                                <OptionInput type={"checkbox"}/>
+                            )
+                        ) : (
+                            <OptionInput type={"checkbox"} deletable={false}/>
+                        )}
+                    <OptionInput type={"checkbox"} addOption={true} onAdd={handleAddOption}/>
                 </>
             )
             break;
         case "selectList":
             component = (
-                <Select disabled={true}>
-                    <option>Answer</option>
-                </Select>
+                <>
+                    {(options.length > 1) ? (
+                            options.map((e, index) =>
+                                <OptionInput
+                                    type={"select"}
+                                    index={index+1}
+                                    onBlur={handleOptionRedacted}/>
+                            )
+                        ) : (
+                            <OptionInput
+                                type={"select"}
+                                deletable={false}
+                                index={"1"}
+                                onBlur={handleOptionRedacted}/>
+                        )}
+                    <OptionInput
+                        type={"select"}
+                        addOption={true}
+                        onAdd={handleAddOption}
+                        index={options.length+1}/>
+                </>
             )
             break;
         case "date":

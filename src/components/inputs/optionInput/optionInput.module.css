@@ -1,0 +1,53 @@
+.radioContainer {
+    display: flex;
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    min-height: 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #2a313d;
+    border-radius: 4px;
+}
+
+.radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: #2a313d;
+    border-radius: 50%;
+}
+
+.select {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    height: 30px;
+    width: 30px;
+}
+
+.text{
+    color: white;
+    width: 98%;
+}
+
+.disabled{
+    display: none;
+}
+
+.addOptionText{
+    font-weight: 600;
+}

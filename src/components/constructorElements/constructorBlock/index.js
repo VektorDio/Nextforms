@@ -22,10 +22,6 @@ const ConstructorBlock = ({id, updater, array}) => {
         array.find(e => e.id === id).required = e.target.checked
     }
 
-    const handleOptionsChanged = (options) => {
-        array.find(e => e.id === id).options = options
-    }
-
     const handleAddQuestionBlock = () => {
         let buf = [...array]
         buf.splice((array.findIndex(e => e.id === id)+1), 0, {
@@ -68,7 +64,6 @@ const ConstructorBlock = ({id, updater, array}) => {
                 <div>
                     <RedactableMultiInput
                         type={selectValue}>
-                        updater={handleOptionsChanged}
                     </RedactableMultiInput>
                 </div>
                 <div className={styles.blockFooter}>
