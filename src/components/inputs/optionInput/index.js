@@ -3,31 +3,8 @@ import styles from "./optionInput.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import TextParagraph from "@/components/inputs/textParagraph";
-import {v4 as uuidv4} from "uuid";
 
-const OptionInput = ({id, type, deletable, index, addOption, options, setOptions}) => {
-    function handleOptionRedacted(e) {
-        options.find(q => q.id === id).text = e.currentTarget.textContent
-        setOptions([...options])
-    }
-
-    function handleDeleteOption() {
-        let buf = [...options]
-        if(buf.length > 1){
-            buf.splice(options.findIndex(e => e.id === id), 1)
-        }
-        setOptions([...buf])
-    }
-
-    function handleAddOption() {
-        let buf = [...options]
-        buf.splice(options.length, 0, {
-            id: uuidv4(),
-            text: ""
-        })
-        setOptions([...buf])
-    }
-
+const OptionInput = ({id, type, deletable, index, addOption, handleOptionRedacted, handleDeleteOption, handleAddOption}) => {
     let checkmark
     switch (type){
         case "radio":
@@ -50,10 +27,10 @@ const OptionInput = ({id, type, deletable, index, addOption, options, setOptions
                 {(addOption) ? (
                     <div className={styles.addOptionText} onClick={handleAddOption}> Add new option </div>
                 ) : (
-                    <TextParagraph onBlur={handleOptionRedacted} placeholder={"Option"}/>
+                    <TextParagraph onBlur={(e) => handleOptionRedacted(id, e.currentTarget.textContent)} placeholder={"Option"}/>
                 )}
             </div>
-            <div className={(!deletable || addOption) ? styles.disabled : styles.enabled} onClick={handleDeleteOption}>
+            <div className={(!deletable || addOption) ? styles.disabled : styles.enabled} onClick={()=> handleDeleteOption(id)}>
                 <FontAwesomeIcon icon={faXmark}/>
             </div>
         </label>

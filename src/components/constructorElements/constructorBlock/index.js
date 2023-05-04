@@ -11,55 +11,37 @@ import TextParagraph from "@/components/inputs/textParagraph";
 import OptionInput from "@/components/inputs/optionInput";
 import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
-const ConstructorBlock = ({id, updater, questionsObject}) => {
-    const [selectValue, setSelectValue] = useState("radio");
-    const currentQuestion = questionsObject.find(e => e.id === id)
-    const currentQuestionIndex = questionsObject.findIndex(e => e.id === id)
-    const [options, setOptions] = useState([...currentQuestion.options])
+const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange, handleRequiredToggle}) => {
+    const [options, setOptions] = useState(question.options)
 
-    if(options.length < 1){
-        setOptions([{
+    question.options = options
+    function handleOptionRedacted(id, text) {
+        let buf = [...options]
+        let index = buf.findIndex(e => e.id === id)
+        buf[index].text = text
+        setOptions([...buf])
+    }
+
+    function handleDeleteOption(id) {
+        let buf = [...options]
+        let index = buf.findIndex(e => e.id === id)
+        if(buf.length > 1){
+            buf.splice(index, 1)
+        }
+        setOptions([...buf])
+    }
+
+    function handleAddOption() {
+        let buf = [...options]
+        buf.splice(options.length, 0, {
             id: uuidv4(),
             text: ""
-        }])
-    }
-    const handleSelectChange = (e) => {
-        currentQuestion.type = e.target.value
-        setSelectValue(e.target.value);
-    }
-
-    const handleQuestionChange = (e) => {
-        currentQuestion.question = e.currentTarget.textContent
-    }
-
-    const handleRequiredToggle = (e) => {
-        currentQuestion.required = e.target.checked
-    }
-
-    const handleAddQuestionBlock = () => {
-        let buf = [...questionsObject]
-        buf.splice((currentQuestionIndex+1), 0, {
-            id: uuidv4(),
-            required: false,
-            type: "radio",
-            question:"",
-            options:[]
         })
-        updater([...buf])
+        setOptions([...buf])
     }
-
-    const handleDelete = () => {
-        let buf = [...questionsObject]
-        if(buf.length > 1){
-            buf.splice(currentQuestionIndex, 1)
-        }
-        updater([...buf])
-    }
-
-
 
     let component
-    switch (selectValue){
+    switch (question.type){
         case "oneLineText":
             component = (
                 <div className={styles.oneLineText}>
@@ -89,14 +71,14 @@ const ConstructorBlock = ({id, updater, questionsObject}) => {
                             key={e.id}
                             type={"radio"}
                             deletable={options.length > 1}
-                            options={options}
-                            setOptions={setOptions}
+                            handleOptionRedacted={handleOptionRedacted}
+                            handleDeleteOption={handleDeleteOption}
                         />
                     )}
                     <OptionInput type={"radio"}
                                  addOption={true}
-                                 options={options}
-                                 setOptions={setOptions}/>
+                                 handleAddOption={handleAddOption}
+                    />
                 </>
             )
             break;
@@ -109,15 +91,13 @@ const ConstructorBlock = ({id, updater, questionsObject}) => {
                                 key={e.id}
                                 type={"checkbox"}
                                 deletable={options.length > 1}
-                                options={options}
-                                setOptions={setOptions}
-
+                                handleOptionRedacted={handleOptionRedacted}
+                                handleDeleteOption={handleDeleteOption}
                             />
                         )}
                     <OptionInput type={"checkbox"}
                                  addOption={true}
-                                 options={options}
-                                 setOptions={setOptions}
+                                 handleAddOption={handleAddOption}
                     />
                 </>
             )
@@ -132,14 +112,14 @@ const ConstructorBlock = ({id, updater, questionsObject}) => {
                             type={"select"}
                             deletable={options.length > 1}
                             index={index+1}
-                            options={options}
-                            setOptions={setOptions}/>
+                            handleOptionRedacted={handleOptionRedacted}
+                            handleDeleteOption={handleDeleteOption}
+                        />
                     )}
                     <OptionInput type={"select"}
                                  addOption={true}
                                  index={options.length+1}
-                                 options={options}
-                                 setOptions={setOptions}
+                                 handleAddOption={handleAddOption}
                     />
                 </>
             )
@@ -161,10 +141,10 @@ const ConstructorBlock = ({id, updater, questionsObject}) => {
                 <div className={styles.blockHeader}>
                     <BlockInput
                         placeholder="Question"
-                        onBlur={handleQuestionChange}
+                        onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
                     />
 
-                    <Select defaultValue={"radio"} onChange={handleSelectChange}>
+                    <Select defaultValue={"radio"} onChange={(e) => handleSelectChange(question.id, e.target.value)}>
                         <option value="oneLineText">Text (One Line) </option>
                         <option value="paragraphText">Text (Paragraph) </option>
                         <option value="radio">One from List </option>
@@ -178,12 +158,12 @@ const ConstructorBlock = ({id, updater, questionsObject}) => {
                     {component}
                 </div>
                 <div className={styles.blockFooter}>
-                    <ToggleButton onClick={handleRequiredToggle} text={"Required Field"} checked={false}/>
-                    <DeleteButton onClick={handleDelete}/>
+                    <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Required Field"} checked={false}/>
+                    <DeleteButton onClick={() => handleDelete(question.id)}/>
                 </div>
             </div>
             <div className={styles.addButton}>
-                <AddButton onClick={handleAddQuestionBlock}/>
+                <AddButton onClick={()=> handleAdd(question.id)}/>
             </div>
         </div>
     );

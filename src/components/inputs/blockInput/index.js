@@ -5,7 +5,7 @@ const BlockInput = ({placeholder, onBlur}) => {
         <div className={styles.mainQuestion}
              contentEditable={true}
              placeholder={placeholder}
-             onBlur={ onBlur}>
+             onBlur={onBlur}>
         </div>
     );
 };

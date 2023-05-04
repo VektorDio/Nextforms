@@ -10,7 +10,7 @@ import {useRouter} from "next/router";
 
 const FormConstructor = () => {
     const router = useRouter()
-    const {id} = router.query
+    const {formId} = router.query
 
     const [formObject, setFormObject] = useState({
         id: uuidv4(),
@@ -30,12 +30,12 @@ const FormConstructor = () => {
         }]
     })
 
-    if(id === "new"){
+    if(formId === "new"){
         // continue
     } else {
         // find id in database and load its data into form
         // if none found, redirect to error page or somewhere else
-        if (id === '123'){
+        if (formId === '123'){
         setFormObject({
                 id: "123",
                 creator: "test",
@@ -103,7 +103,8 @@ const FormConstructor = () => {
 
     const [questions, setQuestions] = useState(formObject.questions)
     function handleFormSubmit(){
-        console.log(formObject)
+        //console.log(formObject)
+        console.log(questions)
     }
 
     function handleNameChange(text){
@@ -120,7 +121,64 @@ const FormConstructor = () => {
     }
 
     function handleAcceptChange(status) {
-        formObject.active = status
+        setFormObject(prev => ({
+            ...prev,
+            active: status
+        }))
+    }
+
+    const handleAddQuestionBlock = (id) => {
+        let buf = [...questions]
+        let index = buf.findIndex(e => e.id === id)
+        buf.splice((index + 1), 0, {
+            id: uuidv4(),
+            required: false,
+            type: "radio",
+            question:"",
+            options:[{
+                id: uuidv4(),
+                text: ""
+            }]
+        })
+        setQuestions([...buf])
+        // setFormObject(prev => ({
+        //     ...prev,
+        //     questions: [...buf]
+        // }))
+    }
+
+    const handleDelete = (id) => {
+        let buf = [...questions]
+        let index = buf.findIndex(e => e.id === id)
+        if(buf.length > 1){
+            buf.splice(index, 1)
+        }
+        setQuestions([...buf])
+        // setFormObject(prev => ({
+        //     ...prev,
+        //     questions: [...buf]
+        // }))
+    }
+
+    const handleSelectChange = (id, value) => {
+        let buf = [...questions]
+        let index = buf.findIndex(e => e.id === id)
+        buf[index].type = value
+        setQuestions([...buf])
+    }
+
+    const handleQuestionChange = (id, text) => {
+        let buf = [...questions]
+        let index = buf.findIndex(e => e.id === id)
+        buf[index].question = text
+        setQuestions([...buf])
+    }
+
+    const handleRequiredToggle = (id, value) => {
+        let buf = [...questions]
+        let index = buf.findIndex(e => e.id === id)
+        buf[index].required = value
+        setQuestions([...buf])
     }
 
     return (
@@ -145,10 +203,13 @@ const FormConstructor = () => {
                         questions.map((q) => (
                             <ConstructorBlock
                                 key={q.id}
-                                id={q.id}
-                                questionsObject={questions}
-                                updater={setQuestions}
-                                />
+                                question={q}
+                                handleAdd={handleAddQuestionBlock}
+                                handleDelete={handleDelete}
+                                handleSelectChange={handleSelectChange}
+                                handleQuestionChange={handleQuestionChange}
+                                handleRequiredToggle={handleRequiredToggle}
+                            />
                         ))
                     }
                 </ConstructorColumn>
