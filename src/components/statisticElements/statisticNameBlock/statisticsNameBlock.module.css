@@ -1,0 +1,17 @@
+.container{
+    background-color: #272e3a;
+    height:1%;
+    width: 80vh;
+    border-radius: 12px;
+    padding: 29px;
+    overflow:hidden;
+}
+
+.answersCount{
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.formDescription{
+    font-size: 16px;
+}
