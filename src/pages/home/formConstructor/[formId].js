@@ -9,102 +9,95 @@ import ConstructorBlock from "@/components/constructorElements/constructorBlock"
 import {useRouter} from "next/router";
 
 const FormConstructor = () => {
+
     const router = useRouter()
     const {formId} = router.query
 
+    // const [formObject, setFormObject] = useState((initialState !== undefined) ? initialState : {
+    //     id: uuidv4(),
+    //     creator: "test",
+    //     active: true,
+    //     formName: "New form",
+    //     formDescription: "Description",
+    //     questions: [{
+    //         id: uuidv4(),
+    //         required: false,
+    //         type: "radio",
+    //         question:"",
+    //         options:[{
+    //             id: uuidv4(),
+    //             text: ""
+    //         }]
+    //     }]
+    // })
+
     const [formObject, setFormObject] = useState({
-        id: uuidv4(),
+        id: "123",
         creator: "test",
         active: true,
-        formName: "New form",
-        formDescription: "Description",
+        formName: "This name",
+        formDescription: "That description",
         questions: [{
-            id: uuidv4(),
+            id: "197341823401234",
             required: false,
-            type: "radio",
-            question:"",
+            type: "paragraphText",
+            question:"First question",
             options:[{
-                id: uuidv4(),
-                text: ""
-            }]
-        }]
-    })
-
-    if(formId === "new"){
-        // continue
-    } else {
-        // find id in database and load its data into form
-        // if none found, redirect to error page or somewhere else
-        if (formId === '123'){
-        setFormObject({
-                id: "123",
-                creator: "test",
-                active: true,
-                formName: "This name",
-                formDescription: "That description",
-                questions: [{
-                    id: "197341823401234",
-                    required: false,
-                    type: "paragraphText",
-                    question:"First question",
-                    options:[{
-                        id: "15245322",
-                        text: "123123"
-                    },
-                    {
-                        id: "61523422",
-                        text: "123123"
-                    },
-                    {
-                        id: "1344234232",
-                        text: "123123"
-                    }
-                    ]
+                id: "15245322",
+                text: "123123"
+            },
+                {
+                    id: "61523422",
+                    text: "123123"
+                },
+                {
+                    id: "1344234232",
+                    text: "123123"
+                }
+            ]
+        },
+            {
+                id: "0519931423415",
+                required: true,
+                type: "radio",
+                question:"12312",
+                options:[{
+                    id: "041512342",
+                    text: "First answer"
                 },
                     {
-                        id: "0519931423415",
-                        required: true,
-                        type: "radio",
-                        question:"",
-                        options:[{
-                            id: "041512342",
-                            text: "First answer"
-                        },
-                            {
-                                id: "612341234234",
-                                text: "Second answer"
-                            },
-                            {
-                                id: "6614343525234",
-                                text: "Third answer"
-                            },]
+                        id: "612341234234",
+                        text: "Second answer"
                     },
                     {
-                        id: "05112312323415",
-                        required: true,
-                        type: "select",
-                        question:"",
-                        options:[{
-                            id: "041523422342",
-                            text: "First answer"
-                        },
-                            {
-                                id: "612324442234",
-                                text: "Second answer"
-                            },
-                            {
-                                id: "6614343525234",
-                                text: "Third answer"
-                            },]
-                    }]
-            })
-        }
-    }
+                        id: "6614343525234",
+                        text: "Third answer"
+                    },]
+            },
+            {
+                id: "05112312323415",
+                required: true,
+                type: "select",
+                question:"662242424",
+                options:[{
+                    id: "041523422342",
+                    text: "First answer"
+                },
+                    {
+                        id: "612324442234",
+                        text: "Second answer"
+                    },
+                    {
+                        id: "6614343525234",
+                        text: "Third answer"
+                    },]
+            }]
+    })
 
-    const [questions, setQuestions] = useState(formObject.questions)
+    //const [questions, setQuestions] = useState(formObject.questions)
     function handleFormSubmit(){
-        //console.log(formObject)
-        console.log(questions)
+        console.log(formObject)
+        //console.log(questions)
     }
 
     function handleNameChange(text){
@@ -128,7 +121,7 @@ const FormConstructor = () => {
     }
 
     const handleAddQuestionBlock = (id) => {
-        let buf = [...questions]
+        let buf = [...formObject.questions]
         let index = buf.findIndex(e => e.id === id)
         buf.splice((index + 1), 0, {
             id: uuidv4(),
@@ -140,45 +133,52 @@ const FormConstructor = () => {
                 text: ""
             }]
         })
-        setQuestions([...buf])
-        // setFormObject(prev => ({
-        //     ...prev,
-        //     questions: [...buf]
-        // }))
+        setFormObject(prev => ({
+            ...prev,
+            questions: [...buf]
+        }))
     }
 
     const handleDelete = (id) => {
-        let buf = [...questions]
+        let buf = [...formObject.questions]
         let index = buf.findIndex(e => e.id === id)
         if(buf.length > 1){
             buf.splice(index, 1)
         }
-        setQuestions([...buf])
-        // setFormObject(prev => ({
-        //     ...prev,
-        //     questions: [...buf]
-        // }))
+        setFormObject(prev => ({
+            ...prev,
+            questions: [...buf]
+        }))
     }
 
     const handleSelectChange = (id, value) => {
-        let buf = [...questions]
+        let buf = [...formObject.questions]
         let index = buf.findIndex(e => e.id === id)
         buf[index].type = value
-        setQuestions([...buf])
+        setFormObject(prev => ({
+            ...prev,
+            questions: [...buf]
+        }))
     }
 
     const handleQuestionChange = (id, text) => {
-        let buf = [...questions]
+        let buf = [...formObject.questions]
         let index = buf.findIndex(e => e.id === id)
         buf[index].question = text
-        setQuestions([...buf])
+        setFormObject(prev => ({
+            ...prev,
+            questions: [...buf]
+        }))
     }
 
     const handleRequiredToggle = (id, value) => {
-        let buf = [...questions]
+        let buf = [...formObject.questions]
         let index = buf.findIndex(e => e.id === id)
         buf[index].required = value
-        setQuestions([...buf])
+        setFormObject(prev => ({
+            ...prev,
+            questions: [...buf]
+        }))
     }
 
     return (
@@ -200,7 +200,7 @@ const FormConstructor = () => {
                         handleAcceptChange={handleAcceptChange}
                     />
                     {
-                        questions.map((q) => (
+                        formObject.questions.map((q) => (
                             <ConstructorBlock
                                 key={q.id}
                                 question={q}

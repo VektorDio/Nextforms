@@ -70,6 +70,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                             id={e.id}
                             key={e.id}
                             type={"radio"}
+                            text={e.text}
                             deletable={options.length > 1}
                             handleOptionRedacted={handleOptionRedacted}
                             handleDeleteOption={handleDeleteOption}
@@ -90,6 +91,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 id={e.id}
                                 key={e.id}
                                 type={"checkbox"}
+                                text={e.text}
                                 deletable={options.length > 1}
                                 handleOptionRedacted={handleOptionRedacted}
                                 handleDeleteOption={handleDeleteOption}
@@ -110,6 +112,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                             id={e.id}
                             key={e.id}
                             type={"select"}
+                            text={e.text}
                             deletable={options.length > 1}
                             index={index+1}
                             handleOptionRedacted={handleOptionRedacted}
@@ -141,10 +144,11 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                 <div className={styles.blockHeader}>
                     <BlockInput
                         placeholder="Question"
+                        defaultValue={question.question}
                         onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
                     />
 
-                    <Select defaultValue={"radio"} onChange={(e) => handleSelectChange(question.id, e.target.value)}>
+                    <Select defaultValue={question.type} onChange={(e) => handleSelectChange(question.id, e.target.value)}>
                         <option value="oneLineText">Text (One Line) </option>
                         <option value="paragraphText">Text (Paragraph) </option>
                         <option value="radio">One from List </option>
