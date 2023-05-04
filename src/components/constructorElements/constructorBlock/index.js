@@ -178,12 +178,12 @@ const ConstructorBlock = ({id, updater, questionsObject}) => {
                     {component}
                 </div>
                 <div className={styles.blockFooter}>
-                    <ToggleButton onClick={handleRequiredToggle} text={"Required Field"}></ToggleButton>
-                    <DeleteButton onClick={handleDelete}></DeleteButton>
+                    <ToggleButton onClick={handleRequiredToggle} text={"Required Field"} checked={false}/>
+                    <DeleteButton onClick={handleDelete}/>
                 </div>
             </div>
             <div className={styles.addButton}>
-                <AddButton onClick={handleAddQuestionBlock}></AddButton>
+                <AddButton onClick={handleAddQuestionBlock}/>
             </div>
         </div>
     );

@@ -23,7 +23,10 @@ const FormConstructor = () => {
             required: false,
             type: "radio",
             question:"",
-            options:[]
+            options:[{
+                id: uuidv4(),
+                text: ""
+            }]
         }]
     })
 
@@ -44,7 +47,19 @@ const FormConstructor = () => {
                     required: false,
                     type: "paragraphText",
                     question:"First question",
-                    options:[]
+                    options:[{
+                        id: "15245322",
+                        text: "123123"
+                    },
+                    {
+                        id: "61523422",
+                        text: "123123"
+                    },
+                    {
+                        id: "1344234232",
+                        text: "123123"
+                    }
+                    ]
                 },
                     {
                         id: "0519931423415",
@@ -87,10 +102,6 @@ const FormConstructor = () => {
     }
 
     const [questions, setQuestions] = useState(formObject.questions)
-
-    // setQuestions((prev)=>{
-    //
-    // })
     function handleFormSubmit(){
         console.log(formObject)
     }
