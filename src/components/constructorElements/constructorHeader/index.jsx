@@ -5,7 +5,7 @@ import ConfirmButton from "@/components/buttons/confirmButton";
 import DeleteButton from "@/components/buttons/deleteButton";
 import ReductButton from "@/components/buttons/reductButton";
 import ReportButton from "@/components/buttons/reportButton";
-import SettingsButton from "@/components/buttons/settingsButton";
+// import SettingsButton from "@/components/buttons/settingsButton";
 
 export default function ConstructorHeader({onFormSubmit}) {
 

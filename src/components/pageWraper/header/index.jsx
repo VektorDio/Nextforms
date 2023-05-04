@@ -2,7 +2,7 @@ import styles from "./Header.module.css"
 import Icon from "@/components/pageWraper/header/icon";
 import Link from "next/link";
 import {signOut, useSession} from "next-auth/react";
-import SettingsButton from "@/components/buttons/settingsButton";
+// import SettingsButton from "@/components/buttons/settingsButton";
 import SignInButton from "@/components/buttons/signInButton";
 import LogOutButton from "@/components/buttons/logOutButton";
 import SignUpButton from "@/components/buttons/signUpButton";
