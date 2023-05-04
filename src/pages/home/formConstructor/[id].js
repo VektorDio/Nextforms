@@ -107,15 +107,16 @@ const FormConstructor = () => {
     }
 
     function handleNameChange(text){
-        setFormObject((prev) => {
-            return {
-                ...prev,
-                formName: text
-            }
-        })
+        setFormObject(prev => ({
+            ...prev,
+            formName: text
+        }))
     }
     function handleDescriptionChange(text){
-        formObject.formDescription = text
+        setFormObject(prev => ({
+            ...prev,
+            formDescription: text
+        }))
     }
 
     function handleAcceptChange(status) {

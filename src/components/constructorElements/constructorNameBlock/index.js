@@ -7,14 +7,14 @@ const ConstructorNameBlock = ({formName, formDescription, handleNameChange, hand
         <div className={styles.container}>
             <div className={styles.formName}>
                 <TextParagraph
-                    onChange={(e) => handleNameChange(e.currentTarget.textContent || "")}
+                    onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
                     placeholder={"New Form"}
                     defaultValue={formName}
                 />
             </div>
             <div className={styles.formDescription}>
                 <TextParagraph
-                    onChange={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
+                    onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
                     placeholder={"Description"}
                     defaultValue={formDescription}
                 />
@@ -22,7 +22,7 @@ const ConstructorNameBlock = ({formName, formDescription, handleNameChange, hand
             <div>
                 <ToggleButton
                     text={"Accept answers"}
-                    onClick={(e) => handleAcceptChange(e.currentTarget.textContent || "")}
+                    onClick={(e) => handleAcceptChange(e.target.checked)}
                     checked={true}
                 />
             </div>
