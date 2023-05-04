@@ -26,16 +26,16 @@ const MenuColumn = ({setCentralColumnContent}) => {
                 <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
                 Reports
             </div>
-            <Link href={"/home/formConstructor"}>
+            <Link href={"/home/formConstructor/new"}>
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
-                    Form constructor
+                    New form
                 </div>
             </Link>
-            <Link href={"/home/reportConstructor"}>
+            <Link href={"/home/reportConstructor/new"}>
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
-                    Report constructor
+                    New report
                 </div>
             </Link>
 

@@ -7,11 +7,7 @@ import ReductButton from "@/components/buttons/reductButton";
 import ReportButton from "@/components/buttons/reportButton";
 import SettingsButton from "@/components/buttons/settingsButton";
 
-export default function ConstructorHeader({formObject}) {
-
-    function submitForm(){
-        console.log(formObject)
-    }
+export default function ConstructorHeader({onFormSubmit}) {
 
     return (
         <div className={styles.header}>
@@ -29,13 +25,13 @@ export default function ConstructorHeader({formObject}) {
                 <Link href={"/home"}>
                     <ReportButton></ReportButton>
                 </Link>
-                <Link href={'/home'}>
-                    <SettingsButton></SettingsButton>
-                </Link>
+                {/*<Link href={'/home'}>*/}
+                {/*    <SettingsButton></SettingsButton>*/}
+                {/*</Link>*/}
             </div>
 
             <div className={styles.sideBlock}>
-                <ConfirmButton onClick={submitForm}></ConfirmButton>
+                <ConfirmButton onClick={onFormSubmit}></ConfirmButton>
                 <Link href={"/home"}>
                     <DeleteButton></DeleteButton>
                 </Link>

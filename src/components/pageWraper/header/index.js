@@ -21,8 +21,8 @@ export default function Header() {
             {
                 (status === "authenticated") ? (
                     <div className={styles.sideBlock}>
-                        <SettingsButton></SettingsButton>
-                        <LogOutButton onClick={signOut}></LogOutButton>
+                        {/*<SettingsButton/>*/}
+                        <LogOutButton onClick={signOut}/>
                     </div>
                 ):(
                     <div className={styles.sideBlock}>
