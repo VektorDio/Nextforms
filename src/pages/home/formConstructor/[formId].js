@@ -6,93 +6,93 @@ import ConstructorHeader from "@/components/constructorElements/constructorHeade
 import ConstructorColumn from "@/components/constructorElements/constructorColumn";
 import ConstructorNameBlock from "@/components/constructorElements/constructorNameBlock";
 import ConstructorBlock from "@/components/constructorElements/constructorBlock";
-import {useRouter} from "next/router";
+// import {useRouter} from "next/router";
 
 const FormConstructor = () => {
 
-    const router = useRouter()
-    const {formId} = router.query
-
-    // const [formObject, setFormObject] = useState((initialState !== undefined) ? initialState : {
-    //     id: uuidv4(),
-    //     creator: "test",
-    //     active: true,
-    //     formName: "New form",
-    //     formDescription: "Description",
-    //     questions: [{
-    //         id: uuidv4(),
-    //         required: false,
-    //         type: "radio",
-    //         question:"",
-    //         options:[{
-    //             id: uuidv4(),
-    //             text: ""
-    //         }]
-    //     }]
-    // })
+    // const router = useRouter()
+    // const {formId} = router.query
 
     const [formObject, setFormObject] = useState({
-        id: "123",
+        id: uuidv4(),
         creator: "test",
         active: true,
-        formName: "This name",
-        formDescription: "That description",
+        formName: "New form",
+        formDescription: "Description",
         questions: [{
-            id: "197341823401234",
+            id: uuidv4(),
             required: false,
-            type: "paragraphText",
-            question:"First question",
+            type: "radio",
+            question:"",
             options:[{
-                id: "15245322",
-                text: "123123"
-            },
-                {
-                    id: "61523422",
-                    text: "123123"
-                },
-                {
-                    id: "1344234232",
-                    text: "123123"
-                }
-            ]
-        },
-            {
-                id: "0519931423415",
-                required: true,
-                type: "radio",
-                question:"12312",
-                options:[{
-                    id: "041512342",
-                    text: "First answer"
-                },
-                    {
-                        id: "612341234234",
-                        text: "Second answer"
-                    },
-                    {
-                        id: "6614343525234",
-                        text: "Third answer"
-                    },]
-            },
-            {
-                id: "05112312323415",
-                required: true,
-                type: "select",
-                question:"662242424",
-                options:[{
-                    id: "041523422342",
-                    text: "First answer"
-                },
-                    {
-                        id: "612324442234",
-                        text: "Second answer"
-                    },
-                    {
-                        id: "6614343525234",
-                        text: "Third answer"
-                    },]
+                id: uuidv4(),
+                text: ""
             }]
+        }]
     })
+
+    // const [formObject, setFormObject] = useState({
+    //     id: "123",
+    //     creator: "test",
+    //     active: true,
+    //     formName: "This name",
+    //     formDescription: "That description",
+    //     questions: [{
+    //         id: "197341823401234",
+    //         required: false,
+    //         type: "paragraphText",
+    //         question:"First question",
+    //         options:[{
+    //             id: "15245322",
+    //             text: "123123"
+    //         },
+    //             {
+    //                 id: "61523422",
+    //                 text: "123123"
+    //             },
+    //             {
+    //                 id: "1344234232",
+    //                 text: "123123"
+    //             }
+    //         ]
+    //     },
+    //         {
+    //             id: "0519931423415",
+    //             required: true,
+    //             type: "radio",
+    //             question:"12312",
+    //             options:[{
+    //                 id: "041512342",
+    //                 text: "First answer"
+    //             },
+    //                 {
+    //                     id: "612341234234",
+    //                     text: "Second answer"
+    //                 },
+    //                 {
+    //                     id: "6614343525234",
+    //                     text: "Third answer"
+    //                 },]
+    //         },
+    //         {
+    //             id: "05112312323415",
+    //             required: true,
+    //             type: "select",
+    //             question:"662242424",
+    //             options:[{
+    //                 id: "041523422342",
+    //                 text: "First answer"
+    //             },
+    //                 {
+    //                     id: "612324442234",
+    //                     text: "Second answer"
+    //                 },
+    //                 {
+    //                     id: "6614343525234",
+    //                     text: "Third answer"
+    //                 },]
+    //         }]
+    // })
 
     //const [questions, setQuestions] = useState(formObject.questions)
     function handleFormSubmit(){
