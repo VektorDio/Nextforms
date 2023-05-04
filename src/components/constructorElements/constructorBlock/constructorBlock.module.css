@@ -27,12 +27,21 @@
 .outerContainer{
     display: flex;
     margin-top: 25px;
-    margin-left: 76px;
+    margin-left: 74px;
+}
+
+.outerContainerDisabled{
+    display: flex;
+    margin-top: 25px;
 }
 
 .addButton{
     padding-left: 8px;
     display: block;
+}
+
+.addButtonDisabled{
+    display: none;
 }
 
 .blockInput{
@@ -45,6 +54,15 @@
 
 .oneLineText {
     width: 45%;
+}
+
+.unselectedText{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    padding: 12px 0;
+    width: 100%;
+    min-height: 46px;
 }
 
 

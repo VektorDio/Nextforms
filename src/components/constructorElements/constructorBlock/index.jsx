@@ -11,9 +11,9 @@ import TextParagraph from "@/components/inputs/textParagraph";
 import OptionInput from "@/components/inputs/optionInput";
 import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
-const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange, handleRequiredToggle}) => {
+const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange, handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
     const [options, setOptions] = useState(question.options)
-
+    const isSelected = selectedBlockId === question.id
     question.options = options
     function handleOptionRedacted(id, text) {
         let buf = [...options]
@@ -71,15 +71,18 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                             key={e.id}
                             type={"radio"}
                             text={e.text}
-                            deletable={options.length > 1}
+                            disabled={!isSelected}
+                            deletable={(options.length > 1)}
                             handleOptionRedacted={handleOptionRedacted}
                             handleDeleteOption={handleDeleteOption}
                         />
                     )}
-                    <OptionInput type={"radio"}
-                                 addOption={true}
-                                 handleAddOption={handleAddOption}
-                    />
+                    <div style={(isSelected) ? null : {display:"none"}}>
+                        <OptionInput type={"radio"}
+                                     addOption={true}
+                                     handleAddOption={handleAddOption}
+                        />
+                    </div>
                 </>
             )
             break;
@@ -93,14 +96,17 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 type={"checkbox"}
                                 text={e.text}
                                 deletable={options.length > 1}
+                                disabled={!isSelected}
                                 handleOptionRedacted={handleOptionRedacted}
                                 handleDeleteOption={handleDeleteOption}
                             />
                         )}
-                    <OptionInput type={"checkbox"}
-                                 addOption={true}
-                                 handleAddOption={handleAddOption}
-                    />
+                    <div style={(isSelected) ? null : {display:"none"}}>
+                        <OptionInput type={"checkbox"}
+                                     addOption={true}
+                                     handleAddOption={handleAddOption}
+                        />
+                    </div>
                 </>
             )
             break;
@@ -114,16 +120,20 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                             type={"select"}
                             text={e.text}
                             deletable={options.length > 1}
+                            disabled={!isSelected}
                             index={index+1}
                             handleOptionRedacted={handleOptionRedacted}
                             handleDeleteOption={handleDeleteOption}
                         />
                     )}
-                    <OptionInput type={"select"}
-                                 addOption={true}
-                                 index={options.length+1}
-                                 handleAddOption={handleAddOption}
-                    />
+                    <div style={(isSelected) ? null : {display:"none"}}>
+                        <OptionInput type={"select"}
+                                     addOption={true}
+                                     index={options.length+1}
+                                     handleAddOption={handleAddOption}
+
+                        />
+                    </div>
                 </>
             )
             break;
@@ -139,34 +149,48 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
     }
 
     return (
-        <div className={styles.outerContainer}>
+        <div
+            className={(selectedBlockId === question.id) ? styles.outerContainer : styles.outerContainerDisabled}
+            onClick={() => setSelectedBlockId(question.id)}
+        >
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
-                    <BlockInput
-                        placeholder="Question"
-                        defaultValue={question.question}
-                        onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
-                    />
+                    {
+                        (isSelected) ? (
+                            <>
+                                <BlockInput
+                                placeholder="Question"
+                                defaultValue={question.question}
+                                onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
+                            />
+                                <Select
+                                    defaultValue={question.type}
+                                    onChange={(e) => handleSelectChange(question.id, e.target.value)}
+                                >
+                                    <option value="oneLineText">Text (One Line) </option>
+                                    <option value="paragraphText">Text (Paragraph) </option>
+                                    <option value="radio">One from List </option>
+                                    <option value="checkbox">Many from List </option>
+                                    <option value="select">Select List </option>
+                                    <option value="date">Date </option>
+                                    <option value="time">Time </option>
+                                </Select>
+                            </>
+                        ) : (
+                            <div className={styles.unselectedText}>{question.question || "Question"}</div>
+                        )
+                    }
 
-                    <Select defaultValue={question.type} onChange={(e) => handleSelectChange(question.id, e.target.value)}>
-                        <option value="oneLineText">Text (One Line) </option>
-                        <option value="paragraphText">Text (Paragraph) </option>
-                        <option value="radio">One from List </option>
-                        <option value="checkbox">Many from List </option>
-                        <option value="select">Select List </option>
-                        <option value="date">Date </option>
-                        <option value="time">Time </option>
-                    </Select>
                 </div>
                 <div className={styles.blockInput}>
                     {component}
                 </div>
-                <div className={styles.blockFooter}>
+                <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
                     <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Required Field"} checked={false}/>
                     <DeleteButton onClick={() => handleDelete(question.id)}/>
                 </div>
             </div>
-            <div className={styles.addButton}>
+            <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>
                 <AddButton onClick={()=> handleAdd(question.id)}/>
             </div>
         </div>

@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import TextParagraph from "@/components/inputs/textParagraph";
 
-const OptionInput = ({id, text, type, deletable, index, addOption, handleOptionRedacted, handleDeleteOption, handleAddOption}) => {
+const OptionInput = ({id, text, type, deletable, index, addOption, handleOptionRedacted, handleDeleteOption, handleAddOption, disabled}) => {
     let checkmark
     switch (type){
         case "radio":
@@ -31,10 +31,11 @@ const OptionInput = ({id, text, type, deletable, index, addOption, handleOptionR
                         onBlur={(e) => handleOptionRedacted(id, e.currentTarget.textContent)}
                         placeholder={"Option"}
                         defaultValue={text}
+                        disabled={disabled}
                     />
                 )}
             </div>
-            <div className={(!deletable || addOption) ? styles.disabled : styles.enabled} onClick={()=> handleDeleteOption(id)}>
+            <div className={(!deletable || addOption || disabled) ? styles.disabled : styles.enabled} onClick={()=> handleDeleteOption(id)}>
                 <FontAwesomeIcon icon={faXmark}/>
             </div>
         </label>

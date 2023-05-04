@@ -2,9 +2,10 @@ import React from 'react';
 import styles from './nameBlock.module.css'
 import TextParagraph from "@/components/inputs/textParagraph";
 import ToggleButton from "@/components/buttons/toggleButton";
-const ConstructorNameBlock = ({formName, formDescription, handleNameChange, handleDescriptionChange, handleAcceptChange}) => {
+const ConstructorNameBlock = ({formName, formDescription, handleNameChange, handleDescriptionChange, handleAcceptChange,
+                                  selectedBlockId, setSelectedBlockId}) => {
     return (
-        <div className={styles.container}>
+        <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
             <div className={styles.formName}>
                 <TextParagraph
                     onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}

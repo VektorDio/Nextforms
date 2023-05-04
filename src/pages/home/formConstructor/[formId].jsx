@@ -12,7 +12,7 @@ const FormConstructor = () => {
 
     // const router = useRouter()
     // const {formId} = router.query
-
+    const [selectedBlockId, setSelectedBlockId] = useState("head")
     const [formObject, setFormObject] = useState({
         id: uuidv4(),
         creator: "test",
@@ -198,6 +198,8 @@ const FormConstructor = () => {
                         handleNameChange={handleNameChange}
                         handleDescriptionChange={handleDescriptionChange}
                         handleAcceptChange={handleAcceptChange}
+                        selectedBlockId={selectedBlockId}
+                        setSelectedBlockId={setSelectedBlockId}
                     />
                     {
                         formObject.questions.map((q) => (
@@ -209,6 +211,8 @@ const FormConstructor = () => {
                                 handleSelectChange={handleSelectChange}
                                 handleQuestionChange={handleQuestionChange}
                                 handleRequiredToggle={handleRequiredToggle}
+                                selectedBlockId={selectedBlockId}
+                                setSelectedBlockId={setSelectedBlockId}
                             />
                         ))
                     }

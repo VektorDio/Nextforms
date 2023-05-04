@@ -8,7 +8,6 @@ import ReportButton from "@/components/buttons/reportButton";
 // import SettingsButton from "@/components/buttons/settingsButton";
 
 export default function ConstructorHeader({onFormSubmit}) {
-
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
