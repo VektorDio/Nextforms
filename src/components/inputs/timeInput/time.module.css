@@ -2,7 +2,7 @@
     font-size: 16px;
     line-height: 28px;
     padding: 8px 16px;
-    width: 45%;
+    width: 14%;
     min-height: 46px;
     border: unset;
     border-radius: 6px;
@@ -10,6 +10,10 @@
     background-color: #353f4f;
     display: flex;
     justify-content: space-between;
+}
+
+.timeField::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }
 
 .placeholder{

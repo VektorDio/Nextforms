@@ -3,7 +3,7 @@ import styles from "./textInput.module.css";
 import React from "react";
 import InlineInput from "@/components/inputs/inlineInput";
 
-const MyTextInput = ({...props }) => {
+const MyTextInput = ({children, ...props }) => {
     const [field, meta] = useField(props);
     return (
         <div>

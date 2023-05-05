@@ -1,9 +1,14 @@
 import React from 'react';
 import styles from "./select.module.css";
 
-const Select = ({children, onChange, defaultValue, disabled}) => {
+const Select = ({name, children, onChange, defaultValue, disabled}) => {
     return (
-        <select className={styles.typeSelect} defaultValue={defaultValue} onChange={onChange} disabled={disabled}>
+        <select
+            name={name}
+                className={styles.typeSelect}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                disabled={disabled}>
             {children}
         </select>
     );

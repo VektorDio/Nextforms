@@ -49,7 +49,6 @@ const Login = () => {
                                 .matches(/[a-z]/, 'Password requires a lowercase letter')
                                 .matches(/[A-Z]/, 'Password requires an uppercase letter')
                                 .required('Required'),
-                            //staySignedIn: Yup.boolean(),
                         })}
                         onSubmit={ async (values, { setSubmitting }) => {
                             const {email, password} = values

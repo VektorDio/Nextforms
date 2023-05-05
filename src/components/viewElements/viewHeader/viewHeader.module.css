@@ -1,0 +1,27 @@
+.header{
+    background-color: #161b22;
+    font-size: 14px;
+    width: 100%;
+    padding: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 8vh;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+
+.siteName{
+    align-self: center;
+    font-size: 22px;
+}
+
+.iconBlock{
+    display: inherit;
+}
+
+.sideBlock{
+    display: flex;
+    align-items: center;
+}
