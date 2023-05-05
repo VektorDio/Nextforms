@@ -1,32 +1,27 @@
 import React from 'react';
 import styles from './constructorBlock.module.css'
-import DateInput from "@/components/inputs/dateInput";
-import TimeInput from "@/components/inputs/timeInput";
 import {Bar, Pie} from "react-chartjs-2";
 import {ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
-const StatisticBlock = ({question}) => {
-    const options = {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'top',
-            },
-            labels:{
-                render: "percentage",
-            }
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+export const options = {
+    responsive: true,
+    plugins: {
+        legend: {
+            position: 'top',
         },
-    };
-
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        BarElement,
-        Title,
-        Tooltip,
-        Legend
-    );
-
-    ChartJS.register(ArcElement, Tooltip, Legend);
+    },
+};
+const StatisticBlock = ({question}) => {
 
     function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -39,7 +34,7 @@ const StatisticBlock = ({question}) => {
         labels,
         datasets: [
             {
-                label: 'Dataset 1',
+                label: '',
                 data: labels.map(() => getRandomInt(0, 100)),
                 backgroundColor: 'rgba(84, 105, 212, 0.8)',
             },

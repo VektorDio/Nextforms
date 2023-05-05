@@ -27,10 +27,10 @@ const FormConstructor = () => {
             options:[{
                 id: uuidv4(),
                 text: ""
-            }],
-            answers: []
+            }]
         }]
     })
+
 
     // const [formObject, setFormObject] = useState({
     //     id: "123",
@@ -101,87 +101,6 @@ const FormConstructor = () => {
         //console.log(questions)
     }
 
-    function handleNameChange(text){
-        setFormObject(prev => ({
-            ...prev,
-            formName: text
-        }))
-    }
-    function handleDescriptionChange(text){
-        setFormObject(prev => ({
-            ...prev,
-            formDescription: text
-        }))
-    }
-
-    function handleAcceptChange(status) {
-        setFormObject(prev => ({
-            ...prev,
-            active: status
-        }))
-    }
-
-    const handleAddQuestionBlock = (id) => {
-        let buf = [...formObject.questions]
-        let index = buf.findIndex(e => e.id === id)
-        buf.splice((index + 1), 0, {
-            id: uuidv4(),
-            required: false,
-            type: "radio",
-            question:"",
-            options:[{
-                id: uuidv4(),
-                text: ""
-            }]
-        })
-        setFormObject(prev => ({
-            ...prev,
-            questions: [...buf]
-        }))
-    }
-
-    const handleDelete = (id) => {
-        let buf = [...formObject.questions]
-        let index = buf.findIndex(e => e.id === id)
-        if(buf.length > 1){
-            buf.splice(index, 1)
-        }
-        setFormObject(prev => ({
-            ...prev,
-            questions: [...buf]
-        }))
-    }
-
-    const handleSelectChange = (id, value) => {
-        let buf = [...formObject.questions]
-        let index = buf.findIndex(e => e.id === id)
-        buf[index].type = value
-        setFormObject(prev => ({
-            ...prev,
-            questions: [...buf]
-        }))
-    }
-
-    const handleQuestionChange = (id, text) => {
-        let buf = [...formObject.questions]
-        let index = buf.findIndex(e => e.id === id)
-        buf[index].question = text
-        setFormObject(prev => ({
-            ...prev,
-            questions: [...buf]
-        }))
-    }
-
-    const handleRequiredToggle = (id, value) => {
-        let buf = [...formObject.questions]
-        let index = buf.findIndex(e => e.id === id)
-        buf[index].required = value
-        setFormObject(prev => ({
-            ...prev,
-            questions: [...buf]
-        }))
-    }
-
     return (
         <>
             <Head>
@@ -196,9 +115,6 @@ const FormConstructor = () => {
                     <ConstructorNameBlock
                         formName={formObject.formName}
                         formDescription={formObject.formDescription}
-                        handleNameChange={handleNameChange}
-                        handleDescriptionChange={handleDescriptionChange}
-                        handleAcceptChange={handleAcceptChange}
                         selectedBlockId={selectedBlockId}
                         setSelectedBlockId={setSelectedBlockId}
                     />
@@ -207,11 +123,6 @@ const FormConstructor = () => {
                             <ConstructorBlock
                                 key={q.id}
                                 question={q}
-                                handleAdd={handleAddQuestionBlock}
-                                handleDelete={handleDelete}
-                                handleSelectChange={handleSelectChange}
-                                handleQuestionChange={handleQuestionChange}
-                                handleRequiredToggle={handleRequiredToggle}
                                 selectedBlockId={selectedBlockId}
                                 setSelectedBlockId={setSelectedBlockId}
                             />
