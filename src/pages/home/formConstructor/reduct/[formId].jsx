@@ -34,7 +34,7 @@ const FormConstructor = () => {
 
     // const [formObject, setFormObject] = useState({
     //     id: "123",
-    //     creator: "test",
+    //     creator: "test.jsx",
     //     active: true,
     //     formName: "This name",
     //     formDescription: "That description",
