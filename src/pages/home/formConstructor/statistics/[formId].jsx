@@ -6,10 +6,19 @@ import Main from "@/components/pageWraper/main";
 import StatisticColumn from "@/components/statisticElements/statisticColumn";
 import StatisticNameBlock from "@/components/statisticElements/statisticNameBlock";
 import StatisticBlock from "@/components/statisticElements/statisticBlock";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 const FormConstructor = () => {
 
-    // const router = useRouter()
+    const router = useRouter()
     // const {formId} = router.query
+    const {status} = useSession()
+
+    if (status === "unauthenticated") {
+        router.push("/home")
+    }
+
+    const testId = "123"
 
     const formObject = [{
         type: "oneLineText",
@@ -39,7 +48,7 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader onFormSubmit={handleFormSubmit}/>
+            <ConstructorHeader id={testId} onFormSubmit={handleFormSubmit}/>
             <Main>
                 <StatisticColumn>
                     <StatisticNameBlock answersCount={"12"}/>

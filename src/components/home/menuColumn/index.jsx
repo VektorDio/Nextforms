@@ -26,7 +26,7 @@ const MenuColumn = ({setCentralColumnContent}) => {
                 <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
                 Reports
             </div>
-            <Link href={"/home/formConstructor/new"}>
+            <Link href={"/home/formConstructor/redact/new"}>
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
                     New form

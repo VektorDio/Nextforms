@@ -6,12 +6,20 @@ import ConstructorHeader from "@/components/constructorElements/constructorHeade
 import ConstructorColumn from "@/components/constructorElements/constructorColumn";
 import ConstructorNameBlock from "@/components/constructorElements/constructorNameBlock";
 import ConstructorBlock from "@/components/constructorElements/constructorBlock";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 // import {useRouter} from "next/router";
 
 const FormConstructor = () => {
 
-    // const router = useRouter()
+    const router = useRouter()
     // const {formId} = router.query
+    const {status} = useSession()
+
+    if (status === "unauthenticated") {
+        router.push("/")
+    }
+
     const [selectedBlockId, setSelectedBlockId] = useState("head")
     const [formObject, setFormObject] = useState({
         id: uuidv4(),
@@ -190,7 +198,7 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader onFormSubmit={handleFormSubmit}/>
+            <ConstructorHeader id={formObject.id} onFormSubmit={handleFormSubmit}/>
             <Main>
                 <ConstructorColumn>
                     <ConstructorNameBlock

@@ -105,16 +105,16 @@ const Login = () => {
                                 />
                             </div>
 
-                            <div className={styles.ssolink}>
-                                <Link href="#">Use Google instead</Link>
-                            </div>
+                            {/*<div className={styles.ssolink}>*/}
+                            {/*    <Link href="#">Use Google instead</Link>*/}
+                            {/*</div>*/}
                         </Form>
                     )}
                     </Formik>
                 </div>
                 <div className={styles.footerLink}>
                     <span className={styles.footerText}>
-                      Don`t have an account? <Link className={styles.signUpLink} href="/index">Sign up</Link>
+                      Don`t have an account? <Link className={styles.signUpLink} href="/register">Sign up</Link>
                     </span>
                     <div className={styles.copyRight}>
                         <span><Link href="#">©2023 TEST, Inc.</Link></span>
