@@ -2,13 +2,11 @@ import React from 'react';
 import styles from './generateLinkButton.module.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLink} from "@fortawesome/free-solid-svg-icons";
-const GenerateLinkButton = () => {
+const GenerateLinkButton = ({onClick}) => {
     return (
-        <div>
-            <button className={styles.button}>
-                <FontAwesomeIcon className={styles.icon} icon={faLink} />
-            </button>
-        </div>
+        <button className={styles.button} onClick={onClick}>
+            <FontAwesomeIcon className={styles.icon} icon={faLink} />
+        </button>
     );
 };
 

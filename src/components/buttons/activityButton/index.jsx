@@ -6,11 +6,11 @@ const ActivityButton = ({toggled, onClick}) => {
     return (
         <div>
             {(toggled)?(
-                <button className={styles.buttonOn}>
+                <button className={styles.buttonOn} onClick={onClick}>
                     <FontAwesomeIcon className={styles.icon} icon={faToggleOn} />
                 </button>
             ):(
-                <button className={styles.buttonOff}>
+                <button className={styles.buttonOff} onClick={onClick}>
                     <FontAwesomeIcon className={styles.icon} icon={faToggleOff} />
                 </button>
             )}
