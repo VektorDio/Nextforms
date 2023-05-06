@@ -9,6 +9,14 @@ export const useAddUser = () => {
     })
 }
 
+export const useUpdateUser = () => {
+    return useMutation({
+        mutationFn: async (data) => {
+            return await axios.patch('/api/user', data)
+        }
+    })
+}
+
 export const useGetUserByEmail = (params) => {
     return useQuery({
         queryKey: ['forms', params],
@@ -20,3 +28,4 @@ export const useGetUserByEmail = (params) => {
         }
     })
 }
+

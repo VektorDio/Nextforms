@@ -4,7 +4,6 @@ export default async function handler(req, res) {
         const { body } = req
         const { email, password, organisation} = body
 
-        const start = Date.now();
         const user = await prisma.user.create({
             data: {
                 email,
@@ -12,15 +11,20 @@ export default async function handler(req, res) {
                 organisation
             },
         })
-        const end = Date.now();
-        console.log(`Execution time: ${end - start} ms`);
         res.status(200).send(user)
     } else if (req.method === 'GET'){
 
     } else if(req.method === 'PATCH') {
-        const {body, query} = req
-        console.log(req)
-        const { firstName, lastName } = body
-        res.send(query.id)
+        const { body } = req
+        const { email, password, organisation } = body
+
+        const user = await prisma.user.create({
+            data: {
+                email,
+                password,
+                organisation
+            },
+        })
+        res.status(200).send(user)
     }
 }

@@ -39,6 +39,7 @@ const ProfileColumn = ({session}) => {
                         })}
                         onSubmit={(values, { setSubmitting }) => {
                             const {firstName, lastName, phone, organization} = values
+
                             setSubmitting(false);
                         }}
                         validateOnBlur={false}>
