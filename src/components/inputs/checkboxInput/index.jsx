@@ -6,7 +6,7 @@ const CheckboxInput = ({name, disabled, onChange, text, value}) => {
         <label className={styles.checkboxContainer}>
             <div className={(disabled) ? styles.textDisabled : styles.text}>{text}</div>
             <input type="checkbox" name={name} onChange={onChange} disabled={disabled} value={value}/>
-            <span className={(disabled) ? styles.checkmarkDisabled : styles.checkmark}></span>
+            <span className={(disabled) ? styles.checkmarkDisabled : styles.checkmark} ></span>
         </label>
     );
 };

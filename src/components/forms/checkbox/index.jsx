@@ -1,6 +1,7 @@
 import {useField} from "formik";
 import React from "react";
 import CheckboxInput from "@/components/inputs/checkboxInput";
+import styles from "./checkbox.module.css"
 
 const MyCheckbox = ({children, ...props}) => {
     const [field, meta] = useField({ ...props, type: 'checkbox' });
@@ -8,7 +9,7 @@ const MyCheckbox = ({children, ...props}) => {
         <>
             <CheckboxInput {...field} {...props} error={(meta.touched && meta.error)}/>
             {(meta.touched && meta.error) ? (
-                <div className="error">{meta.error}</div>
+                <div className={styles.error}>{meta.error}</div>
             ) : null}
         </>
     );

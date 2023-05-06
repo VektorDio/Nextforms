@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from "./longText.module.css";
 
-const TextParagraph = ({name, placeholder, defaultValue, onBlur, disabled}) => {
+const TextParagraph = ({placeholder, defaultValue, onBlur, disabled, error}) => {
     return (
-        <div className={styles.formName} onBlur={onBlur}
+        <div className={(error) ? styles.formNameError : styles.formName} onBlur={onBlur}
              placeholder={placeholder}
              contentEditable={!disabled}
-             name={name}
              suppressContentEditableWarning={true}
         >
             {defaultValue}

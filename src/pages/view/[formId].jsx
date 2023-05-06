@@ -7,6 +7,7 @@ import ViewColumn from "@/components/viewElements/viewColumn";
 import ViewNameBlock from "@/components/viewElements/viewNameBlock";
 import ViewBlock from "@/components/viewElements/viewBlock";
 import {Formik} from "formik";
+import * as Yup from "yup";
 // import {useRouter} from "next/router";
 
 const FormConstructor = () => {
@@ -22,19 +23,19 @@ const FormConstructor = () => {
         formDescription: "Description",
         questions: [{
             id: uuidv4(),
-            required: false,
+            required: true,
             type: "oneLineText",
             question: "test1",
             options:[]
         },
             {
-                required: false,
+                required: true,
                 type: "paragraphText",
                 question: "test2",
                 options:[]
             },
             {
-                required: false,
+                required: true,
                 type: "radio",
                 question: "test3",
                 options:[{
@@ -52,7 +53,7 @@ const FormConstructor = () => {
                 }]
             },
             {
-                required: false,
+                required: true,
                 type: "checkbox",
                 question: "test4",
                 options:[{
@@ -70,7 +71,7 @@ const FormConstructor = () => {
                 }]
             },
             {
-                required: false,
+                required: true,
                 type: "select",
                 question: "test5",
                 options:[{
@@ -88,19 +89,50 @@ const FormConstructor = () => {
                 }]
             },
             {
-                required: false,
+                required: true,
                 type: "date",
                 question: "test6",
                 options:[]
             },
             {
-                required: false,
+                required: true,
                 type: "time",
                 question: "test7",
                 options:[]
             }]
     })
 
+    const required = Yup.string().required("This is a required field")
+    const requiredCheckbox = Yup.array().min(1,"Choose one")
+    const text = Yup.string().max(300, "Too many characters")
+    const date = Yup.date().max("2100-01-01", "Provide valid date").min("1900-01-01", "Provide valid date")
+
+    //bryaw7xLxIp5KkgS
+
+    const validationScheme = {}
+    formObject.questions.map((question)=> {
+        switch (question.type){
+            case "date":
+                validationScheme[question.question] = date
+                break;
+            case "oneLineText":
+                validationScheme[question.question] = text
+                break;
+            case "paragraphText":
+                validationScheme[question.question] = text
+                break;
+        }
+
+        if (question.required){
+            validationScheme[question.question] = required
+            if (question.type === "checkbox"){
+                validationScheme[question.question] = requiredCheckbox
+            }
+            if (question.type === "date"){
+                validationScheme[question.question] = date
+            }
+        }
+    })
 
     return (
         <>
@@ -114,6 +146,7 @@ const FormConstructor = () => {
                 initialValues={{
                     test: [],
                 }}
+                validationSchema={Yup.object().shape(validationScheme)}
                 onSubmit={async (values) => {
                     alert(JSON.stringify(values, null, 2));
                 }}
