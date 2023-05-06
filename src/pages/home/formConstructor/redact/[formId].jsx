@@ -22,22 +22,19 @@ const FormConstructor = () => {
 
     const [selectedBlockId, setSelectedBlockId] = useState("head")
     const [formObject, setFormObject] = useState({
-        id: uuidv4(),
         creator: "test",
         active: true,
         formName: "New form",
         formDescription: "Description",
         questions: [{
-            id: uuidv4(),
             required: false,
             type: "radio",
             question:"",
             options:[{
-                id: uuidv4(),
                 text: ""
-            }],
-            answers: []
-        }]
+            }]
+        }],
+        answers: []
     })
 
     // const [formObject, setFormObject] = useState({

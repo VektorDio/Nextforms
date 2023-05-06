@@ -31,8 +31,9 @@ const FormColumn = () => {
     return (
         <div>
             {
-                test.map((entry) =>
+                test.map((entry,index) =>
                     <FormEntry
+                        key={index}
                         formEntry={entry}
                         onDelete={"123"}
                         onActivityToggle={"123"}

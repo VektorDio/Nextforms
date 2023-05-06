@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Head from "next/head";
-import {useSession} from "next-auth/react";
+import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import styles from "./registerForm.module.css";
 import Link from "next/link";
@@ -8,10 +8,15 @@ import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/forms/textInput";
 import SubmitButton from "@/components/inputs/submitButton";
+import {useAddUser} from "@/queries/users";
 
 const Register = () => {
     const {status} = useSession()
     const router = useRouter()
+
+    const {mutate, isSuccess} = useAddUser()
+
+    const [submissionError, setSubmissionError] = useState(null)
 
     if (status === "authenticated") {
         router.push("/home")
@@ -61,12 +66,7 @@ const Register = () => {
                                 .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
                                 .required('Required'),
                         })}
-                        onSubmit={(values, { setSubmitting }) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
-                                setSubmitting(false);
-                            }, 400);
-                        }}
+                        onSubmit={async (values) => handleSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
@@ -117,10 +117,13 @@ const Register = () => {
                                     type="submit"
                                     name="submit"
                                     value="Register"
-                                    disabled={!(formik.isValid && formik.dirty)}
+                                    disabled={formik.isSubmitting}
                                 />
                             </div>
 
+                            <div className={styles.error}>
+                                {submissionError}
+                            </div>
                             {/*<div className={styles.ssolink}>*/}
                             {/*    <Link href="#">Use Google instead</Link>*/}
                             {/*</div>*/}

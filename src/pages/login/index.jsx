@@ -51,8 +51,9 @@ const Login = () => {
                                 .required('Required'),
                         })}
                         onSubmit={ async (values, { setSubmitting }) => {
-                            const {email, password} = values
                             setSubmitting(false);
+                            const {email, password} = values
+
                             const {ok, error} = await signIn('credentials', {
                                 email: email,
                                 password: password,

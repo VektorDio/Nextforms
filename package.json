@@ -16,6 +16,9 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@prisma/client": "^4.13.0",
+    "@tanstack/react-query": "^4.29.5",
+    "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
@@ -27,5 +30,8 @@
     "react-dom": "18.2.0",
     "uuid": "^9.0.0",
     "yup": "^1.1.1"
+  },
+  "devDependencies": {
+    "prisma": "^4.13.0"
   }
 }

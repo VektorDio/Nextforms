@@ -22,115 +22,123 @@ const FormConstructor = () => {
         formName: "New form",
         formDescription: "Description",
         questions: [{
-            id: uuidv4(),
             required: true,
             type: "oneLineText",
             question: "test1",
             options:[]
         },
-            {
-                required: true,
-                type: "paragraphText",
-                question: "test2",
-                options:[]
-            },
-            {
-                required: true,
-                type: "radio",
-                question: "test3",
-                options:[{
-                    id: uuidv4(),
-                    text: "444"
-                },{
-                    id: uuidv4(),
-                    text: "4441"
-                },{
-                    id: uuidv4(),
-                    text: "4442"
-                },{
-                    id: uuidv4(),
-                    text: "4443"
-                }]
-            },
-            {
-                required: true,
-                type: "checkbox",
-                question: "test4",
-                options:[{
-                    id: uuidv4(),
-                    text: "444"
-                },{
-                    id: uuidv4(),
-                    text: "4441"
-                },{
-                    id: uuidv4(),
-                    text: "4442"
-                },{
-                    id: uuidv4(),
-                    text: "4443"
-                }]
-            },
-            {
-                required: true,
-                type: "select",
-                question: "test5",
-                options:[{
-                    id: uuidv4(),
-                    text: "444"
-                },{
-                    id: uuidv4(),
-                    text: "4441"
-                },{
-                    id: uuidv4(),
-                    text: "4442"
-                },{
-                    id: uuidv4(),
-                    text: "4443"
-                }]
-            },
-            {
-                required: true,
-                type: "date",
-                question: "test6",
-                options:[]
-            },
-            {
-                required: true,
-                type: "time",
-                question: "test7",
-                options:[]
+        {
+            required: true,
+            type: "paragraphText",
+            question: "test2",
+            options:[]
+        },
+        {
+            required: true,
+            type: "radio",
+            question: "test3",
+            options:[{
+                id: uuidv4(),
+                text: "444"
+            },{
+                id: uuidv4(),
+                text: "4441"
+            },{
+                id: uuidv4(),
+                text: "4442"
+            },{
+                id: uuidv4(),
+                text: "4443"
             }]
+        },
+        {
+            required: true,
+            type: "checkbox",
+            question: "test4",
+            options:[{
+                id: uuidv4(),
+                text: "444"
+            },{
+                id: uuidv4(),
+                text: "4441"
+            },{
+                id: uuidv4(),
+                text: "4442"
+            },{
+                id: uuidv4(),
+                text: "4443"
+            }]
+        },
+        {
+            required: true,
+            type: "select",
+            question: "test5",
+            options:[{
+                id: uuidv4(),
+                text: "444"
+            },{
+                id: uuidv4(),
+                text: "4441"
+            },{
+                id: uuidv4(),
+                text: "4442"
+            },{
+                id: uuidv4(),
+                text: "4443"
+            }]
+        },
+        {
+            required: true,
+            type: "date",
+            question: "test6",
+            options:[]
+        },
+        {
+            required: true,
+            type: "time",
+            question: "test7",
+            options:[]
+        }]
     })
 
-    const required = Yup.string().required("This is a required field")
-    const requiredCheckbox = Yup.array().min(1,"Choose one")
-    const text = Yup.string().max(300, "Too many characters")
-    const date = Yup.date().max("2100-01-01", "Provide valid date").min("1900-01-01", "Provide valid date")
-
-    //bryaw7xLxIp5KkgS
+    const requiredField = Yup.string()
+        .required("This is a required field")
+    const checkboxRequired = Yup.array()
+        .min(1,"Choose one")
+    const text = Yup.string()
+        .max(300, "Too many characters")
+    const textRequired = Yup.string()
+        .max(300, "Too many characters")
+        .required("This is a required field")
+    const date = Yup.date()
+        .max("2100-01-01", "Provide valid date")
+        .min("1900-01-01", "Provide valid date")
+    const dateRequired = Yup.date()
+        .max("2100-01-01", "Provide valid date")
+        .min("1900-01-01", "Provide valid date")
+        .required("This is a required field")
 
     const validationScheme = {}
     formObject.questions.map((question)=> {
+        let required = question.required
         switch (question.type){
             case "date":
-                validationScheme[question.question] = date
+                (required) ?
+                    (validationScheme[question.question] = date) :
+                    (validationScheme[question.question] = dateRequired)
                 break;
             case "oneLineText":
-                validationScheme[question.question] = text
-                break;
             case "paragraphText":
-                validationScheme[question.question] = text
+                (required) ?
+                    (validationScheme[question.question] = text) :
+                    (validationScheme[question.question] = textRequired)
                 break;
-        }
-
-        if (question.required){
-            validationScheme[question.question] = required
-            if (question.type === "checkbox"){
-                validationScheme[question.question] = requiredCheckbox
-            }
-            if (question.type === "date"){
-                validationScheme[question.question] = date
-            }
+            case "checkbox":
+                (required) && (validationScheme[question.question] = checkboxRequired)
+                break;
+            default:
+                (required) && (validationScheme[question.question] = requiredField)
+                break;
         }
     })
 
