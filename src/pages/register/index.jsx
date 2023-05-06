@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
@@ -25,6 +25,33 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(true)
     function handleShowPassword(){
         setShowPassword(!showPassword)
+    }
+    const handleSubmit = async (values) => {
+        const {email, password, organisation} = values
+
+        await mutate({
+            email: email,
+            password: password,
+            organisation: organisation
+        })
+
+        const {ok, error} = await signIn('credentials', {
+            email: email,
+            password: password,
+            redirect: false
+        })
+
+        useEffect(async ()=>{
+            if(isSuccess){
+                if (ok) {
+                    await router.push("/home")
+                }
+                else {
+                    setSubmissionError(error)
+                }
+                values.setSubmitting(false);
+            }
+        }, [isSuccess, ok])
     }
 
     return (

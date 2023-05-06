@@ -21,7 +21,7 @@ const authOptions = {
                 if (email !== user.email || password !== user.password){
                     throw Error ('Wrong email or password')
                 }
-                return Promise.resolve(user)
+                return user
             }
         })
     ],
