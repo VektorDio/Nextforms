@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
@@ -16,6 +16,25 @@ const Login = () => {
 
     if (status === "authenticated") {
         router.push("/home")
+    }
+
+    const handleSubmit = async (values) => {
+        const {email, password} = values
+
+        const {ok, error} = await signIn('credentials', {
+            email: email,
+            password: password,
+            redirect: false
+        })
+
+        useEffect(()=>{
+            if (ok) {
+                router.push("/home")
+            }
+            else {
+                setSubmissionError(error)
+            }
+        }, [ok])
     }
 
     return (
@@ -50,22 +69,7 @@ const Login = () => {
                                 .matches(/[A-Z]/, 'Password requires an uppercase letter')
                                 .required('Required'),
                         })}
-                        onSubmit={ async (values, { setSubmitting }) => {
-                            setSubmitting(false);
-                            const {email, password} = values
-
-                            const {ok, error} = await signIn('credentials', {
-                                email: email,
-                                password: password,
-                                redirect: false
-                            })
-
-                            if (ok){
-                                await router.push('/home')
-                            } else {
-                                setSubmissionError(error)
-                            }
-                        }}
+                        onSubmit={async (values) => await handleSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
@@ -101,7 +105,7 @@ const Login = () => {
                                     type="submit"
                                     name="submit"
                                     value="Continue"
-                                    disabled={!(formik.isValid && formik.dirty)}
+                                    disabled={!(formik.isValid && formik.dirty)||formik.isSubmitting}
                                 />
                             </div>
 

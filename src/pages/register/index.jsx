@@ -14,7 +14,7 @@ const Register = () => {
     const {status} = useSession()
     const router = useRouter()
 
-    const {mutate, isSuccess} = useAddUser()
+    const {mutate} = useAddUser()
 
     const [submissionError, setSubmissionError] = useState(null)
 
@@ -26,32 +26,30 @@ const Register = () => {
     function handleShowPassword(){
         setShowPassword(!showPassword)
     }
-    const handleSubmit = async (values) => {
+    const handleSubmit = (values) => {
         const {email, password, organisation} = values
 
-        await mutate({
+        mutate({
             email: email,
             password: password,
             organisation: organisation
         })
 
-        const {ok, error} = await signIn('credentials', {
+        const {ok, error} = signIn('credentials', {
             email: email,
             password: password,
             redirect: false
         })
 
-        useEffect(async ()=>{
-            if(isSuccess){
-                if (ok) {
-                    await router.push("/home")
-                }
-                else {
-                    setSubmissionError(error)
-                }
+        useEffect( ()=>{
+            if (ok) {
+                router.push("/home")
+            }
+            else {
+                setSubmissionError(error)
                 values.setSubmitting(false);
             }
-        }, [isSuccess, ok])
+        }, [ok])
     }
 
     return (
@@ -93,7 +91,7 @@ const Register = () => {
                                 .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
                                 .required('Required'),
                         })}
-                        onSubmit={async (values) => handleSubmit(values)}
+                        onSubmit={(values) => handleSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
@@ -144,7 +142,7 @@ const Register = () => {
                                     type="submit"
                                     name="submit"
                                     value="Register"
-                                    disabled={formik.isSubmitting}
+                                    disabled={!(formik.isValid && formik.dirty)||formik.isSubmitting}
                                 />
                             </div>
 
