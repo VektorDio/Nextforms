@@ -7,24 +7,40 @@ import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/forms/textInput";
 import {signOut} from "next-auth/react";
+import {useGetUserById, useUpdateUser} from "@/queries/users";
 
 const ProfileColumn = ({session}) => {
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
 
+    const {mutateAsync, isLoading:isUpdating} = useUpdateUser()
+
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/
 
-    const {firstName, lastName, phoneNumber, organisation, email} = session.user
+    const {id} = session.user
+
+    const {error, data, isFetching} = useGetUserById({
+        id: id,
+    })
+
+    if (isFetching || isUpdating) return (
+        <div className={styles.profileContainer}>
+            <div>Fetching...</div>
+        </div>
+    )
+    if (error) return (<div>error</div>)
+
+    const {firstName, lastName, phoneNumber, email, organisation, password} = data.user
 
     return (
         <div className={styles.profileContainer}>
             <div className={styles.generalBlock}>
                 <Formik initialValues={{
-                    firstName: firstName,
-                    lastName: lastName,
-                    phone: phoneNumber,
-                    organisation: organisation
+                    firstName: firstName ? firstName : "",
+                    lastName: lastName ? lastName : "",
+                    phone: phoneNumber ? phoneNumber : "",
+                    organisation: organisation ? organisation : ""
                 }}
                         validationSchema={Yup.object({
                             firstName: Yup.string()
@@ -37,8 +53,16 @@ const ProfileColumn = ({session}) => {
                             organisation: Yup.string()
                                 .max(20)
                         })}
-                        onSubmit={(values, { setSubmitting }) => {
-                            const {firstName, lastName, phone, organization} = values
+                        onSubmit={async (values, {setSubmitting}) => {
+                            const {firstName, lastName, phoneNumber, organisation} = values
+
+                            await mutateAsync({
+                                id:id,
+                                firstName:firstName,
+                                lastName:lastName,
+                                phoneNumber:phoneNumber,
+                                organisation:organisation
+                            })
 
                             setSubmitting(false);
                         }}
@@ -77,7 +101,7 @@ const ProfileColumn = ({session}) => {
                                                 type="firstName"
                                             />
                                         ) : (
-                                            <div className={styles.centeredText}>{lastName}</div>
+                                            <div className={styles.centeredText}>{firstName}</div>
                                         )}
                                 </div>
                                 <div className={styles.field}>
@@ -126,14 +150,20 @@ const ProfileColumn = ({session}) => {
             </div>
             <div className={styles.generalBlock}>
                 <Formik initialValues={{
-                    email: email,
+                    email: email ? email : "",
                 }}
                 validationSchema={Yup.object({
                     email: Yup.string()
                         .email()
                 })}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={async (values, {setSubmitting}) => {
                     const {email} = values
+
+                    await mutateAsync({
+                        id: id,
+                        email:email,
+                    })
+
                     setSubmitting(false);
                 }}
                 validateOnBlur={false}>
@@ -196,8 +226,16 @@ const ProfileColumn = ({session}) => {
                         .matches(/[A-Z]/, 'Password requires an uppercase letter')
                         .required('Required'),
                 })}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={async (values, {setSubmitting}) => {
                     const {currentPassword, newPassword} = values
+
+                    if (password === currentPassword) {
+                        await mutateAsync({
+                            id: id,
+                            password: newPassword,
+                        })
+                    }
+
                     setSubmitting(false);
                 }}
                 validateOnBlur={false}>

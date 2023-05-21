@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Head from "next/head";
 import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
@@ -13,43 +13,39 @@ import {useAddUser} from "@/queries/users";
 const Register = () => {
     const {status} = useSession()
     const router = useRouter()
-
-    const {mutate} = useAddUser()
-
     const [submissionError, setSubmissionError] = useState(null)
+    const [showPassword, setShowPassword] = useState(true)
+    const {mutateAsync} = useAddUser()
 
     if (status === "authenticated") {
         router.push("/home")
     }
 
-    const [showPassword, setShowPassword] = useState(true)
     function handleShowPassword(){
         setShowPassword(!showPassword)
     }
-    const handleSubmit = (values) => {
+
+    const handleSubmit = async (values) => {
         const {email, password, organisation} = values
 
-        mutate({
+        await mutateAsync({
             email: email,
             password: password,
             organisation: organisation
         })
 
-        const {ok, error} = signIn('credentials', {
+        const {ok, error} = await signIn('credentials', {
             email: email,
             password: password,
             redirect: false
         })
 
-        useEffect( ()=>{
-            if (ok) {
-                router.push("/home")
-            }
-            else {
-                setSubmissionError(error)
-                values.setSubmitting(false);
-            }
-        }, [ok])
+        if (ok) {
+            router.push("/home")
+        } else {
+            setSubmissionError(error)
+            values.setSubmitting(false);
+        }
     }
 
     return (
@@ -91,7 +87,7 @@ const Register = () => {
                                 .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
                                 .required('Required'),
                         })}
-                        onSubmit={(values) => handleSubmit(values)}
+                        onSubmit={async (values) => await handleSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>

@@ -15,3 +15,11 @@
 .formDescription{
     font-size: 16px;
 }
+
+@media print {
+    .answersCount{
+        font-weight: 600;
+        font-size: 24px;
+        color: black;
+    }
+}

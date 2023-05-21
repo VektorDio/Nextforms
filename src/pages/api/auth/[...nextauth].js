@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from "@/server";
+import {validatePassword} from "@/server/hash";
 
 const authOptions = {
     session: {
@@ -18,9 +19,10 @@ const authOptions = {
                     }
                 })
 
-                if (email !== user.email || password !== user.password){
+                if (email !== user.email || !validatePassword(password, user.password)){
                     throw Error ('Wrong email or password')
                 }
+
                 return user
             }
         })
@@ -30,9 +32,9 @@ const authOptions = {
             session.accessToken = token.accessToken
             session.user.id = token.id
             session.email = token.email
-            session.user.firstName = token.firstName
-            session.user.lastName = token.lastName
-            session.user.phoneNumber = token.phoneNumber
+            // session.user.firstName = token.firstName
+            // session.user.lastName = token.lastName
+            // session.user.phoneNumber = token.phoneNumber
             session.user.organisation = token.organisation
             return session
         },
@@ -41,9 +43,9 @@ const authOptions = {
                 token.accessToken = account.access_token
                 token.id = user.id
                 token.email = user.email
-                token.firstName = user.firstName
-                token.lastName = user.lastName
-                token.phoneNumber = user.phoneNumber
+                // token.firstName = user.firstName
+                // token.lastName = user.lastName
+                // token.phoneNumber = user.phoneNumber
                 token.organisation = user.organisation
             }
             return token

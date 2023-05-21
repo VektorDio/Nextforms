@@ -1,5 +1,6 @@
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import axios from "axios";
+
 
 export const useAddUser = () => {
     return useMutation({
@@ -10,21 +11,26 @@ export const useAddUser = () => {
 }
 
 export const useUpdateUser = () => {
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (data) => {
-            return await axios.patch('/api/user', data)
+            const updatedUser = await axios.patch('/api/user', data)
+            await queryClient.invalidateQueries({ queryKey: ['forms'] })
+            return updatedUser
         }
     })
 }
 
-export const useGetUserByEmail = (params) => {
+export const useGetUserById = (params) => {
     return useQuery({
         queryKey: ['forms', params],
         queryFn: async () => {
-            const { email } = params
-            return axios.get('http://localhost:3000/api/user/userEmail',{params:{
-                    email:email,
-                }})
+            const { id } = params
+            return (await axios.get('/api/user/userEmail', {
+                params: {
+                    id: id,
+                }
+            })).data
         }
     })
 }
