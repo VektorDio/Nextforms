@@ -8,15 +8,14 @@ import ViewNameBlock from "@/components/viewElements/viewNameBlock";
 import ViewBlock from "@/components/viewElements/viewBlock";
 import {Formik} from "formik";
 import * as Yup from "yup";
-// import {useRouter} from "next/router";
+import {useRouter} from "next/router";
 
 const FormConstructor = () => {
-
-    // const router = useRouter()
-    // const {formId} = router.query
+    const router = useRouter()
+    const {formId} = router.query
 
     const [formObject, setFormObject] = useState({
-        id: uuidv4(),
+        id: formId,
         creator: "test",
         active: true,
         formName: "New form",
@@ -100,6 +99,9 @@ const FormConstructor = () => {
             options:[]
         }]
     })
+    function handleFormSubmit() {
+        console.log(formId)
+    }
 
     const requiredField = Yup.string()
         .required("This is a required field")
@@ -111,11 +113,9 @@ const FormConstructor = () => {
         .max(300, "Too many characters")
         .required("This is a required field")
     const date = Yup.date()
-        .max("2100-01-01", "Provide valid date")
-        .min("1900-01-01", "Provide valid date")
+        .max("9999-01-01", "Provide valid date")
     const dateRequired = Yup.date()
-        .max("2100-01-01", "Provide valid date")
-        .min("1900-01-01", "Provide valid date")
+        .max("9999-01-01", "Provide valid date")
         .required("This is a required field")
 
     const validationScheme = {}
@@ -124,14 +124,14 @@ const FormConstructor = () => {
         switch (question.type){
             case "date":
                 (required) ?
-                    (validationScheme[question.question] = date) :
-                    (validationScheme[question.question] = dateRequired)
+                    (validationScheme[question.question] = dateRequired) :
+                    (validationScheme[question.question] = date)
                 break;
             case "oneLineText":
             case "paragraphText":
                 (required) ?
-                    (validationScheme[question.question] = text) :
-                    (validationScheme[question.question] = textRequired)
+                    (validationScheme[question.question] = textRequired) :
+                    (validationScheme[question.question] = text)
                 break;
             case "checkbox":
                 (required) && (validationScheme[question.question] = checkboxRequired)
@@ -142,6 +142,12 @@ const FormConstructor = () => {
         }
     })
 
+    let initialValues = {}
+    formObject.questions.map(e => {
+         initialValues[e.question] = (e.type === "checkbox") ?  [] : ""
+    })
+    console.log(initialValues)
+
     return (
         <>
             <Head>
@@ -151,16 +157,14 @@ const FormConstructor = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Formik
-                initialValues={{
-                    test: [],
-                }}
+                initialValues={initialValues}
                 validationSchema={Yup.object().shape(validationScheme)}
-                onSubmit={async (values) => {
+                onSubmit={(values) => {
                     alert(JSON.stringify(values, null, 2));
                 }}
             >{() => (
                 <>
-                    <ViewHeader id={formObject.id}/>
+                    <ViewHeader handleFormSubmit={handleFormSubmit}/>
                     <Main>
                         <ViewColumn>
                             <ViewNameBlock

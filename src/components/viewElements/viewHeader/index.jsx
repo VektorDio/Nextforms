@@ -4,14 +4,12 @@ import Link from "next/link";
 import ConfirmButton from "@/components/buttons/confirmButton";
 import DeleteButton from "@/components/buttons/deleteButton";
 import {useFormikContext} from "formik";
-// import SettingsButton from "@/components/buttons/settingsButton";
 
-export default function ViewHeader({id}) {
-
+export default function ViewHeader({handleFormSubmit}) {
     const {submitForm} = useFormikContext();
-    function handleFormSubmit() {
+    function onSubmit() {
+        handleFormSubmit()
         submitForm()
-        console.log(id)
     }
 
     return (
@@ -23,9 +21,8 @@ export default function ViewHeader({id}) {
                 </div>
             </div>
 
-
             <div className={styles.sideBlock}>
-                <ConfirmButton onClick={handleFormSubmit}></ConfirmButton>
+                <ConfirmButton onClick={onSubmit}></ConfirmButton>
                 <Link href={"/home"}>
                     <DeleteButton></DeleteButton>
                 </Link>
