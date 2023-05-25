@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Head from "next/head";
 import ConstructorHeader from "@/components/constructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
@@ -7,39 +7,41 @@ import StatisticNameBlock from "@/components/statisticElements/statisticNameBloc
 import StatisticBlock from "@/components/statisticElements/statisticBlock";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import {useGetAnswersByFormId} from "@/queries/forms";
 const FormConstructor = () => {
-
     const router = useRouter()
-     const {formId} = router.query
-    const {status} = useSession()
+    const {formId} = router.query
+    useSession({
+        required: true,
+        onUnauthenticated() {
+            router.push("/")
+        },
+    })
 
-    if (status === "unauthenticated") {
-        router.push("/home")
-    }
+    const [formObject, setFormObject] = useState()
 
+    const {error, data, isLoading} = useGetAnswersByFormId({
+        id: formId,
+    })
 
+    useEffect(() => {
+        if(data) {
+            setFormObject(data)
+        }
+    }, [data])
 
-    const formObject = [{
-        type: "oneLineText",
-        question: "testtesttesttest",
-        answers: ["123", "123", "123", "321", "321"]
-    },
-    {
-        type: "checkbox",
-        question: "testtesttesttest",
-        answers: ["123", "123", "123", "321", "321"]
-    },
-    {
-        type: "radio",
-        question: "testtesttesttest",
-        answers: ["123", "123", "123", "321", "321"]
-    }]
+    if (isLoading) return (<div>Loading...</div>)
+    if (error) return (<div>error</div>)
 
     function handleFormSubmit(){
-        console.log(formObject)
+
     }
 
-    return (
+    const answersCount = formObject?.reduce((acc, val) => (acc + val.answers.length), 0)
+
+    console.log(formObject)
+
+    return ((formObject) &&
         <>
             <Head>
                 <title>Create Next App</title>
@@ -50,9 +52,9 @@ const FormConstructor = () => {
             <ConstructorHeader id={formId} onFormSubmit={handleFormSubmit}/>
             <Main>
                 <StatisticColumn>
-                    <StatisticNameBlock answersCount={"12"}/>
+                    <StatisticNameBlock answersCount={answersCount}/>
                     {
-                        formObject.map((question, index) => (
+                        formObject?.map((question, index) => (
                             <StatisticBlock
                                 key={index}
                                 question={question}

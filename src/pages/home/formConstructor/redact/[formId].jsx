@@ -15,9 +15,9 @@ const FormConstructor = () => {
     const [selectedBlockId, setSelectedBlockId] = useState("head")
     const {formId} = router.query
 
-    const {mutateAsync, isLoading:isUpdating} = useUpdateForm()
+    const {mutateAsync} = useUpdateForm()
 
-    const {status, data:session} = useSession({
+    useSession({
         required: true,
         onUnauthenticated() {
             router.push("/")
@@ -135,8 +135,6 @@ const FormConstructor = () => {
             questions: [...buf]
         }))
     }
-
-    console.log(formObject)
 
     return ((formObject) &&
         <>

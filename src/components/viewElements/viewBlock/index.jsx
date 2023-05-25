@@ -15,7 +15,7 @@ const ViewBlock = ({question}) => {
             component = (
                 <div className={styles.oneLineText}>
                     <MyTextInput
-                        name={question.question}
+                        name={question.id}
                         placeholder={"Answer"}
                     />
                 </div>
@@ -25,7 +25,7 @@ const ViewBlock = ({question}) => {
             component = (
                 <div className={styles.paragraphText}>
                     <MyParagraphInput
-                        name={question.question}
+                        name={question.id}
                         placeholder={"Answer"}
                     />
                 </div>
@@ -36,7 +36,7 @@ const ViewBlock = ({question}) => {
                 <>
                     {question.options.map((e, index) =>(
                         <MyRadio
-                            name={question.question}
+                            name={question.id}
                             value={e}
                             text={e}
                             key={index}
@@ -51,7 +51,7 @@ const ViewBlock = ({question}) => {
                 <>
                     {question.options.map((e, index) =>(
                         <MyCheckbox
-                            name={question.question}
+                            name={question.id}
                             value={e}
                             text={e}
                             key={index}
@@ -64,7 +64,7 @@ const ViewBlock = ({question}) => {
         case "select":
             component = (
                 <MySelect
-                    name={question.question}
+                    name={question.id}
                 >
                     {question.options.map((e, index) =>(
                             <option value={e} key={index}>{e}</option>
@@ -76,14 +76,14 @@ const ViewBlock = ({question}) => {
         case "date":
             component = (
                 <MyDate
-                    name={question.question}
+                    name={question.id}
                 />
             )
             break;
         case "time":
             component = (
                 <MyTime
-                    name={question.question}
+                    name={question.id}
                 />
             )
             break;

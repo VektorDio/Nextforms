@@ -3,10 +3,13 @@ import axios from "axios";
 
 
 export const useAddUser = () => {
+    const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (data) => {
             try {
-                return await axios.post('/api/user', data)
+                const addedUser = await axios.post('/api/user', data)
+                await queryClient.invalidateQueries({ queryKey: ['users'] })
+                return addedUser
             } catch (e) {
                 throw e
             }

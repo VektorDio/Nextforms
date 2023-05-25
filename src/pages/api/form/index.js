@@ -23,28 +23,32 @@ export default async function handler(req, res) {
     } else if (req.method === 'GET'){
         const {query} = req
         const {id} = query
-        const form = await prisma.form.findUnique({
-            where: {
-                id: id
-            },
-            include: {
-                questions: true
-            }
-        })
+        let form
+        if (id){
+            form = await prisma.form.findUnique({
+                where: {
+                    id: id
+                },
+                include: {
+                    questions: true
+                }
+            })
+        }
         res.send({form})
     } else if(req.method === 'PATCH') {
         const { body } = req
         const { id, active, description, name, questions } = body
 
-        await prisma.question.deleteMany({
-            where:{
-                formId: id,
-            }
-        })
-
         let form
 
         if (questions && questions.length > 0){
+
+            await prisma.question.deleteMany({
+                where:{
+                    formId: id,
+                }
+            })
+
             form = await prisma.form.update({
                 where: {
                     id: id,

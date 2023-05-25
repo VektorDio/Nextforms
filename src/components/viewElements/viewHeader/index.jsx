@@ -5,10 +5,9 @@ import ConfirmButton from "@/components/buttons/confirmButton";
 import DeleteButton from "@/components/buttons/deleteButton";
 import {useFormikContext} from "formik";
 
-export default function ViewHeader({handleFormSubmit}) {
+export default function ViewHeader() {
     const {submitForm} = useFormikContext();
     function onSubmit() {
-        handleFormSubmit()
         submitForm()
     }
 

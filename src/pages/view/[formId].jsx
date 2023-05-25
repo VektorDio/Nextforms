@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ViewHeader from "@/components/viewElements/viewHeader";
@@ -9,7 +8,7 @@ import ViewBlock from "@/components/viewElements/viewBlock";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useRouter} from "next/router";
-import {useGetFormById} from "@/queries/forms";
+import {useCreateAnswers, useGetFormById} from "@/queries/forms";
 
 const FormConstructor = () => {
     const router = useRouter()
@@ -19,8 +18,9 @@ const FormConstructor = () => {
         id: formId,
     })
 
-    const [formObject, setFormObject] = useState()
+    const {mutateAsync:createAnswers} = useCreateAnswers()
 
+    const [formObject, setFormObject] = useState()
 
     useEffect(() => {
         if(data) {
@@ -31,11 +31,16 @@ const FormConstructor = () => {
     if (isLoading) return (<div>Loading...</div>)
     if (error) return (<div>error</div>)
 
-    function handleFormSubmit(values) {
-        if (formObject.active){
-            alert(JSON.stringify(values, null, 2));
+    async function handleFormSubmit(values) {
+        if (formObject.active) {
+            let data = Object.entries(values).map(([k, v]) => ({
+                questionId: k,
+                answerData: v,
+            }))
+            await createAnswers({
+                data: data
+            })
         }
-        console.log(formId)
     }
 
     const requiredField = Yup.string()
@@ -59,27 +64,27 @@ const FormConstructor = () => {
         switch (question.type){
             case "date":
                 (required) ?
-                    (validationScheme[question.question] = dateRequired) :
-                    (validationScheme[question.question] = date)
+                    (validationScheme[question.id] = dateRequired) :
+                    (validationScheme[question.id] = date)
                 break;
             case "oneLineText":
             case "paragraphText":
                 (required) ?
-                    (validationScheme[question.question] = textRequired) :
-                    (validationScheme[question.question] = text)
+                    (validationScheme[question.id] = textRequired) :
+                    (validationScheme[question.id] = text)
                 break;
             case "checkbox":
-                (required) && (validationScheme[question.question] = checkboxRequired)
+                (required) && (validationScheme[question.id] = checkboxRequired)
                 break;
             default:
-                (required) && (validationScheme[question.question] = requiredField)
+                (required) && (validationScheme[question.id] = requiredField)
                 break;
         }
     })
 
     let initialValues = {}
     formObject?.questions.map(e => {
-         initialValues[e.question] = (e.type === "checkbox") ?  [] : ""
+         initialValues[e.id] = (e.type === "checkbox") ?  [] : ""
     })
 
     return ((formObject) &&
@@ -93,20 +98,18 @@ const FormConstructor = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={Yup.object().shape(validationScheme)}
-                onSubmit={(values) => {
-                    handleFormSubmit(values)
-                }}
+                onSubmit={(values) => {handleFormSubmit(values)}}
             >{() => (
                 <>
-                    <ViewHeader handleFormSubmit={handleFormSubmit}/>
+                    <ViewHeader/>
                     <Main>
                         <ViewColumn>
                             <ViewNameBlock
-                                formName={formObject.name}
-                                formDescription={formObject.description}
+                                formName={formObject?.name}
+                                formDescription={formObject?.description}
                             />
                             {
-                                formObject.questions.map((question , index) => (
+                                formObject?.questions.map((question , index) => (
                                     <ViewBlock
                                         key={index}
                                         question={question}

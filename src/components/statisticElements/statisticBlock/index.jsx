@@ -23,19 +23,26 @@ export const options = {
 };
 const StatisticBlock = ({question}) => {
 
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-    }
+    // function getRandomInt(min, max) {
+    //     min = Math.ceil(min);
+    //     max = Math.floor(max);
+    //     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    // }
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+    const answers = (question.type === "checkbox") ? question.answers.flat() : question.answers
+
+    const dataValue = answers.reduce((acc, val) => {
+        acc[val] = acc[val] === undefined ? 1 : acc[val] += 1;
+        return acc;
+    }, {});
+
+    const labels = question.options
     const data = {
         labels,
         datasets: [
             {
                 label: '',
-                data: labels.map(() => getRandomInt(0, 100)),
+                data: labels.map((e) => dataValue[e]),
                 backgroundColor: 'rgba(84, 105, 212, 0.8)',
             },
         ],
@@ -47,8 +54,8 @@ const StatisticBlock = ({question}) => {
             component = (
                 <>
                     {
-                        question.answers.map((answer) => (
-                            <div className={styles.textContainer}>{answer}</div>
+                        question.answers.map((answer, index) => ((answer[0] !== "") &&
+                            <div key={index} className={styles.textContainer}>{answer}</div>
                         ))
                     }
                 </>
@@ -58,8 +65,8 @@ const StatisticBlock = ({question}) => {
             component = (
                 <>
                     {
-                        question.answers.map((answer) => (
-                            <div className={styles.textContainer}>{answer}</div>
+                        question.answers.map((answer, index) => ((answer[0] !== "") &&
+                            <div key={index} className={styles.textContainer}>{answer}</div>
                         ))
                     }
                 </>
@@ -90,7 +97,7 @@ const StatisticBlock = ({question}) => {
             component = (
                 <>
                     {
-                        question.answers.map((answer) => (
+                        question.answers.map((answer) => ((answer[0] !== "") &&
                             <div className={styles.textContainer}>{answer}</div>
                         ))
                     }
@@ -101,7 +108,7 @@ const StatisticBlock = ({question}) => {
             component = (
                 <>
                     {
-                        question.answers.map((answer) => (
+                        question.answers.map((answer) => ((answer[0] !== "") &&
                             <div className={styles.textContainer}>{answer}</div>
                         ))
                     }
