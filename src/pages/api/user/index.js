@@ -17,7 +17,14 @@ export default async function handler(req, res) {
 
         res.status(200).send(user)
     } else if (req.method === 'GET'){
-
+        const {query} = req
+        const {id} = query
+        const user = await prisma.user.findUnique({
+            where: {
+                id: id
+            }
+        })
+        res.send({user})
     } else if(req.method === 'PATCH') {
 
         const { body } = req

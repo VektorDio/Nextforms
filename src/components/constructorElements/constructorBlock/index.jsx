@@ -12,7 +12,15 @@ import OptionInput from "@/components/inputs/optionInput";
 import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
 const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange, handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
-    const [options, setOptions] = useState(question.options)
+    const [options, setOptions] = useState(() => {
+        if (typeof question.options[0] === "string"){
+
+            return question.options.map(e => ({
+                id: uuidv4(),
+                text: e,
+            }))
+        } else return question.options
+    })
     const isSelected = selectedBlockId === question.id
     question.options = options
     function handleOptionRedacted(id, text) {

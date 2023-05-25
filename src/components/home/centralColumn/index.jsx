@@ -8,7 +8,7 @@ const CentralColumn = ({centralColumnContent, session}) => {
     let columnToRender
     switch (centralColumnContent){
         case "form":
-            columnToRender = <FormColumn></FormColumn>
+            columnToRender = <FormColumn ></FormColumn>
             break
         case "report":
             columnToRender = <ReportColumn></ReportColumn>

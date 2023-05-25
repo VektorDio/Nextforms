@@ -1,5 +1,4 @@
 import React from "react";
-import {v4 as uuidv4} from "uuid";
 import Head from "next/head";
 import ConstructorHeader from "@/components/constructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
@@ -11,14 +10,14 @@ import {useRouter} from "next/router";
 const FormConstructor = () => {
 
     const router = useRouter()
-    // const {formId} = router.query
+     const {formId} = router.query
     const {status} = useSession()
 
     if (status === "unauthenticated") {
         router.push("/home")
     }
 
-    const testId = "123"
+
 
     const formObject = [{
         type: "oneLineText",
@@ -48,7 +47,7 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader id={testId} onFormSubmit={handleFormSubmit}/>
+            <ConstructorHeader id={formId} onFormSubmit={handleFormSubmit}/>
             <Main>
                 <StatisticColumn>
                     <StatisticNameBlock answersCount={"12"}/>

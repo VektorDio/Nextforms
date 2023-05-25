@@ -1,42 +1,57 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import FormEntry from "@/components/home/formColumn/formEntry";
+import {useDeleteFormById, useGetFormsByCreatorId, useUpdateForm} from "@/queries/forms";
+import {useSession} from "next-auth/react";
 
 const FormColumn = () => {
+    const {status, data:session} = useSession({
+        required: true,
+    })
+    const {mutateAsync:deleteForm, isLoading:isUpdating} = useDeleteFormById()
+    const {mutateAsync:updateForm, } = useUpdateForm()
+    const [forms, setForms] = useState()
 
-    const test =[{
-        id: "123",
-        formName: "Form1",
-        active: true,
+    let userId = ""
 
-    },
-        {
-            id: "123",
-            formName: "Form2",
-            active: true,
+    if (status !== 'loading'){
+        const {id} = session.user
+        userId = id
+    }
 
-        },
-        {
-            id: "123",
-            formName: "Form3",
-            active: false,
+    const {error, data, isLoading} = useGetFormsByCreatorId({
+        id: userId,
+    })
 
-        },
-        {
-            id: "123",
-            formName: "Form4",
-            active: false,
+    useEffect(() => {
+        if(data) {
+            setForms(data.forms)
+        }
+    }, [data])
 
-        }]
+    async function handleEntryDelete(id) {
+        await deleteForm({
+            id: id,
+        })
+    }
 
-    return (
+    async function handleActivityToggle(id, isActive) {
+        await updateForm({
+            id: id,
+            active: isActive,
+        })
+    }
+
+    if (isLoading) return (<div>Loading...</div>)
+    if (error) return (<div>Error</div>)
+    if (forms) return (
         <div>
             {
-                test.map((entry,index) =>
+                forms.map((entry,index) =>
                     <FormEntry
                         key={index}
                         formEntry={entry}
-                        onDelete={"123"}
-                        onActivityToggle={"123"}
+                        onDelete={handleEntryDelete}
+                        onActivityToggle={handleActivityToggle}
                         onGenerateLink={"123"}
                     />
                 )

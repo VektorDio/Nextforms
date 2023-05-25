@@ -3,7 +3,7 @@ import styles from './nameBlock.module.css'
 import TextParagraph from "@/components/inputs/textParagraph";
 import ToggleButton from "@/components/buttons/toggleButton";
 const ConstructorNameBlock = ({formName, formDescription, handleNameChange, handleDescriptionChange, handleAcceptChange,
-                                  selectedBlockId, setSelectedBlockId}) => {
+                                  selectedBlockId, setSelectedBlockId, acceptAnswers}) => {
     return (
         <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
             <div className={styles.formName}>
@@ -24,7 +24,7 @@ const ConstructorNameBlock = ({formName, formDescription, handleNameChange, hand
                 <ToggleButton
                     text={"Accept answers"}
                     onClick={(e) => handleAcceptChange(e.target.checked)}
-                    checked={true}
+                    checked={acceptAnswers}
                 />
             </div>
         </div>

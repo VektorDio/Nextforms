@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
@@ -8,114 +8,63 @@ import ConstructorNameBlock from "@/components/constructorElements/constructorNa
 import ConstructorBlock from "@/components/constructorElements/constructorBlock";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-// import {useRouter} from "next/router";
+import {useGetFormById, useUpdateForm} from "@/queries/forms";
 
 const FormConstructor = () => {
-
     const router = useRouter()
-    // const {formId} = router.query
-    const {status} = useSession()
-
-    if (status === "unauthenticated") {
-        router.push("/")
-    }
-
     const [selectedBlockId, setSelectedBlockId] = useState("head")
-    const [formObject, setFormObject] = useState({
-        creator: "test",
-        active: true,
-        formName: "New form",
-        formDescription: "Description",
-        questions: [{
-            required: false,
-            type: "radio",
-            question:"",
-            options:[{
-                text: ""
-            }]
-        }],
-        answers: []
+    const {formId} = router.query
+
+    const {mutateAsync, isLoading:isUpdating} = useUpdateForm()
+
+    const {status, data:session} = useSession({
+        required: true,
+        onUnauthenticated() {
+            router.push("/")
+        },
     })
 
-    // const [formObject, setFormObject] = useState({
-    //     id: "123",
-    //     creator: "test.jsx",
-    //     active: true,
-    //     formName: "This name",
-    //     formDescription: "That description",
-    //     questions: [{
-    //         id: "197341823401234",
-    //         required: false,
-    //         type: "paragraphText",
-    //         question:"First question",
-    //         options:[{
-    //             id: "15245322",
-    //             text: "123123"
-    //         },
-    //             {
-    //                 id: "61523422",
-    //                 text: "123123"
-    //             },
-    //             {
-    //                 id: "1344234232",
-    //                 text: "123123"
-    //             }
-    //         ]
-    //     },
-    //         {
-    //             id: "0519931423415",
-    //             required: true,
-    //             type: "radio",
-    //             question:"12312",
-    //             options:[{
-    //                 id: "041512342",
-    //                 text: "First answer"
-    //             },
-    //                 {
-    //                     id: "612341234234",
-    //                     text: "Second answer"
-    //                 },
-    //                 {
-    //                     id: "6614343525234",
-    //                     text: "Third answer"
-    //                 },]
-    //         },
-    //         {
-    //             id: "05112312323415",
-    //             required: true,
-    //             type: "select",
-    //             question:"662242424",
-    //             options:[{
-    //                 id: "041523422342",
-    //                 text: "First answer"
-    //             },
-    //                 {
-    //                     id: "612324442234",
-    //                     text: "Second answer"
-    //                 },
-    //                 {
-    //                     id: "6614343525234",
-    //                     text: "Third answer"
-    //                 },]
-    //         }]
-    // })
+    const {error, data, isLoading} = useGetFormById({
+        id: formId,
+    })
 
-    //const [questions, setQuestions] = useState(formObject.questions)
-    function handleFormSubmit(){
-        console.log(formObject)
-        //console.log(questions)
+    const [formObject, setFormObject] = useState()
+
+    useEffect(() => {
+        if(data) {
+            setFormObject(data.form)
+        }
+    }, [data])
+
+    if (isLoading) return (<div>Loading...</div>)
+    if (error) return (<div>error</div>)
+
+    async function handleFormSubmit() {
+        await mutateAsync({
+            id: formObject.id,
+            description: formObject.description,
+            name: formObject.name,
+            active: formObject.active,
+            questions: formObject.questions.map(e => ({
+                type: e.type,
+                required: e.required,
+                question: e.question,
+                options: e.options.map(e => (e.text)),
+            })),
+        })
+        router.push("/home")
     }
 
     function handleNameChange(text){
         setFormObject(prev => ({
             ...prev,
-            formName: text
+            name: text
         }))
     }
     function handleDescriptionChange(text){
         setFormObject(prev => ({
             ...prev,
-            formDescription: text
+            description: text
         }))
     }
 
@@ -187,7 +136,8 @@ const FormConstructor = () => {
         }))
     }
 
-    return (
+
+    return ((formObject) &&
         <>
             <Head>
                 <title>Create Next App</title>
@@ -199,8 +149,9 @@ const FormConstructor = () => {
             <Main>
                 <ConstructorColumn>
                     <ConstructorNameBlock
-                        formName={formObject.formName}
-                        formDescription={formObject.formDescription}
+                        formName={formObject.name}
+                        formDescription={formObject.description}
+                        acceptAnswers={formObject.active}
                         handleNameChange={handleNameChange}
                         handleDescriptionChange={handleDescriptionChange}
                         handleAcceptChange={handleAcceptChange}

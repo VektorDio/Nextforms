@@ -15,7 +15,7 @@ export const useUpdateUser = () => {
     return useMutation({
         mutationFn: async (data) => {
             const updatedUser = await axios.patch('/api/user', data)
-            await queryClient.invalidateQueries({ queryKey: ['forms'] })
+            await queryClient.invalidateQueries({ queryKey: ['users'] })
             return updatedUser
         }
     })
@@ -23,10 +23,10 @@ export const useUpdateUser = () => {
 
 export const useGetUserById = (params) => {
     return useQuery({
-        queryKey: ['forms', params],
+        queryKey: ['users', params],
         queryFn: async () => {
             const { id } = params
-            return (await axios.get('/api/user/userEmail', {
+            return (await axios.get('/api/user', {
                 params: {
                     id: id,
                 }

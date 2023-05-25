@@ -9,7 +9,20 @@ import {
     faWindowMaximize,
     faWindowRestore
 } from "@fortawesome/free-solid-svg-icons";
+import {useAddForm} from "@/queries/forms";
+import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 const MenuColumn = ({setCentralColumnContent}) => {
+    const {data:session} = useSession()
+    const router = useRouter()
+    const {mutateAsync} = useAddForm()
+    async function handleFormCreation() {
+        const {data} = await mutateAsync({
+            userId: session.user.id,
+        })
+        router.push(`/home/formConstructor/redact/${data.id}`)
+    }
+
     return (
         <div className={styles.mainColumn}>
             <div className={styles.menuButton} onClick={() => setCentralColumnContent("profile")}>
@@ -26,12 +39,13 @@ const MenuColumn = ({setCentralColumnContent}) => {
                 <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
                 Reports
             </div>
-            <Link href={"/home/formConstructor/redact/new"}>
+
+            <div onClick={handleFormCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
                     New form
                 </div>
-            </Link>
+            </div>
             <Link href={"/home/reportConstructor/new"}>
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
