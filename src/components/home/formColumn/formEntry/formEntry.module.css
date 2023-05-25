@@ -23,3 +23,27 @@
     height: 48px;
     align-items: center;
 }
+
+.copyMessage{
+    position: absolute;
+    top: -45px;
+    left: -40px;
+
+    background-color: #2b6b10;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    height: 40px;
+    width: 140px;
+    user-select: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: visibility 0s, opacity 0.4s linear;
+}
+
+.copyMessageContainer{
+    position: relative;
+}
