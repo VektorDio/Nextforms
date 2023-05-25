@@ -1,19 +1,32 @@
 import prisma from "@/server";
 import {hashPassword} from "@/server/hash";
+import {Prisma} from "@prisma/client";
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { body } = req
         const { email, password, organisation} = body
 
         const hashedPassword = hashPassword(password)
+        let user
+        try {
+            user = await prisma.user.create({
+                data: {
+                    email: email,
+                    password: hashedPassword,
+                    organisation: organisation
+                },
+            })
+        } catch (e) {
+            let errorMessage
+            if (e instanceof Prisma.PrismaClientKnownRequestError) {
+                // The .code property can be accessed in a type-safe manner
 
-        const user = await prisma.user.create({
-            data: {
-                email: email,
-                password: hashedPassword,
-                organisation: organisation
-            },
-        })
+                if (e.code === 'P2002') {
+                    errorMessage = "This email is already taken"
+                }
+            }
+            res.status(500).send({...e, message: errorMessage})
+        }
 
         res.status(200).send(user)
     } else if (req.method === 'GET'){
@@ -45,5 +58,14 @@ export default async function handler(req, res) {
         })
 
         res.status(200).send(user)
+    } else if (req.method === 'DELETE'){
+        const {query} = req
+        const {id} = query
+        await prisma.user.delete({
+            where: {
+                id: id,
+            },
+        })
+        res.status(200).send()
     }
 }

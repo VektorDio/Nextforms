@@ -7,15 +7,18 @@ import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/forms/textInput";
 import {signOut} from "next-auth/react";
-import {useGetUserById, useUpdateUser} from "@/queries/users";
+import {useDeleteUserById, useGetUserById, useUpdateUser} from "@/queries/users";
+import {useRouter} from "next/router";
 
 const ProfileColumn = ({session}) => {
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
+    const router = useRouter()
 
-    const {mutateAsync, isLoading:isUpdating} = useUpdateUser()
-
+    const {mutateAsync:updateUser, isLoading:isUpdating} = useUpdateUser()
+    const {mutateAsync:deleteUser} = useDeleteUserById()
+    
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/
 
     const {id} = session.user
@@ -32,6 +35,14 @@ const ProfileColumn = ({session}) => {
     if (error) return (<div>error</div>)
 
     const {firstName, lastName, phoneNumber, email, organisation, password} = data.user
+    
+    async function handleUserDelete() {
+        await router.push("/")
+        await signOut()
+        await deleteUser({
+            id: id
+        })
+    }
 
     return (
         <div className={styles.profileContainer}>
@@ -56,7 +67,7 @@ const ProfileColumn = ({session}) => {
                         onSubmit={async (values, {setSubmitting}) => {
                             const {firstName, lastName, phoneNumber, organisation} = values
 
-                            await mutateAsync({
+                            await updateUser({
                                 id:id,
                                 firstName:firstName,
                                 lastName:lastName,
@@ -159,7 +170,7 @@ const ProfileColumn = ({session}) => {
                 onSubmit={async (values, {setSubmitting}) => {
                     const {email} = values
 
-                    await mutateAsync({
+                    await updateUser({
                         id: id,
                         email:email,
                     })
@@ -230,7 +241,7 @@ const ProfileColumn = ({session}) => {
                     const {currentPassword, newPassword} = values
 
                     if (password === currentPassword) {
-                        await mutateAsync({
+                        await updateUser({
                             id: id,
                             password: newPassword,
                         })
@@ -294,7 +305,7 @@ const ProfileColumn = ({session}) => {
             </div>
 
             <div className={styles.buttonGroup}>
-                <DeleteButton onClick={signOut}></DeleteButton>
+                <DeleteButton onClick={handleUserDelete}></DeleteButton>
             </div>
         </div>
     );

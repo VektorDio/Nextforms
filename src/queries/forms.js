@@ -28,13 +28,13 @@ export const useDeleteFormById = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (data) => {
-            const deletedUser = await axios.delete('/api/form', {
+            const deletedForm = await axios.delete('/api/form', {
                 params: {
                     id: data.id
                 }
             })
             await queryClient.invalidateQueries({ queryKey: ['forms'] })
-            return deletedUser
+            return deletedForm
         }
     })
 }

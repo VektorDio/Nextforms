@@ -5,7 +5,11 @@ import axios from "axios";
 export const useAddUser = () => {
     return useMutation({
         mutationFn: async (data) => {
-            return await axios.post('/api/user', data)
+            try {
+                return await axios.post('/api/user', data)
+            } catch (e) {
+                throw e
+            }
         }
     })
 }
@@ -31,6 +35,21 @@ export const useGetUserById = (params) => {
                     id: id,
                 }
             })).data
+        }
+    })
+}
+
+export const useDeleteUserById = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data) => {
+            const deletedUser = await axios.delete('/api/user', {
+                params: {
+                    id: data.id
+                }
+            })
+            await queryClient.invalidateQueries({ queryKey: ['users'] })
+            return deletedUser
         }
     })
 }

@@ -15,7 +15,7 @@ const Register = () => {
     const router = useRouter()
     const [submissionError, setSubmissionError] = useState(null)
     const [showPassword, setShowPassword] = useState(true)
-    const {mutateAsync} = useAddUser()
+    const {mutateAsync, error} = useAddUser()
 
     if (status === "authenticated") {
         router.push("/home")
@@ -24,27 +24,30 @@ const Register = () => {
     function handleShowPassword(){
         setShowPassword(!showPassword)
     }
-
     const handleSubmit = async (values) => {
         const {email, password, organisation} = values
 
-        await mutateAsync({
-            email: email,
-            password: password,
-            organisation: organisation
-        })
+        try {
+            await mutateAsync({
+                email: email,
+                password: password,
+                organisation: organisation
+            })
 
-        const {ok, error} = await signIn('credentials', {
-            email: email,
-            password: password,
-            redirect: false
-        })
+            const {ok, error:logInError} = await signIn('credentials', {
+                email: email,
+                password: password,
+                redirect: false
+            })
 
-        if (ok) {
-            router.push("/home")
-        } else {
-            setSubmissionError(error)
-            values.setSubmitting(false);
+            if (ok) {
+                router.push("/home")
+            } else {
+                setSubmissionError(logInError)
+                values.setSubmitting(false);
+            }
+        } catch (e){
+            setSubmissionError(e.response.data.message)
         }
     }
 
