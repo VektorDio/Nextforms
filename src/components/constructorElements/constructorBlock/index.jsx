@@ -194,7 +194,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                     {component}
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
-                    <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Required Field"} checked={false}/>
+                    <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Required Field"} checked={question.required}/>
                     <DeleteButton onClick={() => handleDelete(question.id)}/>
                 </div>
             </div>

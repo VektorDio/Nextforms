@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
@@ -9,97 +9,32 @@ import ViewBlock from "@/components/viewElements/viewBlock";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useRouter} from "next/router";
+import {useGetFormById} from "@/queries/forms";
 
 const FormConstructor = () => {
     const router = useRouter()
     const {formId} = router.query
 
-    const [formObject, setFormObject] = useState({
+    const {error, data, isLoading} = useGetFormById({
         id: formId,
-        creator: "test",
-        active: true,
-        formName: "New form",
-        formDescription: "Description",
-        questions: [{
-            required: true,
-            type: "oneLineText",
-            question: "test1",
-            options:[]
-        },
-        {
-            required: true,
-            type: "paragraphText",
-            question: "test2",
-            options:[]
-        },
-        {
-            required: true,
-            type: "radio",
-            question: "test3",
-            options:[{
-                id: uuidv4(),
-                text: "444"
-            },{
-                id: uuidv4(),
-                text: "4441"
-            },{
-                id: uuidv4(),
-                text: "4442"
-            },{
-                id: uuidv4(),
-                text: "4443"
-            }]
-        },
-        {
-            required: true,
-            type: "checkbox",
-            question: "test4",
-            options:[{
-                id: uuidv4(),
-                text: "444"
-            },{
-                id: uuidv4(),
-                text: "4441"
-            },{
-                id: uuidv4(),
-                text: "4442"
-            },{
-                id: uuidv4(),
-                text: "4443"
-            }]
-        },
-        {
-            required: true,
-            type: "select",
-            question: "test5",
-            options:[{
-                id: uuidv4(),
-                text: "444"
-            },{
-                id: uuidv4(),
-                text: "4441"
-            },{
-                id: uuidv4(),
-                text: "4442"
-            },{
-                id: uuidv4(),
-                text: "4443"
-            }]
-        },
-        {
-            required: true,
-            type: "date",
-            question: "test6",
-            options:[]
-        },
-        {
-            required: true,
-            type: "time",
-            question: "test7",
-            options:[]
-        }]
     })
-    function handleFormSubmit() {
+
+    const [formObject, setFormObject] = useState()
+
+
+    useEffect(() => {
+        if(data) {
+            setFormObject(data.form)
+        }
+    }, [data])
+
+    if (isLoading) return (<div>Loading...</div>)
+    if (error) return (<div>error</div>)
+
+    function handleFormSubmit(values) {
+        if (formObject.active){
+            alert(JSON.stringify(values, null, 2));
+        }
         console.log(formId)
     }
 
@@ -119,7 +54,7 @@ const FormConstructor = () => {
         .required("This is a required field")
 
     const validationScheme = {}
-    formObject.questions.map((question)=> {
+    formObject?.questions.map((question)=> {
         let required = question.required
         switch (question.type){
             case "date":
@@ -143,12 +78,11 @@ const FormConstructor = () => {
     })
 
     let initialValues = {}
-    formObject.questions.map(e => {
+    formObject?.questions.map(e => {
          initialValues[e.question] = (e.type === "checkbox") ?  [] : ""
     })
-    console.log(initialValues)
 
-    return (
+    return ((formObject) &&
         <>
             <Head>
                 <title>Create Next App</title>
@@ -160,7 +94,7 @@ const FormConstructor = () => {
                 initialValues={initialValues}
                 validationSchema={Yup.object().shape(validationScheme)}
                 onSubmit={(values) => {
-                    alert(JSON.stringify(values, null, 2));
+                    handleFormSubmit(values)
                 }}
             >{() => (
                 <>
@@ -168,8 +102,8 @@ const FormConstructor = () => {
                     <Main>
                         <ViewColumn>
                             <ViewNameBlock
-                                formName={formObject.formName}
-                                formDescription={formObject.formDescription}
+                                formName={formObject.name}
+                                formDescription={formObject.description}
                             />
                             {
                                 formObject.questions.map((question , index) => (

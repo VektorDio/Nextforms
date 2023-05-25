@@ -37,8 +37,8 @@ const ViewBlock = ({question}) => {
                     {question.options.map((e, index) =>(
                         <MyRadio
                             name={question.question}
-                            value={e.text}
-                            text={e.text}
+                            value={e}
+                            text={e}
                             key={index}
                         />
                         ))
@@ -52,8 +52,8 @@ const ViewBlock = ({question}) => {
                     {question.options.map((e, index) =>(
                         <MyCheckbox
                             name={question.question}
-                            value={e.text}
-                            text={e.text}
+                            value={e}
+                            text={e}
                             key={index}
                         />
                         ))
@@ -67,7 +67,7 @@ const ViewBlock = ({question}) => {
                     name={question.question}
                 >
                     {question.options.map((e, index) =>(
-                            <option value={e.text} key={index}>{e.text}</option>
+                            <option value={e} key={index}>{e}</option>
                         ))
                     }
                 </MySelect>

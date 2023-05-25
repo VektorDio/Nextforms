@@ -136,6 +136,7 @@ const FormConstructor = () => {
         }))
     }
 
+    console.log(formObject)
 
     return ((formObject) &&
         <>
