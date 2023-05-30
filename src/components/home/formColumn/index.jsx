@@ -46,7 +46,7 @@ const FormColumn = () => {
     if (forms) return (
         <div>
             {
-                forms.map((entry,index) =>
+                forms?.map((entry,index) =>
                     <FormEntry
                         key={index}
                         formEntry={entry}
