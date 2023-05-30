@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
 import {v4 as uuidv4} from "uuid";
@@ -8,62 +8,52 @@ import Main from "@/components/pageWraper/main";
 import ConstructorColumn from "@/components/reportConstructorElements/constructorColumn";
 import ConstructorNameBlock from "@/components/reportConstructorElements/constructorNameBlock";
 import ConstructorBlock from "@/components/reportConstructorElements/constructorBlock";
+import {useGetReportById, useUpdateReport} from "@/queries/reports";
 
 const ReportConstructor = () => {
     const router = useRouter()
     const [selectedBlockId, setSelectedBlockId] = useState("head")
     const {repId} = router.query
 
-    // const {mutateAsync} = useUpdateForm()
+    const {mutateAsync} = useUpdateReport()
 
-    // useSession({
-    //     required: true,
-    //     onUnauthenticated() {
-    //         router.push("/")
-    //     },
-    // })
-
-    // const {error, data, isLoading} = useGetFormById({
-    //     id: formId,
-    // })
-
-    const [reportObject, setReportObject] = useState({
-        id: uuidv4(),
-        blocks: [{
-            id: uuidv4(),
-            type: "oneLineText",
-            name: ""
-        }]
+    useSession({
+        required: true,
+        onUnauthenticated() {
+            router.push("/")
+        },
     })
 
-    // useEffect(() => {
-    //     if(data) {
-    //         setFormObject(data.form)
-    //     }
-    // }, [data])
+    const {error, data, isLoading} = useGetReportById({
+        id: repId,
+    })
 
-    // if (isLoading) return (<div>Loading...</div>)
-    // if (error) return (<div>error</div>)
+    const [reportObject, setReportObject] = useState()
+
+    useEffect(() => {
+        if(data) {
+            setReportObject(data.report)
+        }
+    }, [data])
+
+    if (isLoading) return (<div>Loading...</div>)
+    if (error) return (<div>error</div>)
 
     async function handleReportSubmit() {
-        // await mutateAsync({
-        //     id: reportObject.id,
-        //     description: reportObject.description,
-        //     name: reportObject.name,
-        //     active: reportObject.active,
-        //     questions: reportObject.questions.map(e => ({
-        //         type: e.type,
-        //         required: e.required,
-        //         question: e.question,
-        //         options: e.options.map(e => (e.text)),
-        //     })),
-        // })
-        console.log(reportObject)
-        //router.push("/home")
+        await mutateAsync({
+            id: reportObject.id,
+            description: reportObject.description,
+            name: reportObject.name,
+            blocks: reportObject.blocks.map(e => ({
+                type: e.type,
+                name: e.name,
+            })),
+        })
+        router.push("/home")
     }
 
     const handleAddBlock = (id) => {
-        let buf = [...reportObject.blocks]
+        let buf = [...reportObject?.blocks]
         let index = buf.findIndex(e => e.id === id)
         buf.splice((index + 1), 0, {
             id: uuidv4(),
@@ -77,7 +67,7 @@ const ReportConstructor = () => {
     }
 
     const handleDelete = (id) => {
-        let buf = [...reportObject.blocks]
+        let buf = [...reportObject?.blocks]
         let index = buf.findIndex(e => e.id === id)
         if(buf.length > 1){
             buf.splice(index, 1)
@@ -89,7 +79,7 @@ const ReportConstructor = () => {
     }
 
     const handleTypeChange = (id, value) => {
-        let buf = [...reportObject.blocks]
+        let buf = [...reportObject?.blocks]
         let index = buf.findIndex(e => e.id === id)
         buf[index].type = value
         setReportObject(prev => ({
@@ -99,7 +89,7 @@ const ReportConstructor = () => {
     }
 
     const handleBlockNameChange = (id, text) => {
-        let buf = [...reportObject.blocks]
+        let buf = [...reportObject?.blocks]
         let index = buf.findIndex(e => e.id === id)
         buf[index].name = text
         setReportObject(prev => ({
@@ -108,7 +98,7 @@ const ReportConstructor = () => {
         }))
     }
 
-    return (//(reportObject) &&
+    return ((reportObject) &&
         <>
             <Head>
                 <title>Create Next App</title>
@@ -117,7 +107,7 @@ const ReportConstructor = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <ConstructorHeader id={reportObject.id} onReportSubmit={handleReportSubmit}/>
+            <ConstructorHeader id={reportObject?.id} onReportSubmit={handleReportSubmit}/>
 
             <Main>
                 <ConstructorColumn>
@@ -126,7 +116,7 @@ const ReportConstructor = () => {
                         setSelectedBlockId={setSelectedBlockId}
                     />
                     {
-                        reportObject.blocks.map((q) => (
+                        reportObject?.blocks.map((q) => (
                             <ConstructorBlock
                                 key={q.id}
                                 block={q}

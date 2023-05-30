@@ -17,6 +17,7 @@ model User {
   firstName    String?
   lastName     String?
   phoneNumber  String?
+
   Form         Form[]
   Report       Report[]
 }

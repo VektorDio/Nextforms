@@ -11,24 +11,25 @@ import {
 import {useAddForm} from "@/queries/forms";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import {useAddReport} from "@/queries/reports";
 const MenuColumn = ({setCentralColumnContent}) => {
     const {data:session} = useSession()
     const router = useRouter()
 
-    const {mutateAsync} = useAddForm()
+    const {mutateAsync: addForm} = useAddForm()
+    const {mutateAsync: addReport} = useAddReport()
     async function handleFormCreation() {
-        const {data} = await mutateAsync({
+        const {data} = await addForm({
             userId: session.user.id,
         })
         router.push(`/home/formConstructor/redact/${data.id}`)
     }
 
     async function handleReportCreation() {
-        // const {data} = await mutateAsync({
-        //     userId: session.user.id,
-        // })
-        //router.push(`/home/reportConstructor/create/${data.id}`)
-        router.push(`/home/reportConstructor/create/test`)
+        const {data} = await addReport({
+            userId: session.user.id,
+        })
+        router.push(`/home/reportConstructor/create/${data.id}`)
     }
 
     return (

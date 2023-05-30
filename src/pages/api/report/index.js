@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { body } = req
         const { userId } = body
-        const form = await prisma.report.create({
+        const report = await prisma.report.create({
             data: {
                 userId: userId,
                 name: "New report",
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
             },
         })
 
-        res.status(200).send(form)
+        res.status(200).send(report)
     } else if (req.method === 'GET'){
         const {query} = req
         const {id} = query
@@ -48,14 +48,14 @@ export default async function handler(req, res) {
                 }
             })
 
-            report = await prisma.form.update({
+            report = await prisma.report.update({
                 where: {
                     id: id,
                 },
                 data: {
                     description: description,
                     name: name,
-                    questions: {
+                    blocks: {
                         createMany: {
                             data: blocks
                         }
