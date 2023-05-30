@@ -32,7 +32,6 @@ const FormConstructor = () => {
     if (error) return (<div>error</div>)
 
     async function handleFormSubmit(values) {
-        window.print()
         if (formObject.active) {
             let data = Object.entries(values).map(([k, v]) => ({
                 questionId: k,
