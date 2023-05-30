@@ -43,7 +43,8 @@ const StatisticBlock = ({question}) => {
             {
                 label: '',
                 data: labels.map((e) => dataValue[e]),
-                backgroundColor: 'rgba(84, 105, 212, 0.8)',
+                backgroundColor: (question.type === "checkbox") ? 'rgba(84, 105, 212, 0.8)'
+                    : labels.map((e) => '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')),
             },
         ],
     };
