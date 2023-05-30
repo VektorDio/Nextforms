@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Head from "next/head";
-import ConstructorHeader from "@/components/constructorElements/constructorHeader";
+import ConstructorHeader from "@/components/formConstructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
 import StatisticColumn from "@/components/statisticElements/statisticColumn";
 import StatisticNameBlock from "@/components/statisticElements/statisticNameBlock";
@@ -33,13 +33,9 @@ const FormConstructor = () => {
     if (isLoading) return (<div>Loading...</div>)
     if (error) return (<div>error</div>)
 
-    function handleFormSubmit(){
-
-    }
+    function handleFormSubmit(){}
 
     const answersCount = formObject?.reduce((acc, val) => (acc + val.answers.length), 0)
-
-    console.log(formObject)
 
     return ((formObject) &&
         <>

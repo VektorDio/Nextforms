@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './menuColumn.module.css'
-import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faFileCode,
@@ -15,12 +14,21 @@ import {useRouter} from "next/router";
 const MenuColumn = ({setCentralColumnContent}) => {
     const {data:session} = useSession()
     const router = useRouter()
+
     const {mutateAsync} = useAddForm()
     async function handleFormCreation() {
         const {data} = await mutateAsync({
             userId: session.user.id,
         })
         router.push(`/home/formConstructor/redact/${data.id}`)
+    }
+
+    async function handleReportCreation() {
+        // const {data} = await mutateAsync({
+        //     userId: session.user.id,
+        // })
+        //router.push(`/home/reportConstructor/create/${data.id}`)
+        router.push(`/home/reportConstructor/create/test`)
     }
 
     return (
@@ -46,12 +54,13 @@ const MenuColumn = ({setCentralColumnContent}) => {
                     New form
                 </div>
             </div>
-            <Link href={"/home/reportConstructor/new"}>
+
+            <div onClick={handleReportCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
                     New report
                 </div>
-            </Link>
+            </div>
 
         </div>
     );

@@ -25,3 +25,9 @@ a {
 ::-webkit-scrollbar-thumb {
   background-color: #3a4556;
 }
+
+@media print {
+  * {
+    color: black;
+  }
+}

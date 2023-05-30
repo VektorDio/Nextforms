@@ -1,0 +1,70 @@
+.container{
+    background-color: #272e3a;
+    height: 2%;
+    width: 80vh;
+    border-radius: 12px;
+    padding: 25px 21px;
+    overflow:hidden;
+
+}
+
+.blockHeader{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4vh;
+    padding: 0 8px 10px 8px;
+}
+
+.blockFooter{
+    margin-left: 8px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.outerContainer{
+    display: flex;
+    margin-top: 25px;
+    margin-left: 74px;
+}
+
+.outerContainerDisabled{
+    display: flex;
+    margin-top: 25px;
+}
+
+.addButton{
+    padding-left: 8px;
+    display: block;
+}
+
+.addButtonDisabled{
+    display: none;
+}
+
+.blockInput{
+    padding: 10px 8px;
+}
+
+.paragraphText{
+    font-size: 16px;
+}
+
+.oneLineText {
+    width: 45%;
+}
+
+.unselectedText{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    padding: 12px 0;
+    width: 100%;
+    min-height: 46px;
+}
+
+
+
+

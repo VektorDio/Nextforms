@@ -18,6 +18,7 @@ model User {
   lastName     String?
   phoneNumber  String?
   Form         Form[]
+  Report       Report[]
 }
 
 model Answer {
@@ -52,5 +53,25 @@ model Form {
   userId  String @db.ObjectId
 
   questions Question[]
+}
+
+model Report {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  description String?
+  name        String?
+
+  creator User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String @db.ObjectId
+
+  blocks Block[]
+}
+
+model Block {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  type     String
+  name     String
+
+  Report   Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId String @db.ObjectId
 }
 
