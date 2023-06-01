@@ -28,6 +28,19 @@ const StatisticBlock = ({question}) => {
     //     max = Math.floor(max);
     //     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
     // }
+    // '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
+
+    const colors = [
+        "#192040",
+        "#3c4c99",
+        "#263162",
+        "#5469d4",
+        "#334182",
+        "#6678d8",
+        "#bec6ef",
+        "#7d8dde",
+        "#e7eaf9",
+    ]
 
     const answers = (question.type === "checkbox") ? question.answers.flat() : question.answers
 
@@ -44,7 +57,7 @@ const StatisticBlock = ({question}) => {
                 label: '',
                 data: labels.map((e) => dataValue[e]),
                 backgroundColor: (question.type === "checkbox") ? 'rgba(84, 105, 212, 0.8)'
-                    : labels.map((e) => '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')),
+                    : labels.map((e, i) => (i > colors.length) ? "rgba(84, 105, 212, 0.8)" : colors[i]),
             },
         ],
     };

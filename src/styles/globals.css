@@ -30,4 +30,11 @@ a {
   * {
     color: black;
   }
+  body {
+    padding-left: 2cm;
+  }
+}
+
+@page {
+  size: portrait;
 }

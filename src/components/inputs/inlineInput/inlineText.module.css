@@ -25,3 +25,14 @@
     background-color: #353f4f;
     outline: red solid 3px !important;
 }
+
+@media print {
+    .oneLineText {
+        padding: 0;
+    }
+
+    .inputInvalid {
+
+        padding: 0;
+    }
+}

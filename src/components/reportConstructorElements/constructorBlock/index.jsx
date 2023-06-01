@@ -62,14 +62,16 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                                 defaultValue={block.name}
                                 onBlur={(e) => handleNameChange(block.id, e.currentTarget.textContent)}
                             />
-                                <Select
-                                    defaultValue={block.type}
-                                    onChange={(e) => handleBlockTypeChange(block.id, e.target.value)}
-                                >
-                                    <option value="oneLineText">Text (One Line) </option>
-                                    <option value="paragraphText">Text (Paragraph) </option>
-                                    <option value="statistics">Statistics </option>
-                                </Select>
+                                <div className={styles.selectContainer}>
+                                    <Select
+                                        defaultValue={block.type}
+                                        onChange={(e) => handleBlockTypeChange(block.id, e.target.value)}
+                                    >
+                                        <option value="oneLineText">Text (One Line) </option>
+                                        <option value="paragraphText">Text (Paragraph) </option>
+                                        <option value="statistics">Statistics </option>
+                                    </Select>
+                                </div>
                             </>
                         ) : (
                             <div className={styles.unselectedText}>{block.name || "Text"}</div>

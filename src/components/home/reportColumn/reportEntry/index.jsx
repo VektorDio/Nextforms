@@ -14,7 +14,7 @@ const ReportEntry = ({reportEntry, onDelete}) => {
         <div className={styles.reportEntry} >
             <div onClick={handleRedact} className={styles.reportName}>{reportEntry.name}</div>
             <div className={styles.buttons}>
-                <Link href={`/home/reportConstructor/fill/${reportEntry.id}`}>
+                <Link href={{ pathname: '/home/reportConstructor/fill', query: { reportId: reportEntry.id, formId: null } }}>
                     <ReportButton/>
                 </Link>
                 <DeleteButton onClick={() => onDelete(reportEntry.id)}/>

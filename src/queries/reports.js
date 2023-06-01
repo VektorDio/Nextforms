@@ -6,15 +6,14 @@ export const useAddReport = () => {
     return useMutation({
         mutationFn: async (data) => {
             const addedReport = await axios.post('/api/report', data)
-            await queryClient.invalidateQueries({ queryKey: ['reports'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetReportById'] })
             return addedReport
         }
     })
 }
 export const useGetReportById = (params) => {
-    //const { enabled } = params
     return useQuery({
-        queryKey: ['reports', params],
+        queryKey: ['GetReportById', params],
         queryFn: async () => {
             const { id } = params
             return (await axios.get('/api/report', {
@@ -23,7 +22,20 @@ export const useGetReportById = (params) => {
                 }
             })).data
         },
-        //enabled: enabled
+    })
+}
+
+export const useGetReportsByCreatorId = (params) => {
+    return useQuery({
+        queryKey: ['GetReportsByCreatorId', params],
+        queryFn: async () => {
+            const { id } = params
+            return (await axios.get('/api/report/reportByCreatorId', {
+                params: {
+                    id: id,
+                }
+            })).data
+        },
     })
 }
 
@@ -36,25 +48,10 @@ export const useDeleteReportById = () => {
                     id: data.id
                 }
             })
-            await queryClient.invalidateQueries({ queryKey: ['reports'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetReportById']})
+            await queryClient.invalidateQueries({ queryKey: ['GetReportsByCreatorId']})
             return deletedReport
         }
-    })
-}
-
-export const useGetReportsByCreatorId = (params) => {
-    //const { enabled } = params
-    return useQuery({
-        queryKey: ['reports', params],
-        queryFn: async () => {
-            const { id } = params
-            return (await axios.get('/api/report/reportByCreatorId', {
-                params: {
-                    id: id,
-                }
-            })).data
-        },
-        //enabled: enabled
     })
 }
 
@@ -63,8 +60,22 @@ export const useUpdateReport = () => {
     return useMutation({
         mutationFn: async (data) => {
             const updatedReport = await axios.patch('/api/report', data)
-            await queryClient.invalidateQueries({ queryKey: ['reports'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetReportById'] })
             return updatedReport
         }
+    })
+}
+
+export const useGetReportNamesByCreatorId = (params) => {
+    return useQuery({
+        queryKey: ['GetReportNamesByCreatorId', params],
+        queryFn: async () => {
+            const { id } = params
+            return (await axios.get('/api/report/reportNamesByCreatorId', {
+                params: {
+                    id: id,
+                }
+            })).data
+        },
     })
 }

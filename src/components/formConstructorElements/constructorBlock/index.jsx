@@ -171,18 +171,20 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 defaultValue={question.question}
                                 onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
                             />
-                                <Select
-                                    defaultValue={question.type}
-                                    onChange={(e) => handleSelectChange(question.id, e.target.value)}
-                                >
-                                    <option value="oneLineText">Text (One Line) </option>
-                                    <option value="paragraphText">Text (Paragraph) </option>
-                                    <option value="radio">One from List </option>
-                                    <option value="checkbox">Many from List </option>
-                                    <option value="select">Select List </option>
-                                    <option value="date">Date </option>
-                                    <option value="time">Time </option>
-                                </Select>
+                                <div className={styles.selectContainer}>
+                                    <Select
+                                        defaultValue={question.type}
+                                        onChange={(e) => handleSelectChange(question.id, e.target.value)}
+                                    >
+                                        <option value="oneLineText">Text (One Line) </option>
+                                        <option value="paragraphText">Text (Paragraph) </option>
+                                        <option value="radio">One from List </option>
+                                        <option value="checkbox">Many from List </option>
+                                        <option value="select">Select List </option>
+                                        <option value="date">Date </option>
+                                        <option value="time">Time </option>
+                                    </Select>
+                                </div>
                             </>
                         ) : (
                             <div className={styles.unselectedText}>{question.question || "Question"}</div>

@@ -5,10 +5,11 @@ const Select = ({name, children, onChange, defaultValue, disabled}) => {
     return (
         <select
             name={name}
-                className={styles.typeSelect}
-                defaultValue={defaultValue}
-                onChange={onChange}
-                disabled={disabled}>
+            className={styles.typeSelect}
+            defaultValue={defaultValue}
+            onChange={onChange}
+            disabled={disabled}
+        >
             {children}
         </select>
     );

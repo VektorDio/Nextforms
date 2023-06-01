@@ -33,8 +33,6 @@ const FormConstructor = () => {
     if (isLoading) return (<div>Loading...</div>)
     if (error) return (<div>error</div>)
 
-    function handleFormSubmit(){}
-
     const answersCount = formObject?.reduce((acc, val) => (acc + val.answers.length), 0)
 
     return ((formObject) &&
@@ -45,7 +43,7 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader id={formId} onFormSubmit={handleFormSubmit}/>
+            <ConstructorHeader id={formId} />
             <Main>
                 <StatisticColumn>
                     <StatisticNameBlock answersCount={answersCount}/>

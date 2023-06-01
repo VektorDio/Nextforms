@@ -6,15 +6,14 @@ export const useAddForm = () => {
     return useMutation({
         mutationFn: async (data) => {
             const addedForm = await axios.post('/api/form', data)
-            await queryClient.invalidateQueries({ queryKey: ['forms'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormById'] })
             return addedForm
         }
     })
 }
 export const useGetFormById = (params) => {
-    //const { enabled } = params
     return useQuery({
-        queryKey: ['forms', params],
+        queryKey: ['GetFormById', params],
         queryFn: async () => {
             const { id } = params
             return (await axios.get('/api/form', {
@@ -23,7 +22,6 @@ export const useGetFormById = (params) => {
                 }
             })).data
         },
-        //enabled: enabled
     })
 }
 
@@ -36,16 +34,15 @@ export const useDeleteFormById = () => {
                     id: data.id
                 }
             })
-            await queryClient.invalidateQueries({ queryKey: ['forms'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormById'] })
             return deletedForm
         }
     })
 }
 
 export const useGetFormsByCreatorId = (params) => {
-    //const { enabled } = params
     return useQuery({
-        queryKey: ['forms', params],
+        queryKey: ['GetFormsByCreatorId', params],
         queryFn: async () => {
             const { id } = params
             return (await axios.get('/api/form/formsByCreatorId', {
@@ -54,7 +51,6 @@ export const useGetFormsByCreatorId = (params) => {
                 }
             })).data
         },
-        //enabled: enabled
     })
 }
 
@@ -63,7 +59,7 @@ export const useUpdateForm = () => {
     return useMutation({
         mutationFn: async (data) => {
             const updatedForm = await axios.patch('/api/form', data)
-            await queryClient.invalidateQueries({ queryKey: ['forms'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormById'] })
             return updatedForm
         }
     })
@@ -74,16 +70,15 @@ export const useCreateAnswers = () => {
     return useMutation({
         mutationFn: async (data) => {
             const createdAnswers = await axios.post('/api/form/answers', data)
-            await queryClient.invalidateQueries({ queryKey: ['answers'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetAnswersByFormId'] })
             return createdAnswers
         }
     })
 }
 
 export const useGetAnswersByFormId = (params) => {
-    //const { enabled } = params
     return useQuery({
-        queryKey: ['answers', params],
+        queryKey: ['GetAnswersByFormId', params],
         queryFn: async () => {
             const { id } = params
             return (await axios.get('/api/form/answers', {
@@ -92,7 +87,20 @@ export const useGetAnswersByFormId = (params) => {
                 }
             })).data
         },
-        //enabled: enabled
+    })
+}
+
+export const useGetFormNamesByCreatorId = (params) => {
+    return useQuery({
+        queryKey: ['GetFormNamesByCreatorId', params],
+        queryFn: async () => {
+            const { id } = params
+            return (await axios.get('/api/form/formNamesByCreatorId', {
+                params: {
+                    id: id,
+                }
+            })).data
+        },
     })
 }
 

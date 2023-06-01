@@ -1,0 +1,23 @@
+.selectContainer{
+    width: 45%;
+    padding-bottom: 2vh;
+}
+
+.checkboxContainer{
+    padding-bottom: 2vh;
+}
+
+.statisticsContainer{
+    padding-bottom: 2vh;
+    font-size: 20px;
+}
+
+@media print {
+    .selectContainer{
+        display: none;
+    }
+
+    .checkboxContainer{
+        display: none;
+    }
+}

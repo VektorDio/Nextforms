@@ -31,8 +31,7 @@ const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
                     > Copied to clipboard </div>
                     <GenerateLinkButton onClick={handleGenerateLink} />
                 </div>
-
-                <Link href={``}>
+                <Link href={{ pathname: '/home/reportConstructor/fill', query: { reportId: null, formId: formEntry.id }}}>
                     <RedactButton/>
                 </Link>
                 <Link href={`/home/formConstructor/statistics/${formEntry.id}`}>

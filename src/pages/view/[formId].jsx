@@ -10,7 +10,7 @@ import * as Yup from "yup";
 import {useRouter} from "next/router";
 import {useCreateAnswers, useGetFormById} from "@/queries/forms";
 
-const FormConstructor = () => {
+const FormView = () => {
     const router = useRouter()
     const {formId} = router.query
 
@@ -125,4 +125,4 @@ const FormConstructor = () => {
     );
 };
 
-export default FormConstructor;
+export default FormView;

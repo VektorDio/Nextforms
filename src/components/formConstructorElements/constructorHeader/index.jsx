@@ -30,7 +30,9 @@ export default function ConstructorHeader({id, onFormSubmit}) {
             </div>
 
             <div className={styles.sideBlock}>
-                <ConfirmButton onClick={onFormSubmit}></ConfirmButton>
+                {
+                    (onFormSubmit) && <ConfirmButton onClick={onFormSubmit}></ConfirmButton>
+                }
                 <Link href={"/home"}>
                     <DeleteButton></DeleteButton>
                 </Link>
