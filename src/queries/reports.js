@@ -7,6 +7,8 @@ export const useAddReport = () => {
         mutationFn: async (data) => {
             const addedReport = await axios.post('/api/report', data)
             await queryClient.invalidateQueries({ queryKey: ['GetReportById'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetReportsByCreatorId']})
+            await queryClient.invalidateQueries({ queryKey: ['GetReportNamesByCreatorId']})
             return addedReport
         }
     })
@@ -48,8 +50,9 @@ export const useDeleteReportById = () => {
                     id: data.id
                 }
             })
-            await queryClient.invalidateQueries({ queryKey: ['GetReportById']})
+            await queryClient.invalidateQueries({ queryKey: ['GetReportById'] })
             await queryClient.invalidateQueries({ queryKey: ['GetReportsByCreatorId']})
+            await queryClient.invalidateQueries({ queryKey: ['GetReportNamesByCreatorId']})
             return deletedReport
         }
     })
@@ -61,6 +64,8 @@ export const useUpdateReport = () => {
         mutationFn: async (data) => {
             const updatedReport = await axios.patch('/api/report', data)
             await queryClient.invalidateQueries({ queryKey: ['GetReportById'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetReportsByCreatorId']})
+            await queryClient.invalidateQueries({ queryKey: ['GetReportNamesByCreatorId']})
             return updatedReport
         }
     })

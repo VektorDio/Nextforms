@@ -7,6 +7,8 @@ export const useAddForm = () => {
         mutationFn: async (data) => {
             const addedForm = await axios.post('/api/form', data)
             await queryClient.invalidateQueries({ queryKey: ['GetFormById'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormsByCreatorId'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormNamesByCreatorId'] })
             return addedForm
         }
     })
@@ -35,6 +37,8 @@ export const useDeleteFormById = () => {
                 }
             })
             await queryClient.invalidateQueries({ queryKey: ['GetFormById'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormsByCreatorId'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormNamesByCreatorId'] })
             return deletedForm
         }
     })
@@ -60,6 +64,8 @@ export const useUpdateForm = () => {
         mutationFn: async (data) => {
             const updatedForm = await axios.patch('/api/form', data)
             await queryClient.invalidateQueries({ queryKey: ['GetFormById'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormsByCreatorId'] })
+            await queryClient.invalidateQueries({ queryKey: ['GetFormNamesByCreatorId'] })
             return updatedForm
         }
     })
