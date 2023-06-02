@@ -41,10 +41,10 @@ const ReportConstructor = () => {
 
     async function handleReportSubmit() {
         await mutateAsync({
-            id: reportObject.id,
-            description: reportObject.description,
-            name: reportObject.name,
-            blocks: reportObject.blocks.map(e => ({
+            id: reportObject?.id,
+            description: reportObject?.description,
+            name: reportObject?.name,
+            blocks: reportObject?.blocks.map(e => ({
                 type: e.type,
                 name: e.name,
             })),
@@ -58,7 +58,7 @@ const ReportConstructor = () => {
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             type: "radio",
-            name:"",
+            name: "Text",
         })
         setReportObject(prev => ({
             ...prev,
@@ -89,6 +89,10 @@ const ReportConstructor = () => {
     }
 
     const handleBlockNameChange = (id, text) => {
+        if (text.length < 1){
+            //display error
+            return
+        }
         let buf = [...reportObject?.blocks]
         let index = buf.findIndex(e => e.id === id)
         buf[index].name = text
