@@ -91,6 +91,7 @@ const ReportConstructor = () => {
                 onReportChange={onReportIdChange}
                 onPrint={handlePrint}
                 formId={formId}
+                reportId={reportId}
             />
             <Main>
                 {
