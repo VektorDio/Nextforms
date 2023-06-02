@@ -6,11 +6,12 @@ import ConfirmButton from "@/components/buttons/confirmButton";
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/forms/textInput";
-import {signOut} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
 import {useDeleteUserById, useGetUserById, useUpdateUser} from "@/queries/users";
 import {useRouter} from "next/router";
 
-const ProfileColumn = ({session}) => {
+const ProfileColumn = () => {
+    const {data:session} = useSession()
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)

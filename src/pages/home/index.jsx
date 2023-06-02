@@ -6,12 +6,13 @@ import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 
 const Home = () => {
-    const { data: session, status } = useSession()
     const router = useRouter()
-
-    if (status === "unauthenticated") {
-        router.push("/")
-    }
+    useSession({
+        required: true,
+        onUnauthenticated() {
+            router.push("/")
+        }
+    })
 
     return (
         <>
@@ -22,7 +23,7 @@ const Home = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
-            <ColumnWrapper session={session}/>
+            <ColumnWrapper/>
         </>
     );
 };
