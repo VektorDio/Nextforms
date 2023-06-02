@@ -11,7 +11,8 @@ import TextParagraph from "@/components/inputs/textParagraph";
 import OptionInput from "@/components/inputs/optionInput";
 import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
-const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange, handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
+const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange,
+                              handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
     const [options, setOptions] = useState(() => {
         if (typeof question.options[0] === "string"){
             return question.options.map(e => ({
@@ -31,18 +32,20 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
         let buf = [...options]
         let index = buf.findIndex(e => e.id === id)
 
-        if (buf.some((e) => e.text === text)){
-            buf[index].text = ""
+        if (buf.some((e) => ((e.text === text) && (e.id !== id)))){
+            handleDeleteOption(id)
             return
         }
+
         buf[index].text = text
         setOptions([...buf])
+        console.log(options)
     }
 
     function handleDeleteOption(id) {
         let buf = [...options]
         let index = buf.findIndex(e => e.id === id)
-        if(buf.length > 1){
+        if(buf.length > 1 || buf[index].text.length < 1){
             buf.splice(index, 1)
         }
         setOptions([...buf])
@@ -51,14 +54,9 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
     function handleAddOption() {
         let buf = [...options]
 
-        if (buf.some((e) => e.text === "Option")){
-            //display error
-            return
-        }
-
         buf.splice(options.length, 0, {
             id: uuidv4(),
-            text: "Option"
+            text: ""
         })
 
         setOptions([...buf])

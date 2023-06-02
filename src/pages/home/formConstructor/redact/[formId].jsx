@@ -44,6 +44,11 @@ const FormConstructor = () => {
             return
         }
 
+        if (!formObject?.questions.every((e) => e.options.length > 0)) {
+            //display error
+            return
+        }
+
         await mutateAsync({
             id: formObject?.id,
             description: formObject?.description,

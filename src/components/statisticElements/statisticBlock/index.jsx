@@ -87,25 +87,25 @@ const StatisticBlock = ({question}) => {
             )
             break;
         case "radio":
-            component = (
+            component = (question.answers.length > 0) ? (
                 <div className={styles.diagramContainer}>
                     <Pie options={options} data={data} />
                 </div>
-            )
+            ) : null
             break;
         case "checkbox":
-            component = (
+            component = (question.answers.length > 0) ? (
                 <div className={styles.diagramContainer}>
                     <Bar options={options} data={data} />
                 </div>
-            )
+            ) : null
             break;
         case "select":
-            component = (
+            component = (question.answers.length > 0) ? (
                 <div className={styles.diagramContainer}>
                     <Pie options={options} data={data} />
                 </div>
-            )
+            ) : null
             break;
         case "date":
             component = (
