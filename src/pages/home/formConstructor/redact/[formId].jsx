@@ -12,11 +12,8 @@ import {useGetFormById, useUpdateForm} from "@/queries/forms";
 
 const FormConstructor = () => {
     const router = useRouter()
-    const [selectedBlockId, setSelectedBlockId] = useState("head")
     const {formId} = router.query
-
     const {mutateAsync} = useUpdateForm()
-
     useSession({
         required: true,
         onUnauthenticated() {
@@ -29,6 +26,7 @@ const FormConstructor = () => {
     })
 
     const [formObject, setFormObject] = useState()
+    const [selectedBlockId, setSelectedBlockId] = useState("head")
 
     useEffect(() => {
         if(data) {
@@ -41,11 +39,11 @@ const FormConstructor = () => {
 
     async function handleFormSubmit() {
         await mutateAsync({
-            id: formObject.id,
-            description: formObject.description,
-            name: formObject.name,
-            active: formObject.active,
-            questions: formObject.questions.map(e => ({
+            id: formObject?.id,
+            description: formObject?.description,
+            name: formObject?.name,
+            active: formObject?.active,
+            questions: formObject?.questions.map(e => ({
                 type: e.type,
                 required: e.required,
                 question: e.question,
@@ -56,12 +54,20 @@ const FormConstructor = () => {
     }
 
     function handleNameChange(text){
+        if (text.length < 1){
+            //display error
+            return
+        }
         setFormObject(prev => ({
             ...prev,
             name: text
         }))
     }
     function handleDescriptionChange(text){
+        if (text.length < 1){
+            //display error
+            return
+        }
         setFormObject(prev => ({
             ...prev,
             description: text
@@ -76,13 +82,13 @@ const FormConstructor = () => {
     }
 
     const handleAddQuestionBlock = (id) => {
-        let buf = [...formObject.questions]
+        let buf = [...formObject?.questions]
         let index = buf.findIndex(e => e.id === id)
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             required: false,
             type: "radio",
-            question:"",
+            question:"Question",
             options:[{
                 id: uuidv4(),
                 text: ""
@@ -95,7 +101,7 @@ const FormConstructor = () => {
     }
 
     const handleDelete = (id) => {
-        let buf = [...formObject.questions]
+        let buf = [...formObject?.questions]
         let index = buf.findIndex(e => e.id === id)
         if(buf.length > 1){
             buf.splice(index, 1)
@@ -107,7 +113,7 @@ const FormConstructor = () => {
     }
 
     const handleSelectChange = (id, value) => {
-        let buf = [...formObject.questions]
+        let buf = [...formObject?.questions]
         let index = buf.findIndex(e => e.id === id)
         buf[index].type = value
         setFormObject(prev => ({
@@ -117,7 +123,17 @@ const FormConstructor = () => {
     }
 
     const handleQuestionChange = (id, text) => {
-        let buf = [...formObject.questions]
+        let buf = [...formObject?.questions]
+
+        if (text.length < 1) {
+            //display error
+            return
+        }
+        if (buf.some((e) => e.question === text)){
+            //display error
+            return
+        }
+
         let index = buf.findIndex(e => e.id === id)
         buf[index].question = text
         setFormObject(prev => ({
@@ -127,7 +143,7 @@ const FormConstructor = () => {
     }
 
     const handleRequiredToggle = (id, value) => {
-        let buf = [...formObject.questions]
+        let buf = [...formObject?.questions]
         let index = buf.findIndex(e => e.id === id)
         buf[index].required = value
         setFormObject(prev => ({
@@ -136,7 +152,7 @@ const FormConstructor = () => {
         }))
     }
 
-    return ((formObject) &&
+    return ((formObject) ? (
         <>
             <Head>
                 <title>Create Next App</title>
@@ -144,13 +160,13 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader id={formObject.id} onFormSubmit={handleFormSubmit}/>
+            <ConstructorHeader id={formObject?.id} onFormSubmit={handleFormSubmit}/>
             <Main>
                 <ConstructorColumn>
                     <ConstructorNameBlock
-                        formName={formObject.name}
-                        formDescription={formObject.description}
-                        acceptAnswers={formObject.active}
+                        formName={formObject?.name}
+                        formDescription={formObject?.description}
+                        acceptAnswers={formObject?.active}
                         handleNameChange={handleNameChange}
                         handleDescriptionChange={handleDescriptionChange}
                         handleAcceptChange={handleAcceptChange}
@@ -158,7 +174,7 @@ const FormConstructor = () => {
                         setSelectedBlockId={setSelectedBlockId}
                     />
                     {
-                        formObject.questions.map((q) => (
+                        formObject?.questions.map((q) => (
                             <ConstructorBlock
                                 key={q.id}
                                 question={q}
@@ -175,6 +191,7 @@ const FormConstructor = () => {
                 </ConstructorColumn>
             </Main>
         </>
+        ) : null
     );
 };
 

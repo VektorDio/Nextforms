@@ -24,8 +24,18 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
     const isSelected = selectedBlockId === question.id
     question.options = options
     function handleOptionRedacted(id, text) {
+        if (text.length < 1){
+            handleDeleteOption(id)
+            return
+        }
+
         let buf = [...options]
         let index = buf.findIndex(e => e.id === id)
+
+        if (buf.some((e) => e.text === text)){
+            buf[index].text = ""
+            return
+        }
         buf[index].text = text
         setOptions([...buf])
     }
@@ -41,10 +51,17 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
 
     function handleAddOption() {
         let buf = [...options]
+
+        if (buf.some((e) => e.text === "Option")){
+            //display error
+            return
+        }
+
         buf.splice(options.length, 0, {
             id: uuidv4(),
-            text: ""
+            text: "Option"
         })
+
         setOptions([...buf])
     }
 
