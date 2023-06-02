@@ -23,14 +23,20 @@ const StatisticsInput = ({answers}) => {
                 </Select>
             </div>
             <div className={styles.checkboxContainer}>
-                <CheckboxInput
-                    text={"Show answers given"}
-                    onChange={() => setOptions({...options, amountOfAnswers: !options.amountOfAnswers})}
-                />
-                <CheckboxInput
-                    text={"Show options chosen"}
-                    onChange={() => setOptions({...options, amountByOptions: !options.amountByOptions})}
-                />
+                {
+                    (answer) ? (
+                        <>
+                            <CheckboxInput
+                                text={"Show answers given"}
+                                onChange={() => setOptions({...options, amountOfAnswers: !options.amountOfAnswers})}
+                            />
+                            <CheckboxInput
+                                text={"Show options chosen"}
+                                onChange={() => setOptions({...options, amountByOptions: !options.amountByOptions})}
+                            />
+                        </>
+                    ) : null
+                }
             </div>
             <div className={styles.statisticsContainer}>
                 {
@@ -45,7 +51,7 @@ const StatisticsInput = ({answers}) => {
                         <div>
                             {
                                 answer?.options.map((e, i) => {
-                                    let counter = answer.answers.flat().reduce((acc, el) => (el === e) ? acc + 1 : acc, 0)
+                                    let counter = answer.answers.flat().reduce((acc, el) => ((el === e)) ? acc + 1 : acc, 0)
                                     return (
                                         <div key={i}>
                                             Option {e} selected {counter} time(s)

@@ -32,7 +32,7 @@ const FormView = () => {
     if (error) return (<div>error</div>)
 
     async function handleFormSubmit(values) {
-        if (formObject.active) {
+        if (formObject?.active) {
             let data = Object.entries(values).map(([k, v]) => ({
                 questionId: k,
                 answerData: v,
