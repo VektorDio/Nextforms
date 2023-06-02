@@ -48,7 +48,7 @@ const ReportConstructor = () => {
         if(answersData) {
             setAnswersObject([...answersData])
         }
-    }, [answersData, formId])
+    }, [answersLoading, answersData, formId])
 
     useEffect(() => {
         if (queryReportId) {
@@ -90,6 +90,7 @@ const ReportConstructor = () => {
                 onFormChange={onFormIdChange}
                 onReportChange={onReportIdChange}
                 onPrint={handlePrint}
+                formId={formId}
             />
             <Main>
                 {

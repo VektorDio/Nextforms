@@ -5,7 +5,7 @@ import DeleteButton from "@/components/buttons/deleteButton";
 import PrintButton from "@/components/buttons/printButton";
 import SelectInput from "@/components/inputs/selectInput";
 
-export default function FillHeader({formEntries, reportEntries, onFormChange, onReportChange, onPrint}) {
+export default function FillHeader({formId, formEntries, reportEntries, onFormChange, onReportChange, onPrint}) {
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
@@ -26,7 +26,8 @@ export default function FillHeader({formEntries, reportEntries, onFormChange, on
                     </SelectInput>
                 </div>
                 <div className={styles.selectContainer}>
-                    <SelectInput onChange={(e) => onFormChange(e.target.value)}>
+                    <SelectInput defaultValue={formId} onChange={(e) => {onFormChange(e.target.value)}
+                    }>
                         {
                             formEntries?.map((e, i) => (
                                 <option key={i} value={e.id} label={e.name}>{e.name}</option>
