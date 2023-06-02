@@ -14,7 +14,6 @@ import TimeInput from "@/components/inputs/timeInput";
 const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange, handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
     const [options, setOptions] = useState(() => {
         if (typeof question.options[0] === "string"){
-
             return question.options.map(e => ({
                 id: uuidv4(),
                 text: e,
@@ -204,7 +203,9 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 </div>
                             </>
                         ) : (
-                            <div className={styles.unselectedText}>{question.question || "Question"}</div>
+                            <div className={(question.question.length > 0) ? styles.unselectedText : styles.unselectedPlaceholder}>
+                                {question.question || "Question"}
+                            </div>
                         )
                     }
 

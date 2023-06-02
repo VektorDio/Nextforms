@@ -38,6 +38,12 @@ const FormConstructor = () => {
     if (error) return (<div>error</div>)
 
     async function handleFormSubmit() {
+
+        if (!formObject?.questions.every((e) => e.question.length > 1)) {
+            //display error
+            return
+        }
+
         await mutateAsync({
             id: formObject?.id,
             description: formObject?.description,
@@ -129,13 +135,9 @@ const FormConstructor = () => {
             //display error
             return
         }
-        if (buf.some((e) => e.question === text)){
-            //display error
-            return
-        }
 
         let index = buf.findIndex(e => e.id === id)
-        buf[index].question = text
+        buf[index].question = (buf.some((e) => e.question === text)) ? "" : text
         setFormObject(prev => ({
             ...prev,
             questions: [...buf]

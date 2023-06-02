@@ -65,6 +65,16 @@
     min-height: 46px;
 }
 
+.unselectedPlaceholder{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 28px;
+    padding: 12px 0;
+    width: 100%;
+    min-height: 46px;
+    color: grey;
+}
+
 .selectContainer{
     width: 45%;
 }
