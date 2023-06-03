@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from './profileColumn.module.css'
-import RedactButton from "@/components/buttons/reductButton";
+import RedactButton from "@/components/buttons/redactButton";
 import DeleteButton from "@/components/buttons/deleteButton";
 import ConfirmButton from "@/components/buttons/confirmButton";
 import {Form, Formik} from "formik";

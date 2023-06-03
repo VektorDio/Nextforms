@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './reductButton.module.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
-const ReductButton = ({onClick}) => {
+const RedactButton = ({onClick}) => {
     return (
         <div>
             <button className={styles.button} onClick={onClick}>
@@ -12,4 +12,4 @@ const ReductButton = ({onClick}) => {
     );
 };
 
-export default ReductButton;
+export default RedactButton;

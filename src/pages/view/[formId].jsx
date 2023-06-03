@@ -40,6 +40,7 @@ const FormView = () => {
             await createAnswers({
                 data: data
             })
+            router.push("/answerSubmitted")
         }
     }
 
