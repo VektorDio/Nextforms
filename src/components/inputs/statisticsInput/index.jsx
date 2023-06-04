@@ -14,7 +14,10 @@ const StatisticsInput = ({answers}) => {
     return (
         <div>
             <div className={styles.selectContainer}>
-                <Select defaultValue={"Placeholder"} onChange={(e)=> setAnswer(answers[e.target.value])}>
+                <Select defaultValue={"placeholder"} onChange={(e)=> setAnswer(answers[e.target.value])}>
+                    {
+                        (answer === undefined) ? <option key={"placeholder"} value={"placeholder"}>Select question</option> : null
+                    }
                     {
                         answers?.map((ans, i) => (
                             <option key={i} value={i}>{ans.question}</option>

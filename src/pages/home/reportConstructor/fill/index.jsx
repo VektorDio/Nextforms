@@ -65,11 +65,11 @@ const ReportConstructor = () => {
     if (formNamesError || reportNamesError || reportError || answersError) return (<div>error</div>)
 
     function onFormIdChange(id) {
-        setFormId(id)
+        (id !== "placeholder") && setFormId(id)
     }
 
     function onReportIdChange(id) {
-        setReportId(id)
+        (id !== "placeholder") && setReportId(id)
     }
 
     function handlePrint() {

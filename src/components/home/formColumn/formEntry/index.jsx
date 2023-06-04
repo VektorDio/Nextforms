@@ -12,7 +12,7 @@ const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
 
     function handleGenerateLink() {
         setIsMessageCopied(true)
-        navigator.clipboard.writeText(`/view/${formEntry.id}`)
+        navigator.clipboard.writeText(`http://localhost:3000/view/${formEntry.id}`)
     }
 
     return (

@@ -19,6 +19,9 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
                 <div className={styles.selectContainer}>
                     <SelectInput defaultValue={reportId} onChange={(e) => onReportChange(e.target.value)}>
                         {
+                            (reportId === undefined) ? <option key={"placeholder"} value={"placeholder"}>Select report</option> : null
+                        }
+                        {
                             reportEntries?.map((e, i) => (
                                 <option key={i} value={e.id} label={e.name}>{e.name}</option>
                             ))
@@ -26,8 +29,10 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
                     </SelectInput>
                 </div>
                 <div className={styles.selectContainer}>
-                    <SelectInput defaultValue={formId} onChange={(e) => {onFormChange(e.target.value)}
-                    }>
+                    <SelectInput defaultValue={formId} onChange={(e) => {onFormChange(e.target.value)}}>
+                        {
+                            (formId === undefined) ? <option key={"placeholder"} value={"placeholder"} >Select form</option> : null
+                        }
                         {
                             formEntries?.map((e, i) => (
                                 <option key={i} value={e.id} label={e.name}>{e.name}</option>
