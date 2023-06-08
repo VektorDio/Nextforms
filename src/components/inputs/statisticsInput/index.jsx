@@ -16,7 +16,7 @@ const StatisticsInput = ({answers}) => {
             <div className={styles.selectContainer}>
                 <Select defaultValue={"placeholder"} onChange={(e)=> setAnswer(answers[e.target.value])}>
                     {
-                        (answer === undefined) ? <option key={"placeholder"} value={"placeholder"}>Select question</option> : null
+                        (answer === undefined) ? <option key={"placeholder"} value={"placeholder"}>Виберіть питання</option> : null
                     }
                     {
                         answers?.map((ans, i) => (
@@ -30,11 +30,11 @@ const StatisticsInput = ({answers}) => {
                     (answer) ? (
                         <>
                             <CheckboxInput
-                                text={"Show answers given"}
+                                text={"Кількість відповідей"}
                                 onChange={() => setOptions({...options, amountOfAnswers: !options.amountOfAnswers})}
                             />
                             <CheckboxInput
-                                text={"Show options chosen"}
+                                text={"Кількість обраних варіантів"}
                                 onChange={() => setOptions({...options, amountByOptions: !options.amountByOptions})}
                             />
                         </>
@@ -45,7 +45,7 @@ const StatisticsInput = ({answers}) => {
                 {
                     (options.amountOfAnswers) ? (
                         <div>
-                            Answers provided: {answer.answers.length}
+                            Надано відповідей: {answer.answers.length}
                         </div>
                     ) : null
                 }
@@ -57,7 +57,7 @@ const StatisticsInput = ({answers}) => {
                                     let counter = answer.answers.flat().reduce((acc, el) => ((el === e)) ? acc + 1 : acc, 0)
                                     return (
                                         <div key={i}>
-                                            Option {e} selected {counter} time(s)
+                                            {e} - {counter}
                                         </div>
                                     )
                                 })

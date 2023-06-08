@@ -16,7 +16,7 @@ const ViewBlock = ({question}) => {
                 <div className={styles.oneLineText}>
                     <MyTextInput
                         name={question.id}
-                        placeholder={"Answer"}
+                        placeholder={"Відповідь"}
                     />
                 </div>
             )
@@ -26,7 +26,7 @@ const ViewBlock = ({question}) => {
                 <div className={styles.paragraphText}>
                     <MyParagraphInput
                         name={question.id}
-                        placeholder={"Answer"}
+                        placeholder={"Відповідь"}
                     />
                 </div>
             )
@@ -95,7 +95,7 @@ const ViewBlock = ({question}) => {
     return (
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
-                    <div className={styles.unselectedText}>{question.question || "Question"}</div>
+                    <div className={styles.unselectedText}>{question.question || "Питання"}</div>
                 </div>
                 <div className={styles.blockInput}>
                     <Form>

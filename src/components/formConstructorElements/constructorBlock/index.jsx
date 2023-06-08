@@ -56,7 +56,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
 
         buf.splice(options.length, 0, {
             id: uuidv4(),
-            text: ""
+            text: "Питання"
         })
 
         setOptions([...buf])

@@ -58,7 +58,7 @@ const ReportConstructor = () => {
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             type: "radio",
-            name: "Text",
+            name: "Текст",
         })
         setReportObject(prev => ({
             ...prev,
