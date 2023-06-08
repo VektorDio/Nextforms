@@ -137,7 +137,7 @@ const StatisticBlock = ({question}) => {
     return (
         <div className={styles.container}>
             <div className={styles.blockHeader}>
-                <div className={styles.text}>{question.question || "Question"}</div>
+                <div className={styles.text}>{question.question || "Питання"}</div>
             </div>
             <div className={styles.blockInput}>
                 {component}

@@ -36,30 +36,30 @@ const MenuColumn = ({setCentralColumnContent}) => {
         <div className={styles.mainColumn}>
             <div className={styles.menuButton} onClick={() => setCentralColumnContent("profile")}>
                 <FontAwesomeIcon className={styles.icons} icon={faUser} />
-                Profile
+                Профіль
             </div>
 
             <div className={styles.menuButton} onClick={() => setCentralColumnContent("form")}>
                 <FontAwesomeIcon className={styles.icons} icon={faWindowRestore} />
-                Forms
+                Форми
             </div>
 
             <div className={styles.menuButton} onClick={() => setCentralColumnContent("report")}>
                 <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
-                Reports
+                Звіти
             </div>
 
             <div onClick={handleFormCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
-                    New form
+                    Нова форма
                 </div>
             </div>
 
             <div onClick={handleReportCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
-                    New report
+                    Новий звіт
                 </div>
             </div>
 

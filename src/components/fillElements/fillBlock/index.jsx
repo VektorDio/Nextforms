@@ -11,7 +11,7 @@ const FillBlock = ({block, answers}) => {
                 <div className={styles.oneLineText}>
                     <InlineInput
                         name={block.id}
-                        placeholder={"Text"}
+                        placeholder={"Текст"}
                     />
                 </div>
             )
@@ -21,7 +21,7 @@ const FillBlock = ({block, answers}) => {
                 <div className={styles.paragraphText}>
                     <TextParagraph
                         name={block.id}
-                        placeholder={"Text"}
+                        placeholder={"Текст"}
                     />
                 </div>
             )
@@ -39,7 +39,7 @@ const FillBlock = ({block, answers}) => {
     return (
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
-                    <div className={styles.unselectedText}>{block.name || "Name"}</div>
+                    <div className={styles.unselectedText}>{block.name || "Текст"}</div>
                 </div>
                 <div className={styles.blockInput}>
                     {component}

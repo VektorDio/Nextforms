@@ -26,7 +26,7 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
                                 disabled={true}
                                 hidden={true}
                             >
-                                Select report
+                                Виберіть звіт
                             </option> : null
                         }
                         {
@@ -46,7 +46,7 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
                                 disabled={true}
                                 hidden={true}
                             >
-                                Select form
+                                Виберіть форму
                             </option> : null
                         }
                         {

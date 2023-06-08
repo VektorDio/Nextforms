@@ -27,10 +27,10 @@ export default function Header() {
                 ):(
                     <div className={styles.sideBlock}>
                         <Link href={"/login"}>
-                            <SignInButton>Sign In</SignInButton>
+                            <SignInButton>Вхід</SignInButton>
                         </Link>
                         <Link href={"/register"}>
-                            <SignUpButton>Sign Up</SignUpButton>
+                            <SignUpButton>Реєстрація</SignUpButton>
                         </Link>
                     </div>
                 )

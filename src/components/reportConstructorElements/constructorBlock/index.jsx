@@ -17,7 +17,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
             component = (
                 <div className={styles.oneLineText}>
                     <InlineInput
-                        placeholder={"Text"}
+                        placeholder={"Текст"}
                         disabled={true}
                     />
                 </div>
@@ -27,7 +27,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
             component = (
                 <div className={styles.paragraphText}>
                     <TextParagraph
-                        placeholder={"Text"}
+                        placeholder={"Текст"}
                         disabled={true}
                     />
                 </div>
@@ -36,8 +36,8 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
         case "statistics":
             component = (
                 <div className={styles.paragraphText}>
-                    <Select defaultValue={"Select field"} disabled={true}>
-                        <option value={"Placeholder"}>Select data field</option>
+                    <Select defaultValue={"placeholder"} disabled={true}>
+                        <option value={"placeholder"}>Виберіть відповідь</option>
                     </Select>
                 </div>
             )
@@ -58,7 +58,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                         (isSelected) ? (
                             <>
                                 <BlockInput
-                                placeholder="Text"
+                                placeholder="Текст"
                                 defaultValue={block.name}
                                 onBlur={(e) => handleNameChange(block.id, e.currentTarget.textContent)}
                             />
@@ -67,14 +67,14 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                                         defaultValue={block.type}
                                         onChange={(e) => handleBlockTypeChange(block.id, e.target.value)}
                                     >
-                                        <option value="oneLineText">Text (One Line) </option>
-                                        <option value="paragraphText">Text (Paragraph) </option>
-                                        <option value="statistics">Statistics </option>
+                                        <option value="oneLineText">Текст (Одна лінія) </option>
+                                        <option value="paragraphText">Текст (Параграф) </option>
+                                        <option value="statistics">Статистика </option>
                                     </Select>
                                 </div>
                             </>
                         ) : (
-                            <div className={styles.unselectedText}>{block.name || "Text"}</div>
+                            <div className={styles.unselectedText}>{block.name || "Текст"}</div>
                         )
                     }
 

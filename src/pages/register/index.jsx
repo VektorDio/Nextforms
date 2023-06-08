@@ -66,7 +66,7 @@ const Register = () => {
                     </Link>
                 </div>
                 <div className={styles.formBody}>
-                    <span className={styles.signInText}>Register your account</span>
+                    <span className={styles.signInText}>Зареєструйте свій аккаунт</span>
                     <Formik
                         initialValues={{
                             email: '',
@@ -95,7 +95,7 @@ const Register = () => {
                     >{(formik) => (
                         <Form>
                             <div className={styles.field}>
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email">Пошта</label>
                                 <MyTextInput
                                     name="email"
                                     type="email"
@@ -104,19 +104,19 @@ const Register = () => {
                             </div>
 
                             <div className={styles.field}>
-                                <label htmlFor="organisation">Organisation</label>
+                                <label htmlFor="organisation">Організація</label>
                                 <MyTextInput
                                     name="organisation"
                                     type="text"
-                                    placeholder="My Organisation"
+                                    placeholder="Моя організація"
                                 />
                             </div>
 
                             <div className={styles.field}>
                                 <div className={styles.passwordGrid}>
-                                    <label htmlFor="password">Password</label>
+                                    <label htmlFor="password">Пароль</label>
                                     <div className={styles.showText} onClick={handleShowPassword}>
-                                        {(showPassword) ? "Show password" : "Hide password"}
+                                        {(showPassword) ? "Показати пароль" : "Сховати пароль"}
                                     </div>
                                 </div>
                                 <MyTextInput
@@ -127,7 +127,7 @@ const Register = () => {
                             </div>
 
                             <div className={styles.field}>
-                                <label htmlFor="password">Confirm password</label>
+                                <label htmlFor="password">Підтвердження паролю</label>
                                 <MyTextInput
                                     name="confirmPassword"
                                     type={(showPassword) ? "password" : "text"}
@@ -140,7 +140,7 @@ const Register = () => {
                                 <SubmitButton
                                     type="submit"
                                     name="submit"
-                                    value="Register"
+                                    value="Зареєструватись"
                                     disabled={!(formik.isValid && formik.dirty)||formik.isSubmitting}
                                 />
                             </div>
@@ -157,12 +157,12 @@ const Register = () => {
                 </div>
                 <div className={styles.footerLink}>
                 <span className={styles.footerText}>
-                      Have an account? <Link className={styles.signUpLink} href="/login">Sign in</Link>
+                      Маете аккаунт? <Link className={styles.signUpLink} href="/login">Увійти</Link>
                     </span>
                     <div className={styles.copyRight}>
                         <span><Link href="#">©2023 TEST, Inc.</Link></span>
-                        <span><Link href="#">Contact</Link></span>
-                        <span><Link href="#">Privacy & terms</Link></span>
+                        <span><Link href="#">Контакти</Link></span>
+                        <span><Link href="#">Приватність & Умову</Link></span>
                     </div>
                 </div>
             </div>

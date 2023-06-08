@@ -7,8 +7,8 @@ export default async function handler(req, res) {
         const report = await prisma.report.create({
             data: {
                 userId: userId,
-                name: "New report",
-                description: "Description",
+                name: "Новий звіт",
+                description: "Опис",
                 blocks: {
                     create: {
                         type: "oneLineText",

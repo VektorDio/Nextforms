@@ -30,10 +30,10 @@ const ProfileColumn = () => {
 
     if (isFetching || isUpdating) return (
         <div className={styles.profileContainer}>
-            <div>Fetching...</div>
+            <div>Завантажуємо...</div>
         </div>
     )
-    if (error) return (<div>error</div>)
+    if (error) return (<div>Помилка</div>)
 
     const {firstName, lastName, phoneNumber, email, organisation, password} = data.user
     
@@ -60,7 +60,7 @@ const ProfileColumn = () => {
                             lastName: Yup.string()
                                 .max(20),
                             phone: Yup.string()
-                                .matches(phoneRegex, "Invalid phone number")
+                                .matches(phoneRegex, "Невірний номер телефону")
                                 .max(20),
                             organisation: Yup.string()
                                 .max(20)
@@ -82,7 +82,7 @@ const ProfileColumn = () => {
                     {(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
-                                <p>General Info</p>
+                                <p>Загальна інформація</p>
                                 {(editGeneral) ? (
                                         <div className={styles.buttonGroup}>
                                             <ConfirmButton onClick={() => {
@@ -106,7 +106,7 @@ const ProfileColumn = () => {
 
                             <div className={styles.inputFieldsContainer}>
                                 <div className={styles.field}>
-                                    <label>First Name</label>
+                                    <label>Ім'я</label>
                                     {(editGeneral) ? (
                                             <MyTextInput
                                                 name="firstName"
@@ -117,7 +117,7 @@ const ProfileColumn = () => {
                                         )}
                                 </div>
                                 <div className={styles.field}>
-                                    <label>Last Name</label>
+                                    <label>Прізвище</label>
                                     {(editGeneral) ? (
                                             <MyTextInput
                                                 name="lastName"
@@ -131,7 +131,7 @@ const ProfileColumn = () => {
 
                             <div className={styles.inputFieldsContainer}>
                                 <div className={styles.field}>
-                                    <label>Phone Number</label>
+                                    <label>Телефон</label>
                                     {(editGeneral) ? (
                                             <MyTextInput
                                                 name="phone"
@@ -145,7 +145,7 @@ const ProfileColumn = () => {
 
                             <div className={styles.inputFieldsContainer}>
                                 <div className={styles.field}>
-                                    <label>Organisation</label>
+                                    <label>Організація</label>
                                     {(editGeneral) ? (
                                             <MyTextInput
                                                 name="organisation"
@@ -182,7 +182,7 @@ const ProfileColumn = () => {
                     {(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
-                                <p>Email Address</p>
+                                <p>Поштові дані</p>
                                 {(editEmail) ? (
                                         <div className={styles.buttonGroup}>
                                             <ConfirmButton onClick={() => {
@@ -203,7 +203,7 @@ const ProfileColumn = () => {
                             </div>
                             <div className={styles.inputFieldsContainer}>
                                 <div className={styles.field}>
-                                    <label>Email</label>
+                                    <label>Пошта</label>
                                     {(editEmail) ? (
                                             <MyTextInput
                                                 type="email"
@@ -254,7 +254,7 @@ const ProfileColumn = () => {
                     {(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
-                                <p>Password</p>
+                                <p>Пароль</p>
                                 {(editPassword) ? (
                                         <div className={styles.buttonGroup}>
                                             <ConfirmButton onClick={()=>{
@@ -277,7 +277,7 @@ const ProfileColumn = () => {
                                 <>
                                     <div className={styles.inputFieldsContainer}>
                                         <div className={styles.field}>
-                                            <label>Current Password</label>
+                                            <label>Старий пароль</label>
                                             <MyTextInput
                                                 name="currentPassword"
                                                 type="password"
@@ -287,7 +287,7 @@ const ProfileColumn = () => {
 
                                     <div className={styles.inputFieldsContainer}>
                                         <div className={styles.field}>
-                                            <label>New Password</label>
+                                            <label>Новий пароль</label>
                                             <MyTextInput
                                                 name="newPassword"
                                                 type="password"
@@ -297,7 +297,7 @@ const ProfileColumn = () => {
                                 </>
                             ) : (
                                 <div className={styles.field}>
-                                    <div className={styles.centeredText}>Forgot password?</div>
+                                    <div className={styles.centeredText}>Забули пароль?</div>
                                 </div>
                             )}
                         </Form>

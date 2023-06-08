@@ -8,14 +8,14 @@ const ConstructorNameBlock = ({handleNameChange, handleDescriptionChange, setSel
                 <TextParagraph
                     disabled={disabled}
                     onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
-                    placeholder={"New Report"}
+                    placeholder={"Поле імені звіту"}
                 />
             </div>
             <div className={styles.formDescription}>
                 <TextParagraph
                     disabled={disabled}
                     onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
-                    placeholder={"Description"}
+                    placeholder={"Опис нового звіту"}
                 />
             </div>
         </div>

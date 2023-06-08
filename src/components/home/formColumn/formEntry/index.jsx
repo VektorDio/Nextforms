@@ -24,7 +24,7 @@ const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
                     <div className={styles.copyMessage}
                          style={{opacity: (isMessageCopied) ? 100 : 0,
                              visibility: (isMessageCopied) ? "visible" : "hidden"}}
-                    > Copied to clipboard </div>
+                    > Скопійовано </div>
                     <GenerateLinkButton onClick={handleGenerateLink} />
                 </div>
                 <Link href={`/home/formConstructor/redact/${formEntry.id}`}>

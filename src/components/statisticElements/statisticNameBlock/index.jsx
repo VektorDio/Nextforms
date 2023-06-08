@@ -4,7 +4,7 @@ const StatisticNameBlock = ({answersCount}) => {
     return (
         <div className={styles.container}>
             <div className={styles.answersCount}>
-                {answersCount} Answers
+                {answersCount} Відповідей
             </div>
             <div className={styles.formDescription}>
 
