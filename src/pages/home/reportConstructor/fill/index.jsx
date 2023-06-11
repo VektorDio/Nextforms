@@ -9,6 +9,9 @@ import {useGetReportById, useGetReportNamesByCreatorId} from "@/queries/reports"
 import FillColumn from "@/components/fillElements/fillColumn";
 import FillNameBlock from "@/components/fillElements/fillNameBlock";
 import FillBlock from "@/components/fillElements/fillBlock";
+import ConstructorHeader from "@/components/reportConstructorElements/constructorHeader";
+import LoadingMessage from "@/components/messages/loadingMessage";
+import ErrorMessage from "@/components/messages/errorMessage";
 const ReportConstructor = () => {
     const router = useRouter()
     const { data: session} = useSession()
@@ -60,9 +63,25 @@ const ReportConstructor = () => {
     }, [queryReportId, queryFormId])
 
     if (formNamesLoading || reportNamesLoading || reportLoading || answersLoading) return (
-        <Main>Loading...</Main>
+        <>
+            <ConstructorHeader />
+            <Main>
+                <FillColumn>
+                    <LoadingMessage/>
+                </FillColumn>
+            </Main>
+        </>
     )
-    if (formNamesError || reportNamesError || reportError || answersError) return (<div>error</div>)
+    if (formNamesError || reportNamesError || reportError || answersError) return (
+        <>
+            <ConstructorHeader />
+            <Main>
+                <FillColumn>
+                    <ErrorMessage error={(formNamesError || reportNamesError || reportError || answersError)}/>
+                </FillColumn>
+            </Main>
+        </>
+    )
 
     function onFormIdChange(id) {
         (id !== "placeholder") && setFormId(id)

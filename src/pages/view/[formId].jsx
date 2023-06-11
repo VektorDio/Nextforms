@@ -9,6 +9,9 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {useRouter} from "next/router";
 import {useCreateAnswers, useGetFormById} from "@/queries/forms";
+import LoadingMessage from "@/components/messages/loadingMessage";
+import ErrorMessage from "@/components/messages/errorMessage";
+import ConstructorHeader from "@/components/reportConstructorElements/constructorHeader";
 
 const FormView = () => {
     const router = useRouter()
@@ -28,8 +31,27 @@ const FormView = () => {
         }
     }, [data])
 
-    if (isLoading) return (<div>Loading...</div>)
-    if (error) return (<div>error</div>)
+    if (isLoading) return (
+        <>
+            <ConstructorHeader/>
+            <Main>
+                <ViewColumn>
+                    <LoadingMessage/>
+                </ViewColumn>
+
+            </Main>
+        </>
+    )
+    if (error) return (
+        <>
+            <ConstructorHeader/>
+            <Main>
+                <ViewColumn>
+                    <ErrorMessage error={error}/>
+                </ViewColumn>
+            </Main>
+        </>
+    )
 
     async function handleFormSubmit(values) {
         if (formObject?.active) {

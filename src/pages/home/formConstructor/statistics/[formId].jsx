@@ -8,6 +8,8 @@ import StatisticBlock from "@/components/statisticElements/statisticBlock";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useGetAnswersByFormId} from "@/queries/forms";
+import LoadingMessage from "@/components/messages/loadingMessage";
+import ErrorMessage from "@/components/messages/errorMessage";
 const FormConstructor = () => {
     const router = useRouter()
     const {formId} = router.query
@@ -30,8 +32,24 @@ const FormConstructor = () => {
         }
     }, [data])
 
-    if (isLoading) return (<div>Loading...</div>)
-    if (error) return (<div>error</div>)
+    if (isLoading) return ((
+        <>
+            <ConstructorHeader id={formObject?.id} />
+            <Main>
+                <StatisticColumn>
+                    <LoadingMessage/>
+                </StatisticColumn>
+            </Main>
+        </>
+    ))
+    if (error) return (<>
+        <ConstructorHeader id={formObject?.id} />
+        <Main>
+            <StatisticColumn>
+                <ErrorMessage error={error}/>
+            </StatisticColumn>
+        </Main>
+    </>)
 
     const answersCount = formObject?.reduce((acc, val) => (acc + val.answers.length), 0)
 

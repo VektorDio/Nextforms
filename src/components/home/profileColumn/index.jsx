@@ -9,6 +9,8 @@ import MyTextInput from "@/components/forms/textInput";
 import {signOut, useSession} from "next-auth/react";
 import {useDeleteUserById, useGetUserById, useUpdateUser} from "@/queries/users";
 import {useRouter} from "next/router";
+import LoadingMessage from "@/components/messages/loadingMessage";
+import ErrorMessage from "@/components/messages/errorMessage";
 
 const ProfileColumn = () => {
     const {data:session} = useSession()
@@ -29,11 +31,15 @@ const ProfileColumn = () => {
     })
 
     if (isFetching || isUpdating) return (
-        <div className={styles.profileContainer}>
-            <div>Завантажуємо...</div>
+        <div>
+            <LoadingMessage/>
         </div>
     )
-    if (error) return (<div>Помилка</div>)
+    if (error) return (
+        <div>
+            <ErrorMessage error={error}/>
+        </div>
+    )
 
     const {firstName, lastName, phoneNumber, email, organisation, password} = data.user
     

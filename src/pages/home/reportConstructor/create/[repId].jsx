@@ -9,6 +9,8 @@ import ConstructorColumn from "@/components/reportConstructorElements/constructo
 import ConstructorNameBlock from "@/components/reportConstructorElements/constructorNameBlock";
 import ConstructorBlock from "@/components/reportConstructorElements/constructorBlock";
 import {useGetReportById, useUpdateReport} from "@/queries/reports";
+import LoadingMessage from "@/components/messages/loadingMessage";
+import ErrorMessage from "@/components/messages/errorMessage";
 
 const ReportConstructor = () => {
     const router = useRouter()
@@ -36,8 +38,24 @@ const ReportConstructor = () => {
         }
     }, [data])
 
-    if (isLoading) return (<div>Loading...</div>)
-    if (error) return (<div>error</div>)
+    if (isLoading) return (
+        <>
+            <ConstructorHeader />
+            <Main>
+                <ConstructorColumn>
+                    <LoadingMessage/>
+                </ConstructorColumn>
+            </Main>
+        </>
+    )
+    if (error) return (<>
+        <ConstructorHeader />
+        <Main>
+            <ConstructorColumn>
+                <ErrorMessage error={error}/>
+            </ConstructorColumn>
+        </Main>
+    </>)
 
     async function handleReportSubmit() {
         await mutateAsync({

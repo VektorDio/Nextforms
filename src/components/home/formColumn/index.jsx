@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import FormEntry from "@/components/home/formColumn/formEntry";
 import {useDeleteFormById, useGetFormsByCreatorId, useUpdateForm} from "@/queries/forms";
 import {useSession} from "next-auth/react";
+import LoadingMessage from "@/components/messages/loadingMessage";
+import ErrorMessage from "@/components/messages/errorMessage";
 
 const FormColumn = () => {
     const {status, data:session} = useSession({
@@ -41,8 +43,13 @@ const FormColumn = () => {
         })
     }
 
-    if (isLoading) return (<div>Loading...</div>)
-    if (error) return (<div>Error</div>)
+    if (isLoading) return (
+        <LoadingMessage/>
+    )
+    if (error) return (
+        <ErrorMessage error={error}/>
+    )
+
     if (forms) return (
         <div>
             {

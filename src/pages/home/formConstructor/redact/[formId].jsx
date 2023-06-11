@@ -9,6 +9,8 @@ import ConstructorBlock from "@/components/formConstructorElements/constructorBl
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useGetFormById, useUpdateForm} from "@/queries/forms";
+import LoadingMessage from "@/components/messages/loadingMessage";
+import ErrorMessage from "@/components/messages/errorMessage";
 
 const FormConstructor = () => {
     const router = useRouter()
@@ -34,8 +36,24 @@ const FormConstructor = () => {
         }
     }, [data])
 
-    if (isLoading) return (<div>Loading...</div>)
-    if (error) return (<div>error</div>)
+    if (isLoading) return ((
+        <>
+            <ConstructorHeader />
+            <Main>
+                <ConstructorColumn>
+                    <LoadingMessage/>
+                </ConstructorColumn>
+            </Main>
+        </>
+    ))
+    if (error) return (<>
+        <ConstructorHeader />
+        <Main>
+            <ConstructorColumn>
+                <ErrorMessage error={error}/>
+            </ConstructorColumn>
+        </Main>
+    </>)
 
     async function handleFormSubmit() {
 

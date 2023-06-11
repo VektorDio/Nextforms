@@ -18,12 +18,23 @@ export default function ConstructorHeader({id, onFormSubmit}) {
             </div>
 
             <div className={styles.centerBlock}>
-                <Link href={`/home/formConstructor/redact/${id}`}>
-                    <RedactButton></RedactButton>
-                </Link>
-                <Link href={`/home/formConstructor/statistics/${id}`}>
-                    <ReportButton></ReportButton>
-                </Link>
+                {
+                    (id) ? (
+                        <>
+                            <Link href={`/home/formConstructor/redact/${id}`}>
+                                <RedactButton></RedactButton>
+                            </Link>
+                            <Link href={`/home/formConstructor/statistics/${id}`}>
+                                <ReportButton></ReportButton>
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <RedactButton></RedactButton>
+                            <ReportButton></ReportButton>
+                        </>
+                    )
+                }
                 {/*<Link href={'/home'}>*/}
                 {/*    <SettingsButton></SettingsButton>*/}
                 {/*</Link>*/}
