@@ -1,38 +1,33 @@
 import React from 'react';
+import {useSession} from "next-auth/react";
 import Head from "next/head";
 import Header from "@/components/pageWraper/header";
 import ColumnWrapper from "@/components/home/columnWraper";
-import {useSession} from "next-auth/react";
-import {useRouter} from "next/router";
 import MenuColumn from "@/components/home/menuColumn";
 import InfoColumn from "@/components/home/infoColumn";
-import HomeColumn from "@/components/home/homeColumn";
+import Profile from "@/components/home/profileColumn";
 
-const Home = () => {
-    const router = useRouter()
+const ProfileColumn = () => {
     useSession({
         required: true,
-        onUnauthenticated() {
-            router.push("/")
-        }
     })
 
     return (
         <>
             <Head>
-                <title>Home | Report Generator</title>
-                <meta name="description" content="Home page" />
+                <title>Profile | Report Generator</title>
+                <meta name="description" content="Profile page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
             <ColumnWrapper>
-                <MenuColumn/>
-                <HomeColumn/>
+                <MenuColumn centralColumn={"profile"}/>
+                <Profile/>
                 <InfoColumn/>
             </ColumnWrapper>
         </>
     );
 };
 
-export default Home;
+export default ProfileColumn;

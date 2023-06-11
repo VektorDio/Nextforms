@@ -12,7 +12,8 @@ import {useAddForm} from "@/queries/forms";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useAddReport} from "@/queries/reports";
-const MenuColumn = ({setCentralColumnContent, centralColumn}) => {
+import Link from "next/link";
+const MenuColumn = ({centralColumn}) => {
     const {data:session} = useSession()
     const router = useRouter()
 
@@ -34,32 +35,36 @@ const MenuColumn = ({setCentralColumnContent, centralColumn}) => {
 
     return (
         <div className={styles.mainColumn}>
-            <div
-                className={styles.menuButton}
-                onClick={() => setCentralColumnContent("profile")}
-                style={{backgroundColor: (centralColumn === "profile") ? "#365688" : null}}
-            >
-                <FontAwesomeIcon className={styles.icons} icon={faUser} />
-                Профіль
-            </div>
 
-            <div
-                className={styles.menuButton}
-                onClick={() => setCentralColumnContent("form")}
-                style={{backgroundColor: (centralColumn === "form") ? "#365688" : null}}
-            >
-                <FontAwesomeIcon className={styles.icons} icon={faWindowRestore} />
-                Форми
-            </div>
+            <Link href={`/home/profile/`}>
+                <div
+                    className={styles.menuButton}
+                    style={{backgroundColor: (centralColumn === "profile") ? "#365688" : null}}
+                >
+                    <FontAwesomeIcon className={styles.icons} icon={faUser} />
+                    Профіль
+                </div>
+            </Link>
 
-            <div
-                className={styles.menuButton}
-                onClick={() => setCentralColumnContent("report")}
-                style={{backgroundColor: (centralColumn === "report") ? "#365688" : null}}
-            >
-                <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
-                Звіти
-            </div>
+            <Link href={`/home/forms/`}>
+                <div
+                    className={styles.menuButton}
+                    style={{backgroundColor: (centralColumn === "form") ? "#365688" : null}}
+                >
+                    <FontAwesomeIcon className={styles.icons} icon={faWindowRestore} />
+                    Форми
+                </div>
+            </Link>
+
+            <Link href={`/home/reports/`}>
+                <div
+                    className={styles.menuButton}
+                    style={{backgroundColor: (centralColumn === "report") ? "#365688" : null}}
+                >
+                    <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
+                    Звіти
+                </div>
+            </Link>
 
             <div onClick={handleFormCreation} >
                 <div className={styles.menuButton}>

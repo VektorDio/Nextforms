@@ -1,16 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './columnWraper.module.css'
-import MenuColumn from "@/components/home/menuColumn";
-import CentralColumn from "@/components/home/centralColumn";
-import InfoColumn from "@/components/home/infoColumn";
 
-const ColumnWrapper = () => {
-    const [centralColumnContent, setCentralColumnContent] = useState("form");
+const ColumnWrapper = ({children}) => {
     return (
         <div className={styles.columnWrapper}>
-            <MenuColumn setCentralColumnContent={setCentralColumnContent} centralColumn={centralColumnContent}/>
-            <CentralColumn centralColumnContent={centralColumnContent} />
-            <InfoColumn/>
+            {children}
         </div>
     );
 };

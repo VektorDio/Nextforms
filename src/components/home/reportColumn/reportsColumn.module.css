@@ -1,0 +1,8 @@
+.container{
+    background-color: #010409;
+    min-height: 92vh;
+    width: 60%;
+    display: block;
+    padding: 15px;
+    float: left;
+}

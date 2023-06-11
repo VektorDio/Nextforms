@@ -1,3 +1,12 @@
+.container{
+    background-color: #010409;
+    min-height: 92vh;
+    width: 60%;
+    display: block;
+    padding: 15px;
+    float: left;
+}
+
 .profileContainer{
     margin: 12px 100px;
     padding: 20px;

@@ -4,7 +4,7 @@ import {useSession} from "next-auth/react";
 import {useDeleteReportById, useGetReportsByCreatorId} from "@/queries/reports";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
-
+import styles from './reportsColumn.module.css'
 const ReportColumn = () => {
     const {status, data:session} = useSession({
         required: true,
@@ -36,14 +36,19 @@ const ReportColumn = () => {
     }
 
     if (isLoading) return (
-        <LoadingMessage/>
+        <div className={styles.container}>
+            <LoadingMessage/>
+        </div>
+
     )
     if (error) return (
-        <ErrorMessage error={error}/>
+        <div className={styles.container}>
+            <ErrorMessage error={error}/>
+        </div>
     )
 
     if (reports) return (
-        <div>
+        <div className={styles.container}>
             {
                 reports?.map((entry,index) =>
                     <ReportEntry

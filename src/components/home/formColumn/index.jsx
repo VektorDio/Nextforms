@@ -4,7 +4,7 @@ import {useDeleteFormById, useGetFormsByCreatorId, useUpdateForm} from "@/querie
 import {useSession} from "next-auth/react";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
-
+import styles from './formsColumn.module.css'
 const FormColumn = () => {
     const {status, data:session} = useSession({
         required: true,
@@ -44,14 +44,19 @@ const FormColumn = () => {
     }
 
     if (isLoading) return (
-        <LoadingMessage/>
+        <div className={styles.container}>
+            <LoadingMessage/>
+        </div>
+
     )
     if (error) return (
-        <ErrorMessage error={error}/>
+        <div className={styles.container}>
+            <ErrorMessage error={error}/>
+        </div>
     )
 
     if (forms) return (
-        <div>
+        <div className={styles.container}>
             {
                 forms?.map((entry,index) =>
                     <FormEntry

@@ -12,8 +12,11 @@ import {useRouter} from "next/router";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 
-const ProfileColumn = () => {
-    const {data:session} = useSession()
+const Profile = () => {
+    const {data:session} = useSession({
+        required: true,
+    })
+
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
@@ -31,12 +34,12 @@ const ProfileColumn = () => {
     })
 
     if (isFetching || isUpdating) return (
-        <div>
+        <div className={styles.container}>
             <LoadingMessage/>
         </div>
     )
     if (error) return (
-        <div>
+        <div className={styles.container}>
             <ErrorMessage error={error}/>
         </div>
     )
@@ -52,270 +55,272 @@ const ProfileColumn = () => {
     }
 
     return (
-        <div className={styles.profileContainer}>
-            <div className={styles.generalBlock}>
-                <Formik initialValues={{
-                    firstName: firstName ? firstName : "",
-                    lastName: lastName ? lastName : "",
-                    phone: phoneNumber ? phoneNumber : "",
-                    organisation: organisation ? organisation : ""
-                }}
-                        validationSchema={Yup.object({
-                            firstName: Yup.string()
-                                .max(20),
-                            lastName: Yup.string()
-                                .max(20),
-                            phone: Yup.string()
-                                .matches(phoneRegex, "Невірний номер телефону")
-                                .max(20),
-                            organisation: Yup.string()
-                                .max(20)
-                        })}
-                        onSubmit={async (values, {setSubmitting}) => {
-                            const {firstName, lastName, phoneNumber, organisation} = values
+        <div className={styles.container}>
+            <div className={styles.profileContainer}>
+                <div className={styles.generalBlock}>
+                    <Formik initialValues={{
+                        firstName: firstName ? firstName : "",
+                        lastName: lastName ? lastName : "",
+                        phone: phoneNumber ? phoneNumber : "",
+                        organisation: organisation ? organisation : ""
+                    }}
+                            validationSchema={Yup.object({
+                                firstName: Yup.string()
+                                    .max(20),
+                                lastName: Yup.string()
+                                    .max(20),
+                                phone: Yup.string()
+                                    .matches(phoneRegex, "Невірний номер телефону")
+                                    .max(20),
+                                organisation: Yup.string()
+                                    .max(20)
+                            })}
+                            onSubmit={async (values, {setSubmitting}) => {
+                                const {firstName, lastName, phoneNumber, organisation} = values
 
-                            await updateUser({
-                                id:id,
-                                firstName:firstName,
-                                lastName:lastName,
-                                phoneNumber:phoneNumber,
-                                organisation:organisation
-                            })
+                                await updateUser({
+                                    id:id,
+                                    firstName:firstName,
+                                    lastName:lastName,
+                                    phoneNumber:phoneNumber,
+                                    organisation:organisation
+                                })
 
-                            setSubmitting(false);
-                        }}
-                        validateOnBlur={false}>
-                    {(formik) => (
-                        <Form>
-                            <div className={styles.generalInfo}>
-                                <p>Загальна інформація</p>
-                                {(editGeneral) ? (
-                                        <div className={styles.buttonGroup}>
-                                            <ConfirmButton onClick={() => {
-                                                formik.handleSubmit()
-                                                setEditGeneral(false)
-                                            }
-                                            }></ConfirmButton>
-                                            <DeleteButton onClick={() => {
+                                setSubmitting(false);
+                            }}
+                            validateOnBlur={false}>
+                        {(formik) => (
+                            <Form>
+                                <div className={styles.generalInfo}>
+                                    <p>Загальна інформація</p>
+                                    {(editGeneral) ? (
+                                            <div className={styles.buttonGroup}>
+                                                <ConfirmButton onClick={() => {
+                                                    formik.handleSubmit()
+                                                    setEditGeneral(false)
+                                                }
+                                                }></ConfirmButton>
+                                                <DeleteButton onClick={() => {
+                                                    setEditGeneral(!editGeneral)
+                                                    formik.resetForm()
+                                                }}></DeleteButton>
+                                            </div>
+                                        ) : (
+                                            <RedactButton onClick={() => {
                                                 setEditGeneral(!editGeneral)
                                                 formik.resetForm()
-                                            }}></DeleteButton>
-                                        </div>
-                                    ) : (
-                                        <RedactButton onClick={() => {
-                                            setEditGeneral(!editGeneral)
-                                            formik.resetForm()
-                                        }}></RedactButton>
-                                    )
-                                }
-                            </div>
-
-                            <div className={styles.inputFieldsContainer}>
-                                <div className={styles.field}>
-                                    <label>Ім'я</label>
-                                    {(editGeneral) ? (
-                                            <MyTextInput
-                                                name="firstName"
-                                                type="firstName"
-                                            />
-                                        ) : (
-                                            <div className={styles.centeredText}>{firstName}</div>
-                                        )}
+                                            }}></RedactButton>
+                                        )
+                                    }
                                 </div>
-                                <div className={styles.field}>
-                                    <label>Прізвище</label>
-                                    {(editGeneral) ? (
-                                            <MyTextInput
-                                                name="lastName"
-                                                type="lastName"
-                                            />
-                                        ) : (
-                                            <div className={styles.centeredText}>{lastName}</div>
-                                        )}
+
+                                <div className={styles.inputFieldsContainer}>
+                                    <div className={styles.field}>
+                                        <label>Ім'я</label>
+                                        {(editGeneral) ? (
+                                                <MyTextInput
+                                                    name="firstName"
+                                                    type="firstName"
+                                                />
+                                            ) : (
+                                                <div className={styles.centeredText}>{firstName}</div>
+                                            )}
+                                    </div>
+                                    <div className={styles.field}>
+                                        <label>Прізвище</label>
+                                        {(editGeneral) ? (
+                                                <MyTextInput
+                                                    name="lastName"
+                                                    type="lastName"
+                                                />
+                                            ) : (
+                                                <div className={styles.centeredText}>{lastName}</div>
+                                            )}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className={styles.inputFieldsContainer}>
-                                <div className={styles.field}>
-                                    <label>Телефон</label>
-                                    {(editGeneral) ? (
-                                            <MyTextInput
-                                                name="phone"
-                                                type="phone"
-                                            />
-                                        ) : (
-                                            <div className={styles.centeredText}>{phoneNumber}</div>
-                                        )}
+                                <div className={styles.inputFieldsContainer}>
+                                    <div className={styles.field}>
+                                        <label>Телефон</label>
+                                        {(editGeneral) ? (
+                                                <MyTextInput
+                                                    name="phone"
+                                                    type="phone"
+                                                />
+                                            ) : (
+                                                <div className={styles.centeredText}>{phoneNumber}</div>
+                                            )}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className={styles.inputFieldsContainer}>
-                                <div className={styles.field}>
-                                    <label>Організація</label>
-                                    {(editGeneral) ? (
-                                            <MyTextInput
-                                                name="organisation"
-                                                type="organisation"
-                                            />
-                                        ) : (
-                                            <div className={styles.centeredText}>{organisation}</div>
-                                        )}
+                                <div className={styles.inputFieldsContainer}>
+                                    <div className={styles.field}>
+                                        <label>Організація</label>
+                                        {(editGeneral) ? (
+                                                <MyTextInput
+                                                    name="organisation"
+                                                    type="organisation"
+                                                />
+                                            ) : (
+                                                <div className={styles.centeredText}>{organisation}</div>
+                                            )}
+                                    </div>
                                 </div>
-                            </div>
-                        </Form>
-                        )}
-                </Formik>
-            </div>
-            <div className={styles.generalBlock}>
-                <Formik initialValues={{
-                    email: email ? email : "",
-                }}
-                validationSchema={Yup.object({
-                    email: Yup.string()
-                        .email()
-                })}
-                onSubmit={async (values, {setSubmitting}) => {
-                    const {email} = values
+                            </Form>
+                            )}
+                    </Formik>
+                </div>
+                <div className={styles.generalBlock}>
+                    <Formik initialValues={{
+                        email: email ? email : "",
+                    }}
+                    validationSchema={Yup.object({
+                        email: Yup.string()
+                            .email()
+                    })}
+                    onSubmit={async (values, {setSubmitting}) => {
+                        const {email} = values
 
-                    await updateUser({
-                        id: id,
-                        email:email,
-                    })
-
-                    setSubmitting(false);
-                }}
-                validateOnBlur={false}>
-                    {(formik) => (
-                        <Form>
-                            <div className={styles.generalInfo}>
-                                <p>Поштові дані</p>
-                                {(editEmail) ? (
-                                        <div className={styles.buttonGroup}>
-                                            <ConfirmButton onClick={() => {
-                                                formik.handleSubmit()
-                                                setEditEmail(false)
-                                            }}></ConfirmButton>
-                                            <DeleteButton onClick={() => {
-                                                setEditEmail(!editEmail)
-                                                formik.resetForm()
-                                            }}></DeleteButton>
-                                        </div>
-                                    ) : (
-                                        <RedactButton onClick={() => {
-                                            setEditEmail(!editEmail)
-                                            formik.resetForm()
-                                        }}></RedactButton>
-                                    )}
-                            </div>
-                            <div className={styles.inputFieldsContainer}>
-                                <div className={styles.field}>
-                                    <label>Пошта</label>
-                                    {(editEmail) ? (
-                                            <MyTextInput
-                                                type="email"
-                                                name="email"
-                                            />
-                                        ) : (
-                                            <div className={styles.centeredText}>{email}</div>
-                                    )}
-                                </div>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
-            </div>
-
-            <div className={styles.generalBlock}>
-                <Formik initialValues={{
-                    currentPassword: '',
-                    newPassword: '',
-                }}
-                validationSchema={Yup.object({
-                    currentPassword: Yup.string()
-                        .min(8, 'Password must be 8 characters long')
-                        .matches(/[0-9]/, 'Password requires a number')
-                        .matches(/[a-z]/, 'Password requires a lowercase letter')
-                        .matches(/[A-Z]/, 'Password requires an uppercase letter')
-                        .required('Required'),
-                    newPassword: Yup.string()
-                        .min(8, 'Password must be 8 characters long')
-                        .matches(/[0-9]/, 'Password requires a number')
-                        .matches(/[a-z]/, 'Password requires a lowercase letter')
-                        .matches(/[A-Z]/, 'Password requires an uppercase letter')
-                        .required('Required'),
-                })}
-                onSubmit={async (values, {setSubmitting}) => {
-                    const {currentPassword, newPassword} = values
-
-                    if (password === currentPassword) {
                         await updateUser({
                             id: id,
-                            password: newPassword,
+                            email:email,
                         })
-                    }
 
-                    setSubmitting(false);
-                }}
-                validateOnBlur={false}>
-                    {(formik) => (
-                        <Form>
-                            <div className={styles.generalInfo}>
-                                <p>Пароль</p>
-                                {(editPassword) ? (
-                                        <div className={styles.buttonGroup}>
-                                            <ConfirmButton onClick={()=>{
-                                                formik.handleSubmit()
-                                                setEditPassword(false)
-                                            }}></ConfirmButton>
-                                            <DeleteButton onClick={() => {
+                        setSubmitting(false);
+                    }}
+                    validateOnBlur={false}>
+                        {(formik) => (
+                            <Form>
+                                <div className={styles.generalInfo}>
+                                    <p>Поштові дані</p>
+                                    {(editEmail) ? (
+                                            <div className={styles.buttonGroup}>
+                                                <ConfirmButton onClick={() => {
+                                                    formik.handleSubmit()
+                                                    setEditEmail(false)
+                                                }}></ConfirmButton>
+                                                <DeleteButton onClick={() => {
+                                                    setEditEmail(!editEmail)
+                                                    formik.resetForm()
+                                                }}></DeleteButton>
+                                            </div>
+                                        ) : (
+                                            <RedactButton onClick={() => {
+                                                setEditEmail(!editEmail)
+                                                formik.resetForm()
+                                            }}></RedactButton>
+                                        )}
+                                </div>
+                                <div className={styles.inputFieldsContainer}>
+                                    <div className={styles.field}>
+                                        <label>Пошта</label>
+                                        {(editEmail) ? (
+                                                <MyTextInput
+                                                    type="email"
+                                                    name="email"
+                                                />
+                                            ) : (
+                                                <div className={styles.centeredText}>{email}</div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+
+                <div className={styles.generalBlock}>
+                    <Formik initialValues={{
+                        currentPassword: '',
+                        newPassword: '',
+                    }}
+                    validationSchema={Yup.object({
+                        currentPassword: Yup.string()
+                            .min(8, 'Password must be 8 characters long')
+                            .matches(/[0-9]/, 'Password requires a number')
+                            .matches(/[a-z]/, 'Password requires a lowercase letter')
+                            .matches(/[A-Z]/, 'Password requires an uppercase letter')
+                            .required('Required'),
+                        newPassword: Yup.string()
+                            .min(8, 'Password must be 8 characters long')
+                            .matches(/[0-9]/, 'Password requires a number')
+                            .matches(/[a-z]/, 'Password requires a lowercase letter')
+                            .matches(/[A-Z]/, 'Password requires an uppercase letter')
+                            .required('Required'),
+                    })}
+                    onSubmit={async (values, {setSubmitting}) => {
+                        const {currentPassword, newPassword} = values
+
+                        if (password === currentPassword) {
+                            await updateUser({
+                                id: id,
+                                password: newPassword,
+                            })
+                        }
+
+                        setSubmitting(false);
+                    }}
+                    validateOnBlur={false}>
+                        {(formik) => (
+                            <Form>
+                                <div className={styles.generalInfo}>
+                                    <p>Пароль</p>
+                                    {(editPassword) ? (
+                                            <div className={styles.buttonGroup}>
+                                                <ConfirmButton onClick={()=>{
+                                                    formik.handleSubmit()
+                                                    setEditPassword(false)
+                                                }}></ConfirmButton>
+                                                <DeleteButton onClick={() => {
+                                                    setEditPassword(!editPassword)
+                                                    formik.resetForm()
+                                                }}></DeleteButton>
+                                            </div>
+                                        ) : (
+                                            <RedactButton onClick={() => {
                                                 setEditPassword(!editPassword)
                                                 formik.resetForm()
-                                            }}></DeleteButton>
-                                        </div>
-                                    ) : (
-                                        <RedactButton onClick={() => {
-                                            setEditPassword(!editPassword)
-                                            formik.resetForm()
-                                        }}></RedactButton>
-                                    )}
-                            </div>
-                            {(editPassword) ? (
-                                <>
-                                    <div className={styles.inputFieldsContainer}>
-                                        <div className={styles.field}>
-                                            <label>Старий пароль</label>
-                                            <MyTextInput
-                                                name="currentPassword"
-                                                type="password"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.inputFieldsContainer}>
-                                        <div className={styles.field}>
-                                            <label>Новий пароль</label>
-                                            <MyTextInput
-                                                name="newPassword"
-                                                type="password"
-                                            />
-                                        </div>
-                                    </div>
-                                </>
-                            ) : (
-                                <div className={styles.field}>
-                                    <div className={styles.centeredText}>Забули пароль?</div>
+                                            }}></RedactButton>
+                                        )}
                                 </div>
-                            )}
-                        </Form>
-                    )}
-                </Formik>
-            </div>
+                                {(editPassword) ? (
+                                    <>
+                                        <div className={styles.inputFieldsContainer}>
+                                            <div className={styles.field}>
+                                                <label>Старий пароль</label>
+                                                <MyTextInput
+                                                    name="currentPassword"
+                                                    type="password"
+                                                />
+                                            </div>
+                                        </div>
 
-            <div className={styles.buttonGroup}>
-                <DeleteButton onClick={handleUserDelete}></DeleteButton>
+                                        <div className={styles.inputFieldsContainer}>
+                                            <div className={styles.field}>
+                                                <label>Новий пароль</label>
+                                                <MyTextInput
+                                                    name="newPassword"
+                                                    type="password"
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className={styles.field}>
+                                        <div className={styles.centeredText}>Забули пароль?</div>
+                                    </div>
+                                )}
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+
+                <div className={styles.buttonGroup}>
+                    <DeleteButton onClick={handleUserDelete}></DeleteButton>
+                </div>
             </div>
         </div>
     );
 };
 
-export default ProfileColumn;
+export default Profile;
