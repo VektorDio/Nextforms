@@ -5,10 +5,10 @@ import CentralColumn from "@/components/home/centralColumn";
 import InfoColumn from "@/components/home/infoColumn";
 
 const ColumnWrapper = () => {
-    const [centralColumnContent, setCentralColumnContent] = useState(true);
+    const [centralColumnContent, setCentralColumnContent] = useState("form");
     return (
         <div className={styles.columnWrapper}>
-            <MenuColumn setCentralColumnContent={setCentralColumnContent}/>
+            <MenuColumn setCentralColumnContent={setCentralColumnContent} centralColumn={centralColumnContent}/>
             <CentralColumn centralColumnContent={centralColumnContent} />
             <InfoColumn/>
         </div>

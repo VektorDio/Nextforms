@@ -52,6 +52,27 @@ const ReportConstructor = () => {
         router.push("/home")
     }
 
+    function handleNameChange(text){
+        if (text.length < 1){
+            //display error
+            return
+        }
+        setReportObject(prev => ({
+            ...prev,
+            name: text
+        }))
+    }
+    function handleDescriptionChange(text){
+        if (text.length < 1){
+            //display error
+            return
+        }
+        setReportObject(prev => ({
+            ...prev,
+            description: text
+        }))
+    }
+
     const handleAddBlock = (id) => {
         let buf = [...reportObject?.blocks]
         let index = buf.findIndex(e => e.id === id)
@@ -114,7 +135,10 @@ const ReportConstructor = () => {
             <Main>
                 <ConstructorColumn>
                     <ConstructorNameBlock
-                        disabled={true}
+                        reportName={reportObject?.name}
+                        reportDescription={reportObject?.description}
+                        handleNameChange={handleNameChange}
+                        handleDescriptionChange={handleDescriptionChange}
                         setSelectedBlockId={setSelectedBlockId}
                     />
                     {

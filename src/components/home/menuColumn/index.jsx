@@ -12,7 +12,7 @@ import {useAddForm} from "@/queries/forms";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useAddReport} from "@/queries/reports";
-const MenuColumn = ({setCentralColumnContent}) => {
+const MenuColumn = ({setCentralColumnContent, centralColumn}) => {
     const {data:session} = useSession()
     const router = useRouter()
 
@@ -34,17 +34,29 @@ const MenuColumn = ({setCentralColumnContent}) => {
 
     return (
         <div className={styles.mainColumn}>
-            <div className={styles.menuButton} onClick={() => setCentralColumnContent("profile")}>
+            <div
+                className={styles.menuButton}
+                onClick={() => setCentralColumnContent("profile")}
+                style={{backgroundColor: (centralColumn === "profile") ? "#365688" : null}}
+            >
                 <FontAwesomeIcon className={styles.icons} icon={faUser} />
                 Профіль
             </div>
 
-            <div className={styles.menuButton} onClick={() => setCentralColumnContent("form")}>
+            <div
+                className={styles.menuButton}
+                onClick={() => setCentralColumnContent("form")}
+                style={{backgroundColor: (centralColumn === "form") ? "#365688" : null}}
+            >
                 <FontAwesomeIcon className={styles.icons} icon={faWindowRestore} />
                 Форми
             </div>
 
-            <div className={styles.menuButton} onClick={() => setCentralColumnContent("report")}>
+            <div
+                className={styles.menuButton}
+                onClick={() => setCentralColumnContent("report")}
+                style={{backgroundColor: (centralColumn === "report") ? "#365688" : null}}
+            >
                 <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
                 Звіти
             </div>
