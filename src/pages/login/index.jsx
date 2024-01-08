@@ -13,6 +13,8 @@ const Login = () => {
     const {status} = useSession()
     const router = useRouter()
     const [submissionError, setSubmissionError] = useState(null)
+    const [ok, setOk] = useState(null)
+    const [error, setError] = useState(null)
 
     if (status === "authenticated") {
         router.push("/home")
@@ -27,15 +29,18 @@ const Login = () => {
             redirect: false
         })
 
-        useEffect(()=>{
-            if (ok) {
-                router.push("/home")
-            }
-            else {
-                setSubmissionError(error)
-            }
-        }, [ok])
+        setError(error)
+        setOk(ok)
     }
+
+    useEffect(() => {
+        if (ok) {
+            router.push("/home")
+        }
+        else {
+            setSubmissionError(error)
+        }
+    }, [ok, error])
 
     return (
         <>
@@ -106,7 +111,7 @@ const Login = () => {
                                     type="submit"
                                     name="submit"
                                     value="Продовжити"
-                                    disabled={!(formik.isValid && formik.dirty)||formik.isSubmitting}
+                                    disabled={!(formik.isValid && formik.dirty) || formik.isSubmitting}
                                 />
                             </div>
 

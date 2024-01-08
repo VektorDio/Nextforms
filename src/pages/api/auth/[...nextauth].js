@@ -12,12 +12,20 @@ const authOptions = {
         CredentialsProvider({
             async authorize(credentials) {
                 const {email, password} = credentials
+                let user
+                try {
+                    user = await prisma.user.findUnique({
+                        where:{
+                            email:email
+                        }
+                    })
+                } catch (e) {
+                    throw e
+                }
 
-                const user = await prisma.user.findUnique({
-                    where:{
-                        email:email
-                    }
-                })
+                if (user === null) {
+                    throw new Error("There is no user with this email")
+                }
 
                 if (email !== user.email || !validatePassword(password, user.password)){
                     throw Error ('Wrong email or password')

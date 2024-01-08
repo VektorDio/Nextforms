@@ -9,6 +9,16 @@ export default async function handler(req, res) {
         const hashedPassword = hashPassword(password)
         let user
         try {
+            const userToSearch = await prisma.user.findUnique({
+                where: {
+                    email: email
+                }
+            })
+
+            if (userToSearch){
+                res.status(500).send({message: "This email is already taken"})
+            }
+
             user = await prisma.user.create({
                 data: {
                     email: email,
@@ -20,7 +30,6 @@ export default async function handler(req, res) {
             let errorMessage
             if (e instanceof Prisma.PrismaClientKnownRequestError) {
                 // The .code property can be accessed in a type-safe manner
-
                 if (e.code === 'P2002') {
                     errorMessage = "This email is already taken"
                 }
