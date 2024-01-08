@@ -11,7 +11,10 @@
 }
 
 .oneLineText:focus {
-    outline: #365688 solid 4px;
+    border: #365688 solid 3px;
+    line-height: 22px;
+    padding: 8px 13px;
+    outline: none;
 }
 
 .inputInvalid {
@@ -23,7 +26,8 @@
     border: unset;
     border-radius: 6px;
     background-color: #353f4f;
-    outline: red solid 3px !important;
+    border: red solid 3px;
+    outline: none;
 }
 
 @media print {
@@ -32,7 +36,6 @@
     }
 
     .inputInvalid {
-
         padding: 0;
     }
 }

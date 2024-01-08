@@ -5,6 +5,7 @@ import Footer from "@/components/pageWraper/footer";
 import About from "@/components/about";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import React from "react";
 export default function Welcome() {
   const {status} = useSession()
   const router = useRouter()
@@ -21,11 +22,11 @@ export default function Welcome() {
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <link rel="icon" href="/favicon.ico"/>
         </Head>
-        <Header></Header>
+        <Header/>
         <Main>
-          <About></About>
+          <About/>
         </Main>
-        <Footer></Footer>
+        <Footer/>
       </>
   )
 }

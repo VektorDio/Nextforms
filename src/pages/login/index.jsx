@@ -45,6 +45,7 @@ const Login = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+
             <div className={styles.mainContainer}>
                 <div className={styles.siteName}>
                     <Link href="/" rel="dofollow">
@@ -116,6 +117,7 @@ const Login = () => {
                     )}
                     </Formik>
                 </div>
+
                 <div className={styles.footerLink}>
                     <span className={styles.footerText}>
                       Немає аккаунту? <Link className={styles.signUpLink} href="/register">Зареєструйтесь</Link>
