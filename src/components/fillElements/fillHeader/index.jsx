@@ -26,7 +26,7 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
                                 disabled={true}
                                 hidden={true}
                             >
-                                Виберіть звіт
+                                Select report
                             </option> : null
                         }
                         {
@@ -46,7 +46,7 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
                                 disabled={true}
                                 hidden={true}
                             >
-                                Виберіть форму
+                                Select form
                             </option> : null
                         }
                         {
@@ -61,7 +61,7 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
             <div className={styles.sideBlock}>
                 <PrintButton onClick={onPrint}/>
                 <Link href={"/home"}>
-                    <DeleteButton></DeleteButton>
+                    <DeleteButton/>
                 </Link>
             </div>
         </div>

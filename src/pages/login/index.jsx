@@ -58,7 +58,7 @@ const Login = () => {
                     </Link>
                 </div>
                 <div className={styles.formBody}>
-                    <span className={styles.signInText}>Війдіть в свій аккаунт</span>
+                    <span className={styles.signInText}>Log in to account</span>
                     <Formik
                         initialValues={{
                             email: '',
@@ -80,7 +80,7 @@ const Login = () => {
                     >{(formik) => (
                         <Form>
                             <div className={styles.field}>
-                                <label htmlFor="email">Пошта</label>
+                                <label htmlFor="email">Email</label>
                                 <MyTextInput
                                     name="email"
                                     type="email"
@@ -90,9 +90,9 @@ const Login = () => {
 
                             <div className={styles.field}>
                                 <div className={styles.passwordGrid}>
-                                    <label htmlFor="password">Пароль</label>
+                                    <label htmlFor="password">Password</label>
                                     <div className={styles.resetPassText}>
-                                        <Link href="/index">Забули пароль?</Link>
+                                        <Link href="/index">Forgot your password?</Link>
                                     </div>
                                 </div>
                                 <MyTextInput
@@ -110,7 +110,7 @@ const Login = () => {
                                 <SubmitButton
                                     type="submit"
                                     name="submit"
-                                    value="Продовжити"
+                                    value="Continue"
                                     disabled={!(formik.isValid && formik.dirty) || formik.isSubmitting}
                                 />
                             </div>
@@ -125,12 +125,12 @@ const Login = () => {
 
                 <div className={styles.footerLink}>
                     <span className={styles.footerText}>
-                      Немає аккаунту? <Link className={styles.signUpLink} href="/register">Зареєструйтесь</Link>
+                      Dont have an account? <Link className={styles.signUpLink} href="/register">Register</Link>
                     </span>
                     <div className={styles.copyRight}>
                         <span><Link href="#">©2023 TEST, Inc.</Link></span>
-                        <span><Link href="#">Контакти</Link></span>
-                        <span><Link href="#">Приватність & Умови</Link></span>
+                        <span><Link href="#">Contact</Link></span>
+                        <span><Link href="#">Privacy & Terms</Link></span>
                     </div>
                 </div>
             </div>

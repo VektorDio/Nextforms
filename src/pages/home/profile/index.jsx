@@ -8,10 +8,17 @@ import InfoColumn from "@/components/home/infoColumn";
 import Profile from "@/components/home/profileColumn";
 
 const ProfileColumn = () => {
-    useSession({
+    const { status } = useSession({
         required: true,
     })
 
+    if(status === "loading"){
+        return (
+            <>
+                <div>Loading...</div>
+            </>
+        );
+    }
     return (
         <>
             <Head>

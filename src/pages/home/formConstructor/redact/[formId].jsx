@@ -46,7 +46,8 @@ const FormConstructor = () => {
             </Main>
         </>
     ))
-    if (error) return (<>
+    if (error) return (
+        <>
         <ConstructorHeader />
         <Main>
             <ConstructorColumn>

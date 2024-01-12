@@ -9,20 +9,20 @@ const ConstructorNameBlock = ({formName, formDescription, handleNameChange,
             <div className={styles.formName}>
                 <TextParagraph
                     onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
-                    placeholder={"Нова форма"}
+                    placeholder={"New form"}
                     defaultValue={formName}
                 />
             </div>
             <div className={styles.formDescription}>
                 <TextParagraph
                     onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
-                    placeholder={"Опис"}
+                    placeholder={"Description"}
                     defaultValue={formDescription}
                 />
             </div>
             <div>
                 <ToggleButton
-                    text={"Приймати відповіді"}
+                    text={"Accept answers"}
                     onClick={(e) => handleAcceptChange(e.target.checked)}
                     checked={acceptAnswers}
                 />

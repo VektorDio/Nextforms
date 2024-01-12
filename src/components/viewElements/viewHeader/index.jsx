@@ -23,7 +23,7 @@ export default function ViewHeader() {
             <div className={styles.sideBlock}>
                 <ConfirmButton onClick={onSubmit}></ConfirmButton>
                 <Link href={"/home"}>
-                    <DeleteButton></DeleteButton>
+                    <DeleteButton/>
                 </Link>
             </div>
         </div>

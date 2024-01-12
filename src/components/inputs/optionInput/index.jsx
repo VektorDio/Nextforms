@@ -25,11 +25,11 @@ const OptionInput = ({id, text, type, deletable, index, addOption, handleOptionR
             {checkmark}
             <div className={styles.text}>
                 {(addOption) ? (
-                    <div className={styles.addOptionText} onClick={handleAddOption}> Додати новиу відповідь </div>
+                    <div className={styles.addOptionText} onClick={handleAddOption}> Add option </div>
                 ) : (
                     <TextParagraph
                         onBlur={(e) => handleOptionRedacted(id, e.currentTarget.textContent)}
-                        placeholder={"Відповідь"}
+                        placeholder={"Answer"}
                         defaultValue={text}
                         disabled={disabled}
                     />

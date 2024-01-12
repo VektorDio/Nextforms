@@ -17,7 +17,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
             component = (
                 <div className={styles.oneLineText}>
                     <InlineInput
-                        placeholder={"Текст"}
+                        placeholder={"Text"}
                         disabled={true}
                     />
                 </div>
@@ -27,7 +27,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
             component = (
                 <div className={styles.paragraphText}>
                     <TextParagraph
-                        placeholder={"Текст"}
+                        placeholder={"Text"}
                         disabled={true}
                     />
                 </div>
@@ -37,7 +37,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
             component = (
                 <div className={styles.paragraphText}>
                     <Select defaultValue={"placeholder"} disabled={true}>
-                        <option value={"placeholder"}>Виберіть відповідь</option>
+                        <option value={"placeholder"}>Select answer</option>
                     </Select>
                 </div>
             )
@@ -58,7 +58,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                         (isSelected) ? (
                             <>
                                 <BlockInput
-                                placeholder="Текст"
+                                placeholder="Text"
                                 defaultValue={block.name}
                                 onBlur={(e) => handleNameChange(block.id, e.currentTarget.textContent)}
                             />
@@ -67,14 +67,14 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                                         defaultValue={block.type}
                                         onChange={(e) => handleBlockTypeChange(block.id, e.target.value)}
                                     >
-                                        <option value="oneLineText">Текст (Одна лінія) </option>
-                                        <option value="paragraphText">Текст (Параграф) </option>
-                                        <option value="statistics">Статистика </option>
+                                        <option value="oneLineText">Text (One line) </option>
+                                        <option value="paragraphText">Text (Paragraph) </option>
+                                        <option value="statistics">Statistics </option>
                                     </Select>
                                 </div>
                             </>
                         ) : (
-                            <div className={styles.unselectedText}>{block.name || "Текст"}</div>
+                            <div className={styles.unselectedText}>{block.name || "Text"}</div>
                         )
                     }
 

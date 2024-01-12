@@ -70,7 +70,7 @@ const Profile = () => {
                                 lastName: Yup.string()
                                     .max(20),
                                 phone: Yup.string()
-                                    .matches(phoneRegex, "Невірний номер телефону")
+                                    .matches(phoneRegex, "Wrong phone number")
                                     .max(20),
                                 organisation: Yup.string()
                                     .max(20)
@@ -92,14 +92,13 @@ const Profile = () => {
                         {(formik) => (
                             <Form>
                                 <div className={styles.generalInfo}>
-                                    <p>Загальна інформація</p>
+                                    <p>General info</p>
                                     {(editGeneral) ? (
                                             <div className={styles.buttonGroup}>
                                                 <ConfirmButton onClick={() => {
                                                     formik.handleSubmit()
                                                     setEditGeneral(false)
-                                                }
-                                                }></ConfirmButton>
+                                                }}></ConfirmButton>
                                                 <DeleteButton onClick={() => {
                                                     setEditGeneral(!editGeneral)
                                                     formik.resetForm()
@@ -116,7 +115,7 @@ const Profile = () => {
 
                                 <div className={styles.inputFieldsContainer}>
                                     <div className={styles.field}>
-                                        <label>Ім'я</label>
+                                        <label>Name</label>
                                         {(editGeneral) ? (
                                                 <MyTextInput
                                                     name="firstName"
@@ -127,7 +126,7 @@ const Profile = () => {
                                             )}
                                     </div>
                                     <div className={styles.field}>
-                                        <label>Прізвище</label>
+                                        <label>Last Name</label>
                                         {(editGeneral) ? (
                                                 <MyTextInput
                                                     name="lastName"
@@ -141,7 +140,7 @@ const Profile = () => {
 
                                 <div className={styles.inputFieldsContainer}>
                                     <div className={styles.field}>
-                                        <label>Телефон</label>
+                                        <label>Phone</label>
                                         {(editGeneral) ? (
                                                 <MyTextInput
                                                     name="phone"
@@ -155,7 +154,7 @@ const Profile = () => {
 
                                 <div className={styles.inputFieldsContainer}>
                                     <div className={styles.field}>
-                                        <label>Організація</label>
+                                        <label>Organization</label>
                                         {(editGeneral) ? (
                                                 <MyTextInput
                                                     name="organisation"
@@ -192,7 +191,7 @@ const Profile = () => {
                         {(formik) => (
                             <Form>
                                 <div className={styles.generalInfo}>
-                                    <p>Поштові дані</p>
+                                    <p>Email</p>
                                     {(editEmail) ? (
                                             <div className={styles.buttonGroup}>
                                                 <ConfirmButton onClick={() => {
@@ -213,7 +212,7 @@ const Profile = () => {
                                 </div>
                                 <div className={styles.inputFieldsContainer}>
                                     <div className={styles.field}>
-                                        <label>Пошта</label>
+                                        <label>Email</label>
                                         {(editEmail) ? (
                                                 <MyTextInput
                                                     type="email"
@@ -264,7 +263,7 @@ const Profile = () => {
                         {(formik) => (
                             <Form>
                                 <div className={styles.generalInfo}>
-                                    <p>Пароль</p>
+                                    <p>Password</p>
                                     {(editPassword) ? (
                                             <div className={styles.buttonGroup}>
                                                 <ConfirmButton onClick={()=>{
@@ -287,7 +286,7 @@ const Profile = () => {
                                     <>
                                         <div className={styles.inputFieldsContainer}>
                                             <div className={styles.field}>
-                                                <label>Старий пароль</label>
+                                                <label>Old password</label>
                                                 <MyTextInput
                                                     name="currentPassword"
                                                     type="password"
@@ -297,7 +296,7 @@ const Profile = () => {
 
                                         <div className={styles.inputFieldsContainer}>
                                             <div className={styles.field}>
-                                                <label>Новий пароль</label>
+                                                <label>New password</label>
                                                 <MyTextInput
                                                     name="newPassword"
                                                     type="password"
@@ -307,7 +306,7 @@ const Profile = () => {
                                     </>
                                 ) : (
                                     <div className={styles.field}>
-                                        <div className={styles.centeredText}>Забули пароль?</div>
+                                        <div className={styles.centeredText}>Forgot your password?</div>
                                     </div>
                                 )}
                             </Form>

@@ -8,8 +8,8 @@ export default async function handler(req, res) {
             data: {
                 userId: userId,
                 active: false,
-                name: "Нова форма",
-                description: "Опис",
+                name: "New form",
+                description: "Description",
                 questions: {
                     create: {
                         type: "radio",

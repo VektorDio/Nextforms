@@ -16,7 +16,7 @@ const StatisticsInput = ({answers}) => {
             <div className={styles.selectContainer}>
                 <Select defaultValue={"placeholder"} onChange={(e)=> setAnswer(answers[e.target.value])}>
                     {
-                        (answer === undefined) ? <option key={"placeholder"} value={"placeholder"}>Виберіть питання</option> : null
+                        (answer === undefined) ? <option key={"placeholder"} value={"placeholder"}>Select questions</option> : null
                     }
                     {
                         answers?.map((ans, i) => (
@@ -30,11 +30,11 @@ const StatisticsInput = ({answers}) => {
                     (answer) ? (
                         <>
                             <CheckboxInput
-                                text={"Кількість відповідей"}
+                                text={"Amount of answers"}
                                 onChange={() => setOptions({...options, amountOfAnswers: !options.amountOfAnswers})}
                             />
                             <CheckboxInput
-                                text={"Кількість обраних варіантів"}
+                                text={"Options selected"}
                                 onChange={() => setOptions({...options, amountByOptions: !options.amountByOptions})}
                             />
                         </>
@@ -45,7 +45,7 @@ const StatisticsInput = ({answers}) => {
                 {
                     (options.amountOfAnswers) ? (
                         <div>
-                            Надано відповідей: {answer.answers.length}
+                            Answers given: {answer.answers.length}
                         </div>
                     ) : null
                 }

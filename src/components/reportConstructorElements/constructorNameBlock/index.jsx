@@ -8,7 +8,7 @@ const ConstructorNameBlock = ({reportName, reportDescription, handleNameChange, 
                 <TextParagraph
                     disabled={disabled}
                     onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
-                    placeholder={"Поле імені звіту"}
+                    placeholder={"Report name film"}
                     defaultValue={reportName}
                 />
             </div>
@@ -16,7 +16,7 @@ const ConstructorNameBlock = ({reportName, reportDescription, handleNameChange, 
                 <TextParagraph
                     disabled={disabled}
                     onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
-                    placeholder={"Опис нового звіту"}
+                    placeholder={"Report description"}
                     defaultValue={reportDescription}
                 />
             </div>

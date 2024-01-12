@@ -13,7 +13,7 @@ export default function Header() {
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
-                <Icon></Icon>
+                <Icon/>
                 <div className={styles.siteName}>
                     ReportsGenerator.js
                 </div>
@@ -27,10 +27,10 @@ export default function Header() {
                 ):(
                     <div className={styles.sideBlock}>
                         <Link href={"/login"}>
-                            <SignInButton>Вхід</SignInButton>
+                            <SignInButton>Log In</SignInButton>
                         </Link>
                         <Link href={"/register"}>
-                            <SignUpButton>Реєстрація</SignUpButton>
+                            <SignUpButton>Register</SignUpButton>
                         </Link>
                     </div>
                 )

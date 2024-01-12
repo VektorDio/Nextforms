@@ -6,13 +6,13 @@ const FillNameBlock = ({formName, formDescription}) => {
         <div className={styles.container} >
             <div className={styles.formName}>
                 <TextParagraph
-                    placeholder={"Новий звіт"}
+                    placeholder={"New report"}
                     defaultValue={formName}
                 />
             </div>
             <div className={styles.formDescription}>
                 <TextParagraph
-                    placeholder={"Опис звіту"}
+                    placeholder={"Description"}
                     defaultValue={formDescription}
                 />
             </div>

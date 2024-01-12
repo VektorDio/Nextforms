@@ -66,7 +66,7 @@ const Register = () => {
                     </Link>
                 </div>
                 <div className={styles.formBody}>
-                    <span className={styles.signInText}>Зареєструйте свій аккаунт</span>
+                    <span className={styles.signInText}>Register new account</span>
                     <Formik
                         initialValues={{
                             email: '',
@@ -95,7 +95,7 @@ const Register = () => {
                     >{(formik) => (
                         <Form>
                             <div className={styles.field}>
-                                <label htmlFor="email">Пошта</label>
+                                <label htmlFor="email">Email</label>
                                 <MyTextInput
                                     name="email"
                                     type="email"
@@ -104,19 +104,19 @@ const Register = () => {
                             </div>
 
                             <div className={styles.field}>
-                                <label htmlFor="organisation">Організація</label>
+                                <label htmlFor="organisation">Organization</label>
                                 <MyTextInput
                                     name="organisation"
                                     type="text"
-                                    placeholder="Моя організація"
+                                    placeholder="Organization"
                                 />
                             </div>
 
                             <div className={styles.field}>
                                 <div className={styles.passwordGrid}>
-                                    <label htmlFor="password">Пароль</label>
+                                    <label htmlFor="password">Password</label>
                                     <div className={styles.showText} onClick={handleShowPassword}>
-                                        {(showPassword) ? "Показати пароль" : "Сховати пароль"}
+                                        {(showPassword) ? "Show password" : "Hide password"}
                                     </div>
                                 </div>
                                 <MyTextInput
@@ -127,7 +127,7 @@ const Register = () => {
                             </div>
 
                             <div className={styles.field}>
-                                <label htmlFor="password">Підтвердження паролю</label>
+                                <label htmlFor="password">Password confirmation</label>
                                 <MyTextInput
                                     name="confirmPassword"
                                     type={(showPassword) ? "password" : "text"}
@@ -135,12 +135,11 @@ const Register = () => {
                                 />
                             </div>
 
-
                             <div className={styles.field}>
                                 <SubmitButton
                                     type="submit"
                                     name="submit"
-                                    value="Зареєструватись"
+                                    value="Register"
                                     disabled={!(formik.isValid && formik.dirty)||formik.isSubmitting}
                                 />
                             </div>
@@ -148,6 +147,7 @@ const Register = () => {
                             <div className={styles.error}>
                                 {submissionError}
                             </div>
+
                             {/*<div className={styles.ssolink}>*/}
                             {/*    <Link href="#">Use Google instead</Link>*/}
                             {/*</div>*/}
@@ -157,12 +157,12 @@ const Register = () => {
                 </div>
                 <div className={styles.footerLink}>
                 <span className={styles.footerText}>
-                      Маете аккаунт? <Link className={styles.signUpLink} href="/login">Увійти</Link>
+                      Have an account? <Link className={styles.signUpLink} href="/login">Log In</Link>
                     </span>
                     <div className={styles.copyRight}>
                         <span><Link href="#">©2023 TEST, Inc.</Link></span>
-                        <span><Link href="#">Контакти</Link></span>
-                        <span><Link href="#">Приватність & Умову</Link></span>
+                        <span><Link href="#">Contact</Link></span>
+                        <span><Link href="#">Privacy & Terms</Link></span>
                     </div>
                 </div>
             </div>

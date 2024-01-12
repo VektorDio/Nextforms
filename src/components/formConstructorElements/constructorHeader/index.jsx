@@ -22,16 +22,16 @@ export default function ConstructorHeader({id, onFormSubmit}) {
                     (id) ? (
                         <>
                             <Link href={`/home/formConstructor/redact/${id}`}>
-                                <RedactButton></RedactButton>
+                                <RedactButton/>
                             </Link>
                             <Link href={`/home/formConstructor/statistics/${id}`}>
-                                <ReportButton></ReportButton>
+                                <ReportButton/>
                             </Link>
                         </>
                     ) : (
                         <>
-                            <RedactButton></RedactButton>
-                            <ReportButton></ReportButton>
+                            <RedactButton/>
+                            <ReportButton/>
                         </>
                     )
                 }

@@ -67,19 +67,19 @@ const FormView = () => {
     }
 
     const requiredField = Yup.string()
-        .required("Обов'язкове поле")
+        .required("Required")
     const checkboxRequired = Yup.array()
-        .min(1,"Виберіть одне")
+        .min(1,"Select one")
     const text = Yup.string()
-        .max(300, "Забагато символів")
+        .max(300, "Too many characters")
     const textRequired = Yup.string()
-        .max(300, "Забагато символів")
-        .required("Обов'язкове поле")
+        .max(300, "Too many characters")
+        .required("Required")
     const date = Yup.date()
-        .max("9999-01-01", "Введіть правильну дату")
+        .max("9999-01-01", "Select correct date")
     const dateRequired = Yup.date()
-        .max("9999-01-01", "Введіть правильну дату")
-        .required("Обов'язкове поле")
+        .max("9999-01-01", "Select correct date")
+        .required("Required")
 
     const validationScheme = {}
     formObject?.questions.map((question)=> {

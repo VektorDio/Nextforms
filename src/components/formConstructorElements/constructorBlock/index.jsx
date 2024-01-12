@@ -56,7 +56,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
 
         buf.splice(options.length, 0, {
             id: uuidv4(),
-            text: "Питання"
+            text: "Question"
         })
 
         setOptions([...buf])
@@ -68,7 +68,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
             component = (
                 <div className={styles.oneLineText}>
                     <InlineInput
-                        placeholder={"Відповідь"}
+                        placeholder={"Answer"}
                         disabled={true}
                     />
                 </div>
@@ -78,7 +78,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
             component = (
                 <div className={styles.paragraphText}>
                     <TextParagraph
-                        placeholder={"Відповідь"}
+                        placeholder={"Answer"}
                         disabled={true}
                     />
                 </div>
@@ -181,7 +181,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                         (isSelected) ? (
                             <>
                                 <BlockInput
-                                placeholder="Питання"
+                                placeholder="Questions"
                                 defaultValue={question.question}
                                 onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
                             />
@@ -190,19 +190,19 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                         defaultValue={question.type}
                                         onChange={(e) => handleSelectChange(question.id, e.target.value)}
                                     >
-                                        <option value="oneLineText">Текст (одна лінія) </option>
-                                        <option value="paragraphText">Текст (Параграф) </option>
-                                        <option value="radio">Один зі списку </option>
-                                        <option value="checkbox">Багато зі списку </option>
-                                        <option value="select">Список вибору </option>
-                                        <option value="date">Дата </option>
-                                        <option value="time">Час </option>
+                                        <option value="oneLineText">Text (one line) </option>
+                                        <option value="paragraphText">Text (Paragraph) </option>
+                                        <option value="radio">Select one </option>
+                                        <option value="checkbox">Select many </option>
+                                        <option value="select">List </option>
+                                        <option value="date">Date </option>
+                                        <option value="time">Time </option>
                                     </Select>
                                 </div>
                             </>
                         ) : (
                             <div className={(question.question.length > 0) ? styles.unselectedText : styles.unselectedPlaceholder}>
-                                {question.question || "Питання"}
+                                {question.question || "Question"}
                             </div>
                         )
                     }
@@ -212,7 +212,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                     {component}
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
-                    <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Обов'язкове поле"} checked={question.required}/>
+                    <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Required"} checked={question.required}/>
                     <DeleteButton onClick={() => handleDelete(question.id)}/>
                 </div>
             </div>

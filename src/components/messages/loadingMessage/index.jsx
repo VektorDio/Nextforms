@@ -4,7 +4,7 @@ import styles from './loading.module.css'
 const LoadingMessage = () => {
     return (
         <div className={styles.container}>
-            Завантажуємо...
+            Loading...
         </div>
     );
 };

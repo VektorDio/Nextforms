@@ -42,7 +42,7 @@ const MenuColumn = ({centralColumn}) => {
                     style={{backgroundColor: (centralColumn === "profile") ? "#365688" : null}}
                 >
                     <FontAwesomeIcon className={styles.icons} icon={faUser} />
-                    Профіль
+                    Profile
                 </div>
             </Link>
 
@@ -52,7 +52,7 @@ const MenuColumn = ({centralColumn}) => {
                     style={{backgroundColor: (centralColumn === "form") ? "#365688" : null}}
                 >
                     <FontAwesomeIcon className={styles.icons} icon={faWindowRestore} />
-                    Форми
+                    Forms
                 </div>
             </Link>
 
@@ -62,21 +62,21 @@ const MenuColumn = ({centralColumn}) => {
                     style={{backgroundColor: (centralColumn === "report") ? "#365688" : null}}
                 >
                     <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
-                    Звіти
+                    Reports
                 </div>
             </Link>
 
             <div onClick={handleFormCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
-                    Нова форма
+                    New form
                 </div>
             </div>
 
             <div onClick={handleReportCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
-                    Новий звіт
+                    New report
                 </div>
             </div>
 

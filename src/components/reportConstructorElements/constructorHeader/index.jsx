@@ -8,16 +8,16 @@ export default function ConstructorHeader({onReportSubmit}) {
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
-                <Icon></Icon>
+                <Icon/>
                 <div className={styles.siteName}>
                     ReportsGenerator.js
                 </div>
             </div>
 
             <div className={styles.sideBlock}>
-                <ConfirmButton onClick={onReportSubmit}></ConfirmButton>
+                <ConfirmButton onClick={onReportSubmit}/>
                 <Link href={"/home"}>
-                    <DeleteButton></DeleteButton>
+                    <DeleteButton/>
                 </Link>
             </div>
         </div>
