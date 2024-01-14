@@ -2,17 +2,20 @@ import Head from 'next/head'
 import Header from "@/components/pageWraper/header";
 import Main from "@/components/pageWraper/main";
 import Footer from "@/components/pageWraper/footer";
-import About from "@/components/about";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import React from "react";
+import React, {useEffect} from "react";
+import styles from "./welcome.module.css"
+
 export default function Welcome() {
   const {status} = useSession()
   const router = useRouter()
 
-  if (status === "authenticated") {
-    router.push("/home")
-  }
+    useEffect(() => {
+        if (status === "authenticated") {
+            router.push("/home")
+        }
+    }, [status])
 
   return (
       <>
@@ -22,11 +25,18 @@ export default function Welcome() {
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <link rel="icon" href="/favicon.ico"/>
         </Head>
-        <Header/>
-        <Main>
-          <About/>
-        </Main>
-        <Footer/>
+          {(status === "loading" || status === "authenticated") ? null : (
+              <>
+                  <Header/>
+                  <Main>
+                      <div className={styles.about}>
+                          <h1>About us</h1>
+                          <p>Reports Generator - helps you to create reports and forms.</p>
+                      </div>
+                  </Main>
+                  <Footer/>
+              </>
+          )}
       </>
   )
 }
