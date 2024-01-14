@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './constructorBlock.module.css'
-import DeleteButton from "@/components/buttons/deleteButton";
 import AddButton from "@/components/buttons/addButton";
 import Select from "@/components/inputs/selectInput";
 import BlockInput from "@/components/inputs/blockInput";
 import InlineInput from "@/components/inputs/inlineInput";
 import TextParagraph from "@/components/inputs/textParagraph";
+import SimpleButton from "@/components/buttons/simpleButton";
+
 const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange,
                               handleNameChange, selectedBlockId, setSelectedBlockId}) => {
 
@@ -83,7 +84,7 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                     {component}
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
-                    <DeleteButton onClick={() => handleDelete(block.id)}/>
+                    <SimpleButton onClick={() => handleDelete(block.id)} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
             <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>

@@ -1,15 +1,15 @@
 .button{
-    background-color: #3a4556;
     border: none;
     margin: 4px 8px;
     border-radius: 8px;
     transition: 0.3s;
-
     width: 40px;
     height: 40px;
 }
 
-.button:hover {background-color: #272e3a;}
+.button:hover {
+    filter: brightness(0.7);
+}
 
 .icon{
     width: 28px;
@@ -17,3 +17,5 @@
     font-weight: 600;
     padding-top: 4px;
 }
+
+

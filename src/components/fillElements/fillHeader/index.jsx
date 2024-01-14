@@ -1,15 +1,14 @@
 import styles from "./fillHeader.module.css"
 import Icon from "@/components/pageWraper/header/icon";
 import Link from "next/link";
-import DeleteButton from "@/components/buttons/deleteButton";
-import PrintButton from "@/components/buttons/printButton";
 import SelectInput from "@/components/inputs/selectInput";
+import SimpleButton from "@/components/buttons/simpleButton";
 
 export default function FillHeader({formId, formEntries, reportEntries, onFormChange, onReportChange, onPrint, reportId}) {
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
-                <Icon></Icon>
+                <Icon/>
                 <div className={styles.siteName}>
                     ReportsGenerator.js
                 </div>
@@ -59,9 +58,9 @@ export default function FillHeader({formId, formEntries, reportEntries, onFormCh
             </div>
 
             <div className={styles.sideBlock}>
-                <PrintButton onClick={onPrint}/>
+                <SimpleButton onClick={onPrint} iconType={"print"} bgColor={"#399412"}/>
                 <Link href={"/home"}>
-                    <DeleteButton/>
+                    <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </Link>
             </div>
         </div>

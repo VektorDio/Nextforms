@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './constructorBlock.module.css'
-import DeleteButton from "@/components/buttons/deleteButton";
 import ToggleButton from "@/components/buttons/toggleButton";
 import AddButton from "@/components/buttons/addButton";
 import Select from "@/components/inputs/selectInput";
@@ -11,6 +10,7 @@ import TextParagraph from "@/components/inputs/textParagraph";
 import OptionInput from "@/components/inputs/optionInput";
 import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
+import SimpleButton from "@/components/buttons/simpleButton";
 const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange,
                               handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
     const [options, setOptions] = useState(() => {
@@ -213,7 +213,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
                     <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Required"} checked={question.required}/>
-                    <DeleteButton onClick={() => handleDelete(question.id)}/>
+                    <SimpleButton onClick={() => handleDelete(question.id)} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
             <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>

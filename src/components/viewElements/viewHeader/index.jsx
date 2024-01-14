@@ -1,8 +1,7 @@
 import styles from "./viewHeader.module.css"
 import Icon from "@/components/pageWraper/header/icon";
 import Link from "next/link";
-import ConfirmButton from "@/components/buttons/confirmButton";
-import DeleteButton from "@/components/buttons/deleteButton";
+import SimpleButton from "@/components/buttons/simpleButton";
 import {useFormikContext} from "formik";
 
 export default function ViewHeader() {
@@ -14,16 +13,16 @@ export default function ViewHeader() {
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
-                <Icon></Icon>
+                <Icon/>
                 <div className={styles.siteName}>
                     ReportsGenerator.js
                 </div>
             </div>
 
             <div className={styles.sideBlock}>
-                <ConfirmButton onClick={onSubmit}></ConfirmButton>
+                <SimpleButton onClick={onSubmit} iconType={"check"} bgColor={"#399412"}/>
                 <Link href={"/home"}>
-                    <DeleteButton/>
+                    <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </Link>
             </div>
         </div>

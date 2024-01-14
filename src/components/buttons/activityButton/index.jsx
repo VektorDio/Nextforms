@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './activityButton.module.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faToggleOff, faToggleOn} from "@fortawesome/free-solid-svg-icons";
+
 const ActivityButton = ({toggled, onClick}) => {
     return (
         <div>

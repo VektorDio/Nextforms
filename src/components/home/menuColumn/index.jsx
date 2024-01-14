@@ -19,6 +19,7 @@ const MenuColumn = ({centralColumn}) => {
 
     const {mutateAsync: addForm} = useAddForm()
     const {mutateAsync: addReport} = useAddReport()
+
     async function handleFormCreation() {
         const {data} = await addForm({
             userId: session.user.id,

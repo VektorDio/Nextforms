@@ -1,8 +1,7 @@
 import styles from "./constructorHeader.module.css"
 import Icon from "@/components/pageWraper/header/icon";
 import Link from "next/link";
-import ConfirmButton from "@/components/buttons/confirmButton";
-import DeleteButton from "@/components/buttons/deleteButton";
+import SimpleButton from "@/components/buttons/simpleButton";
 
 export default function ConstructorHeader({onReportSubmit}) {
     return (
@@ -15,9 +14,9 @@ export default function ConstructorHeader({onReportSubmit}) {
             </div>
 
             <div className={styles.sideBlock}>
-                <ConfirmButton onClick={onReportSubmit}/>
+                <SimpleButton onClick={onReportSubmit} iconType={"check"} bgColor={"#399412"}/>
                 <Link href={"/home"}>
-                    <DeleteButton/>
+                    <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </Link>
             </div>
         </div>

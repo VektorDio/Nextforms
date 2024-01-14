@@ -1,12 +1,8 @@
 import React, {useState} from 'react';
 import styles from './formEntry.module.css'
 import ActivityButton from "@/components/buttons/activityButton";
-import GenerateLinkButton from "@/components/buttons/generateLinkButton";
-import RedactButton from "@/components/buttons/redactButton";
-import ReportButton from "@/components/buttons/reportButton";
-import DeleteButton from "@/components/buttons/deleteButton";
 import Link from "next/link";
-import FillButton from "@/components/buttons/fillButton";
+import SimpleButton from "@/components/buttons/simpleButton";
 const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
     const [isMessageCopied, setIsMessageCopied] = useState(false)
 
@@ -25,18 +21,18 @@ const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
                          style={{opacity: (isMessageCopied) ? 100 : 0,
                              visibility: (isMessageCopied) ? "visible" : "hidden"}}
                     > Copied to clipboard </div>
-                    <GenerateLinkButton onClick={handleGenerateLink} />
+                    <SimpleButton onClick={handleGenerateLink} iconType={"link"} bgColor={"#3a4556"}/>
                 </div>
                 <Link href={`/home/formConstructor/redact/${formEntry.id}`}>
-                    <RedactButton/>
+                    <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
                 </Link>
                 <Link href={`/home/formConstructor/statistics/${formEntry.id}`}>
-                    <ReportButton/>
+                    <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
                 </Link>
                 <Link href={{ pathname: '/home/reportConstructor/fill', query: { reportId: null, formId: formEntry.id }}}>
-                    <FillButton/>
+                    <SimpleButton iconType={"window"} bgColor={"#3a4556"}/>
                 </Link>
-                <DeleteButton onClick={() => onDelete(formEntry.id)}/>
+                <SimpleButton onClick={() => onDelete(formEntry.id)} iconType={"xmark"} bgColor={"#d00c0c"}/>
             </div>
         </div>
     );

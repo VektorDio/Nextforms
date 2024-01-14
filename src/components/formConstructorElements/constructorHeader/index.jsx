@@ -1,17 +1,14 @@
 import styles from "./constructorHeader.module.css"
 import Icon from "@/components/pageWraper/header/icon";
 import Link from "next/link";
-import ConfirmButton from "@/components/buttons/confirmButton";
-import DeleteButton from "@/components/buttons/deleteButton";
-import RedactButton from "@/components/buttons/redactButton";
-import ReportButton from "@/components/buttons/reportButton";
+import SimpleButton from "@/components/buttons/simpleButton";
 // import SettingsButton from "@/components/buttons/settingsButton";
 
 export default function ConstructorHeader({id, onFormSubmit}) {
     return (
         <div className={styles.header}>
             <div className={styles.iconBlock}>
-                <Icon></Icon>
+                <Icon/>
                 <div className={styles.siteName}>
                     ReportsGenerator.js
                 </div>
@@ -22,16 +19,16 @@ export default function ConstructorHeader({id, onFormSubmit}) {
                     (id) ? (
                         <>
                             <Link href={`/home/formConstructor/redact/${id}`}>
-                                <RedactButton/>
+                                <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
                             </Link>
                             <Link href={`/home/formConstructor/statistics/${id}`}>
-                                <ReportButton/>
+                                <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
                             </Link>
                         </>
                     ) : (
                         <>
-                            <RedactButton/>
-                            <ReportButton/>
+                            <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
+                            <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
                         </>
                     )
                 }
@@ -42,10 +39,10 @@ export default function ConstructorHeader({id, onFormSubmit}) {
 
             <div className={styles.sideBlock}>
                 {
-                    (onFormSubmit) && <ConfirmButton onClick={onFormSubmit}></ConfirmButton>
+                    (onFormSubmit) && <SimpleButton onClick={onFormSubmit} iconType={"check"} bgColor={"#399412"}/>
                 }
                 <Link href={"/home"}>
-                    <DeleteButton></DeleteButton>
+                    <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </Link>
             </div>
         </div>

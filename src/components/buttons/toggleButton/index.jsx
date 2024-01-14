@@ -9,7 +9,7 @@ const ToggleButton = ({onClick, text, checked}) => {
         <div className={styles.toggleContainer}>
             <label className={styles.toggleSwitch}>
                 <input type="checkbox" onClick={onClick} onChange={handleChange} checked={checkedState}/>
-                <span className={styles.slider}></span>
+                <span className={styles.slider}/>
             </label>
             <div className={styles.text}>{text}</div>
         </div>

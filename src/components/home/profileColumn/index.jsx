@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import styles from './profileColumn.module.css'
-import RedactButton from "@/components/buttons/redactButton";
-import DeleteButton from "@/components/buttons/deleteButton";
-import ConfirmButton from "@/components/buttons/confirmButton";
 import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/forms/textInput";
@@ -11,6 +8,7 @@ import {useDeleteUserById, useGetUserById, useUpdateUser} from "@/queries/users"
 import {useRouter} from "next/router";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
+import SimpleButton from "@/components/buttons/simpleButton";
 
 const Profile = () => {
     const {data:session} = useSession({
@@ -95,20 +93,30 @@ const Profile = () => {
                                     <p>General info</p>
                                     {(editGeneral) ? (
                                             <div className={styles.buttonGroup}>
-                                                <ConfirmButton onClick={() => {
+                                                <SimpleButton onClick={() => {
                                                     formik.handleSubmit()
                                                     setEditGeneral(false)
-                                                }}></ConfirmButton>
-                                                <DeleteButton onClick={() => {
+                                                }}
+                                                iconType={"check"}
+                                                bgColor={"#399412"}
+                                                />
+                                                <SimpleButton onClick={() => {
                                                     setEditGeneral(!editGeneral)
                                                     formik.resetForm()
-                                                }}></DeleteButton>
+                                                }}
+                                                iconType={"xmark"}
+                                                bgColor={"#d00c0c"}
+                                                />
                                             </div>
                                         ) : (
-                                            <RedactButton onClick={() => {
+                                            <SimpleButton onClick={() => {
                                                 setEditGeneral(!editGeneral)
                                                 formik.resetForm()
-                                            }}></RedactButton>
+                                            }}
+                                            iconType={"redact"}
+                                            bgColor={"#3a4556"}
+                                            />
+
                                         )
                                     }
                                 </div>
@@ -194,20 +202,29 @@ const Profile = () => {
                                     <p>Email</p>
                                     {(editEmail) ? (
                                             <div className={styles.buttonGroup}>
-                                                <ConfirmButton onClick={() => {
+                                                <SimpleButton onClick={() => {
                                                     formik.handleSubmit()
                                                     setEditEmail(false)
-                                                }}></ConfirmButton>
-                                                <DeleteButton onClick={() => {
+                                                }}
+                                                iconType={"check"}
+                                                bgColor={"#399412"}
+                                                />
+                                                <SimpleButton onClick={() => {
                                                     setEditEmail(!editEmail)
                                                     formik.resetForm()
-                                                }}></DeleteButton>
+                                                }}
+                                                iconType={"xmark"}
+                                                bgColor={"#d00c0c"}
+                                                />
                                             </div>
                                         ) : (
-                                            <RedactButton onClick={() => {
+                                            <SimpleButton onClick={() => {
                                                 setEditEmail(!editEmail)
                                                 formik.resetForm()
-                                            }}></RedactButton>
+                                            }}
+                                            iconType={"redact"}
+                                            bgColor={"#3a4556"}
+                                            />
                                         )}
                                 </div>
                                 <div className={styles.inputFieldsContainer}>
@@ -266,20 +283,29 @@ const Profile = () => {
                                     <p>Password</p>
                                     {(editPassword) ? (
                                             <div className={styles.buttonGroup}>
-                                                <ConfirmButton onClick={()=>{
+                                                <SimpleButton onClick={()=>{
                                                     formik.handleSubmit()
                                                     setEditPassword(false)
-                                                }}></ConfirmButton>
-                                                <DeleteButton onClick={() => {
+                                                }}
+                                                iconType={"check"}
+                                                bgColor={"#399412"}
+                                                />
+                                                <SimpleButton onClick={() => {
                                                     setEditPassword(!editPassword)
                                                     formik.resetForm()
-                                                }}></DeleteButton>
+                                                }}
+                                                iconType={"xmark"}
+                                                bgColor={"#d00c0c"}
+                                                />
                                             </div>
                                         ) : (
-                                            <RedactButton onClick={() => {
+                                            <SimpleButton onClick={() => {
                                                 setEditPassword(!editPassword)
                                                 formik.resetForm()
-                                            }}></RedactButton>
+                                            }}
+                                            iconType={"redact"}
+                                            bgColor={"#3a4556"}
+                                            />
                                         )}
                                 </div>
                                 {(editPassword) ? (
@@ -315,7 +341,7 @@ const Profile = () => {
                 </div>
 
                 <div className={styles.buttonGroup}>
-                    <DeleteButton onClick={handleUserDelete}></DeleteButton>
+                    <SimpleButton onClick={handleUserDelete} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
         </div>

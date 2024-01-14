@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from "./signUpButton.module.css";
 
-const SignUpButton = ({children ,onClick}) => {
+const SignUpButton = ({onClick}) => {
     return (
         <div>
             <button className={styles.signUpBtn} onClick={onClick}>
-                {children}
+                Register
             </button>
         </div>
     );

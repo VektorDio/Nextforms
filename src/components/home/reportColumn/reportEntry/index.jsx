@@ -1,9 +1,7 @@
 import React from 'react';
 import styles from './reportEntry.module.css'
-import DeleteButton from "@/components/buttons/deleteButton";
 import Link from "next/link";
-import FillButton from "@/components/buttons/fillButton";
-import RedactButton from "@/components/buttons/redactButton";
+import SimpleButton from "@/components/buttons/simpleButton";
 const ReportEntry = ({reportEntry, onDelete}) => {
 
     return (
@@ -11,12 +9,12 @@ const ReportEntry = ({reportEntry, onDelete}) => {
             <div className={styles.reportName}>{reportEntry.name}</div>
             <div className={styles.buttons}>
                 <Link href={`/home/reportConstructor/create/${reportEntry.id}`}>
-                    <RedactButton/>
+                    <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
                 </Link>
-                <Link href={{ pathname: '/home/reportConstructor/fill', query: { reportId: reportEntry.id, formId: null } }}>
-                    <FillButton/>
+                <Link href={{pathname: '/home/reportConstructor/fill', query: {reportId: reportEntry.id, formId: null}}}>
+                    <SimpleButton iconType={"window"} bgColor={"#3a4556"}/>
                 </Link>
-                <DeleteButton onClick={() => onDelete(reportEntry.id)}/>
+                <SimpleButton onClick={() => onDelete(reportEntry.id)} iconType={"xmark"} bgColor={"#d00c0c"}/>
             </div>
         </div>
     );

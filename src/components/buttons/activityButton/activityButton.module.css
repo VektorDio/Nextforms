@@ -20,8 +20,12 @@
     height: 40px;
 }
 
-.buttonOff:hover {background-color: #272e3a;}
-.buttonOn:hover {background-color: #365688;}
+.buttonOff:hover {
+    filter: brightness(0.7);
+}
+.buttonOn:hover {
+    filter: brightness(0.7);
+}
 
 .icon{
     width: 28px;

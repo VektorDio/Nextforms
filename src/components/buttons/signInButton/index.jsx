@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from "./signInButton.module.css";
 
-const SignInButton = ({children ,onClick}) => {
+const SignInButton = ({onClick}) => {
     return (
         <div>
             <button className={styles.signInBtn} onClick={onClick}>
-                {children}
+                Log In
             </button>
         </div>
     );
