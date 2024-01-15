@@ -45,7 +45,7 @@ const Login = () => {
     return (
         <>
             <Head>
-                <title>Sign in | ReportGenerator</title>
+                <title>Sign in | NextForms</title>
                 <meta name="description" content="Sign in page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@ const Login = () => {
             <div className={styles.mainContainer}>
                 <div className={styles.siteName}>
                     <Link href="/" rel="dofollow">
-                        <h1> ReportGenerator.js </h1>
+                        <h1> NextForms </h1>
                     </Link>
                 </div>
                 <div className={styles.formBody}>

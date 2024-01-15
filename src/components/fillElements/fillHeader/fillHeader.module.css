@@ -31,6 +31,18 @@
 .centerBlock{
     display: flex;
     align-items: center;
-    justify-self: center;
+    justify-content: space-evenly;
 }
 
+.selectContainer{
+    display: flex;
+    justify-content: center;
+    width: 20vh;
+    margin-right: 2vh;
+}
+
+@media print {
+    .header {
+        display: none;
+    }
+}

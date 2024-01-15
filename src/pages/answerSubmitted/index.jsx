@@ -7,7 +7,7 @@ const AnswerSubmit = () => {
     return (
         <>
             <Head>
-                <title>Answer Received | Report Generator</title>
+                <title>Answer Received | NextForms</title>
                 <meta name="description" content="Answer received page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />

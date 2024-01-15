@@ -20,7 +20,7 @@ export default function Welcome() {
   return (
       <>
         <Head>
-          <title>Info | Report Generator</title>
+          <title>Info | NextForms</title>
           <meta name="description" content="Info page"/>
           <meta name="viewport" content="width=device-width, initial-scale=1"/>
           <link rel="icon" href="/favicon.ico"/>
@@ -31,7 +31,7 @@ export default function Welcome() {
                   <Main>
                       <div className={styles.about}>
                           <h1>About us</h1>
-                          <p>Reports Generator - helps you to create reports and forms.</p>
+                          <p>NextForms - site for creating and maintaining forms.</p>
                       </div>
                   </Main>
                   <Footer/>

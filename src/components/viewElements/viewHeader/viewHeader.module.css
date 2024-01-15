@@ -19,9 +19,11 @@
 
 .iconBlock{
     display: inherit;
+    width: 50%;
 }
 
 .sideBlock{
     display: flex;
-    align-items: center;
+    width: 50%;
+    justify-content: right;
 }

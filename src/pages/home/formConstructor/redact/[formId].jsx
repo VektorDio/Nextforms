@@ -166,8 +166,8 @@ const FormConstructor = () => {
     return (
         <>
             <Head>
-                <title>{formObject?.name} | Report Generator</title>
-                <meta name="description" content="Form redact page" />
+                <title>{formObject?.name || "Form"} | NextForms</title>
+                <meta name="description" content="Form redacting page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>

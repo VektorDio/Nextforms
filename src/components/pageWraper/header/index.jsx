@@ -1,5 +1,5 @@
 import styles from "./Header.module.css"
-import Icon from "@/components/pageWraper/header/icon";
+import Icon from "@/components/icon";
 import Link from "next/link";
 import {signOut, useSession} from "next-auth/react";
 // import SettingsButton from "@/components/buttons/settingsButton";
@@ -15,7 +15,7 @@ export default function Header() {
             <div className={styles.iconBlock}>
                 <Icon/>
                 <div className={styles.siteName}>
-                    ReportsGenerator.js
+                    NextForms
                 </div>
             </div>
             {

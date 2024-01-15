@@ -1,5 +1,5 @@
 import styles from "./constructorHeader.module.css"
-import Icon from "@/components/pageWraper/header/icon";
+import Icon from "@/components/icon";
 import Link from "next/link";
 import SimpleButton from "@/components/buttons/simpleButton";
 // import SettingsButton from "@/components/buttons/settingsButton";
@@ -10,7 +10,7 @@ export default function ConstructorHeader({id, onFormSubmit}) {
             <div className={styles.iconBlock}>
                 <Icon/>
                 <div className={styles.siteName}>
-                    ReportsGenerator.js
+                    NextForms
                 </div>
             </div>
 
