@@ -10,7 +10,7 @@ import HomeColumn from "@/components/home/homeColumn";
 
 const Home = () => {
     const router = useRouter()
-    useSession({
+    const {status} = useSession({
         required: true,
         onUnauthenticated() {
             router.push("/")
@@ -26,11 +26,15 @@ const Home = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
-            <ColumnWrapper>
-                <MenuColumn/>
-                <HomeColumn/>
-                <InfoColumn/>
-            </ColumnWrapper>
+            {
+                (status !== "loading") && (
+                    <ColumnWrapper>
+                        <MenuColumn/>
+                        <HomeColumn/>
+                        <InfoColumn/>
+                    </ColumnWrapper>
+                )
+            }
         </>
     );
 };

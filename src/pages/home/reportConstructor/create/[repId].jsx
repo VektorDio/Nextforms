@@ -6,11 +6,12 @@ import Head from "next/head";
 import ConstructorHeader from "@/components/reportConstructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
 import ConstructorColumn from "@/components/reportConstructorElements/constructorColumn";
-import ConstructorNameBlock from "@/components/reportConstructorElements/constructorNameBlock";
 import ConstructorBlock from "@/components/reportConstructorElements/constructorBlock";
 import {useGetReportById, useUpdateReport} from "@/queries/reports";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
+import styles from "./reportRedact.module.css";
+import TextParagraph from "@/components/inputs/textParagraph";
 
 const ReportConstructor = () => {
     const router = useRouter()
@@ -37,25 +38,6 @@ const ReportConstructor = () => {
             setReportObject(data.report)
         }
     }, [data])
-
-    if (isLoading) return (
-        <>
-            <ConstructorHeader />
-            <Main>
-                <ConstructorColumn>
-                    <LoadingMessage/>
-                </ConstructorColumn>
-            </Main>
-        </>
-    )
-    if (error) return (<>
-        <ConstructorHeader />
-        <Main>
-            <ConstructorColumn>
-                <ErrorMessage error={error}/>
-            </ConstructorColumn>
-        </Main>
-    </>)
 
     async function handleReportSubmit() {
         await mutateAsync({
@@ -141,7 +123,7 @@ const ReportConstructor = () => {
         }))
     }
 
-    return ((reportObject) &&
+    return (
         <>
             <Head>
                 <title>{reportObject?.name} | Report Generator</title>
@@ -149,29 +131,48 @@ const ReportConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader id={reportObject?.id} onReportSubmit={handleReportSubmit}/>
+            <ConstructorHeader onReportSubmit={handleReportSubmit}/>
             <Main>
                 <ConstructorColumn>
-                    <ConstructorNameBlock
-                        reportName={reportObject?.name}
-                        reportDescription={reportObject?.description}
-                        handleNameChange={handleNameChange}
-                        handleDescriptionChange={handleDescriptionChange}
-                        setSelectedBlockId={setSelectedBlockId}
-                    />
                     {
-                        reportObject?.blocks.map((q) => (
-                            <ConstructorBlock
-                                key={q.id}
-                                block={q}
-                                handleAdd={handleAddBlock}
-                                handleDelete={handleDelete}
-                                handleBlockTypeChange={handleTypeChange}
-                                handleNameChange={handleBlockNameChange}
-                                selectedBlockId={selectedBlockId}
-                                setSelectedBlockId={setSelectedBlockId}
-                            />
-                        ))
+                        (isLoading) ? (
+                            <LoadingMessage/>
+                        ) : (error) ? (
+                            <ErrorMessage error={error}/>
+                        ) : (reportObject) && (
+                            <>
+                                <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
+                                    <div className={styles.formName}>
+                                        <TextParagraph
+                                            onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
+                                            placeholder={"Report name film"}
+                                            defaultValue={reportObject?.name}
+                                        />
+                                    </div>
+                                    <div className={styles.formDescription}>
+                                        <TextParagraph
+                                            onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
+                                            placeholder={"Report description"}
+                                            defaultValue={reportObject?.description}
+                                        />
+                                    </div>
+                                </div>
+                                {
+                                    reportObject?.blocks.map((q) => (
+                                        <ConstructorBlock
+                                            key={q.id}
+                                            block={q}
+                                            handleAdd={handleAddBlock}
+                                            handleDelete={handleDelete}
+                                            handleBlockTypeChange={handleTypeChange}
+                                            handleNameChange={handleBlockNameChange}
+                                            selectedBlockId={selectedBlockId}
+                                            setSelectedBlockId={setSelectedBlockId}
+                                        />
+                                    ))
+                                }
+                            </>
+                        )
                     }
                 </ConstructorColumn>
             </Main>

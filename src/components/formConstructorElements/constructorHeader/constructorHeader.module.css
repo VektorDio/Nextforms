@@ -19,17 +19,18 @@
 
 .iconBlock{
     display: inherit;
+    width: 40%;
 }
 
 .sideBlock{
     display: flex;
-    align-items: center;
+    justify-content: right;
+    width: 40%;
 }
 
 .centerBlock{
     display: flex;
     align-items: center;
     justify-self: center;
-    margin-right: 16vh;
 }
 

@@ -35,27 +35,21 @@ const ReportColumn = () => {
         })
     }
 
-    if (isLoading) return (
-        <div className={styles.container}>
-            <LoadingMessage/>
-        </div>
-
-    )
-    if (error) return (
-        <div className={styles.container}>
-            <ErrorMessage error={error}/>
-        </div>
-    )
-
-    if (reports) return (
+    return (
         <div className={styles.container}>
             {
-                reports?.map((entry,index) =>
-                    <ReportEntry
-                        key={index}
-                        reportEntry={entry}
-                        onDelete={handleEntryDelete}
-                    />
+                (isLoading) ? (
+                    <LoadingMessage/>
+                ) : (error) ? (
+                    <ErrorMessage error={error}/>
+                ) : (
+                    reports?.map((entry,index) =>
+                        <ReportEntry
+                            key={index}
+                            reportEntry={entry}
+                            onDelete={handleEntryDelete}
+                        />
+                    )
                 )
             }
         </div>

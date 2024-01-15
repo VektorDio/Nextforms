@@ -6,10 +6,15 @@ import FormColumn from "@/components/home/formColumn";
 import Head from "next/head";
 import Header from "@/components/pageWraper/header";
 import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 const FormsHomePage = () => {
-    useSession({
+    const router = useRouter()
+    const {status} = useSession({
         required: true,
+        onUnauthenticated() {
+            router.push("/")
+        }
     })
 
     return (
@@ -21,11 +26,15 @@ const FormsHomePage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
-            <ColumnWrapper>
-                <MenuColumn centralColumn={"form"}/>
-                <FormColumn/>
-                <InfoColumn/>
-            </ColumnWrapper>
+            {
+                (status !== "loading") && (
+                    <ColumnWrapper>
+                        <MenuColumn centralColumn={"form"}/>
+                        <FormColumn/>
+                        <InfoColumn/>
+                    </ColumnWrapper>
+                )
+            }
         </>
     );
 };

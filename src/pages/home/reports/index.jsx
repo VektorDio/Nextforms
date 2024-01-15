@@ -6,10 +6,15 @@ import ColumnWrapper from "@/components/home/columnWraper";
 import MenuColumn from "@/components/home/menuColumn";
 import InfoColumn from "@/components/home/infoColumn";
 import ReportColumn from "@/components/home/reportColumn";
+import {useRouter} from "next/router";
 
-const ReportsColumn = () => {
-    useSession({
+const ReportsHomePage = () => {
+    const router = useRouter()
+    const {status} = useSession({
         required: true,
+        onUnauthenticated() {
+            router.push("/")
+        }
     })
 
     return (
@@ -21,13 +26,17 @@ const ReportsColumn = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
-            <ColumnWrapper>
-                <MenuColumn centralColumn={"report"}/>
-                <ReportColumn/>
-                <InfoColumn/>
-            </ColumnWrapper>
+            {
+                (status !== "loading") && (
+                    <ColumnWrapper>
+                        <MenuColumn centralColumn={"report"}/>
+                        <ReportColumn/>
+                        <InfoColumn/>
+                    </ColumnWrapper>
+                )
+            }
         </>
     );
 };
 
-export default ReportsColumn;
+export default ReportsHomePage;

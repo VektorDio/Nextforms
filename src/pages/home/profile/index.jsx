@@ -6,19 +6,17 @@ import ColumnWrapper from "@/components/home/columnWraper";
 import MenuColumn from "@/components/home/menuColumn";
 import InfoColumn from "@/components/home/infoColumn";
 import Profile from "@/components/home/profileColumn";
+import {useRouter} from "next/router";
 
-const ProfileColumn = () => {
-    const { status } = useSession({
+const ProfilePage = () => {
+    const router = useRouter()
+    const {status} = useSession({
         required: true,
+        onUnauthenticated() {
+            router.push("/")
+        }
     })
 
-    if(status === "loading"){
-        return (
-            <>
-                <div>Loading...</div>
-            </>
-        );
-    }
     return (
         <>
             <Head>
@@ -28,13 +26,17 @@ const ProfileColumn = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
-            <ColumnWrapper>
-                <MenuColumn centralColumn={"profile"}/>
-                <Profile/>
-                <InfoColumn/>
-            </ColumnWrapper>
+            {
+                (status !== "loading") && (
+                    <ColumnWrapper>
+                        <MenuColumn centralColumn={"profile"}/>
+                        <Profile/>
+                        <InfoColumn/>
+                    </ColumnWrapper>
+                )
+            }
         </>
     );
 };
 
-export default ProfileColumn;
+export default ProfilePage;

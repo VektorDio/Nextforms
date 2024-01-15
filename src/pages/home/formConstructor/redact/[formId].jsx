@@ -4,24 +4,28 @@ import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ConstructorHeader from "@/components/formConstructorElements/constructorHeader";
 import ConstructorColumn from "@/components/formConstructorElements/constructorColumn";
-import ConstructorNameBlock from "@/components/formConstructorElements/constructorNameBlock";
 import ConstructorBlock from "@/components/formConstructorElements/constructorBlock";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useGetFormById, useUpdateForm} from "@/queries/forms";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
+import styles from "./formRedact.module.css"
+import TextParagraph from "@/components/inputs/textParagraph";
+import ToggleButton from "@/components/buttons/toggleButton";
 
 const FormConstructor = () => {
     const router = useRouter()
     const {formId} = router.query
-    const {mutateAsync} = useUpdateForm()
+
     useSession({
         required: true,
         onUnauthenticated() {
             router.push("/")
         },
     })
+
+    const {mutateAsync} = useUpdateForm()
 
     const {error, data, isLoading} = useGetFormById({
         id: formId,
@@ -36,35 +40,15 @@ const FormConstructor = () => {
         }
     }, [data])
 
-    if (isLoading) return ((
-        <>
-            <ConstructorHeader />
-            <Main>
-                <ConstructorColumn>
-                    <LoadingMessage/>
-                </ConstructorColumn>
-            </Main>
-        </>
-    ))
-    if (error) return (
-        <>
-        <ConstructorHeader />
-        <Main>
-            <ConstructorColumn>
-                <ErrorMessage error={error}/>
-            </ConstructorColumn>
-        </Main>
-    </>)
-
     async function handleFormSubmit() {
 
         if (!formObject?.questions.every((e) => e.question.length > 1)) {
-            //display error
+            console.log("Empty question")
             return
         }
 
         if (!formObject?.questions.every((e) => e.options.length > 0)) {
-            //display error
+            console.log("Question with no options")
             return
         }
 
@@ -80,6 +64,7 @@ const FormConstructor = () => {
                 options: e.options.map(e => (e.text)),
             })),
         })
+
         router.push("/home")
     }
 
@@ -178,7 +163,7 @@ const FormConstructor = () => {
         }))
     }
 
-    return ((formObject) ? (
+    return (
         <>
             <Head>
                 <title>{formObject?.name} | Report Generator</title>
@@ -186,38 +171,60 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader id={formObject?.id} onFormSubmit={handleFormSubmit}/>
+            <ConstructorHeader id={formObject?.id} onFormSubmit={formObject && handleFormSubmit}/>
             <Main>
                 <ConstructorColumn>
-                    <ConstructorNameBlock
-                        formName={formObject?.name}
-                        formDescription={formObject?.description}
-                        acceptAnswers={formObject?.active}
-                        handleNameChange={handleNameChange}
-                        handleDescriptionChange={handleDescriptionChange}
-                        handleAcceptChange={handleAcceptChange}
-                        selectedBlockId={selectedBlockId}
-                        setSelectedBlockId={setSelectedBlockId}
-                    />
                     {
-                        formObject?.questions.map((q) => (
-                            <ConstructorBlock
-                                key={q.id}
-                                question={q}
-                                handleAdd={handleAddQuestionBlock}
-                                handleDelete={handleDelete}
-                                handleSelectChange={handleSelectChange}
-                                handleQuestionChange={handleQuestionChange}
-                                handleRequiredToggle={handleRequiredToggle}
-                                selectedBlockId={selectedBlockId}
-                                setSelectedBlockId={setSelectedBlockId}
-                            />
-                        ))
+                        (isLoading) ? (
+                            <LoadingMessage/>
+                        ) : (error) ? (
+                            <ErrorMessage error={error}/>
+                        ) : (formObject) && (
+                            <>
+                                <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
+                                    <div className={styles.formName}>
+                                        <TextParagraph
+                                            onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
+                                            placeholder={"New form"}
+                                            defaultValue={formObject?.name}
+                                        />
+                                    </div>
+                                    <div className={styles.formDescription}>
+                                        <TextParagraph
+                                            onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
+                                            placeholder={"Description"}
+                                            defaultValue={formObject?.description}
+                                        />
+                                    </div>
+                                    <div>
+                                        <ToggleButton
+                                            text={"Accept answers"}
+                                            onClick={(e) => handleAcceptChange(e.target.checked)}
+                                            checked={formObject?.active}
+                                        />
+                                    </div>
+                                </div>
+                                {
+                                    formObject?.questions.map((q) => (
+                                        <ConstructorBlock
+                                            key={q.id}
+                                            question={q}
+                                            handleAdd={handleAddQuestionBlock}
+                                            handleDelete={handleDelete}
+                                            handleSelectChange={handleSelectChange}
+                                            handleQuestionChange={handleQuestionChange}
+                                            handleRequiredToggle={handleRequiredToggle}
+                                            selectedBlockId={selectedBlockId}
+                                            setSelectedBlockId={setSelectedBlockId}
+                                        />
+                                    ))
+                                }
+                            </>
+                        )
                     }
                 </ConstructorColumn>
             </Main>
         </>
-        ) : null
     );
 };
 

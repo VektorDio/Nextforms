@@ -23,13 +23,6 @@ export const options = {
 };
 const StatisticBlock = ({question}) => {
 
-    // function getRandomInt(min, max) {
-    //     min = Math.ceil(min);
-    //     max = Math.floor(max);
-    //     return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-    // }
-    // '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
-
     const colors = [
         "#192040",
         "#3c4c99",

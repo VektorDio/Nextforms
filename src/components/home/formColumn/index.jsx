@@ -6,9 +6,7 @@ import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import styles from './formsColumn.module.css'
 const FormColumn = () => {
-    const {status, data:session} = useSession({
-        required: true,
-    })
+    const {status, data:session} = useSession()
     const {mutateAsync:deleteForm, isLoading:isUpdating} = useDeleteFormById()
     const {mutateAsync:updateForm, } = useUpdateForm()
     const [forms, setForms] = useState()
@@ -43,29 +41,22 @@ const FormColumn = () => {
         })
     }
 
-    if (isLoading) return (
-        <div className={styles.container}>
-            <LoadingMessage/>
-        </div>
-
-    )
-    if (error) return (
-        <div className={styles.container}>
-            <ErrorMessage error={error}/>
-        </div>
-    )
-
-    if (forms) return (
+    return (
         <div className={styles.container}>
             {
-                forms?.map((entry,index) =>
-                    <FormEntry
-                        key={index}
-                        formEntry={entry}
-                        onDelete={handleEntryDelete}
-                        onActivityToggle={handleActivityToggle}
-                        onGenerateLink={"123"}
-                    />
+                (isLoading) ? (
+                    <LoadingMessage/>
+                ) : (error) ? (
+                    <ErrorMessage error={error}/>
+                ) : (
+                    forms?.map((entry,index) =>
+                        <FormEntry
+                            key={index}
+                            formEntry={entry}
+                            onDelete={handleEntryDelete}
+                            onActivityToggle={handleActivityToggle}
+                        />
+                    )
                 )
             }
         </div>

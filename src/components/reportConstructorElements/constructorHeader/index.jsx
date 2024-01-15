@@ -14,7 +14,9 @@ export default function ConstructorHeader({onReportSubmit}) {
             </div>
 
             <div className={styles.sideBlock}>
-                <SimpleButton onClick={onReportSubmit} iconType={"check"} bgColor={"#399412"}/>
+                {
+                    (onReportSubmit) && <SimpleButton onClick={onReportSubmit} iconType={"check"} bgColor={"#399412"}/>
+                }
                 <Link href={"/home"}>
                     <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </Link>

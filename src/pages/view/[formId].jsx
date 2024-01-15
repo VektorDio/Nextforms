@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ViewHeader from "@/components/viewElements/viewHeader";
-import ViewColumn from "@/components/viewElements/viewColumn";
-import ViewNameBlock from "@/components/viewElements/viewNameBlock";
 import ViewBlock from "@/components/viewElements/viewBlock";
 import {Formik} from "formik";
 import * as Yup from "yup";
@@ -11,7 +9,8 @@ import {useRouter} from "next/router";
 import {useCreateAnswers, useGetFormById} from "@/queries/forms";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
-import ConstructorHeader from "@/components/reportConstructorElements/constructorHeader";
+import ConstructorColumn from "@/components/formConstructorElements/constructorColumn";
+import styles from "./formView.module.css";
 
 const FormView = () => {
     const router = useRouter()
@@ -31,38 +30,20 @@ const FormView = () => {
         }
     }, [data])
 
-    if (isLoading) return (
-        <>
-            <ConstructorHeader/>
-            <Main>
-                <ViewColumn>
-                    <LoadingMessage/>
-                </ViewColumn>
-
-            </Main>
-        </>
-    )
-    if (error) return (
-        <>
-            <ConstructorHeader/>
-            <Main>
-                <ViewColumn>
-                    <ErrorMessage error={error}/>
-                </ViewColumn>
-            </Main>
-        </>
-    )
-
     async function handleFormSubmit(values) {
         if (formObject?.active) {
-            let data = Object.entries(values).map(([k, v]) => ({
-                questionId: k,
-                answerData: v,
+            let data = Object.entries(values).map(([key, value]) => ({
+                questionId: key,
+                answerData: value,
             }))
+
             await createAnswers({
                 data: data
             })
+
             router.push("/answerSubmitted")
+        } else {
+            console.log("Form is inactive")
         }
     }
 
@@ -110,7 +91,7 @@ const FormView = () => {
          initialValues[e.id] = (e.type === "checkbox") ?  [] : ""
     })
 
-    return ((formObject) &&
+    return (
         <>
             <Head>
                 <title>{formObject?.name} | Report Generator</title>
@@ -126,20 +107,34 @@ const FormView = () => {
                 <>
                     <ViewHeader/>
                     <Main>
-                        <ViewColumn>
-                            <ViewNameBlock
-                                formName={formObject?.name}
-                                formDescription={formObject?.description}
-                            />
+                        <ConstructorColumn>
                             {
-                                formObject?.questions.map((question , index) => (
-                                    <ViewBlock
-                                        key={index}
-                                        question={question}
-                                    />
-                                ))
+                                (isLoading) ? (
+                                    <LoadingMessage/>
+                                ) : (error) ? (
+                                    <ErrorMessage error={error}/>
+                                ) : (formObject) && (
+                                    <>
+                                        <div className={styles.container} >
+                                            <div className={styles.formName}>
+                                                {formObject?.name}
+                                            </div>
+                                            <div className={styles.formDescription}>
+                                                {formObject?.description}
+                                            </div>
+                                        </div>
+                                        {
+                                            formObject?.questions.map((question , index) => (
+                                                <ViewBlock
+                                                    key={index}
+                                                    question={question}
+                                                />
+                                            ))
+                                        }
+                                    </>
+                                )
                             }
-                        </ViewColumn>
+                        </ConstructorColumn>
                     </Main>
                 </>
             )}
