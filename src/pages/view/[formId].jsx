@@ -9,7 +9,7 @@ import {useRouter} from "next/router";
 import {useCreateAnswers, useGetFormById} from "@/queries/forms";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
-import ConstructorColumn from "@/components/formConstructorElements/constructorColumn";
+import ConstructorColumn from "src/components/constructorColumn";
 import styles from "./formView.module.css";
 
 const FormView = () => {

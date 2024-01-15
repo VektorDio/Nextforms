@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ConstructorHeader from "@/components/formConstructorElements/constructorHeader";
-import ConstructorColumn from "@/components/formConstructorElements/constructorColumn";
+import ConstructorColumn from "src/components/constructorColumn";
 import ConstructorBlock from "@/components/formConstructorElements/constructorBlock";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";

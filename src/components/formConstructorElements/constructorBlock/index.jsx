@@ -39,7 +39,6 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
 
         buf[index].text = text
         setOptions([...buf])
-        console.log(options)
     }
 
     function handleDeleteOption(id) {

@@ -3,6 +3,7 @@ import styles from './fillBlock.module.css'
 import InlineInput from "@/components/inputs/inlineInput";
 import TextParagraph from "@/components/inputs/textParagraph";
 import StatisticsInput from "@/components/inputs/statisticsInput";
+
 const FillBlock = ({block, answers}) => {
     let component
     switch (block.type){

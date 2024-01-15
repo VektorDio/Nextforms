@@ -5,7 +5,7 @@ import {v4 as uuidv4} from "uuid";
 import Head from "next/head";
 import ConstructorHeader from "@/components/reportConstructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
-import ConstructorColumn from "@/components/reportConstructorElements/constructorColumn";
+import ConstructorColumn from "src/components/constructorColumn";
 import ConstructorBlock from "@/components/reportConstructorElements/constructorBlock";
 import {useGetReportById, useUpdateReport} from "@/queries/reports";
 import LoadingMessage from "@/components/messages/loadingMessage";

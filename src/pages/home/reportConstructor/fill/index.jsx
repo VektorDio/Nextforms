@@ -14,7 +14,7 @@ import SelectInput from "@/components/inputs/selectInput";
 import SimpleButton from "@/components/buttons/simpleButton";
 import Link from "next/link";
 import TextParagraph from "@/components/inputs/textParagraph";
-import ConstructorColumn from "@/components/formConstructorElements/constructorColumn";
+import ConstructorColumn from "src/components/constructorColumn";
 
 const ReportConstructor = () => {
     const router = useRouter()

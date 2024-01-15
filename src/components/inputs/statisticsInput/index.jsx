@@ -8,7 +8,6 @@ const StatisticsInput = ({answers}) => {
     const [options, setOptions] = useState({
         amountOfAnswers: false,
         amountByOptions: false,
-        //sumOfAnswers: false,
     })
 
     return (
@@ -27,7 +26,7 @@ const StatisticsInput = ({answers}) => {
             </div>
             <div className={styles.checkboxContainer}>
                 {
-                    (answer) ? (
+                    (answer) && (
                         <>
                             <CheckboxInput
                                 text={"Amount of answers"}
@@ -38,19 +37,19 @@ const StatisticsInput = ({answers}) => {
                                 onChange={() => setOptions({...options, amountByOptions: !options.amountByOptions})}
                             />
                         </>
-                    ) : null
+                    )
                 }
             </div>
             <div className={styles.statisticsContainer}>
                 {
-                    (options.amountOfAnswers) ? (
+                    (options.amountOfAnswers) && (
                         <div>
                             Answers given: {answer.answers.length}
                         </div>
-                    ) : null
+                    )
                 }
                 {
-                    (options.amountByOptions) ? (
+                    (options.amountByOptions) && (
                         <div>
                             {
                                 answer?.options.map((e, i) => {
@@ -63,7 +62,7 @@ const StatisticsInput = ({answers}) => {
                                 })
                             }
                         </div>
-                    ) : null
+                    )
                 }
             </div>
         </div>
