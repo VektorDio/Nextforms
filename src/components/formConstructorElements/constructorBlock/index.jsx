@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import styles from './constructorBlock.module.css'
 import ToggleButton from "@/components/buttons/toggleButton";
 import AddButton from "@/components/buttons/addButton";
@@ -14,50 +13,40 @@ import SimpleButton from "@/components/buttons/simpleButton";
 const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange,
                               handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
     const [options, setOptions] = useState(() => {
-        if (typeof question.options[0] === "string"){
-            return question.options.map(e => ({
-                id: uuidv4(),
-                text: e,
-            }))
-        } else return question.options
+        return question.options !== undefined ? question.options : []
     })
+
     const isSelected = selectedBlockId === question.id
+
     question.options = options
-    function handleOptionRedacted(id, text) {
+
+    function handleOptionRedacted(index, text) {
         if (text.length < 1){
-            handleDeleteOption(id)
+            handleDeleteOption(index)
+            // cant create empty option
             return
         }
 
         let buf = [...options]
-        let index = buf.findIndex(e => e.id === id)
 
-        if (buf.some((e) => ((e.text === text) && (e.id !== id)))){
-            handleDeleteOption(id)
+        if (buf.find((option, i) => (option === text && i !== index))){ // similarity check
+            handleDeleteOption(index) // cant create similar option, error
             return
         }
 
-        buf[index].text = text
+        buf[index] = text
         setOptions([...buf])
     }
 
-    function handleDeleteOption(id) {
+    function handleDeleteOption(index) {
         let buf = [...options]
-        let index = buf.findIndex(e => e.id === id)
-        if(buf.length > 1 || buf[index].text.length < 1){
-            buf.splice(index, 1)
-        }
+        buf.splice(index, 1)
         setOptions([...buf])
     }
 
     function handleAddOption() {
         let buf = [...options]
-
-        buf.splice(options.length, 0, {
-            id: uuidv4(),
-            text: "Question"
-        })
-
+        buf.push("Option")
         setOptions([...buf])
     }
 
@@ -86,12 +75,12 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
         case "radio":
             component = (
                 <>
-                    {options.map((e) =>
+                    {options.map((e, i) =>
                         <OptionInput
-                            id={e.id}
-                            key={e.id}
+                            id={i}
+                            key={i}
+                            text={e}
                             type={"radio"}
-                            text={e.text}
                             disabled={!isSelected}
                             deletable={(options.length > 1)}
                             handleOptionRedacted={handleOptionRedacted}
@@ -110,12 +99,12 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
         case "checkbox":
             component = (
                 <>
-                    {options.map((e) =>
+                    {options.map((e, i) =>
                             <OptionInput
-                                id={e.id}
-                                key={e.id}
+                                id={i}
+                                key={i}
+                                text={e}
                                 type={"checkbox"}
-                                text={e.text}
                                 deletable={options.length > 1}
                                 disabled={!isSelected}
                                 handleOptionRedacted={handleOptionRedacted}
@@ -136,10 +125,10 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                 <>
                     {options.map((e, index) =>
                         <OptionInput
-                            id={e.id}
-                            key={e.id}
+                            id={index}
+                            key={index}
                             type={"select"}
-                            text={e.text}
+                            text={e}
                             deletable={options.length > 1}
                             disabled={!isSelected}
                             index={index+1}

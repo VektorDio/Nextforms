@@ -42,6 +42,8 @@ const FormConstructor = () => {
 
     async function handleFormSubmit() {
 
+        console.log(formObject)
+
         if (!formObject?.questions.every((e) => e.question.length > 1)) {
             console.log("Empty question")
             return
@@ -61,7 +63,7 @@ const FormConstructor = () => {
                 type: e.type,
                 required: e.required,
                 question: e.question,
-                options: e.options.map(e => (e.text)),
+                options: e.options,
             })),
         })
 
@@ -141,12 +143,12 @@ const FormConstructor = () => {
         let buf = [...formObject?.questions]
 
         if (text.length < 1) {
-            //display error
+            console.log("Empty question")
             return
         }
 
         let index = buf.findIndex(e => e.id === id)
-        buf[index].question = (buf.some((e) => e.question === text)) ? "" : text
+        buf[index].question = (buf.some((e) => e.question === text)) ? "" : text //Similar question check
         setFormObject(prev => ({
             ...prev,
             questions: [...buf]
@@ -209,11 +211,13 @@ const FormConstructor = () => {
                                         <ConstructorBlock
                                             key={q.id}
                                             question={q}
+
                                             handleAdd={handleAddQuestionBlock}
                                             handleDelete={handleDelete}
-                                            handleSelectChange={handleSelectChange}
                                             handleQuestionChange={handleQuestionChange}
                                             handleRequiredToggle={handleRequiredToggle}
+
+                                            handleSelectChange={handleSelectChange}
                                             selectedBlockId={selectedBlockId}
                                             setSelectedBlockId={setSelectedBlockId}
                                         />
