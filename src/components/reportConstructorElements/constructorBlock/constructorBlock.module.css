@@ -56,6 +56,11 @@
     width: 45%;
 }
 
+.oneLineSelect {
+    width: 45%;
+
+}
+
 .unselectedText{
     font-size: 24px;
     font-weight: 600;

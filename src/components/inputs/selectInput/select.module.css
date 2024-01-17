@@ -1,15 +1,43 @@
-.typeSelect{
-    font-size: 16px;
-    line-height: 28px;
-    padding: 8px 10px;
+.container{
     width: 100%;
     min-height: 46px;
-    border-right: solid #353f4f 12px;
-    border-left: solid #353f4f;
-    border-top: solid #353f4f;
-    border-bottom: solid #353f4f;
     border-radius: 6px;
-    background-color: #353f4f;
+}
+
+.control {
+    font-size: 16px;
+    line-height: 28px;
+    background-color: #353f4f !important;
+    border: #353f4f solid 3px !important;
+}
+
+.control:focus-within {
+    outline: none !important;
+    border: #4c6386 solid 3px !important;
+    box-shadow: none;
+}
+
+.placeholder {
+    color: white !important;
+}
+
+.menu {
+    font-size: 16px;
+    line-height: 28px;
+    background-color: #353f4f !important;
+    border-color: #353f4f !important;
+}
+
+.option {
+    background-color: #353f4f !important;
+}
+
+.singleValue {
+    color: white !important;
+}
+
+.option:hover {
+    background-color: #5a667a !important;
 }
 
 .typeSelect:focus {

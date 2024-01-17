@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./statistics.module.css";
-import Select from "@/components/inputs/selectInput";
+import SelectInput from "@/components/inputs/selectInput";
 import CheckboxInput from "@/components/inputs/checkboxInput";
 
 const StatisticsInput = ({answers}) => {
@@ -10,19 +10,16 @@ const StatisticsInput = ({answers}) => {
         amountByOptions: false,
     })
 
+    let optionsArray = []
+
+    answers?.map((ans, i) => (
+        optionsArray.push({value: i, label: ans.question, key: i})
+    ))
+
     return (
         <div>
             <div className={styles.selectContainer}>
-                <Select defaultValue={"placeholder"} onChange={(e)=> setAnswer(answers[e.target.value])}>
-                    {
-                        (answer === undefined) ? <option key={"placeholder"} value={"placeholder"}>Select questions</option> : null
-                    }
-                    {
-                        answers?.map((ans, i) => (
-                            <option key={i} value={i}>{ans.question}</option>
-                        ))
-                    }
-                </Select>
+                <SelectInput placeholder={"Select questions"} options={optionsArray} onChange={(choice)=> setAnswer(answers[choice.value])}/>
             </div>
             <div className={styles.checkboxContainer}>
                 {

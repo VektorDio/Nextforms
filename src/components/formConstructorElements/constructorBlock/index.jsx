@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from './constructorBlock.module.css'
 import ToggleButton from "@/components/buttons/toggleButton";
 import AddButton from "@/components/buttons/addButton";
-import Select from "@/components/inputs/selectInput";
+import SelectInput from "@/components/inputs/selectInput";
 import BlockInput from "@/components/inputs/blockInput";
 import InlineInput from "@/components/inputs/inlineInput";
 import TextParagraph from "@/components/inputs/textParagraph";
@@ -169,6 +169,16 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
             break;
     }
 
+    let questionTypeOptions = [
+        {value: "oneLineText", label: "Text (one line)"},
+        {value: "paragraphText", label: "Text (Paragraph)"},
+        {value: "radio", label: "Select one"},
+        {value: "checkbox", label: "Select many"},
+        {value: "select", label: "List"},
+        {value: "date", label: "Date"},
+        {value: "time", label: "Time"}
+    ]
+
     return (
         <div
             className={(selectedBlockId === question.id) ? styles.outerContainer : styles.outerContainerDisabled}
@@ -185,18 +195,11 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
                             />
                                 <div className={styles.selectContainer}>
-                                    <Select
-                                        defaultValue={question.type}
-                                        onChange={(e) => handleSelectChange(question.id, e.target.value)}
-                                    >
-                                        <option value="oneLineText">Text (one line) </option>
-                                        <option value="paragraphText">Text (Paragraph) </option>
-                                        <option value="radio">Select one </option>
-                                        <option value="checkbox">Select many </option>
-                                        <option value="select">List </option>
-                                        <option value="date">Date </option>
-                                        <option value="time">Time </option>
-                                    </Select>
+                                    <SelectInput
+                                        defaultValue={questionTypeOptions.find((e) => e.value === question.type)}
+                                        onChange={(choice) => handleSelectChange(question.id, choice.value)}
+                                        options={questionTypeOptions}
+                                    />
                                 </div>
                             </>
                         ) : (

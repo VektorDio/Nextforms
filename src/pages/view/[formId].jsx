@@ -31,6 +31,7 @@ const FormView = () => {
     }, [data])
 
     async function handleFormSubmit(values) {
+
         if (formObject?.active) {
             let data = Object.entries(values).map(([key, value]) => ({
                 questionId: key,

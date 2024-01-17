@@ -62,15 +62,14 @@ const ViewBlock = ({question}) => {
             )
             break;
         case "select":
+            let optionsArray = []
+            question.options.map((e, index) =>(
+                optionsArray.push({value: e, label: e, key: index})
+            ))
             component = (
-                <MySelect
-                    name={question.id}
-                >
-                    {question.options.map((e, index) =>(
-                            <option value={e} key={index}>{e}</option>
-                        ))
-                    }
-                </MySelect>
+                <div className={styles.oneLineText}>
+                    <MySelect name={question.id} options={optionsArray}/>
+                </div>
             )
             break;
         case "date":

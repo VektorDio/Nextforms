@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './constructorBlock.module.css'
 import AddButton from "@/components/buttons/addButton";
-import Select from "@/components/inputs/selectInput";
+import SelectInput from "@/components/inputs/selectInput";
 import BlockInput from "@/components/inputs/blockInput";
 import InlineInput from "@/components/inputs/inlineInput";
 import TextParagraph from "@/components/inputs/textParagraph";
@@ -36,10 +36,8 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
             break
         case "statistics":
             component = (
-                <div className={styles.paragraphText}>
-                    <Select defaultValue={"placeholder"} disabled={true}>
-                        <option value={"placeholder"}>Select answer</option>
-                    </Select>
+                <div className={styles.oneLineText}>
+                    <SelectInput placeholder={"Select answer"} isDisabled={true}/>
                 </div>
             )
             break;
@@ -47,6 +45,12 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
             component = (<></>)
             break;
     }
+
+    let blockTypeOptions = [
+        {value: "oneLineText", label: "Text (One line)"},
+        {value: "paragraphText", label: "Text (Paragraph)"},
+        {value: "statistics", label: "Statistics"}
+    ]
 
     return (
         <div
@@ -64,14 +68,11 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                                 onBlur={(e) => handleNameChange(block.id, e.currentTarget.textContent)}
                             />
                                 <div className={styles.selectContainer}>
-                                    <Select
-                                        defaultValue={block.type}
-                                        onChange={(e) => handleBlockTypeChange(block.id, e.target.value)}
-                                    >
-                                        <option value="oneLineText">Text (One line) </option>
-                                        <option value="paragraphText">Text (Paragraph) </option>
-                                        <option value="statistics">Statistics </option>
-                                    </Select>
+                                    <SelectInput
+                                        defaultValue={blockTypeOptions.find((e) => e.value === block.type)}
+                                        options={blockTypeOptions}
+                                        onChange={(choice) => handleBlockTypeChange(block.id, choice.value)}
+                                    />
                                 </div>
                             </>
                         ) : (

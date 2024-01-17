@@ -1,18 +1,28 @@
 import React from 'react';
 import styles from "./select.module.css";
+import Select from "react-select";
 
-const Select = ({name, children, onChange, defaultValue, disabled}) => {
+const SelectInput = (props) => {
     return (
-        <select
-            name={name}
-            className={styles.typeSelect}
-            defaultValue={defaultValue}
-            onChange={onChange}
-            disabled={disabled}
-        >
-            {children}
-        </select>
+        <Select {...props} classNames={{
+            container: () =>
+                styles.container,
+            control: () =>
+                styles.control,
+            menu: () =>
+                styles.menu,
+            option: () =>
+                styles.option,
+            selectContainer: () =>
+                styles.control,
+            placeholder: () =>
+                styles.placeholder,
+            singleValue: () =>
+                styles.singleValue,
+        }}
+                menuPosition={"fixed"}
+        />
     );
 };
 
-export default Select;
+export default SelectInput;
