@@ -170,7 +170,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
 
     return (
         <div
-            className={(selectedBlockId === index) ? styles.outerContainer : styles.outerContainerDisabled}
+            className={isSelected ? styles.outerContainer : styles.outerContainerDisabled}
             onClick={() => setSelectedBlockId(index)}
         >
             <div className={styles.container}>
@@ -182,7 +182,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 placeholder="Questions"
                                 defaultValue={question.question}
                                 onBlur={(e) => handleQuestionChange(index, e.currentTarget.textContent)}
-                            />
+                                />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
                                         defaultValue={questionTypeOptions.find((e) => e.value === question.type)}

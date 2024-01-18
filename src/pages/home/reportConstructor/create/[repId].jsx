@@ -73,9 +73,8 @@ const ReportConstructor = () => {
         }))
     }
 
-    const handleAddBlock = (id) => {
+    const handleAddBlock = (index) => {
         let buf = [...reportObject?.blocks]
-        let index = buf.findIndex(e => e.id === id)
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             type: "radio",
@@ -87,21 +86,19 @@ const ReportConstructor = () => {
         }))
     }
 
-    const handleDelete = (id) => {
-        let buf = [...reportObject?.blocks]
-        let index = buf.findIndex(e => e.id === id)
-        if(buf.length > 1){
+    const handleDelete = (index) => {
+        if(reportObject?.blocks.length > 1){
+            let buf = [...reportObject?.blocks]
             buf.splice(index, 1)
+            setReportObject(prev => ({
+                ...prev,
+                blocks: [...buf]
+            }))
         }
-        setReportObject(prev => ({
-            ...prev,
-            blocks: [...buf]
-        }))
     }
 
-    const handleTypeChange = (id, value) => {
+    const handleTypeChange = (index, value) => {
         let buf = [...reportObject?.blocks]
-        let index = buf.findIndex(e => e.id === id)
         buf[index].type = value
         setReportObject(prev => ({
             ...prev,
@@ -109,13 +106,12 @@ const ReportConstructor = () => {
         }))
     }
 
-    const handleBlockNameChange = (id, text) => {
+    const handleBlockNameChange = (index, text) => {
         if (text.length < 1){
             //display error
             return
         }
         let buf = [...reportObject?.blocks]
-        let index = buf.findIndex(e => e.id === id)
         buf[index].name = text
         setReportObject(prev => ({
             ...prev,
@@ -158,14 +154,17 @@ const ReportConstructor = () => {
                                     </div>
                                 </div>
                                 {
-                                    reportObject?.blocks.map((q) => (
+                                    reportObject?.blocks.map((block, index) => (
                                         <ConstructorBlock
-                                            key={q.id}
-                                            block={q}
+                                            key={block.id}
+                                            block={block}
+                                            index={index}
+
                                             handleAdd={handleAddBlock}
                                             handleDelete={handleDelete}
                                             handleBlockTypeChange={handleTypeChange}
                                             handleNameChange={handleBlockNameChange}
+
                                             selectedBlockId={selectedBlockId}
                                             setSelectedBlockId={setSelectedBlockId}
                                         />

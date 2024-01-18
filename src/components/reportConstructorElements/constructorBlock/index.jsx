@@ -7,10 +7,10 @@ import InlineInput from "@/components/inputs/inlineInput";
 import TextParagraph from "@/components/inputs/textParagraph";
 import SimpleButton from "@/components/buttons/simpleButton";
 
-const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange,
+const ConstructorBlock = ({block, index, handleDelete, handleAdd, handleBlockTypeChange,
                               handleNameChange, selectedBlockId, setSelectedBlockId}) => {
 
-    const isSelected = selectedBlockId === block.id
+    const isSelected = selectedBlockId === index
 
     let component
     switch (block.type){
@@ -54,8 +54,8 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
 
     return (
         <div
-            className={(selectedBlockId === block.id) ? styles.outerContainer : styles.outerContainerDisabled}
-            onClick={() => setSelectedBlockId(block.id)}
+            className={(isSelected) ? styles.outerContainer : styles.outerContainerDisabled}
+            onClick={() => setSelectedBlockId(index)}
         >
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
@@ -65,13 +65,13 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                                 <BlockInput
                                 placeholder="Text"
                                 defaultValue={block.name}
-                                onBlur={(e) => handleNameChange(block.id, e.currentTarget.textContent)}
+                                onBlur={(e) => handleNameChange(index, e.currentTarget.textContent)}
                             />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
                                         defaultValue={blockTypeOptions.find((e) => e.value === block.type)}
                                         options={blockTypeOptions}
-                                        onChange={(choice) => handleBlockTypeChange(block.id, choice.value)}
+                                        onChange={(choice) => handleBlockTypeChange(index, choice.value)}
                                     />
                                 </div>
                             </>
@@ -85,11 +85,11 @@ const ConstructorBlock = ({block, handleDelete, handleAdd, handleBlockTypeChange
                     {component}
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
-                    <SimpleButton onClick={() => handleDelete(block.id)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                    <SimpleButton onClick={() => handleDelete(index)} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
             <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>
-                <AddButton onClick={()=> handleAdd(block.id)}/>
+                <AddButton onClick={()=> handleAdd(index)}/>
             </div>
         </div>
     );
