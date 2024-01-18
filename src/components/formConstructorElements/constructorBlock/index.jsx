@@ -11,12 +11,12 @@ import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
 import SimpleButton from "@/components/buttons/simpleButton";
 const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange,
-                              handleRequiredToggle, selectedBlockId, setSelectedBlockId}) => {
+                              handleRequiredToggle, selectedBlockId, setSelectedBlockId, index}) => {
     const [options, setOptions] = useState(() => {
         return question.options !== undefined ? question.options : []
     })
 
-    const isSelected = selectedBlockId === question.id
+    const isSelected = selectedBlockId === index
 
     question.options = options
 
@@ -170,8 +170,8 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
 
     return (
         <div
-            className={(selectedBlockId === question.id) ? styles.outerContainer : styles.outerContainerDisabled}
-            onClick={() => setSelectedBlockId(question.id)}
+            className={(selectedBlockId === index) ? styles.outerContainer : styles.outerContainerDisabled}
+            onClick={() => setSelectedBlockId(index)}
         >
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
@@ -181,12 +181,12 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 <BlockInput
                                 placeholder="Questions"
                                 defaultValue={question.question}
-                                onBlur={(e) => handleQuestionChange(question.id, e.currentTarget.textContent)}
+                                onBlur={(e) => handleQuestionChange(index, e.currentTarget.textContent)}
                             />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
                                         defaultValue={questionTypeOptions.find((e) => e.value === question.type)}
-                                        onChange={(choice) => handleSelectChange(question.id, choice.value)}
+                                        onChange={(choice) => handleSelectChange(index, choice.value)}
                                         options={questionTypeOptions}
                                     />
                                 </div>
@@ -203,12 +203,12 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                     {component}
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
-                    <ToggleButton onClick={(e) => handleRequiredToggle(question.id, e.target.checked)} text={"Required"} checked={question.required}/>
-                    <SimpleButton onClick={() => handleDelete(question.id)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                    <ToggleButton onClick={(e) => handleRequiredToggle(index, e.target.checked)} text={"Required"} checked={question.required}/>
+                    <SimpleButton onClick={() => handleDelete(index)} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
             <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>
-                <AddButton onClick={()=> handleAdd(question.id)}/>
+                <AddButton onClick={()=> handleAdd(index)}/>
             </div>
         </div>
     );

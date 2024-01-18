@@ -98,18 +98,15 @@ const FormConstructor = () => {
         }))
     }
 
-    const handleAddQuestionBlock = (id) => {
+    const handleAddQuestionBlock = (index) => {
         let buf = [...formObject?.questions]
-        let index = buf.findIndex(e => e.id === id)
+        //let index = buf.findIndex(e => e.id === id)
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             required: false,
             type: "radio",
             question:"Question",
-            options:[{
-                id: uuidv4(),
-                text: ""
-            }]
+            options:[]
         })
         setFormObject(prev => ({
             ...prev,
@@ -117,21 +114,19 @@ const FormConstructor = () => {
         }))
     }
 
-    const handleDelete = (id) => {
-        let buf = [...formObject?.questions]
-        let index = buf.findIndex(e => e.id === id)
-        if(buf.length > 1){
+    const handleDelete = (index) => {
+        if(formObject?.questions.length > 1){ //cant delete last question
+            let buf = [...formObject?.questions]
             buf.splice(index, 1)
+            setFormObject(prev => ({
+                ...prev,
+                questions: [...buf]
+            }))
         }
-        setFormObject(prev => ({
-            ...prev,
-            questions: [...buf]
-        }))
     }
 
-    const handleSelectChange = (id, value) => {
+    const handleQuestionTypeChange = (index, value) => {
         let buf = [...formObject?.questions]
-        let index = buf.findIndex(e => e.id === id)
         buf[index].type = value
         setFormObject(prev => ({
             ...prev,
@@ -139,25 +134,27 @@ const FormConstructor = () => {
         }))
     }
 
-    const handleQuestionChange = (id, text) => {
-        let buf = [...formObject?.questions]
-
+    const handleQuestionChange = (index, text) => {
         if (text.length < 1) {
             console.log("Empty question")
             return
         }
 
-        let index = buf.findIndex(e => e.id === id)
-        buf[index].question = (buf.some((e) => e.question === text)) ? "" : text //Similar question check
+        if (formObject?.questions.some((question, i) => question.question === text && i !== index)){
+            console.log("Duplicate question")
+            return
+        }
+
+        let buf = [...formObject?.questions]
+        buf[index].question = text
         setFormObject(prev => ({
             ...prev,
             questions: [...buf]
         }))
     }
 
-    const handleRequiredToggle = (id, value) => {
+    const handleRequiredToggle = (index, value) => {
         let buf = [...formObject?.questions]
-        let index = buf.findIndex(e => e.id === id)
         buf[index].required = value
         setFormObject(prev => ({
             ...prev,
@@ -207,17 +204,18 @@ const FormConstructor = () => {
                                     </div>
                                 </div>
                                 {
-                                    formObject?.questions.map((q) => (
+                                    formObject?.questions.map((q, index) => (
                                         <ConstructorBlock
                                             key={q.id}
                                             question={q}
+                                            index={index}
 
                                             handleAdd={handleAddQuestionBlock}
                                             handleDelete={handleDelete}
                                             handleQuestionChange={handleQuestionChange}
                                             handleRequiredToggle={handleRequiredToggle}
 
-                                            handleSelectChange={handleSelectChange}
+                                            handleSelectChange={handleQuestionTypeChange}
                                             selectedBlockId={selectedBlockId}
                                             setSelectedBlockId={setSelectedBlockId}
                                         />
