@@ -7,6 +7,7 @@ import {useRouter} from "next/router";
 import MenuColumn from "@/components/home/menuColumn";
 import InfoColumn from "@/components/home/infoColumn";
 import HomeColumn from "@/components/home/homeColumn";
+import LogInGroup from "@/components/pageWraper/header/logInGroup";
 
 const Home = () => {
     const router = useRouter()
@@ -25,14 +26,20 @@ const Home = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header/>
             {
-                (status !== "loading") && (
-                    <ColumnWrapper>
-                        <MenuColumn/>
-                        <HomeColumn/>
-                        <InfoColumn/>
-                    </ColumnWrapper>
+                (status !== "loading") ? (
+                    <>
+                        <Header>
+                            <LogInGroup authenticated={(status === "authenticated")}/>
+                        </Header>
+                        <ColumnWrapper>
+                            <MenuColumn/>
+                            <HomeColumn/>
+                            <InfoColumn/>
+                        </ColumnWrapper>
+                    </>
+                ) : (
+                    <Header/>
                 )
             }
         </>

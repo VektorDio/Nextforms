@@ -12,6 +12,7 @@ import styles from "./reportFill.module.css";
 import TextParagraph from "@/components/inputs/textParagraph";
 import ConstructorColumn from "src/components/constructorColumn";
 import FillHeader from "@/components/fillElements/fillHeader";
+import Header from "@/components/pageWraper/header";
 
 const ReportConstructor = () => {
     const router = useRouter()
@@ -83,14 +84,16 @@ const ReportConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <FillHeader formId={formId}
-                        reportId={reportId}
-                        formNamesData={formNamesData}
-                        reportNamesData={reportNamesData}
-                        onReportIdChange={onReportIdChange}
-                        onFormIdChange={onFormIdChange}
-                        handlePrint={handlePrint}
-            />
+            <Header movable={true}>
+                <FillHeader formId={formId}
+                            reportId={reportId}
+                            formNamesData={formNamesData}
+                            reportNamesData={reportNamesData}
+                            onReportIdChange={onReportIdChange}
+                            onFormIdChange={onFormIdChange}
+                            handlePrint={handlePrint}
+                />
+            </Header>
             <Main>
                 <ConstructorColumn>
                     {

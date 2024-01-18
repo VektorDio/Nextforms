@@ -11,6 +11,7 @@ import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import ConstructorColumn from "src/components/constructorColumn";
 import styles from "./formView.module.css";
+import Header from "@/components/pageWraper/header";
 
 const FormView = () => {
     const router = useRouter()
@@ -29,6 +30,12 @@ const FormView = () => {
             setFormObject(data.form)
         }
     }, [data])
+
+
+    if (formObject?.active === false) {
+        router.push("/closedForm")
+        return null
+    }
 
     async function handleFormSubmit(values) {
 
@@ -88,8 +95,8 @@ const FormView = () => {
     })
 
     let initialValues = {}
-    formObject?.questions.map(e => {
-         initialValues[e.id] = (e.type === "checkbox") ?  [] : ""
+    formObject?.questions.map((e) => {
+         initialValues[e.id] = (e.type === "checkbox") ? [] : ""
     })
 
     return (
@@ -106,7 +113,9 @@ const FormView = () => {
                 onSubmit={(values) => {handleFormSubmit(values)}}
             >{() => (
                 <>
-                    <ViewHeader/>
+                    <Header movable={true}>
+                        <ViewHeader/>
+                    </Header>
                     <Main>
                         <ConstructorColumn>
                             {

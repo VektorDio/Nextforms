@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from "./fillHeader.module.css";
-import Icon from "@/components/icon";
 import SelectInput from "@/components/inputs/selectInput";
 import SimpleButton from "@/components/buttons/simpleButton";
 import Link from "next/link";
@@ -19,14 +18,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
     ))
 
     return (
-        <div className={styles.header}>
-            <div className={styles.iconBlock}>
-                <Icon/>
-                <div className={styles.siteName}>
-                    NextForms
-                </div>
-            </div>
-
+        <>
             <div className={styles.centerBlock}>
                 <div className={styles.selectContainer}>
                     <SelectInput defaultValue={reportId}
@@ -53,7 +45,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
                     <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </Link>
             </div>
-        </div>
+        </>
     );
 };
 

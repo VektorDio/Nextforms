@@ -7,6 +7,7 @@ import MenuColumn from "@/components/home/menuColumn";
 import InfoColumn from "@/components/home/infoColumn";
 import ReportColumn from "@/components/home/reportColumn";
 import {useRouter} from "next/router";
+import LogInGroup from "@/components/pageWraper/header/logInGroup";
 
 const ReportsHomePage = () => {
     const router = useRouter()
@@ -25,15 +26,19 @@ const ReportsHomePage = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header/>
             {
-                (status !== "loading") && (
-                    <ColumnWrapper>
-                        <MenuColumn centralColumn={"report"}/>
-                        <ReportColumn/>
-                        <InfoColumn/>
-                    </ColumnWrapper>
-                )
+                (status !== "loading") ? (
+                    <>
+                        <Header>
+                            <LogInGroup authenticated={(status === "authenticated")}/>
+                        </Header>
+                        <ColumnWrapper>
+                            <MenuColumn centralColumn={"report"}/>
+                            <ReportColumn/>
+                            <InfoColumn/>
+                        </ColumnWrapper>
+                    </>
+                ) : (<Header/>)
             }
         </>
     );

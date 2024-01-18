@@ -12,6 +12,7 @@ import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import styles from "./reportRedact.module.css";
 import TextParagraph from "@/components/inputs/textParagraph";
+import Header from "@/components/pageWraper/header";
 
 const ReportConstructor = () => {
     const router = useRouter()
@@ -127,7 +128,9 @@ const ReportConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader onReportSubmit={handleReportSubmit}/>
+            <Header movable={true}>
+                <ConstructorHeader onReportSubmit={handleReportSubmit}/>
+            </Header>
             <Main>
                 <ConstructorColumn>
                     {

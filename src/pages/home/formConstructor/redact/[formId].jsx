@@ -13,6 +13,7 @@ import ErrorMessage from "@/components/messages/errorMessage";
 import styles from "./formRedact.module.css"
 import TextParagraph from "@/components/inputs/textParagraph";
 import ToggleButton from "@/components/buttons/toggleButton";
+import Header from "@/components/pageWraper/header";
 
 const FormConstructor = () => {
     const router = useRouter()
@@ -170,7 +171,9 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader id={formObject?.id} onFormSubmit={formObject && handleFormSubmit}/>
+            <Header movable={true}>
+                <ConstructorHeader id={formObject?.id} onFormSubmit={formObject && handleFormSubmit}/>
+            </Header>
             <Main>
                 <ConstructorColumn>
                     {

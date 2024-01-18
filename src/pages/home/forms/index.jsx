@@ -7,6 +7,7 @@ import Head from "next/head";
 import Header from "@/components/pageWraper/header";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
+import LogInGroup from "@/components/pageWraper/header/logInGroup";
 
 const FormsHomePage = () => {
     const router = useRouter()
@@ -25,15 +26,19 @@ const FormsHomePage = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Header/>
             {
-                (status !== "loading") && (
-                    <ColumnWrapper>
-                        <MenuColumn centralColumn={"form"}/>
-                        <FormColumn/>
-                        <InfoColumn/>
-                    </ColumnWrapper>
-                )
+                (status !== "loading") ? (
+                    <>
+                        <Header>
+                            <LogInGroup authenticated={(status === "authenticated")}/>
+                        </Header>
+                        <ColumnWrapper>
+                            <MenuColumn centralColumn={"form"}/>
+                            <FormColumn/>
+                            <InfoColumn/>
+                        </ColumnWrapper>
+                    </>
+                ) : (<Header/>)
             }
         </>
     );

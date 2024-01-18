@@ -1,19 +1,10 @@
 import styles from "./constructorHeader.module.css"
-import Icon from "@/components/icon";
 import Link from "next/link";
 import SimpleButton from "@/components/buttons/simpleButton";
-// import SettingsButton from "@/components/buttons/settingsButton";
 
 export default function ConstructorHeader({id, onFormSubmit}) {
     return (
-        <div className={styles.header}>
-            <div className={styles.iconBlock}>
-                <Icon/>
-                <div className={styles.siteName}>
-                    NextForms
-                </div>
-            </div>
-
+        <>
             <div className={styles.centerBlock}>
                 {
                     (id) ? (
@@ -45,6 +36,6 @@ export default function ConstructorHeader({id, onFormSubmit}) {
                     <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </Link>
             </div>
-        </div>
+        </>
     )
 }

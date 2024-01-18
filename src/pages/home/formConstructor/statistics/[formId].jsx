@@ -10,6 +10,7 @@ import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import ConstructorColumn from "src/components/constructorColumn";
 import styles from "./statistics.module.css";
+import Header from "@/components/pageWraper/header";
 const FormConstructor = () => {
     const router = useRouter()
     const {formId} = router.query
@@ -43,7 +44,9 @@ const FormConstructor = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <ConstructorHeader id={formId} />
+            <Header movable={true}>
+                <ConstructorHeader id={formId} />
+            </Header>
             <Main>
                 <ConstructorColumn>
                     {

@@ -6,6 +6,7 @@ import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import React, {useEffect} from "react";
 import styles from "./welcome.module.css"
+import LogInGroup from "@/components/pageWraper/header/logInGroup";
 
 export default function Welcome() {
   const {status} = useSession()
@@ -27,7 +28,9 @@ export default function Welcome() {
         </Head>
           {(status === "loading" || status === "authenticated") ? null : (
               <>
-                  <Header/>
+                  <Header>
+                      <LogInGroup authenticated={(status === "authenticated")}/>
+                  </Header>
                   <Main>
                       <div className={styles.about}>
                           <h1>About us</h1>
