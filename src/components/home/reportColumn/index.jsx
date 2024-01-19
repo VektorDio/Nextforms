@@ -7,21 +7,13 @@ import ErrorMessage from "@/components/messages/errorMessage";
 import styles from './reportsColumn.module.css'
 import SimpleMessage from "@/components/messages/simpleMessage";
 const ReportColumn = () => {
-    const {status, data:session} = useSession({
-        required: true,
-    })
-    const {mutateAsync:deleteReport, isLoading:isUpdating} = useDeleteReportById()
+    const {data:session} = useSession()
+    const {mutateAsync:deleteReport} = useDeleteReportById()
     const [reports, setReports] = useState()
 
-    let userId = ""
-
-    if (status !== 'loading'){
-        const {id} = session.user
-        userId = id
-    }
-
+    const {id} = session.user
     const {error, data, isLoading} = useGetReportsByCreatorId({
-        id: userId,
+        id: id,
     })
 
     useEffect(() => {

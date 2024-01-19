@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ViewHeader from "@/components/viewElements/viewHeader";
@@ -6,40 +6,52 @@ import ViewBlock from "@/components/viewElements/viewBlock";
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {useRouter} from "next/router";
-import {useCreateAnswers, useGetFormById} from "@/queries/forms";
-import LoadingMessage from "@/components/messages/loadingMessage";
-import ErrorMessage from "@/components/messages/errorMessage";
+import {useCreateAnswers} from "@/queries/forms";
 import ConstructorColumn from "src/components/constructorColumn";
 import styles from "./formView.module.css";
 import Header from "@/components/pageWraper/header";
+import axios from "axios";
 
-const FormView = () => {
+export async function getServerSideProps(context) {
+    const id = context.params.formId
+    let data
+
+    try {
+        data = (await axios.get('http://localhost:3000/api/form', {
+            params: {
+                id: id,
+            }
+        })).data
+    } catch (e){
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/${e}`
+            }
+        }
+    }
+    
+    if (!data.form.active) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/closedForm`
+            }
+        }
+    }
+
+    return { props: { data } }
+}
+
+const FormView = ({data}) => {
     const router = useRouter()
-    const {formId} = router.query
-
-    const {error, data, isLoading} = useGetFormById({
-        id: formId,
-    })
 
     const {mutateAsync:createAnswers} = useCreateAnswers()
 
-    const [formObject, setFormObject] = useState()
-
-    useEffect(() => {
-        if(data) {
-            setFormObject(data.form)
-        }
-    }, [data])
-
-
-    if (formObject?.active === false) {
-        router.push("/closedForm")
-        return null
-    }
+    const [formObject, setFormObject] = useState(data.form)
 
     async function handleFormSubmit(values) {
-
-        if (formObject?.active) {
+        if (formObject.active) {
             let data = Object.entries(values).map(([key, value]) => ({
                 questionId: key,
                 answerData: value,
@@ -50,8 +62,6 @@ const FormView = () => {
             })
 
             router.push("/answerSubmitted")
-        } else {
-            console.log("Form is inactive")
         }
     }
 
@@ -118,31 +128,21 @@ const FormView = () => {
                     </Header>
                     <Main>
                         <ConstructorColumn>
+                            <div className={styles.container} >
+                                <div className={styles.formName}>
+                                    {formObject?.name}
+                                </div>
+                                <div className={styles.formDescription}>
+                                    {formObject?.description}
+                                </div>
+                            </div>
                             {
-                                (isLoading) ? (
-                                    <LoadingMessage/>
-                                ) : (error) ? (
-                                    <ErrorMessage error={error}/>
-                                ) : (formObject) && (
-                                    <>
-                                        <div className={styles.container} >
-                                            <div className={styles.formName}>
-                                                {formObject?.name}
-                                            </div>
-                                            <div className={styles.formDescription}>
-                                                {formObject?.description}
-                                            </div>
-                                        </div>
-                                        {
-                                            formObject?.questions.map((question , index) => (
-                                                <ViewBlock
-                                                    key={index}
-                                                    question={question}
-                                                />
-                                            ))
-                                        }
-                                    </>
-                                )
+                                formObject?.questions.map((question , index) => (
+                                    <ViewBlock
+                                        key={index}
+                                        question={question}
+                                    />
+                                ))
                             }
                         </ConstructorColumn>
                     </Main>

@@ -21,8 +21,16 @@ const ReportConstructor = () => {
 
     const {reportId:queryReportId, formId:queryFormId} = router.query
 
-    const [reportId, setReportId] = useState()
-    const [formId, setFormId] = useState()
+    const [reportId, setReportId] = useState(queryReportId)
+    const [formId, setFormId] = useState(queryFormId)
+
+    const {error: reportError, data: reportData, isLoading: reportLoading} = useGetReportById({
+        id: reportId,
+    })
+
+    const {error: answersError, data: answersData, isLoading: answersLoading} = useGetAnswersByFormId({
+        id: formId,
+    })
 
     const [reportObject, setReportObject] = useState()
     const [answersObject, setAnswersObject] = useState()
@@ -35,19 +43,11 @@ const ReportConstructor = () => {
         id: userId,
     })
 
-    const {error: reportError, data: reportData, isLoading: reportLoading} = useGetReportById({
-        id: reportId,
-    })
-
-    const {error: answersError, data: answersData, isLoading: answersLoading} = useGetAnswersByFormId({
-        id: formId,
-    })
-
     useEffect(() => {
         if(reportData) {
             setReportObject({...reportData.report})
         }
-    }, [reportData, reportId])
+    }, [reportData, reportId, reportLoading])
 
     useEffect(() => {
         if(answersData) {
@@ -65,11 +65,15 @@ const ReportConstructor = () => {
     }, [queryReportId, queryFormId])
 
     function onFormIdChange(id) {
-        (id !== "placeholder") && setFormId(id)
+        if(id !== "placeholder"){
+            setFormId(id)
+        }
     }
 
     function onReportIdChange(id) {
-        (id !== "placeholder") && setReportId(id)
+        if (id !== "placeholder") {
+            setReportId(id)
+        }
     }
 
     function handlePrint() {

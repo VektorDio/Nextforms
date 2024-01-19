@@ -1,19 +1,39 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Head from "next/head";
 import ConstructorHeader from "@/components/formConstructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
 import StatisticBlock from "@/components/statisticElements/statisticBlock";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import {useGetAnswersByFormId} from "@/queries/forms";
-import LoadingMessage from "@/components/messages/loadingMessage";
-import ErrorMessage from "@/components/messages/errorMessage";
 import ConstructorColumn from "src/components/constructorColumn";
 import styles from "./statistics.module.css";
 import Header from "@/components/pageWraper/header";
-const FormConstructor = () => {
+import axios from "axios";
+
+export async function getServerSideProps(context) {
+    const formId = context.params.formId
+    let data
+
+    try {
+        data = (await axios.get('http://localhost:3000/api/form/answers', {
+            params: {
+                id: formId,
+            }
+        })).data
+    } catch (e){
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/${e}`
+            }
+        }
+    }
+
+    return { props: { data, formId } }
+}
+
+const StatisticsConstructor = ({data, formId}) => {
     const router = useRouter()
-    const {formId} = router.query
 
     useSession({
         required: true,
@@ -22,19 +42,9 @@ const FormConstructor = () => {
         },
     })
 
-    const [formObject, setFormObject] = useState()
+    const [answersObject, setAnswersObject] = useState(data)
 
-    const {error, data, isLoading} = useGetAnswersByFormId({
-        id: formId,
-    })
-
-    useEffect(() => {
-        if(data) {
-            setFormObject(data)
-        }
-    }, [data])
-
-    const answersCount = formObject?.reduce((acc, val) => (acc + val.answers.length), 0)
+    const answersCount = answersObject.reduce((acc, val) => (acc + val.answers.length), 0)
 
     return (
         <>
@@ -49,31 +59,21 @@ const FormConstructor = () => {
             </Header>
             <Main>
                 <ConstructorColumn>
-                    {
-                        (isLoading) ? (
-                            <LoadingMessage/>
-                        ) : (error) ? (
-                            <ErrorMessage error={error}/>
-                        ) : (formObject) && (
-                            <>
-                                <div className={styles.container}>
-                                    <div className={styles.answersCount}>
-                                        {answersCount} answers
-                                    </div>
-                                    <div className={styles.formDescription}>
+                    <div className={styles.container}>
+                        <div className={styles.answersCount}>
+                            {answersCount} answers
+                        </div>
+                        <div className={styles.formDescription}>
 
-                                    </div>
-                                </div>
-                                {
-                                    formObject?.map((question, index) => (
-                                        <StatisticBlock
-                                            key={index}
-                                            question={question}
-                                        />
-                                    ))
-                                }
-                            </>
-                        )
+                        </div>
+                    </div>
+                    {
+                        answersObject.map((question, index) => (
+                            <StatisticBlock
+                                key={index}
+                                question={question}
+                            />
+                        ))
                     }
                 </ConstructorColumn>
             </Main>
@@ -81,4 +81,4 @@ const FormConstructor = () => {
     );
 };
 
-export default FormConstructor;
+export default StatisticsConstructor;

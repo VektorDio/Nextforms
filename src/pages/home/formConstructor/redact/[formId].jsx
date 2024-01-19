@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
@@ -7,17 +7,38 @@ import ConstructorColumn from "src/components/constructorColumn";
 import ConstructorBlock from "@/components/formConstructorElements/constructorBlock";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
-import {useGetFormById, useUpdateForm} from "@/queries/forms";
-import LoadingMessage from "@/components/messages/loadingMessage";
-import ErrorMessage from "@/components/messages/errorMessage";
+import {useUpdateForm} from "@/queries/forms";
 import styles from "./formRedact.module.css"
 import TextParagraph from "@/components/inputs/textParagraph";
 import ToggleButton from "@/components/buttons/toggleButton";
 import Header from "@/components/pageWraper/header";
+import FormAlert from "@/components/messages/formAlert";
+import axios from "axios";
 
-const FormConstructor = () => {
+export async function getServerSideProps(context) {
+    const id = context.params.formId
+    let data
+
+    try {
+        data = (await axios.get('http://localhost:3000/api/form', {
+            params: {
+                id: id,
+            }
+        })).data
+    } catch (e){
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/${e}`
+            }
+        }
+    }
+
+    return { props: { data } }
+}
+
+const FormConstructor = ({data}) => {
     const router = useRouter()
-    const {formId} = router.query
 
     useSession({
         required: true,
@@ -28,30 +49,20 @@ const FormConstructor = () => {
 
     const {mutateAsync} = useUpdateForm()
 
-    const {error, data, isLoading} = useGetFormById({
-        id: formId,
-    })
 
-    const [formObject, setFormObject] = useState()
+    const [formObject, setFormObject] = useState(data.form)
     const [selectedBlockId, setSelectedBlockId] = useState("head")
 
-    useEffect(() => {
-        if(data) {
-            setFormObject(data.form)
-        }
-    }, [data])
+    const [emptyQuestionCheck, setEmptyQuestionCheck] = useState(false)
+    const [emptyOptionsCheck, setEmptyOptionsCheck] = useState(false)
 
     async function handleFormSubmit() {
 
-        console.log(formObject)
-
-        if (!formObject?.questions.every((e) => e.question.length > 1)) {
-            console.log("Empty question")
+        if (emptyQuestionCheck) {
             return
         }
 
-        if (!formObject?.questions.every((e) => e.options.length > 0)) {
-            console.log("Question with no options")
+        if (emptyOptionsCheck){
             return
         }
 
@@ -101,13 +112,12 @@ const FormConstructor = () => {
 
     const handleAddQuestionBlock = (index) => {
         let buf = [...formObject?.questions]
-        //let index = buf.findIndex(e => e.id === id)
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             required: false,
             type: "radio",
             question:"Question",
-            options:[]
+            options:["Option"]
         })
         setFormObject(prev => ({
             ...prev,
@@ -136,11 +146,6 @@ const FormConstructor = () => {
     }
 
     const handleQuestionChange = (index, text) => {
-        if (text.length < 1) {
-            console.log("Empty question")
-            return
-        }
-
         if (formObject?.questions.some((question, i) => question.question === text && i !== index)){
             console.log("Duplicate question")
             return
@@ -152,6 +157,8 @@ const FormConstructor = () => {
             ...prev,
             questions: [...buf]
         }))
+
+        setEmptyQuestionCheck(!formObject?.questions.every((e) => e.question.length > 1))
     }
 
     const handleRequiredToggle = (index, value) => {
@@ -161,6 +168,17 @@ const FormConstructor = () => {
             ...prev,
             questions: [...buf]
         }))
+    }
+
+    const handleOptionsChange = (index, value) => {
+        let buf = [...formObject?.questions]
+        buf[index].options = value
+        setFormObject(prev => ({
+            ...prev,
+            questions: [...buf]
+        }))
+
+        setEmptyOptionsCheck(!buf[index].options.every((e) => e.length > 0))
     }
 
     return (
@@ -176,56 +194,57 @@ const FormConstructor = () => {
             </Header>
             <Main>
                 <ConstructorColumn>
+                    <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
+                        <div className={styles.formName}>
+                            <TextParagraph
+                                onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
+                                placeholder={"New form"}
+                                defaultValue={formObject?.name}
+                            />
+                        </div>
+                        <div className={styles.formDescription}>
+                            <TextParagraph
+                                onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
+                                placeholder={"Description"}
+                                defaultValue={formObject?.description}
+                            />
+                        </div>
+                        <div>
+                            <ToggleButton
+                                text={"Accept answers"}
+                                onClick={(e) => handleAcceptChange(e.target.checked)}
+                                checked={formObject?.active}
+                            />
+                        </div>
+                    </div>
                     {
-                        (isLoading) ? (
-                            <LoadingMessage/>
-                        ) : (error) ? (
-                            <ErrorMessage error={error}/>
-                        ) : (formObject) && (
-                            <>
-                                <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
-                                    <div className={styles.formName}>
-                                        <TextParagraph
-                                            onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
-                                            placeholder={"New form"}
-                                            defaultValue={formObject?.name}
-                                        />
-                                    </div>
-                                    <div className={styles.formDescription}>
-                                        <TextParagraph
-                                            onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
-                                            placeholder={"Description"}
-                                            defaultValue={formObject?.description}
-                                        />
-                                    </div>
-                                    <div>
-                                        <ToggleButton
-                                            text={"Accept answers"}
-                                            onClick={(e) => handleAcceptChange(e.target.checked)}
-                                            checked={formObject?.active}
-                                        />
-                                    </div>
-                                </div>
-                                {
-                                    formObject?.questions.map((q, index) => (
-                                        <ConstructorBlock
-                                            key={q.id}
-                                            question={q}
-                                            index={index}
-
-                                            handleAdd={handleAddQuestionBlock}
-                                            handleDelete={handleDelete}
-                                            handleQuestionChange={handleQuestionChange}
-                                            handleRequiredToggle={handleRequiredToggle}
-
-                                            handleSelectChange={handleQuestionTypeChange}
-                                            selectedBlockId={selectedBlockId}
-                                            setSelectedBlockId={setSelectedBlockId}
-                                        />
-                                    ))
-                                }
-                            </>
+                        (emptyQuestionCheck) && (
+                            <FormAlert>Form has empty questions!</FormAlert>
                         )
+                    }
+                    {
+                        (emptyOptionsCheck) && (
+                            <FormAlert>Form has empty options!</FormAlert>
+                        )
+                    }
+                    {
+                        formObject?.questions.map((q, index) => (
+                            <ConstructorBlock
+                                key={q.id}
+                                question={q}
+                                questionIndex={index}
+
+                                handleAdd={handleAddQuestionBlock}
+                                handleDelete={handleDelete}
+                                handleQuestionChange={handleQuestionChange}
+                                handleRequiredToggle={handleRequiredToggle}
+                                handleOptionsChange={handleOptionsChange}
+
+                                handleSelectChange={handleQuestionTypeChange}
+                                selectedBlockId={selectedBlockId}
+                                setSelectedBlockId={setSelectedBlockId}
+                            />
+                        ))
                     }
                 </ConstructorColumn>
             </Main>

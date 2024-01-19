@@ -11,31 +11,30 @@ import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
 import SimpleButton from "@/components/buttons/simpleButton";
 const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange,
-                              handleRequiredToggle, selectedBlockId, setSelectedBlockId, index}) => {
+                              handleRequiredToggle, selectedBlockId, setSelectedBlockId, handleOptionsChange, questionIndex}) => {
     const [options, setOptions] = useState(() => {
         return question.options !== undefined ? question.options : []
     })
 
-    const isSelected = selectedBlockId === index
-
-    question.options = options
+    const isSelected = selectedBlockId === questionIndex
 
     function handleOptionRedacted(index, text) {
-        if (text.length < 1){
+        if (text.length < 1 && options.length > 1){
             handleDeleteOption(index)
-            // cant create empty option
+            // cant create empty option unless its last one
             return
         }
 
         let buf = [...options]
 
         if (buf.find((option, i) => (option === text && i !== index))){ // similarity check
-            handleDeleteOption(index) // cant create similar option, error
+            handleDeleteOption(index) // cant create similar option
             return
         }
 
         buf[index] = text
         setOptions([...buf])
+        handleOptionsChange(questionIndex, [...buf])
     }
 
     function handleDeleteOption(index) {
@@ -171,7 +170,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
     return (
         <div
             className={isSelected ? styles.outerContainer : styles.outerContainerDisabled}
-            onClick={() => setSelectedBlockId(index)}
+            onClick={() => setSelectedBlockId(questionIndex)}
         >
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
@@ -180,20 +179,20 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                             <>
                                 <BlockInput
                                 placeholder="Questions"
+                                onBlur={(e) => handleQuestionChange(questionIndex, e.currentTarget.textContent)}
                                 defaultValue={question.question}
-                                onBlur={(e) => handleQuestionChange(index, e.currentTarget.textContent)}
                                 />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
                                         defaultValue={questionTypeOptions.find((e) => e.value === question.type)}
-                                        onChange={(choice) => handleSelectChange(index, choice.value)}
+                                        onChange={(choice) => handleSelectChange(questionIndex, choice.value)}
                                         options={questionTypeOptions}
                                     />
                                 </div>
                             </>
                         ) : (
                             <div className={(question.question.length > 0) ? styles.unselectedText : styles.unselectedPlaceholder}>
-                                {question.question || "Question"}
+                                {question.question || "Empty question"}
                             </div>
                         )
                     }
@@ -203,12 +202,12 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                     {component}
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
-                    <ToggleButton onClick={(e) => handleRequiredToggle(index, e.target.checked)} text={"Required"} checked={question.required}/>
-                    <SimpleButton onClick={() => handleDelete(index)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                    <ToggleButton onClick={(e) => handleRequiredToggle(questionIndex, e.target.checked)} text={"Required"} checked={question.required}/>
+                    <SimpleButton onClick={() => handleDelete(questionIndex)} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
             <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>
-                <AddButton onClick={()=> handleAdd(index)}/>
+                <AddButton onClick={()=> handleAdd(questionIndex)}/>
             </div>
         </div>
     );

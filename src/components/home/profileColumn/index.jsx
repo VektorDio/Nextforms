@@ -11,10 +11,7 @@ import ErrorMessage from "@/components/messages/errorMessage";
 import SimpleButton from "@/components/buttons/simpleButton";
 
 const Profile = () => {
-    const {data:session} = useSession({
-        required: true,
-    })
-
+    const {data:session} = useSession()
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
@@ -45,7 +42,7 @@ const Profile = () => {
     const {firstName, lastName, phoneNumber, email, organisation, password} = data.user
     
     async function handleUserDelete() {
-        await router.push("/")
+        router.push("/")
         await signOut()
         await deleteUser({
             id: id

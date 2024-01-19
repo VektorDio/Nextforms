@@ -29,7 +29,7 @@ const OptionInput = ({id, text, type, deletable, index, addOption, handleOptionR
                 ) : (
                     <TextParagraph
                         onBlur={(e) => handleOptionRedacted(id, e.currentTarget.textContent)}
-                        placeholder={"Answer"}
+                        placeholder={"Empty option"}
                         defaultValue={text}
                         disabled={disabled}
                     />

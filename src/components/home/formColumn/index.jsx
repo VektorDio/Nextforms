@@ -6,21 +6,17 @@ import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import styles from './formsColumn.module.css'
 import SimpleMessage from "@/components/messages/simpleMessage";
+
 const FormColumn = () => {
-    const {status, data:session} = useSession()
-    const {mutateAsync:deleteForm, isLoading:isUpdating} = useDeleteFormById()
+    const {data:session} = useSession()
+    const {mutateAsync:deleteForm} = useDeleteFormById()
     const {mutateAsync:updateForm, } = useUpdateForm()
     const [forms, setForms] = useState()
 
-    let userId = ""
-
-    if (status !== 'loading'){
-        const {id} = session.user
-        userId = id
-    }
+    const {id} = session.user
 
     const {error, data, isLoading} = useGetFormsByCreatorId({
-        id: userId,
+        id: id,
     })
 
     useEffect(() => {
