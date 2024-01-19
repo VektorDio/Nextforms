@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ViewHeader from "@/components/viewElements/viewHeader";
@@ -49,6 +49,19 @@ const FormView = ({data}) => {
     const {mutateAsync:createAnswers} = useCreateAnswers()
 
     const [formObject, setFormObject] = useState(data.form)
+
+    useEffect(() => {
+        const beforeunloadHandler = (e) => {
+            e.preventDefault()
+            e.returnValue = true
+        }
+
+        window.addEventListener("beforeunload", beforeunloadHandler)
+
+        return () => {
+            window.removeEventListener("beforeunload", beforeunloadHandler)
+        }
+    }, [formObject])
 
     async function handleFormSubmit(values) {
         if (formObject.active) {

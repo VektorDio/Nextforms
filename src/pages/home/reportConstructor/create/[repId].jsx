@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
 import {v4 as uuidv4} from "uuid";
@@ -49,6 +49,19 @@ const ReportConstructor = ({data}) => {
     })
 
     const [reportObject, setReportObject] = useState(data.report)
+
+    useEffect(() => {
+        const beforeunloadHandler = (e) => {
+            e.preventDefault()
+            e.returnValue = true
+        }
+
+        window.addEventListener("beforeunload", beforeunloadHandler)
+
+        return () => {
+            window.removeEventListener("beforeunload", beforeunloadHandler)
+        }
+    }, [reportObject])
 
     async function handleReportSubmit() {
         await mutateAsync({

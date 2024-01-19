@@ -64,6 +64,19 @@ const ReportConstructor = () => {
         }
     }, [queryReportId, queryFormId])
 
+    useEffect(() => {
+        const beforeunloadHandler = (e) => {
+            e.preventDefault()
+            e.returnValue = true
+        }
+
+        window.addEventListener("beforeunload", beforeunloadHandler)
+
+        return () => {
+            window.removeEventListener("beforeunload", beforeunloadHandler)
+        }
+    }, [reportObject])
+
     function onFormIdChange(id) {
         if(id !== "placeholder"){
             setFormId(id)

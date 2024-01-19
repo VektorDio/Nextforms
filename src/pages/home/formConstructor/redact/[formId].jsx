@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
@@ -49,12 +49,24 @@ const FormConstructor = ({data}) => {
 
     const {mutateAsync} = useUpdateForm()
 
-
     const [formObject, setFormObject] = useState(data.form)
     const [selectedBlockId, setSelectedBlockId] = useState("head")
 
     const [emptyQuestionCheck, setEmptyQuestionCheck] = useState(false)
     const [emptyOptionsCheck, setEmptyOptionsCheck] = useState(false)
+
+    useEffect(() => {
+        const beforeunloadHandler = (e) => {
+            e.preventDefault()
+            e.returnValue = true
+        }
+
+        window.addEventListener("beforeunload", beforeunloadHandler)
+
+        return () => {
+            window.removeEventListener("beforeunload", beforeunloadHandler)
+        }
+    }, [formObject])
 
     async function handleFormSubmit() {
 
