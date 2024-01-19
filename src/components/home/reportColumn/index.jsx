@@ -5,6 +5,7 @@ import {useDeleteReportById, useGetReportsByCreatorId} from "@/queries/reports";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import styles from './reportsColumn.module.css'
+import SimpleMessage from "@/components/messages/simpleMessage";
 const ReportColumn = () => {
     const {status, data:session} = useSession({
         required: true,
@@ -42,7 +43,7 @@ const ReportColumn = () => {
                     <LoadingMessage/>
                 ) : (error) ? (
                     <ErrorMessage error={error}/>
-                ) : (
+                ) : (reports?.length > 0) ? (
                     reports?.map((entry,index) =>
                         <ReportEntry
                             key={index}
@@ -50,6 +51,10 @@ const ReportColumn = () => {
                             onDelete={handleEntryDelete}
                         />
                     )
+                ) : (
+                    <SimpleMessage>
+                        There no reports yet
+                    </SimpleMessage>
                 )
             }
         </div>

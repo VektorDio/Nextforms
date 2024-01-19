@@ -5,6 +5,7 @@ import {useSession} from "next-auth/react";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import styles from './formsColumn.module.css'
+import SimpleMessage from "@/components/messages/simpleMessage";
 const FormColumn = () => {
     const {status, data:session} = useSession()
     const {mutateAsync:deleteForm, isLoading:isUpdating} = useDeleteFormById()
@@ -48,7 +49,7 @@ const FormColumn = () => {
                     <LoadingMessage/>
                 ) : (error) ? (
                     <ErrorMessage error={error}/>
-                ) : (
+                ) : (forms?.length > 0) ? (
                     forms?.map((entry,index) =>
                         <FormEntry
                             key={index}
@@ -57,6 +58,10 @@ const FormColumn = () => {
                             onActivityToggle={handleActivityToggle}
                         />
                     )
+                ) : (
+                    <SimpleMessage>
+                        There no forms yet
+                    </SimpleMessage>
                 )
             }
         </div>
