@@ -130,6 +130,11 @@ const ReportConstructor = ({data}) => {
         }))
     }
 
+    function setSelectedBlock(e, id){
+        e.stopPropagation()
+        setSelectedBlockId(id)
+    }
+
     return (
         <>
             <Head>
@@ -141,9 +146,9 @@ const ReportConstructor = ({data}) => {
             <Header movable={true}>
                 <ConstructorHeader onReportSubmit={handleReportSubmit}/>
             </Header>
-            <Main>
+            <Main onClick={(e) => setSelectedBlock(e, "head")}>
                 <ConstructorColumn>
-                    <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
+                    <div className={styles.container} onClick={(e) => setSelectedBlock(e, "head")}>
                         <div className={styles.formName}>
                             <TextParagraph
                                 onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
@@ -172,7 +177,7 @@ const ReportConstructor = ({data}) => {
                                 handleNameChange={handleBlockNameChange}
 
                                 selectedBlockId={selectedBlockId}
-                                setSelectedBlockId={setSelectedBlockId}
+                                setSelectedBlockId={setSelectedBlock}
                             />
                         ))
                     }

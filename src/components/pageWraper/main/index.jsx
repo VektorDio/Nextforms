@@ -1,8 +1,8 @@
 import styles from "./Main.module.css"
 
-export default function Main({children}) {
+export default function Main({children, onClick}) {
     return (
-        <div className={styles.main}>
+        <div className={styles.main} onClick={onClick}>
             {children}
         </div>
     )

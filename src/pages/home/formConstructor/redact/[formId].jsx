@@ -181,6 +181,11 @@ const FormConstructor = ({data}) => {
         setEmptyOptionsCheck(!buf[index].options.every((e) => e.length > 0))
     }
 
+    function setSelectedBlock(e, id){
+        e.stopPropagation()
+        setSelectedBlockId(id)
+    }
+
     return (
         <>
             <Head>
@@ -192,9 +197,9 @@ const FormConstructor = ({data}) => {
             <Header movable={true}>
                 <ConstructorHeader id={formObject?.id} onFormSubmit={formObject && handleFormSubmit}/>
             </Header>
-            <Main>
+            <Main onClick={(e) => setSelectedBlock(e, 'head')}>
                 <ConstructorColumn>
-                    <div className={styles.container} onClick={() => setSelectedBlockId("head")}>
+                    <div className={styles.container} onClick={(e) => setSelectedBlock(e, 'head')}>
                         <div className={styles.formName}>
                             <TextParagraph
                                 onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
@@ -239,10 +244,10 @@ const FormConstructor = ({data}) => {
                                 handleQuestionChange={handleQuestionChange}
                                 handleRequiredToggle={handleRequiredToggle}
                                 handleOptionsChange={handleOptionsChange}
-
                                 handleSelectChange={handleQuestionTypeChange}
+
                                 selectedBlockId={selectedBlockId}
-                                setSelectedBlockId={setSelectedBlockId}
+                                setSelectedBlockId={setSelectedBlock}
                             />
                         ))
                     }

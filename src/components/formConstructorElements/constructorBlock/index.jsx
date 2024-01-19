@@ -170,7 +170,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
     return (
         <div
             className={isSelected ? styles.outerContainer : styles.outerContainerDisabled}
-            onClick={() => setSelectedBlockId(questionIndex)}
+            onClick={(e) => setSelectedBlockId(e, questionIndex)}
         >
             <div className={styles.container}>
                 <div className={styles.blockHeader}>
