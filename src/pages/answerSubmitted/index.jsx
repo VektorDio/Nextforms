@@ -2,6 +2,7 @@ import React from 'react';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import Header from "@/components/pageWraper/header";
+import SimpleMessage from "@/components/messages/simpleMessage";
 
 const AnswerSubmit = () => {
     return (
@@ -14,9 +15,9 @@ const AnswerSubmit = () => {
             </Head>
             <Header/>
             <Main>
-                <div>
+                <SimpleMessage>
                     Answer has been submitted
-                </div>
+                </SimpleMessage>
             </Main>
         </>
     );

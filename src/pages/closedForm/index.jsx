@@ -2,6 +2,7 @@ import Head from "next/head";
 import Header from "@/components/pageWraper/header";
 import Main from "@/components/pageWraper/main";
 import React from "react";
+import SimpleMessage from "@/components/messages/simpleMessage";
 
 const ClosedForm = () => {
     return (
@@ -14,9 +15,9 @@ const ClosedForm = () => {
             </Head>
             <Header/>
             <Main>
-                <div>
+                <SimpleMessage>
                     This form no longer accepts answers
-                </div>
+                </SimpleMessage>
             </Main>
         </>
     );
