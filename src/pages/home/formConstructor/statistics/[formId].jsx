@@ -51,9 +51,7 @@ const StatisticsConstructor = ({data, formId}) => {
         },
     })
 
-    const [answersObject, setAnswersObject] = useState(data)
-
-    const answersCount = answersObject.reduce((acc, val) => (acc + val.answers.length), 0)
+    const answersCount = data.reduce((acc, val) => (acc + val.answers.length), 0)
 
     return (
         <>
@@ -77,7 +75,7 @@ const StatisticsConstructor = ({data, formId}) => {
                         </div>
                     </div>
                     {
-                        answersObject.map((question, index) => (
+                        data.map((question, index) => (
                             <StatisticBlock
                                 key={index}
                                 question={question}

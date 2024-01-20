@@ -32,6 +32,7 @@ const OptionInput = ({id, text, type, deletable, index, addOption, handleOptionR
                         placeholder={"Empty option"}
                         defaultValue={text}
                         disabled={disabled}
+                        maxLength={100}
                     />
                 )}
             </div>

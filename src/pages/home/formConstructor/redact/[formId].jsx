@@ -63,6 +63,8 @@ const FormConstructor = ({data}) => {
 
     const [emptyQuestionCheck, setEmptyQuestionCheck] = useState(false)
     const [emptyOptionsCheck, setEmptyOptionsCheck] = useState(false)
+    const [duplicateQuestionsCheck, setDuplicateQuestionsCheck] = useState(false)
+    const [emptyFormNameCheck, setEmptyFormNameCheck] = useState(false)
 
     useEffect(() => {
         const beforeunloadHandler = (e) => {
@@ -79,45 +81,43 @@ const FormConstructor = ({data}) => {
 
     async function handleFormSubmit() {
 
-        if (emptyQuestionCheck) {
+        let emptyQuestionCheck = !formObject?.questions.every((e) => e.question.length > 0)
+        setEmptyQuestionCheck(emptyQuestionCheck) //just to make sure
+
+        if (emptyQuestionCheck || emptyOptionsCheck || duplicateQuestionsCheck || emptyFormNameCheck) {
             return
         }
 
-        if (emptyOptionsCheck){
+        try {
+            await mutateAsync({
+                id: formObject?.id,
+                description: formObject?.description,
+                name: formObject?.name,
+                active: formObject?.active,
+                questions: formObject?.questions.map(e => ({
+                    type: e.type,
+                    required: e.required,
+                    question: e.question,
+                    options: e.options,
+                })),
+            })
+        } catch (e) {
+            router.push(`/errorPage/${e}`)
             return
         }
-
-        await mutateAsync({
-            id: formObject?.id,
-            description: formObject?.description,
-            name: formObject?.name,
-            active: formObject?.active,
-            questions: formObject?.questions.map(e => ({
-                type: e.type,
-                required: e.required,
-                question: e.question,
-                options: e.options,
-            })),
-        })
 
         router.push("/home")
     }
 
     function handleNameChange(text){
-        if (text.length < 1){
-            //display error
-            return
-        }
         setFormObject(prev => ({
             ...prev,
             name: text
         }))
+        setEmptyFormNameCheck(!text > 0)
     }
+
     function handleDescriptionChange(text){
-        if (text.length < 1){
-            //display error
-            return
-        }
         setFormObject(prev => ({
             ...prev,
             description: text
@@ -132,12 +132,17 @@ const FormConstructor = ({data}) => {
     }
 
     const handleAddQuestionBlock = (index) => {
-        let buf = [...formObject?.questions]
+
+        if (formObject.questions.length >= 20) {
+            return //cant create more than that questions per one form
+        }
+
+        let buf = [...formObject.questions]
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             required: false,
             type: "radio",
-            question:"Question",
+            question:"",
             options:["Option"]
         })
         setFormObject(prev => ({
@@ -147,18 +152,19 @@ const FormConstructor = ({data}) => {
     }
 
     const handleDelete = (index) => {
-        if(formObject?.questions.length > 1){ //cant delete last question
-            let buf = [...formObject?.questions]
+        if(formObject.questions.length > 1){ //cant delete last question
+            let buf = [...formObject.questions]
             buf.splice(index, 1)
             setFormObject(prev => ({
                 ...prev,
                 questions: [...buf]
             }))
+            setEmptyQuestionCheck(!formObject.questions.every((e) => e.question.length > 0))
         }
     }
 
     const handleQuestionTypeChange = (index, value) => {
-        let buf = [...formObject?.questions]
+        let buf = [...formObject.questions]
         buf[index].type = value
         setFormObject(prev => ({
             ...prev,
@@ -167,23 +173,19 @@ const FormConstructor = ({data}) => {
     }
 
     const handleQuestionChange = (index, text) => {
-        if (formObject?.questions.some((question, i) => question.question === text && i !== index)){
-            console.log("Duplicate question")
-            return
-        }
-
-        let buf = [...formObject?.questions]
+        let buf = [...formObject.questions]
         buf[index].question = text
         setFormObject(prev => ({
             ...prev,
             questions: [...buf]
         }))
 
-        setEmptyQuestionCheck(!formObject?.questions.every((e) => e.question.length > 1))
+        setDuplicateQuestionsCheck(formObject.questions.some((question, i) => question.question === text && i !== index))
+        setEmptyQuestionCheck(!formObject.questions.every((e) => e.question.length > 0))
     }
 
     const handleRequiredToggle = (index, value) => {
-        let buf = [...formObject?.questions]
+        let buf = [...formObject.questions]
         buf[index].required = value
         setFormObject(prev => ({
             ...prev,
@@ -218,21 +220,23 @@ const FormConstructor = ({data}) => {
             <Header movable={true}>
                 <ConstructorHeader id={formObject?.id} onFormSubmit={formObject && handleFormSubmit}/>
             </Header>
-            <Main onClick={(e) => setSelectedBlock(e, 'head')}>
+            <Main onClick={(e) => setSelectedBlock(e, 'head')} >
                 <ConstructorColumn>
                     <div className={styles.container} onClick={(e) => setSelectedBlock(e, 'head')}>
                         <div className={styles.formName}>
                             <TextParagraph
                                 onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
                                 placeholder={"New form"}
-                                defaultValue={formObject?.name}
+                                defaultValue={formObject.name}
+                                maxLength={126}
                             />
                         </div>
                         <div className={styles.formDescription}>
                             <TextParagraph
                                 onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
                                 placeholder={"Description"}
-                                defaultValue={formObject?.description}
+                                defaultValue={formObject.description}
+                                maxLength={350}
                             />
                         </div>
                         <div>
@@ -251,6 +255,16 @@ const FormConstructor = ({data}) => {
                     {
                         (emptyOptionsCheck) && (
                             <FormAlert>Form has empty options!</FormAlert>
+                        )
+                    }
+                    {
+                        (duplicateQuestionsCheck) && (
+                            <FormAlert>Form has duplicated questions!</FormAlert>
+                        )
+                    }
+                    {
+                        (emptyFormNameCheck) && (
+                            <FormAlert>Form has empty name!</FormAlert>
                         )
                     }
                     {

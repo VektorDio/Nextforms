@@ -12,6 +12,7 @@ import styles from "./reportRedact.module.css";
 import TextParagraph from "@/components/inputs/textParagraph";
 import Header from "@/components/pageWraper/header";
 import axios from "axios";
+import FormAlert from "@/components/messages/formAlert";
 
 export async function getServerSideProps(context) {
     const id = context.params.repId
@@ -59,6 +60,10 @@ const ReportConstructor = ({data}) => {
 
     const [reportObject, setReportObject] = useState(data.report)
 
+    const [emptyBlockNameCheck, setEmptyBlockNameCheck] = useState(false)
+    const [duplicateBlockNameCheck, setDuplicateBlockNameCheck] = useState(false)
+    const [emptyReportNameCheck, setEmptyReportNameCheck] = useState(false)
+
     useEffect(() => {
         const beforeunloadHandler = (e) => {
             e.preventDefault()
@@ -73,33 +78,41 @@ const ReportConstructor = ({data}) => {
     }, [reportObject])
 
     async function handleReportSubmit() {
-        await mutateAsync({
-            id: reportObject?.id,
-            description: reportObject?.description,
-            name: reportObject?.name,
-            blocks: reportObject?.blocks.map(e => ({
-                type: e.type,
-                name: e.name,
-            })),
-        })
+
+        let emptyBlockCheck = !reportObject.blocks.every((e) => e.name.length > 0)
+        setEmptyBlockNameCheck(emptyBlockCheck) //just to make sure
+
+        if (emptyBlockNameCheck || duplicateBlockNameCheck || emptyReportNameCheck) {
+            return
+        }
+
+        try {
+            await mutateAsync({
+                id: reportObject?.id,
+                description: reportObject?.description,
+                name: reportObject?.name,
+                blocks: reportObject?.blocks.map(e => ({
+                    type: e.type,
+                    name: e.name,
+                })),
+            })
+        } catch (e) {
+            router.push(`/errorPage/${e}`)
+            return
+        }
+
         router.push("/home")
     }
 
     function handleNameChange(text){
-        if (text.length < 1){
-            //display error
-            return
-        }
         setReportObject(prev => ({
             ...prev,
             name: text
         }))
+        setEmptyReportNameCheck(!text > 0)
     }
+
     function handleDescriptionChange(text){
-        if (text.length < 1){
-            //display error
-            return
-        }
         setReportObject(prev => ({
             ...prev,
             description: text
@@ -107,7 +120,12 @@ const ReportConstructor = ({data}) => {
     }
 
     const handleAddBlock = (index) => {
-        let buf = [...reportObject?.blocks]
+
+        if (reportObject.blocks.length >= 20) {
+            return //cant create more than that blocks
+        }
+
+        let buf = [...reportObject.blocks]
         buf.splice((index + 1), 0, {
             id: uuidv4(),
             type: "radio",
@@ -120,18 +138,19 @@ const ReportConstructor = ({data}) => {
     }
 
     const handleDelete = (index) => {
-        if(reportObject?.blocks.length > 1){
-            let buf = [...reportObject?.blocks]
+        if(reportObject.blocks.length > 1){
+            let buf = [...reportObject.blocks]
             buf.splice(index, 1)
             setReportObject(prev => ({
                 ...prev,
                 blocks: [...buf]
             }))
+            setEmptyBlockNameCheck(!reportObject.blocks.every((e) => e.name.length > 0))
         }
     }
 
     const handleTypeChange = (index, value) => {
-        let buf = [...reportObject?.blocks]
+        let buf = [...reportObject.blocks]
         buf[index].type = value
         setReportObject(prev => ({
             ...prev,
@@ -140,16 +159,15 @@ const ReportConstructor = ({data}) => {
     }
 
     const handleBlockNameChange = (index, text) => {
-        if (text.length < 1){
-            //display error
-            return
-        }
-        let buf = [...reportObject?.blocks]
+        let buf = [...reportObject.blocks]
         buf[index].name = text
         setReportObject(prev => ({
             ...prev,
             blocks: [...buf]
         }))
+
+        setDuplicateBlockNameCheck(reportObject.blocks.some((block, i) => block.name === text && i !== index))
+        setEmptyBlockNameCheck(!reportObject.blocks.every((e) => e.name.length > 0))
     }
 
     function setSelectedBlock(e, id){
@@ -174,8 +192,9 @@ const ReportConstructor = ({data}) => {
                         <div className={styles.formName}>
                             <TextParagraph
                                 onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
-                                placeholder={"Report name film"}
+                                placeholder={"Report name"}
                                 defaultValue={reportObject.name}
+                                maxLength={126}
                             />
                         </div>
                         <div className={styles.formDescription}>
@@ -183,9 +202,25 @@ const ReportConstructor = ({data}) => {
                                 onBlur={(e) => handleDescriptionChange(e.currentTarget.textContent || "")}
                                 placeholder={"Report description"}
                                 defaultValue={reportObject.description}
+                                maxLength={350}
                             />
                         </div>
                     </div>
+                    {
+                        (emptyBlockNameCheck) && (
+                            <FormAlert>Report has empty block names!</FormAlert>
+                        )
+                    }
+                    {
+                        (duplicateBlockNameCheck) && (
+                            <FormAlert>Report has duplicated blocks!</FormAlert>
+                        )
+                    }
+                    {
+                        (emptyReportNameCheck) && (
+                            <FormAlert>Report has empty name!</FormAlert>
+                        )
+                    }
                     {
                         reportObject.blocks.map((block, index) => (
                             <ConstructorBlock

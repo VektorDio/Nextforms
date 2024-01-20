@@ -11,7 +11,7 @@ import DateInput from "@/components/inputs/dateInput";
 import TimeInput from "@/components/inputs/timeInput";
 import SimpleButton from "@/components/buttons/simpleButton";
 const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange,
-                              handleRequiredToggle, selectedBlockId, setSelectedBlockId, handleOptionsChange, questionIndex}) => {
+                              handleRequiredToggle, selectedBlockId, setSelectedBlockId, handleOptionsChange, questionIndex, maxOptions=10}) => {
     const [options, setOptions] = useState(() => {
         return question.options !== undefined ? question.options : []
     })
@@ -41,12 +41,14 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
         let buf = [...options]
         buf.splice(index, 1)
         setOptions([...buf])
+        handleOptionsChange(questionIndex, [...buf])
     }
 
     function handleAddOption() {
         let buf = [...options]
         buf.push("Option")
         setOptions([...buf])
+        handleOptionsChange(questionIndex, [...buf])
     }
 
     let component
@@ -86,7 +88,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                             handleDeleteOption={handleDeleteOption}
                         />
                     )}
-                    <div style={(isSelected) ? null : {display:"none"}}>
+                    <div style={(isSelected && options.length < maxOptions) ? null : {display:"none"}}>
                         <OptionInput type={"radio"}
                                      addOption={true}
                                      handleAddOption={handleAddOption}
@@ -110,7 +112,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 handleDeleteOption={handleDeleteOption}
                             />
                         )}
-                    <div style={(isSelected) ? null : {display:"none"}}>
+                    <div style={(isSelected && options.length < maxOptions) ? null : {display:"none"}}>
                         <OptionInput type={"checkbox"}
                                      addOption={true}
                                      handleAddOption={handleAddOption}
@@ -135,7 +137,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                             handleDeleteOption={handleDeleteOption}
                         />
                     )}
-                    <div style={(isSelected) ? null : {display:"none"}}>
+                    <div style={(isSelected && options.length < maxOptions) ? null : {display:"none"}}>
                         <OptionInput type={"select"}
                                      addOption={true}
                                      index={options.length+1}
@@ -181,6 +183,7 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
                                 placeholder="Questions"
                                 onBlur={(e) => handleQuestionChange(questionIndex, e.currentTarget.textContent)}
                                 defaultValue={question.question}
+                                maxLength={120}
                                 />
                                 <div className={styles.selectContainer}>
                                     <SelectInput

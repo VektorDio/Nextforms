@@ -1,6 +1,15 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styles from './blockInput.module.css'
-const BlockInput = ({placeholder, onBlur, defaultValue}) => {
+const BlockInput = ({placeholder, onBlur, defaultValue, maxLength}) => {
+
+    let inputRef = useRef('')
+
+    const keyPressEvent = (e) => {
+        if (e.keyCode !== 8 && inputRef.current.textContent.length >= maxLength) {
+            e.preventDefault()
+        }
+    }
+
     return (
         <div className={styles.mainQuestion}
              contentEditable={true}
@@ -8,6 +17,9 @@ const BlockInput = ({placeholder, onBlur, defaultValue}) => {
              onChange={onBlur}
              onBlur={onBlur}
              suppressContentEditableWarning={true}
+
+             ref={inputRef}
+             onKeyDown={keyPressEvent}
         >
             {defaultValue}
         </div>

@@ -66,6 +66,7 @@ const ConstructorBlock = ({block, index, handleDelete, handleAdd, handleBlockTyp
                                 placeholder="Text"
                                 defaultValue={block.name}
                                 onBlur={(e) => handleNameChange(index, e.currentTarget.textContent)}
+                                maxLength={120}
                             />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
