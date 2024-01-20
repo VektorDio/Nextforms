@@ -29,6 +29,15 @@ export async function getServerSideProps(context) {
         }
     }
 
+    if (data === null) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage`
+            }
+        }
+    }
+
     return { props: { data, formId } }
 }
 

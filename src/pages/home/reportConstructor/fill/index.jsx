@@ -16,7 +16,9 @@ import Header from "@/components/pageWraper/header";
 
 const ReportConstructor = () => {
     const router = useRouter()
-    const { data: session} = useSession()
+    const { data: session, status} = useSession({
+        required:true
+    })
     const userId = session?.user.id
 
     const {reportId:queryReportId, formId:queryFormId} = router.query
@@ -102,19 +104,23 @@ const ReportConstructor = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header movable={true}>
-                <FillHeader formId={formId}
-                            reportId={reportId}
-                            formNamesData={formNamesData}
-                            reportNamesData={reportNamesData}
-                            onReportIdChange={onReportIdChange}
-                            onFormIdChange={onFormIdChange}
-                            handlePrint={handlePrint}
-                />
+                {
+                    (status !== "loading") && (
+                        <FillHeader formId={formId}
+                                    reportId={reportId}
+                                    formNamesData={formNamesData}
+                                    reportNamesData={reportNamesData}
+                                    onReportIdChange={onReportIdChange}
+                                    onFormIdChange={onFormIdChange}
+                                    handlePrint={handlePrint}
+                        />
+                    )
+                }
             </Header>
             <Main>
                 <ConstructorColumn>
                     {
-                        (formNamesLoading || reportNamesLoading || reportLoading || answersLoading) ? (
+                        (formNamesLoading || reportNamesLoading || reportLoading || answersLoading || status === "loading") ? (
                             <LoadingMessage/>
                         ) : (formNamesError || reportNamesError || reportError || answersError) ? (
                             <ErrorMessage error={(formNamesError || reportNamesError || reportError || answersError)}/>

@@ -30,6 +30,15 @@ export async function getServerSideProps(context) {
             }
         }
     }
+
+    if (data.form === null) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage`
+            }
+        }
+    }
     
     if (!data.form.active) {
         return {

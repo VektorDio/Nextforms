@@ -32,7 +32,16 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { data} }
+    if (data.report === null) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage`
+            }
+        }
+    }
+
+    return { props: { data } }
 }
 
 const ReportConstructor = ({data}) => {

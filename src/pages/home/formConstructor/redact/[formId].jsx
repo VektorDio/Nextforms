@@ -34,6 +34,15 @@ export async function getServerSideProps(context) {
         }
     }
 
+    if (data.form === null) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage`
+            }
+        }
+    }
+
     return { props: { data } }
 }
 
