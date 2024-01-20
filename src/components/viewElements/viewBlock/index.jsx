@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './viewBlock.module.css'
-import {Form} from "formik";
 import MyCheckbox from "@/components/forms/checkbox";
 import MyRadio from "@/components/forms/radio";
 import MyTextInput from "@/components/forms/textInput";
@@ -68,7 +67,7 @@ const ViewBlock = ({question}) => {
             ))
             component = (
                 <div className={styles.oneLineText}>
-                    <MySelect name={question.id} options={optionsArray}/>
+                    <MySelect name={question.id} instanceId={question.id} options={optionsArray}/>
                 </div>
             )
             break;
@@ -97,9 +96,7 @@ const ViewBlock = ({question}) => {
                     <div className={styles.unselectedText}>{question.question || "Questions"}</div>
                 </div>
                 <div className={styles.blockInput}>
-                    <Form>
-                        {component}
-                    </Form>
+                    {component}
                 </div>
             </div>
     );

@@ -53,6 +53,8 @@ const StatisticsConstructor = ({data, formId}) => {
 
     const answersCount = data.reduce((acc, val) => (acc + val.answers.length), 0)
 
+    console.log(data)
+
     return (
         <>
             <Head>

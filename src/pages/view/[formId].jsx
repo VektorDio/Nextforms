@@ -3,7 +3,7 @@ import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ViewHeader from "@/components/viewElements/viewHeader";
 import ViewBlock from "@/components/viewElements/viewBlock";
-import {Formik} from "formik";
+import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import {useRouter} from "next/router";
 import {useCreateAnswers} from "@/queries/forms";
@@ -74,10 +74,21 @@ const FormView = ({data}) => {
 
     async function handleFormSubmit(values) {
         if (formObject.active) {
-            let data = Object.entries(values).map(([key, value]) => ({
-                questionId: key,
-                answerData: value,
-            }))
+            let data = Object.entries(values).map(([key, value]) => {
+                let parsedValue
+                if (Array.isArray(value)) {
+                    parsedValue = [...value]
+                } else if (typeof value === "object") {
+                    parsedValue = [value.value]
+                } else {
+                    parsedValue = [value]
+                }
+
+                return {
+                    questionId: key,
+                    answerData: parsedValue,
+                }
+            })
 
             try {
                 await createAnswers({
@@ -108,7 +119,7 @@ const FormView = ({data}) => {
         .required("Required")
 
     const validationScheme = {}
-    formObject?.questions.map((question)=> {
+    formObject.questions.map((question)=> {
         let required = question.required
         switch (question.type){
             case "date":
@@ -132,8 +143,8 @@ const FormView = ({data}) => {
     })
 
     let initialValues = {}
-    formObject?.questions.map((e) => {
-         initialValues[e.id] = (e.type === "checkbox") ? [] : ""
+    formObject.questions.map((e) => {
+         initialValues[e.id] = []
     })
 
     return (
@@ -147,7 +158,9 @@ const FormView = ({data}) => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={Yup.object().shape(validationScheme)}
-                onSubmit={(values) => {handleFormSubmit(values)}}
+                onSubmit={async (values) => {
+                    await handleFormSubmit(values)
+                }}
             >{() => (
                 <>
                     <Header movable={true}>
@@ -157,20 +170,22 @@ const FormView = ({data}) => {
                         <ConstructorColumn>
                             <div className={styles.container} >
                                 <div className={styles.formName}>
-                                    {formObject?.name}
+                                    {formObject.name}
                                 </div>
                                 <div className={styles.formDescription}>
-                                    {formObject?.description}
+                                    {formObject.description}
                                 </div>
                             </div>
+                            <Form>
                             {
-                                formObject?.questions.map((question , index) => (
+                                formObject.questions.map((question , index) => (
                                     <ViewBlock
                                         key={index}
                                         question={question}
                                     />
                                 ))
                             }
+                            </Form>
                         </ConstructorColumn>
                     </Main>
                 </>
