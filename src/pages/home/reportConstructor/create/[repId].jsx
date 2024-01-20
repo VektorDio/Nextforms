@@ -88,10 +88,10 @@ const ReportConstructor = ({data}) => {
 
         try {
             await mutateAsync({
-                id: reportObject?.id,
-                description: reportObject?.description,
-                name: reportObject?.name,
-                blocks: reportObject?.blocks.map(e => ({
+                id: reportObject.id,
+                description: reportObject.description,
+                name: reportObject.name,
+                blocks: reportObject.blocks.map(e => ({
                     type: e.type,
                     name: e.name,
                 })),

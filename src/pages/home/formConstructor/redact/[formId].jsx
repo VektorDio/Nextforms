@@ -81,7 +81,7 @@ const FormConstructor = ({data}) => {
 
     async function handleFormSubmit() {
 
-        let emptyQuestionCheck = !formObject?.questions.every((e) => e.question.length > 0)
+        let emptyQuestionCheck = !formObject.questions.every((e) => e.question.length > 0)
         setEmptyQuestionCheck(emptyQuestionCheck) //just to make sure
 
         if (emptyQuestionCheck || emptyOptionsCheck || duplicateQuestionsCheck || emptyFormNameCheck) {
@@ -90,11 +90,11 @@ const FormConstructor = ({data}) => {
 
         try {
             await mutateAsync({
-                id: formObject?.id,
-                description: formObject?.description,
-                name: formObject?.name,
-                active: formObject?.active,
-                questions: formObject?.questions.map(e => ({
+                id: formObject.id,
+                description: formObject.description,
+                name: formObject.name,
+                active: formObject.active,
+                questions: formObject.questions.map(e => ({
                     type: e.type,
                     required: e.required,
                     question: e.question,
@@ -212,13 +212,13 @@ const FormConstructor = ({data}) => {
     return (
         <>
             <Head>
-                <title>{formObject?.name || "Form"} | NextForms</title>
+                <title>{formObject.name || "Form"} | NextForms</title>
                 <meta name="description" content="Form redacting page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header movable={true}>
-                <ConstructorHeader id={formObject?.id} onFormSubmit={formObject && handleFormSubmit}/>
+                <ConstructorHeader id={formObject.id} onFormSubmit={formObject && handleFormSubmit}/>
             </Header>
             <Main onClick={(e) => setSelectedBlock(e, 'head')} >
                 <ConstructorColumn>
@@ -243,7 +243,7 @@ const FormConstructor = ({data}) => {
                             <ToggleButton
                                 text={"Accept answers"}
                                 onClick={(e) => handleAcceptChange(e.target.checked)}
-                                checked={formObject?.active}
+                                checked={formObject.active}
                             />
                         </div>
                     </div>
@@ -268,7 +268,7 @@ const FormConstructor = ({data}) => {
                         )
                     }
                     {
-                        formObject?.questions.map((q, index) => (
+                        formObject.questions.map((q, index) => (
                             <ConstructorBlock
                                 key={q.id}
                                 question={q}

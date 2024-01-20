@@ -79,9 +79,14 @@ const FormView = ({data}) => {
                 answerData: value,
             }))
 
-            await createAnswers({
-                data: data
-            })
+            try {
+                await createAnswers({
+                    data: data
+                })
+            } catch (e) {
+                router.push(`/errorPage/${e}`)
+                return
+            }
 
             router.push("/answerSubmitted")
         }
@@ -134,7 +139,7 @@ const FormView = ({data}) => {
     return (
         <>
             <Head>
-                <title>{formObject?.name} | Report Generator</title>
+                <title>{formObject.name || "Form Name"} | Report Generator</title>
                 <meta name="description" content="Form view page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />

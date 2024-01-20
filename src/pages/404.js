@@ -4,23 +4,23 @@ import Main from "@/components/pageWraper/main";
 import React from "react";
 import SimpleMessage from "@/components/messages/simpleMessage";
 
-const ClosedForm = () => {
+const Custom404 = () => {
     return (
         <>
             <Head>
-                <title>Closed Form | NextForms</title>
-                <meta name="description" content="Closed form message" />
+                <title>Error 404 | NextForms</title>
+                <meta name="description" content="Error 404 page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header/>
             <Main>
                 <SimpleMessage>
-                    This form no longer accepts answers
+                    404 - Page not found
                 </SimpleMessage>
             </Main>
         </>
     );
 };
 
-export default ClosedForm;
+export default Custom404;
