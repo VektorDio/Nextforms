@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import {useRouter} from "next/router";
-import {useGetAnswersByFormId, useGetFormNamesByCreatorId} from "@/queries/forms";
+import {useGetAnswersByFormId} from "@/queries/forms";
 import {useSession} from "next-auth/react";
-import {useGetReportById, useGetReportNamesByCreatorId} from "@/queries/reports";
+import {useGetReportById} from "@/queries/reports";
 import FillBlock from "@/components/fillElements/fillBlock";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
@@ -13,18 +13,79 @@ import TextParagraph from "@/components/inputs/textParagraph";
 import ConstructorColumn from "src/components/constructorColumn";
 import FillHeader from "@/components/fillElements/fillHeader";
 import Header from "@/components/pageWraper/header";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import axios from "axios";
 
-const ReportConstructor = () => {
+export async function getServerSideProps(context) {
+    const session = await getServerSession(context.req, context.res, authOptions)
+
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/You must be logged in.`
+            }
+        }
+    }
+
+    const {formId, reportId} = context.query
+
+    const userId = session.user.id
+
+    let formListData, reportListData
+
+    try {
+        formListData = (await axios.get('http://localhost:3000/api/form/formNamesByCreatorId', {
+            params: {
+                id: userId,
+            },
+            headers: {
+                Cookie: context.req.headers.cookie
+            }
+        })).data
+    } catch (e){
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/${e}`
+            }
+        }
+    }
+
+    try {
+        reportListData = (await axios.get('http://localhost:3000/api/report/reportNamesByCreatorId', {
+            params: {
+                id: userId,
+            },
+            headers: {
+                Cookie: context.req.headers.cookie
+            }
+        })).data
+    } catch (e){
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/${e}`
+            }
+        }
+    }
+
+    return { props: { formListData, reportListData } }
+}
+
+const ReportFillPage = ({ formListData, reportListData }) => {
     const router = useRouter()
-    const { data: session, status} = useSession({
+    useSession({
         required:true
     })
-    const userId = session?.user.id
 
     const {reportId:queryReportId, formId:queryFormId} = router.query
 
     const [reportId, setReportId] = useState(queryReportId)
     const [formId, setFormId] = useState(queryFormId)
+    const [reportObject, setReportObject] = useState({})
+    const [answersObject, setAnswersObject] = useState([])
 
     const {error: reportError, data: reportData, isLoading: reportLoading} = useGetReportById({
         id: reportId,
@@ -34,37 +95,17 @@ const ReportConstructor = () => {
         id: formId,
     })
 
-    const [reportObject, setReportObject] = useState()
-    const [answersObject, setAnswersObject] = useState()
-
-    const {error: formNamesError, data: formNamesData, isLoading: formNamesLoading} = useGetFormNamesByCreatorId({
-        id: userId,
-    })
-
-    const {error: reportNamesError, data: reportNamesData, isLoading: reportNamesLoading} = useGetReportNamesByCreatorId({
-        id: userId,
-    })
-
     useEffect(() => {
         if(reportData) {
             setReportObject({...reportData.report})
         }
-    }, [reportData, reportId, reportLoading])
+    }, [reportData, reportId])
 
     useEffect(() => {
         if(answersData) {
-            setAnswersObject([...answersData])
+            setAnswersObject([...answersData.answers])
         }
-    }, [answersLoading, answersData, formId])
-
-    useEffect(() => {
-        if (queryReportId) {
-            setReportId(queryReportId)
-        }
-        if (queryFormId) {
-            setFormId(queryFormId)
-        }
-    }, [queryReportId, queryFormId])
+    }, [answersData, formId])
 
     useEffect(() => {
         const beforeunloadHandler = (e) => {
@@ -79,18 +120,6 @@ const ReportConstructor = () => {
         }
     }, [reportObject])
 
-    function onFormIdChange(id) {
-        if(id !== "placeholder"){
-            setFormId(id)
-        }
-    }
-
-    function onReportIdChange(id) {
-        if (id !== "placeholder") {
-            setReportId(id)
-        }
-    }
-
     function handlePrint() {
         window.print()
     }
@@ -104,44 +133,40 @@ const ReportConstructor = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Header movable={true}>
-                {
-                    (status !== "loading") && (
-                        <FillHeader formId={formId}
-                                    reportId={reportId}
-                                    formNamesData={formNamesData}
-                                    reportNamesData={reportNamesData}
-                                    onReportIdChange={onReportIdChange}
-                                    onFormIdChange={onFormIdChange}
-                                    handlePrint={handlePrint}
-                        />
-                    )
-                }
+                <FillHeader formId={formId}
+                            reportId={reportId}
+                            formNamesData={formListData}
+                            reportNamesData={reportListData}
+                            onReportIdChange={setReportId}
+                            onFormIdChange={setFormId}
+                            handlePrint={handlePrint}
+                />
             </Header>
             <Main>
                 <ConstructorColumn>
                     {
-                        (formNamesLoading || reportNamesLoading || reportLoading || answersLoading || status === "loading") ? (
+                        (reportLoading || answersLoading) ? (
                             <LoadingMessage/>
-                        ) : (formNamesError || reportNamesError || reportError || answersError) ? (
-                            <ErrorMessage error={(formNamesError || reportNamesError || reportError || answersError)}/>
+                        ) : (reportError || answersError) ? (
+                            <ErrorMessage error={(reportError || answersError)}/>
                         ) : (reportObject) && (
                             <>
                                 <div className={styles.container} >
                                     <div className={styles.formName}>
                                         <TextParagraph
                                             placeholder={"New report"}
-                                            defaultValue={reportObject?.name}
+                                            defaultValue={reportObject.name}
                                         />
                                     </div>
                                     <div className={styles.formDescription}>
                                         <TextParagraph
                                             placeholder={"Description"}
-                                            defaultValue={reportObject?.description}
+                                            defaultValue={reportObject.description}
                                         />
                                     </div>
                                 </div>
                                 {
-                                    reportObject?.blocks?.map((block , index) => (
+                                    reportObject.blocks?.map((block , index) => (
                                         <FillBlock key={index} block={block} answers={answersObject || []}/>
                                     ))
                                 }
@@ -154,4 +179,4 @@ const ReportConstructor = () => {
     );
 };
 
-export default ReportConstructor;
+export default ReportFillPage;

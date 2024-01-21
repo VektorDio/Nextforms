@@ -29,12 +29,15 @@ export default async function handler(req, res) {
             })
         }
 
-        res.send({userId: form.userId, answers: form?.questions.map(e => ({
-                type: e.type,
-                question: e.question,
-                options: e.options,
-                answers: e.answers.map(e => e.answerData),
-            }))})
+        if (form) {
+            res.send({userId: form.userId, answers: form?.questions.map(e => ({
+                    type: e.type,
+                    question: e.question,
+                    options: e.options,
+                    answers: e.answers.map(e => e.answerData),
+                }))})
+        } else res.send(null)
+
     } else if(req.method === 'PATCH') {
 
     } else if (req.method === 'DELETE'){

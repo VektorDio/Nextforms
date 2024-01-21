@@ -25,6 +25,9 @@ export async function getServerSideProps(context) {
         data = (await axios.get('http://localhost:3000/api/report', {
             params: {
                 id: id,
+            },
+            headers: {
+                Cookie: context.req.headers.cookie
             }
         })).data
     } catch (e){

@@ -23,10 +23,22 @@ export async function getServerSideProps(context) {
     const id = context.params.formId
     let data
 
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/You must be logged in.`
+            }
+        }
+    }
+
     try {
         data = (await axios.get('http://localhost:3000/api/form', {
             params: {
                 id: id,
+            },
+            headers: {
+                Cookie: context.req.headers.cookie
             }
         })).data
     } catch (e){

@@ -2,9 +2,10 @@ import React from 'react';
 import styles from "./fillHeader.module.css";
 import SelectInput from "@/components/inputs/selectInput";
 import SimpleButton from "@/components/buttons/simpleButton";
-import Link from "next/link";
+import {useRouter} from "next/router";
 
 const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange, formNamesData, handlePrint, formId}) => {
+    const router = useRouter()
 
     let reportOptions = []
     let formOptions = []
@@ -21,7 +22,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
         <>
             <div className={styles.centerBlock}>
                 <div className={styles.selectContainer}>
-                    <SelectInput defaultValue={reportId}
+                    <SelectInput defaultValue={reportOptions.find((e) => e.value === reportId)}
                                  options={reportOptions}
                                  onChange={(choice) => onReportIdChange(choice.value)}
                                  placeholder={"Select report"}
@@ -29,7 +30,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
                     />
                 </div>
                 <div className={styles.selectContainer}>
-                    <SelectInput defaultValue={formId}
+                    <SelectInput defaultValue={formOptions.find((e) => e.value === formId)}
                                  options={formOptions}
                                  onChange={(choice) => onFormIdChange(choice.value)}
                                  placeholder={"Select form"}
@@ -41,9 +42,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
 
             <div className={styles.sideBlock}>
                 <SimpleButton onClick={handlePrint} iconType={"print"} bgColor={"#399412"}/>
-                <Link href={"/home"}>
-                    <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
-                </Link>
+                <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} />
             </div>
         </>
     );

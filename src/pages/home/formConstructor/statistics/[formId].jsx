@@ -22,6 +22,9 @@ export async function getServerSideProps(context) {
         data = (await axios.get('http://localhost:3000/api/form/answers', {
             params: {
                 id: formId,
+            },
+            headers: {
+                Cookie: context.req.headers.cookie
             }
         })).data
     } catch (e){

@@ -30,6 +30,13 @@ export default async function handler(req, res) {
 
         res.status(200).send(form)
     } else if (req.method === 'GET'){
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
+
         const {query} = req
         const {id} = query
         let form
