@@ -1,38 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+<br/>
+<p align="center">
+  <a href="https://github.com/ShaanCoding/ReadME-Generator">
+    <img src="public/favicon.ico" alt="Logo" width="80" height="80">
+  </a>
+
+<h3 align="center">NextForms</h3>
+
+<p align="center">
+An application to create and manage simple forms!
+<br/>
+Note This Project Is Still W.I.P
+<br/>
+<br/>
+<a href="https://github.com/VektorDio/Nextforms">Explore the docs</a>
+.
+<a href="https://github.com/VektorDio/Nextforms/issues">Report Bug</a>
+.
+<a href="https://github.com/VektorDio/Nextforms/issues">Request Feature</a>
+</p>
+
+![Downloads](https://img.shields.io/github/downloads/VektorDio/Nextforms/total)  ![Issues](https://img.shields.io/github/issues/VektorDio/Nextforms) ![License](https://img.shields.io/github/license/VektorDio/Nextforms) 
+
+## Table Of Contents
+
+- [Table Of Contents](#table-of-contents)
+- [About The Project](#about-the-project)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+- [License](#license)
+- [Authors](#authors)
+
+## About The Project
+
+![Screen Shot](images/Screenshot.png)
+
+This project is aimed to provide basic and simple form functionality, 
+including creation of forms, redacting forms, changing their settings and gathering statistics. 
+Project also includes simple report functionality.
+
+This is also a training for creating and deploying projects.
+
+## Built With
+
+- [JavaScript](https://www.javascript.com/)
+- [Next.js](https://nextjs.org/)
+- [React](https://react.dev/)
+- [Prisma](https://www.prisma.io/)
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running follow these simple example steps.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+### Prerequisites
+
+You need server and database for this one
+
+### Installation
+
+1. Clone the repo
+
+```sh
+git clone https://github.com/VektorDio/Nextforms.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install all necessary packages
+3. Config env. variables
+4. Connect to DB
+3. Run
+```sh
+next start
+```
+3. Have fun!
 
-You can start editing the page by modifying `pages/[formId].jsx`. The page auto-updates as you edit the file.
+## License
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Distributed under the MPL-2.0 License. See [LICENSE](https://github.com/VektorDio/Nextforms/blob/main/LICENSE.md) for more information.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Authors
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Daniel R** - _Comp Sci Student_ - [VektorDio](https://github.com/VektorDio/) - _All Work_
