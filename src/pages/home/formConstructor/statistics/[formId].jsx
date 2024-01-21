@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Head from "next/head";
 import ConstructorHeader from "@/components/formConstructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
@@ -9,8 +9,12 @@ import ConstructorColumn from "src/components/constructorColumn";
 import styles from "./statistics.module.css";
 import Header from "@/components/pageWraper/header";
 import axios from "axios";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/pages/api/auth/[...nextauth]";
 
 export async function getServerSideProps(context) {
+    const session = await getServerSession(context.req, context.res, authOptions)
+
     const formId = context.params.formId
     let data
 
@@ -38,6 +42,15 @@ export async function getServerSideProps(context) {
         }
     }
 
+    if (data.userId !== session.user.id){
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/404`
+            }
+        }
+    }
+
     return { props: { data, formId } }
 }
 
@@ -51,9 +64,7 @@ const StatisticsConstructor = ({data, formId}) => {
         },
     })
 
-    const answersCount = data.reduce((acc, val) => (acc + val.answers.length), 0)
-
-    console.log(data)
+    const answersCount = data.answers.reduce((acc, val) => (acc + val.answers.length), 0)
 
     return (
         <>
@@ -77,7 +88,7 @@ const StatisticsConstructor = ({data, formId}) => {
                         </div>
                     </div>
                     {
-                        data.map((question, index) => (
+                        data.answers.map((question, index) => (
                             <StatisticBlock
                                 key={index}
                                 question={question}

@@ -13,8 +13,11 @@ import TextParagraph from "@/components/inputs/textParagraph";
 import Header from "@/components/pageWraper/header";
 import axios from "axios";
 import FormAlert from "@/components/messages/formAlert";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/pages/api/auth/[...nextauth]";
 
 export async function getServerSideProps(context) {
+    const session = await getServerSession(context.req, context.res, authOptions)
     const id = context.params.repId
     let data
 
@@ -38,6 +41,15 @@ export async function getServerSideProps(context) {
             redirect: {
                 permanent: false,
                 destination: `/errorPage`
+            }
+        }
+    }
+
+    if (data.report.userId !== session.user.id){
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/404`
             }
         }
     }
