@@ -105,18 +105,24 @@ const FormView = ({data}) => {
 
     const requiredField = Yup.string()
         .required("Required")
+        .typeError('Enter valid text')
     const checkboxRequired = Yup.array()
         .min(1,"Select one")
+        .typeError('Select one')
     const text = Yup.string()
         .max(300, "Too many characters")
+        .typeError('Enter valid text')
     const textRequired = Yup.string()
         .max(300, "Too many characters")
         .required("Required")
+        .typeError('Enter valid text')
     const date = Yup.date()
         .max("9999-01-01", "Select correct date")
+        .typeError('You must specify a date')
     const dateRequired = Yup.date()
         .max("9999-01-01", "Select correct date")
         .required("Required")
+        .typeError('You must specify a date')
 
     const validationScheme = {}
     formObject.questions.map((question)=> {
@@ -144,7 +150,7 @@ const FormView = ({data}) => {
 
     let initialValues = {}
     formObject.questions.map((e) => {
-         initialValues[e.id] = []
+         initialValues[e.id] = (e.type === "checkbox") ? [] : ""
     })
 
     return (
