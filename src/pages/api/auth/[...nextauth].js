@@ -3,11 +3,11 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from "@/server";
 import {validatePassword} from "@/server/hash";
 
-const authOptions = {
+export const authOptions = {
     session: {
         strategy: 'jwt'
     },
-    secret: "69dbfac3c1242a9cecd71c8614ef6b2f",
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             async authorize(credentials) {
@@ -24,7 +24,7 @@ const authOptions = {
                 }
 
                 if (user === null) {
-                    throw new Error("There is no user with this email")
+                    throw Error("There is no user with this email")
                 }
 
                 if (email !== user.email || !validatePassword(password, user.password)){
@@ -36,32 +36,22 @@ const authOptions = {
         })
     ],
     callbacks: {
-        async session({session, token}) {
-            session.accessToken = token.accessToken
-            session.user.id = token.id
-            session.email = token.email
-            // session.user.firstName = token.firstName
-            // session.user.lastName = token.lastName
-            // session.user.phoneNumber = token.phoneNumber
-            session.user.organisation = token.organisation
-            return session
-        },
-        async jwt({ token, account, user }) {
-            if (account) {
-                token.accessToken = account.access_token
-                token.id = user.id
-                token.email = user.email
-                // token.firstName = user.firstName
-                // token.lastName = user.lastName
-                // token.phoneNumber = user.phoneNumber
-                token.organisation = user.organisation
+        async jwt({ token, user }) {
+            if (user) {
+                token.userId = user.id
             }
             return token
+        },
+        async session({session, token}) {
+            session.user.id = token.userId
+            return session
         }
     },
     pages: {
         signIn: '/login',
-        error: '/error', // Error code passed in query string as ?error=
+        signOut: '/',
+        error: '/errorPage', // Error code passed in query string as ?error=
     },
 }
+
 export default NextAuth(authOptions);

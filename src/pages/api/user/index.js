@@ -1,6 +1,9 @@
 import prisma from "@/server";
 import {hashPassword} from "@/server/hash";
 import {Prisma} from "@prisma/client";
+import {getServerSession} from "next-auth";
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { body } = req
@@ -39,6 +42,13 @@ export default async function handler(req, res) {
 
         res.status(200).send(user)
     } else if (req.method === 'GET'){
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
+
         const {query} = req
         const {id} = query
         const user = await prisma.user.findUnique({
@@ -48,6 +58,12 @@ export default async function handler(req, res) {
         })
         res.send({user})
     } else if(req.method === 'PATCH') {
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
 
         const { body } = req
         const { email, password, organisation, lastName, firstName, phoneNumber, id } = body
@@ -68,6 +84,13 @@ export default async function handler(req, res) {
 
         res.status(200).send(user)
     } else if (req.method === 'DELETE'){
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
+
         const {query} = req
         const {id} = query
         await prisma.user.delete({

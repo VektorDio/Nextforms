@@ -1,7 +1,16 @@
 import prisma from "@/server";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
+
         const { body } = req
         const { userId } = body
         const report = await prisma.report.create({
@@ -20,6 +29,13 @@ export default async function handler(req, res) {
 
         res.status(200).send(report)
     } else if (req.method === 'GET'){
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
+
         const {query} = req
         const {id} = query
         let report
@@ -35,6 +51,13 @@ export default async function handler(req, res) {
         }
         res.send({report})
     } else if(req.method === 'PATCH') {
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
+
         const { body } = req
         const { id, description, name, blocks } = body
 
@@ -75,6 +98,13 @@ export default async function handler(req, res) {
         }
         res.status(200).send(report)
     } else if (req.method === 'DELETE'){
+        const session = await getServerSession(req, res, authOptions)
+
+        if (!session) {
+            res.status(401).json({ message: "You must be logged in." });
+            return;
+        }
+
         const {query} = req
         const {id} = query
         await prisma.report.delete({
