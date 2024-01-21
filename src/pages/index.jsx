@@ -16,7 +16,7 @@ export default function Welcome() {
         if (status === "authenticated") {
             router.push("/home")
         }
-    }, [status])
+    }, [status, router])
 
   return (
       <>

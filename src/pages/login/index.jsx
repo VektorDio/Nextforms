@@ -40,7 +40,7 @@ const Login = () => {
         else {
             setSubmissionError(error)
         }
-    }, [ok, error])
+    }, [ok, error, router])
 
     return (
         <>

@@ -104,8 +104,8 @@ const StatisticBlock = ({question}) => {
             component = (
                 <>
                     {
-                        question.answers.map((answer) => ((answer[0] !== "") &&
-                            <div className={styles.textContainer}>{answer}</div>
+                        question.answers.map((answer, i) => ((answer[0] !== "") &&
+                            <div key={i} className={styles.textContainer}>{answer}</div>
                         ))
                     }
                 </>
@@ -115,8 +115,8 @@ const StatisticBlock = ({question}) => {
             component = (
                 <>
                     {
-                        question.answers.map((answer) => ((answer[0] !== "") &&
-                            <div className={styles.textContainer}>{answer}</div>
+                        question.answers.map((answer, i) => ((answer[0] !== "") &&
+                            <div key={i} className={styles.textContainer}>{answer}</div>
                         ))
                     }
                 </>
