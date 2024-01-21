@@ -190,7 +190,7 @@ const ReportConstructor = ({data}) => {
     return (
         <>
             <Head>
-                <title>{reportObject.name || "Report"} | NextForms</title>
+                <title>{`${reportObject.name || "Report"} | NextForms`}</title>
                 <meta name="description" content="Report create page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />

@@ -150,7 +150,7 @@ const FormView = ({data}) => {
     return (
         <>
             <Head>
-                <title>{formObject.name || "Form Name"} | Report Generator</title>
+                <title>{`${formObject.name || 'Form Name'} | NextForms`}</title>
                 <meta name="description" content="Form view page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
