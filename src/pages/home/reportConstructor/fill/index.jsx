@@ -16,6 +16,7 @@ import Header from "@/components/pageWraper/header";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import axios from "axios";
+import isValidIdObject from "@/server/utils";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -30,10 +31,53 @@ export async function getServerSideProps(context) {
     }
 
     const {formId, reportId} = context.query
-
     const userId = session.user.id
-
     let formListData, reportListData
+    let answers = null
+    let report = null
+
+    if (isValidIdObject(formId)) {
+        try {
+            answers = (await axios.get('http://localhost:3000/api/form/answers', {
+                params: {
+                    formId: formId,
+                    userId: userId
+                },
+                headers: {
+                    Cookie: context.req.headers.cookie
+                }
+            })).data
+        } catch (e){
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: `/errorPage/${e}`
+                }
+            }
+        }
+    }
+
+    if (isValidIdObject(reportId)){
+        try {
+            report = (await axios.get('http://localhost:3000/api/report', {
+                params: {
+                    reportId: reportId,
+                    userId: userId
+                },
+                headers: {
+                    Cookie: context.req.headers.cookie
+                }
+            })).data
+        } catch (e){
+            return {
+                redirect: {
+                    permanent: false,
+                    destination: `/errorPage/${e}`
+                }
+            }
+        }
+    }
+
 
     try {
         formListData = (await axios.get('http://localhost:3000/api/form/formNamesByCreatorId', {
@@ -71,10 +115,10 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { formListData, reportListData, userId } }
+    return { props: { formListData, reportListData, userId, report, answers } }
 }
 
-const ReportFillPage = ({ formListData, reportListData, userId }) => {
+const ReportFillPage = ({ formListData, reportListData, userId, report, answers }) => {
     const router = useRouter()
     useSession({
         required:true
@@ -84,30 +128,71 @@ const ReportFillPage = ({ formListData, reportListData, userId }) => {
 
     const [reportId, setReportId] = useState(queryReportId)
     const [formId, setFormId] = useState(queryFormId)
-    const [reportObject, setReportObject] = useState({})
-    const [answersObject, setAnswersObject] = useState([])
 
-    const {error: reportError, data: reportData, isLoading: reportLoading} = useGetReportById({
-        formId: reportId,
+    const [reportObject, setReportObject] = useState(() => {
+        return report ? {...report.report} : null
+    })
+    const [answersObject, setAnswersObject] = useState(() => {
+        return answers ? [...answers.questions] : null
+    })
+
+    const {
+        error: reportError,
+        data: reportData,
+        isInitialLoading: reportLoading,
+        refetch: refetchReport,
+        isFetching: reportFetching
+    } = useGetReportById({
+        reportId: reportId,
         userId: userId
     })
 
-    const {error: answersError, data: answersData, isLoading: answersLoading} = useGetAnswersByFormId({
+    const {
+        error: answersError,
+        data: answersData,
+        isInitialLoading: answersLoading,
+        refetch: refetchAnswers,
+        isFetching: answersFetching
+    } = useGetAnswersByFormId({
         formId: formId,
         userId: userId
     })
 
     useEffect(() => {
-        if(reportData) {
+        if (reportData) {
             setReportObject({...reportData.report})
         }
-    }, [reportData, reportId])
+    }, [reportData])
 
     useEffect(() => {
-        if(answersData) {
+        if (answersData) {
             setAnswersObject([...answersData.questions])
         }
-    }, [answersData, formId])
+    }, [answersData])
+
+    useEffect(() => {
+        if (isValidIdObject(formId)) {
+            refetchAnswers()
+        }
+    }, [formId])
+
+    useEffect(() => {
+        if (isValidIdObject(reportId)) {
+            refetchReport()
+        }
+    }, [reportId])
+
+    function handleFormIdChange(formId) {
+        if (isValidIdObject(formId)) {
+            setFormId(formId)
+        }
+    }
+
+    function handleReportIdChange(reportId) {
+        if (isValidIdObject(reportId) && isValidIdObject(userId)) {
+            setReportId(reportId)
+        }
+    }
 
     useEffect(() => {
         const beforeunloadHandler = (e) => {
@@ -139,19 +224,19 @@ const ReportFillPage = ({ formListData, reportListData, userId }) => {
                             reportId={reportId}
                             formNamesData={formListData}
                             reportNamesData={reportListData}
-                            onReportIdChange={setReportId}
-                            onFormIdChange={setFormId}
+                            onReportIdChange={handleReportIdChange}
+                            onFormIdChange={handleFormIdChange}
                             handlePrint={handlePrint}
                 />
             </Header>
             <Main>
                 <ConstructorColumn>
                     {
-                        (reportLoading || answersLoading) ? (
-                            <LoadingMessage/>
-                        ) : (reportError || answersError) ? (
+                        (reportError || answersError) ? (
                             <ErrorMessage error={(reportError?.message || answersError?.message)}/>
-                        ) : (reportObject) && (
+                        ) :
+                        (reportObject) &&
+                        (
                             <>
                                 <div className={styles.container} >
                                     <div className={styles.formName}>

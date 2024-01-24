@@ -96,6 +96,7 @@ export const useGetAnswersByFormId = (params) => {
                 }
             })).data
         },
+        enabled: false
     })
 }
 

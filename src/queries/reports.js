@@ -26,6 +26,7 @@ export const useGetReportById = (params) => {
                 }
             })).data
         },
+        enabled: false
     })
 }
 
