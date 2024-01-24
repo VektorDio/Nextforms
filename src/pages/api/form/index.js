@@ -1,19 +1,36 @@
 import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import isValidIdObject from "@/server/utils";
+
+const handlers = {
+    GET: getHandler,
+    POST: postHandler,
+    PATCH: patchHandler,
+    DELETE: deleteHandler,
+}
 
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-        const session = await getServerSession(req, res, authOptions)
+    handlers[req.method](req, res)
+}
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+async function postHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const { userId } = req.body
 
-        const { body } = req
-        const { userId } = body
-        const form = await prisma.form.create({
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        res.status(401).send({ message: "You must be logged in." });
+        return;
+    }
+
+    let form
+
+    try {
+        form = await prisma.form.create({
             data: {
                 userId: userId,
                 active: false,
@@ -23,58 +40,72 @@ export default async function handler(req, res) {
                     create: {
                         type: "radio",
                         question: "",
+                        options: ["Option"]
                     }
                 }
             },
         })
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({ message: "Error occurred while creating forms."})
+    }
 
-        res.status(200).send(form)
-    } else if (req.method === 'GET'){
-        const session = await getServerSession(req, res, authOptions)
+    return res.status(200).send({form})
+}
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+async function getHandler(req, res) {
+    const { formId } = req.query
 
-        const {query} = req
-        const {id} = query
-        let form
-        if (id){
-            form = await prisma.form.findUnique({
-                where: {
-                    id: id
-                },
-                include: {
-                    questions: true
-                }
-            })
-        }
-        res.send({form})
-    } else if(req.method === 'PATCH') {
-        const session = await getServerSession(req, res, authOptions)
+    if (!isValidIdObject(formId)) {
+        return res.status(400).send({ message: "Malformed form ID."})
+    }
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+    let form
 
-        const { body } = req
-        const { id, active, description, name, questions } = body
+    try {
+        form = await prisma.form.findUnique({
+            where: {
+                id: formId
+            },
+            include: {
+                questions: true,
+            }
+        })
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({message: "Error occurred while retrieving forms."})
+    }
 
-        let form
+    return res.status(200).send({form})
+}
 
-        if (questions && questions.length > 0){
+async function patchHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
 
+    const { userId, id:formId, active, description, name, questions } = req.body
+
+    if (!isValidIdObject(formId)) {
+        return res.status(400).send({ message: "Malformed form ID."})
+    }
+
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        return res.status(401).send({ message: "You must be logged in." });
+    }
+
+    if (questions && questions.length > 0) {
+        try {
             await prisma.question.deleteMany({
-                where:{
-                    formId: id,
-                }
-            })
-
-            form = await prisma.form.update({
                 where: {
-                    id: id,
+                    formId: formId,
+                },
+            })
+            await prisma.form.update({
+                where: {
+                    id: formId,
                 },
                 data: {
                     active: active,
@@ -87,10 +118,15 @@ export default async function handler(req, res) {
                     },
                 },
             })
-        } else {
-            form = await prisma.form.update({
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while updating forms."})
+        }
+    } else {
+        try {
+            await prisma.form.update({
                 where: {
-                    id: id,
+                    id: formId,
                 },
                 data: {
                     active: active,
@@ -98,23 +134,41 @@ export default async function handler(req, res) {
                     name: name,
                 },
             })
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while updating forms."})
         }
-        res.status(200).send(form)
-    } else if (req.method === 'DELETE'){
-        const session = await getServerSession(req, res, authOptions)
+    }
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+    return res.status(200).send({})
+}
 
-        const {query} = req
-        const {id} = query
+async function deleteHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const {formId, userId} = req.query
+
+    if (!isValidIdObject(formId)) {
+        return res.status(400).send({ message: "Malformed form ID."})
+    }
+
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        return res.status(401).send({ message: "You must be logged in." });
+    }
+
+    try {
         await prisma.form.delete({
             where: {
-                id: id,
+                id: formId,
             },
         })
-        res.status(200).send()
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({message: "Error occurred while deleting form."})
     }
+
+    return res.status(200).send({})
 }

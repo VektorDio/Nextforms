@@ -1,76 +1,99 @@
 import prisma from "@/server";
 import {hashPassword} from "@/server/hash";
-import {Prisma} from "@prisma/client";
 import {getServerSession} from "next-auth";
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import isValidIdObject from "@/server/utils";
+
+const handlers = {
+    GET: getHandler,
+    POST: postHandler,
+    PATCH: patchHandler,
+    DELETE: deleteHandler,
+}
 
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-        const { body } = req
-        const { email, password, organisation} = body
+    handlers[req.method](req, res)
+}
 
-        const hashedPassword = hashPassword(password)
-        let user
-        try {
-            const userToSearch = await prisma.user.findUnique({
-                where: {
-                    email: email
-                }
-            })
-
-            if (userToSearch){
-                res.status(500).send({message: "This email is already taken"})
-            }
-
-            user = await prisma.user.create({
-                data: {
-                    email: email,
-                    password: hashedPassword,
-                    organisation: organisation
-                },
-            })
-        } catch (e) {
-            let errorMessage
-            if (e instanceof Prisma.PrismaClientKnownRequestError) {
-                // The .code property can be accessed in a type-safe manner
-                if (e.code === 'P2002') {
-                    errorMessage = "This email is already taken"
-                }
-            }
-            res.status(500).send({...e, message: errorMessage})
-        }
-
-        res.status(200).send(user)
-    } else if (req.method === 'GET'){
-        const session = await getServerSession(req, res, authOptions)
-
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
-
-        const {query} = req
-        const {id} = query
-        const user = await prisma.user.findUnique({
+async function postHandler(req, res) {
+    const {email, password, organisation} = req.body
+    const hashedPassword = hashPassword(password)
+    let user
+    try {
+        const userToSearch = await prisma.user.findUnique({
             where: {
-                id: id
+                email: email
             }
         })
-        res.send({user})
-    } else if(req.method === 'PATCH') {
-        const session = await getServerSession(req, res, authOptions)
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
+        if (userToSearch) {
+            res.status(500).send({message: "This email is already taken"})
+            return
         }
 
-        const { body } = req
-        const { email, password, organisation, lastName, firstName, phoneNumber, id } = body
+        user = await prisma.user.create({
+            data: {
+                email: email,
+                password: hashedPassword,
+                organisation: organisation
+            },
+        })
+    } catch (e) {
+        console.log({...e, message: e})
+        res.status(500).send({message: "Error occurred while creating user."})
+        return
+    }
 
-        const user = await prisma.user.update({
+    res.status(200).send({user})
+}
+
+async function getHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const {userId} = req.query
+
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        res.status(401).send({ message: "You must be logged in." })
+        return
+    }
+
+    let user
+    try {
+        user = await prisma.user.findUnique({
             where: {
-                id: id,
+                id: userId
+            }
+        })
+    } catch (e) {
+        console.log({...e, message: e})
+        res.status(500).send({message: "Error occurred while retrieving user."})
+        return
+    }
+
+    res.status(200).send({user})
+}
+
+async function patchHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const { email, password, organisation, lastName, firstName, phoneNumber, id:userId } = req.body
+
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        res.status(401).send({ message: "You must be logged in." });
+        return;
+    }
+
+    let user
+    try {
+        user = await prisma.user.update({
+            where: {
+                id: userId,
             },
             data: {
                 email: email,
@@ -81,23 +104,39 @@ export default async function handler(req, res) {
                 firstName: firstName,
             },
         })
+    } catch (e) {
+        console.log({...e, message: e})
+        res.status(500).send({message: "Error occurred while updating user."})
+        return
+    }
 
-        res.status(200).send(user)
-    } else if (req.method === 'DELETE'){
-        const session = await getServerSession(req, res, authOptions)
+    res.status(200).send({user})
+}
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+async function deleteHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const {userId} = req.query
 
-        const {query} = req
-        const {id} = query
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        res.status(401).send({ message: "You must be logged in." });
+        return;
+    }
+
+    try {
         await prisma.user.delete({
             where: {
-                id: id,
+                id: userId,
             },
         })
-        res.status(200).send()
+    } catch (e) {
+        console.log({...e, message: e})
+        res.status(500).send({message: "Error occurred while deleting user."})
+        return
     }
+
+    res.status(200).send({})
 }

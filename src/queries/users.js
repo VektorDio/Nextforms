@@ -5,13 +5,9 @@ export const useAddUser = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: async (data) => {
-            try {
-                const addedUser = await axios.post('/api/user', data)
-                await queryClient.invalidateQueries({ queryKey: ['GetUserById'] })
-                return addedUser
-            } catch (e) {
-                throw e
-            }
+            const addedUser = await axios.post('/api/user', data)
+            await queryClient.invalidateQueries({ queryKey: ['GetUserById'] })
+            return addedUser
         }
     })
 }
@@ -31,10 +27,10 @@ export const useGetUserById = (params) => {
     return useQuery({
         queryKey: ['GetUserById', params],
         queryFn: async () => {
-            const { id } = params
+            const { userId } = params
             return (await axios.get('/api/user', {
                 params: {
-                    id: id,
+                    userId: userId,
                 }
             })).data
         }
@@ -47,7 +43,7 @@ export const useDeleteUserById = () => {
         mutationFn: async (data) => {
             const deletedUser = await axios.delete('/api/user', {
                 params: {
-                    id: data.id
+                    userId: data.userId
                 }
             })
             await queryClient.invalidateQueries({ queryKey: ['GetUserById'] })

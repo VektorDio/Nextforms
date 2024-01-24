@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
     try {
         formListData = (await axios.get('http://localhost:3000/api/form/formNamesByCreatorId', {
             params: {
-                id: userId,
+                userId: userId,
             },
             headers: {
                 Cookie: context.req.headers.cookie
@@ -56,7 +56,7 @@ export async function getServerSideProps(context) {
     try {
         reportListData = (await axios.get('http://localhost:3000/api/report/reportNamesByCreatorId', {
             params: {
-                id: userId,
+                userId: userId,
             },
             headers: {
                 Cookie: context.req.headers.cookie
@@ -71,10 +71,10 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { formListData, reportListData } }
+    return { props: { formListData, reportListData, userId } }
 }
 
-const ReportFillPage = ({ formListData, reportListData }) => {
+const ReportFillPage = ({ formListData, reportListData, userId }) => {
     const router = useRouter()
     useSession({
         required:true
@@ -88,11 +88,13 @@ const ReportFillPage = ({ formListData, reportListData }) => {
     const [answersObject, setAnswersObject] = useState([])
 
     const {error: reportError, data: reportData, isLoading: reportLoading} = useGetReportById({
-        id: reportId,
+        formId: reportId,
+        userId: userId
     })
 
     const {error: answersError, data: answersData, isLoading: answersLoading} = useGetAnswersByFormId({
-        id: formId,
+        formId: formId,
+        userId: userId
     })
 
     useEffect(() => {
@@ -103,7 +105,7 @@ const ReportFillPage = ({ formListData, reportListData }) => {
 
     useEffect(() => {
         if(answersData) {
-            setAnswersObject([...answersData.answers])
+            setAnswersObject([...answersData.questions])
         }
     }, [answersData, formId])
 
@@ -148,7 +150,7 @@ const ReportFillPage = ({ formListData, reportListData }) => {
                         (reportLoading || answersLoading) ? (
                             <LoadingMessage/>
                         ) : (reportError || answersError) ? (
-                            <ErrorMessage error={(reportError || answersError)}/>
+                            <ErrorMessage error={(reportError?.message || answersError?.message)}/>
                         ) : (reportObject) && (
                             <>
                                 <div className={styles.container} >

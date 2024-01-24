@@ -16,12 +16,14 @@ export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
 
     const formId = context.params.formId
+    const userId = session.user.id
     let data
 
     try {
         data = (await axios.get('http://localhost:3000/api/form/answers', {
             params: {
-                id: formId,
+                formId: formId,
+                userId: userId
             },
             headers: {
                 Cookie: context.req.headers.cookie
@@ -45,7 +47,7 @@ export async function getServerSideProps(context) {
         }
     }
 
-    if (data.userId !== session.user.id){
+    if (data.userId !== userId){
         return {
             redirect: {
                 permanent: false,
@@ -67,7 +69,7 @@ const StatisticsConstructor = ({data, formId}) => {
         },
     })
 
-    const answersCount = data.answers.reduce((acc, val) => (acc + val.answers.length), 0)
+    const answersCount = data.questions.reduce((acc, val) => (acc + val.answers.length), 0)
 
     return (
         <>
@@ -91,7 +93,7 @@ const StatisticsConstructor = ({data, formId}) => {
                         </div>
                     </div>
                     {
-                        data.answers.map((question, index) => (
+                        data.questions.map((question, index) => (
                             <StatisticBlock
                                 key={index}
                                 question={question}

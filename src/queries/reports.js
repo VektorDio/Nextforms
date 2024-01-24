@@ -18,10 +18,11 @@ export const useGetReportById = (params) => {
     return useQuery({
         queryKey: ['GetReportById', params],
         queryFn: async () => {
-            const { id } = params
+            const { reportId, userId } = params
             return (await axios.get('/api/report', {
                 params: {
-                    id: id,
+                    reportId: reportId,
+                    userId: userId
                 }
             })).data
         },
@@ -32,10 +33,10 @@ export const useGetReportsByCreatorId = (params) => {
     return useQuery({
         queryKey: ['GetReportsByCreatorId', params],
         queryFn: async () => {
-            const { id } = params
+            const { userId } = params
             return (await axios.get('/api/report/reportByCreatorId', {
                 params: {
-                    id: id,
+                    userId: userId,
                 }
             })).data
         },
@@ -48,7 +49,8 @@ export const useDeleteReportById = () => {
         mutationFn: async (data) => {
             const deletedReport = await axios.delete('/api/report', {
                 params: {
-                    id: data.id
+                    reportId: data.reportId,
+                    userId: data.userId
                 }
             })
             await queryClient.invalidateQueries({ queryKey: ['GetReportById'] })
@@ -76,10 +78,10 @@ export const useGetReportNamesByCreatorId = (params) => {
     return useQuery({
         queryKey: ['GetReportNamesByCreatorId', params],
         queryFn: async () => {
-            const { id } = params
+            const { userId } = params
             return (await axios.get('/api/report/reportNamesByCreatorId', {
                 params: {
-                    id: id,
+                    userId: userId,
                 }
             })).data
         },

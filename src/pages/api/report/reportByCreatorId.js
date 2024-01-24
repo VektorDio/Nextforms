@@ -1,23 +1,34 @@
 import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import isValidIdObject from "@/server/utils";
 
 export default async function handler(req, res) {
     if (req.method === 'GET'){
         const session = await getServerSession(req, res, authOptions)
+        const {userId} = req.query
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
+        if (!isValidIdObject(userId)) {
+            return res.status(400).send({ message: "Malformed user ID."})
         }
 
-        const {query} = req
-        const {id} = query
-        const reports = await prisma.report.findMany({
-            where: {
-                userId: id
-            }
-        })
-        res.send({reports})
+        if (!session || session.user.id !== userId) {
+            return res.status(401).send({ message: "You must be logged in." });
+        }
+
+        let reports
+
+        try {
+            reports = await prisma.report.findMany({
+                where: {
+                    userId: userId
+                }
+            })
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while retrieving reports."})
+        }
+
+        return res.status(200).send({reports})
     }
 }

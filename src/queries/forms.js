@@ -18,10 +18,10 @@ export const useGetFormById = (params) => {
     return useQuery({
         queryKey: ['GetFormById', params],
         queryFn: async () => {
-            const { id } = params
+            const { formId } = params
             return (await axios.get('/api/form', {
                 params: {
-                    id: id,
+                    formId: formId,
                 }
             })).data
         },
@@ -34,7 +34,8 @@ export const useDeleteFormById = () => {
         mutationFn: async (data) => {
             const deletedForm = await axios.delete('/api/form', {
                 params: {
-                    id: data.id
+                    formId: data.formId,
+                    userId: data.userId
                 }
             })
             await queryClient.invalidateQueries({ queryKey: ['GetFormById'] })
@@ -49,10 +50,10 @@ export const useGetFormsByCreatorId = (params) => {
     return useQuery({
         queryKey: ['GetFormsByCreatorId', params],
         queryFn: async () => {
-            const { id } = params
+            const { userId } = params
             return (await axios.get('/api/form/formsByCreatorId', {
                 params: {
-                    id: id,
+                    userId: userId,
                 }
             })).data
         },
@@ -87,10 +88,11 @@ export const useGetAnswersByFormId = (params) => {
     return useQuery({
         queryKey: ['GetAnswersByFormId', params],
         queryFn: async () => {
-            const { id } = params
+            const { formId, userId } = params
             return (await axios.get('/api/form/answers', {
                 params: {
-                    id: id,
+                    formId: formId,
+                    userId: userId
                 }
             })).data
         },
@@ -101,10 +103,10 @@ export const useGetFormNamesByCreatorId = (params) => {
     return useQuery({
         queryKey: ['GetFormNamesByCreatorId', params],
         queryFn: async () => {
-            const { id } = params
+            const { userId } = params
             return (await axios.get('/api/form/formNamesByCreatorId', {
                 params: {
-                    id: id,
+                    userId: userId,
                 }
             })).data
         },

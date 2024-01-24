@@ -25,7 +25,7 @@ const Profile = () => {
     const {id} = session.user
 
     const {error, data, isFetching} = useGetUserById({
-        id: id,
+        userId: id,
     })
 
     if (isFetching || isUpdating) return (
@@ -45,7 +45,7 @@ const Profile = () => {
         router.push("/")
         await signOut()
         await deleteUser({
-            id: id
+            userId: id
         })
     }
 

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ConstructorHeader from "@/components/formConstructorElements/constructorHeader";
@@ -20,7 +19,7 @@ import {authOptions} from "@/pages/api/auth/[...nextauth]";
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
 
-    const id = context.params.formId
+    const formId = context.params.formId
     let data
 
     if (!session) {
@@ -35,11 +34,8 @@ export async function getServerSideProps(context) {
     try {
         data = (await axios.get('http://localhost:3000/api/form', {
             params: {
-                id: id,
+                formId: formId,
             },
-            headers: {
-                Cookie: context.req.headers.cookie
-            }
         })).data
     } catch (e){
         return {
@@ -115,6 +111,7 @@ const FormConstructor = ({data}) => {
 
         try {
             await mutateAsync({
+                userId: formObject.userId,
                 id: formObject.id,
                 description: formObject.description,
                 name: formObject.name,
@@ -131,7 +128,7 @@ const FormConstructor = ({data}) => {
             return
         }
 
-        router.push("/home")
+        router.back()
     }
 
     function handleNameChange(text){
@@ -164,7 +161,6 @@ const FormConstructor = ({data}) => {
 
         let buf = [...formObject.questions]
         buf.splice((index + 1), 0, {
-            id: uuidv4(),
             required: false,
             type: "radio",
             question:"",
@@ -295,7 +291,7 @@ const FormConstructor = ({data}) => {
                     {
                         formObject.questions.map((q, index) => (
                             <ConstructorBlock
-                                key={q.id}
+                                key={index}
                                 question={q}
                                 questionIndex={index}
 

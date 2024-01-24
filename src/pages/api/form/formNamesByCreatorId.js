@@ -1,27 +1,37 @@
 import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import isValidIdObject from "@/server/utils";
 
 export default async function handler(req, res) {
     if (req.method === 'GET'){
         const session = await getServerSession(req, res, authOptions)
+        const { userId } = req.query
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
+        if (!isValidIdObject(userId)) {
+            return res.status(400).send({ message: "Malformed user ID."})
         }
 
-        const {query} = req
-        const {id} = query
-        const forms = await prisma.form.findMany({
-            where: {
-                userId: id
-            },
-            select: {
-                id: true,
-                name: true,
-            },
-        })
-        res.send({forms})
+        if (!session || session.user.id !== userId) {
+            return res.status(401).send({ message: "You must be logged in." });
+        }
+
+        let forms
+        try {
+            forms = await prisma.form.findMany({
+                where: {
+                    userId: userId
+                },
+                select: {
+                    id: true,
+                    name: true,
+                },
+            })
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while retrieving forms."})
+        }
+
+        return res.status(200).send({forms})
     }
 }

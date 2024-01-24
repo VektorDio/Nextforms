@@ -12,10 +12,10 @@ export default function ConstructorHeader({id, onFormSubmit}) {
                 {
                     (id) ? (
                         <>
-                            <Link href={`/home/formConstructor/redact/${id}`}>
+                            <Link href={`/home/formConstructor/redact/${id}`} replace={true}>
                                 <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
                             </Link>
-                            <Link href={`/home/formConstructor/statistics/${id}`}>
+                            <Link href={`/home/formConstructor/statistics/${id}`} replace={true}>
                                 <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
                             </Link>
                         </>

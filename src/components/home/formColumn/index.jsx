@@ -13,10 +13,10 @@ const FormColumn = () => {
     const {mutateAsync:updateForm} = useUpdateForm()
     const [forms, setForms] = useState()
 
-    const {id} = session.user
+    const {id:userId} = session.user
 
     const {error, data, isLoading} = useGetFormsByCreatorId({
-        id: id,
+        userId: userId,
     })
 
     useEffect(() => {
@@ -27,7 +27,8 @@ const FormColumn = () => {
 
     async function handleEntryDelete(id) {
         await deleteForm({
-            id: id,
+            formId: id,
+            userId: userId
         })
     }
 
@@ -35,6 +36,7 @@ const FormColumn = () => {
         await updateForm({
             id: id,
             active: isActive,
+            userId: userId
         })
     }
 

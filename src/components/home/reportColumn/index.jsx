@@ -11,9 +11,9 @@ const ReportColumn = () => {
     const {mutateAsync:deleteReport} = useDeleteReportById()
     const [reports, setReports] = useState()
 
-    const {id} = session.user
+    const {id:userId} = session.user
     const {error, data, isLoading} = useGetReportsByCreatorId({
-        id: id,
+        userId: userId,
     })
 
     useEffect(() => {
@@ -24,7 +24,8 @@ const ReportColumn = () => {
 
     async function handleEntryDelete(id) {
         await deleteReport({
-            id: id,
+            reportId: id,
+            userId: userId
         })
     }
 
@@ -34,7 +35,7 @@ const ReportColumn = () => {
                 (isLoading) ? (
                     <LoadingMessage/>
                 ) : (error) ? (
-                    <ErrorMessage error={error}/>
+                    <ErrorMessage error={error.message}/>
                 ) : (reports?.length > 0) ? (
                     reports?.map((entry,index) =>
                         <ReportEntry

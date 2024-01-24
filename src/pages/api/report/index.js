@@ -1,19 +1,35 @@
 import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import isValidIdObject from "@/server/utils";
+
+const handlers = {
+    GET: getHandler,
+    POST: postHandler,
+    PATCH: patchHandler,
+    DELETE: deleteHandler,
+}
 
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-        const session = await getServerSession(req, res, authOptions)
+    handlers[req.method](req, res)
+}
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+async function postHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const { userId } = req.body
 
-        const { body } = req
-        const { userId } = body
-        const report = await prisma.report.create({
+    if (!session || session.user.id !== userId) {
+        return res.status(401).send({ message: "You must be logged in." });
+    }
+
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    let report
+
+    try {
+        report = await prisma.report.create({
             data: {
                 userId: userId,
                 name: "New report",
@@ -26,54 +42,76 @@ export default async function handler(req, res) {
                 }
             },
         })
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({ message: "Error occurred while creating report."})
+    }
 
-        res.status(200).send(report)
-    } else if (req.method === 'GET'){
-        const session = await getServerSession(req, res, authOptions)
+    return res.status(200).send({report})
+}
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+async function getHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const {reportId, userId} = req.query
 
-        const {query} = req
-        const {id} = query
-        let report
-        if (id){
-            report = await prisma.report.findUnique({
-                where: {
-                    id: id
-                },
-                include: {
-                    blocks: true
-                }
-            })
-        }
-        res.send({report})
-    } else if(req.method === 'PATCH') {
-        const session = await getServerSession(req, res, authOptions)
+    if (!isValidIdObject(reportId)) {
+        return res.status(400).send({ message: "Malformed report ID."})
+    }
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
 
-        const { body } = req
-        const { id, description, name, blocks } = body
+    if (!session || session.user.id !== userId) {
+        return res.status(401).send({ message: "You must be logged in." });
+    }
 
-        let report
+    let report
 
-        if (blocks && blocks.length > 0){
+    try {
+        report = await prisma.report.findUnique({
+            where: {
+                id: reportId
+            },
+            include: {
+                blocks: true
+            }
+        })
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({message: "Error occurred while retrieving report."})
+    }
 
+    return res.status(200).send({report})
+}
+
+async function patchHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const { id:reportId, description, name, blocks, userId } = req.body
+
+    if (!isValidIdObject(reportId)) {
+        return res.status(400).send({ message: "Malformed report ID."})
+    }
+
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        return res.status(401).send({ message: "You must be logged in." });
+    }
+
+    if (blocks && blocks.length > 0) {
+        try {
             await prisma.block.deleteMany({
-                where:{
-                    reportId: id,
-                }
+                where: {
+                    reportId: reportId,
+                },
             })
 
-            report = await prisma.report.update({
+            await prisma.report.update({
                 where: {
-                    id: id,
+                    id: reportId,
                 },
                 data: {
                     description: description,
@@ -82,36 +120,60 @@ export default async function handler(req, res) {
                         createMany: {
                             data: blocks
                         }
-                    },
+                    }
                 },
             })
-        } else {
-            report = await prisma.report.update({
+
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while updating report."})
+        }
+    } else {
+        try {
+            await prisma.report.update({
                 where: {
-                    id: id,
+                    id: reportId,
                 },
                 data: {
                     description: description,
                     name: name,
                 },
             })
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while updating report."})
         }
-        res.status(200).send(report)
-    } else if (req.method === 'DELETE'){
-        const session = await getServerSession(req, res, authOptions)
+    }
 
-        if (!session) {
-            res.status(401).json({ message: "You must be logged in." });
-            return;
-        }
+    return res.status(200).send({})
+}
 
-        const {query} = req
-        const {id} = query
+async function deleteHandler(req, res) {
+    const session = await getServerSession(req, res, authOptions)
+    const {reportId, userId} = req.query
+
+    if (!isValidIdObject(reportId)) {
+        return res.status(400).send({ message: "Malformed report ID."})
+    }
+
+    if (!isValidIdObject(userId)) {
+        return res.status(400).send({ message: "Malformed user ID."})
+    }
+
+    if (!session || session.user.id !== userId) {
+        return res.status(401).send({ message: "You must be logged in." });
+    }
+
+    try {
         await prisma.report.delete({
             where: {
-                id: id,
+                id: reportId,
             },
         })
-        res.status(200).send()
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({message: "Error occurred while deleting report."})
     }
+
+    return res.status(200).send({})
 }

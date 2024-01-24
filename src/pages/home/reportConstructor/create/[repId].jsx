@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
-import {v4 as uuidv4} from "uuid";
 import Head from "next/head";
 import ConstructorHeader from "@/components/reportConstructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
@@ -18,13 +17,16 @@ import {authOptions} from "@/pages/api/auth/[...nextauth]";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
-    const id = context.params.repId
+
+    const reportId = context.params.repId
+    const userId = session.user.id
     let data
 
     try {
         data = (await axios.get('http://localhost:3000/api/report', {
             params: {
-                id: id,
+                reportId: reportId,
+                userId: userId
             },
             headers: {
                 Cookie: context.req.headers.cookie
@@ -48,7 +50,7 @@ export async function getServerSideProps(context) {
         }
     }
 
-    if (data.report.userId !== session.user.id){
+    if (data.report.userId !== userId){
         return {
             redirect: {
                 permanent: false,
@@ -103,6 +105,7 @@ const ReportConstructor = ({data}) => {
 
         try {
             await mutateAsync({
+                userId: reportObject.userId,
                 id: reportObject.id,
                 description: reportObject.description,
                 name: reportObject.name,
@@ -116,7 +119,7 @@ const ReportConstructor = ({data}) => {
             return
         }
 
-        router.push("/home")
+        router.back()
     }
 
     function handleNameChange(text){
@@ -142,7 +145,6 @@ const ReportConstructor = ({data}) => {
 
         let buf = [...reportObject.blocks]
         buf.splice((index + 1), 0, {
-            id: uuidv4(),
             type: "radio",
             name: "Text",
         })
@@ -239,7 +241,7 @@ const ReportConstructor = ({data}) => {
                     {
                         reportObject.blocks.map((block, index) => (
                             <ConstructorBlock
-                                key={block.id}
+                                key={index}
                                 block={block}
                                 index={index}
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import Head from "next/head";
 import Main from "@/components/pageWraper/main";
 import ViewHeader from "@/components/viewElements/viewHeader";
@@ -13,13 +13,13 @@ import Header from "@/components/pageWraper/header";
 import axios from "axios";
 
 export async function getServerSideProps(context) {
-    const id = context.params.formId
+    const formId = context.params.formId
     let data
 
     try {
         data = (await axios.get('http://localhost:3000/api/form', {
             params: {
-                id: id,
+                formId: formId,
             }
         })).data
     } catch (e){
@@ -57,7 +57,7 @@ const FormView = ({data}) => {
 
     const {mutateAsync:createAnswers} = useCreateAnswers()
 
-    const [formObject, setFormObject] = useState(data.form)
+    const formObject = data.form
 
     useEffect(() => {
         const beforeunloadHandler = (e) => {
@@ -70,7 +70,7 @@ const FormView = ({data}) => {
         return () => {
             window.removeEventListener("beforeunload", beforeunloadHandler)
         }
-    }, [formObject])
+    }, [])
 
     async function handleFormSubmit(values) {
         if (formObject.active) {

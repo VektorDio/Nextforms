@@ -24,14 +24,14 @@ const MenuColumn = ({centralColumn}) => {
         const {data} = await addForm({
             userId: session.user.id,
         })
-        router.push(`/home/formConstructor/redact/${data.id}`)
+        router.push(`/home/formConstructor/redact/${data.form.id}`)
     }
 
     async function handleReportCreation() {
         const {data} = await addReport({
             userId: session.user.id,
         })
-        router.push(`/home/reportConstructor/create/${data.id}`)
+        router.push(`/home/reportConstructor/create/${data.report.id}`)
     }
 
     return (
