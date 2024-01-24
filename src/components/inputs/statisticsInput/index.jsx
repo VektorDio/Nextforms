@@ -19,7 +19,7 @@ const StatisticsInput = ({answers}) => {
     return (
         <div>
             <div className={styles.selectContainer}>
-                <SelectInput placeholder={"Select questions"} options={optionsArray} onChange={(choice)=> setAnswer(answers[choice.value])}/>
+                <SelectInput placeholder={"Select questions"} instanceId={"select-questions"} options={optionsArray} onChange={(choice)=> setAnswer(answers[choice.value])}/>
             </div>
             <div className={styles.checkboxContainer}>
                 {

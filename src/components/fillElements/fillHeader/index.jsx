@@ -27,7 +27,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
                                  onChange={(choice) => onReportIdChange(choice.value)}
                                  placeholder={"Select report"}
                                  isSearchable={false}
-                                 instanceId={reportId}
+                                 instanceId={"select-report"}
                     />
                 </div>
                 <div className={styles.selectContainer}>
@@ -36,7 +36,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
                                  onChange={(choice) => onFormIdChange(choice.value)}
                                  placeholder={"Select form"}
                                  isSearchable={false}
-                                 instanceId={formId}
+                                 instanceId={"select-form"}
                     />
 
                 </div>
