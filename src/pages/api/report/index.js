@@ -101,8 +101,8 @@ async function patchHandler(req, res) {
         return res.status(401).send({ message: "You must be logged in." });
     }
 
-    if (blocks && blocks.length > 0) {
-        try {
+    try {
+        if (blocks && blocks.length > 0) {
             await prisma.block.deleteMany({
                 where: {
                     reportId: reportId,
@@ -123,13 +123,7 @@ async function patchHandler(req, res) {
                     }
                 },
             })
-
-        } catch (e) {
-            console.log({...e, message: e})
-            return res.status(500).send({message: "Error occurred while updating report."})
-        }
-    } else {
-        try {
+        } else {
             await prisma.report.update({
                 where: {
                     id: reportId,
@@ -139,10 +133,10 @@ async function patchHandler(req, res) {
                     name: name,
                 },
             })
-        } catch (e) {
-            console.log({...e, message: e})
-            return res.status(500).send({message: "Error occurred while updating report."})
         }
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({message: "Error occurred while updating report."})
     }
 
     return res.status(200).send({})

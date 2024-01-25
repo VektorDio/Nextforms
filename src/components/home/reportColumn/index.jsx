@@ -6,6 +6,7 @@ import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import styles from './reportsColumn.module.css'
 import SimpleMessage from "@/components/messages/simpleMessage";
+
 const ReportColumn = () => {
     const {data:session} = useSession()
     const {mutateAsync:deleteReport} = useDeleteReportById()

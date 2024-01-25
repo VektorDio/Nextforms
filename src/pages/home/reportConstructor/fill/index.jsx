@@ -36,8 +36,8 @@ export async function getServerSideProps(context) {
     let answers = null
     let report = null
 
-    if (isValidIdObject(formId)) {
-        try {
+    try {
+        if (isValidIdObject(formId)) {
             answers = (await axios.get('http://localhost:3000/api/form/answers', {
                 params: {
                     formId: formId,
@@ -47,18 +47,9 @@ export async function getServerSideProps(context) {
                     Cookie: context.req.headers.cookie
                 }
             })).data
-        } catch (e){
-            return {
-                redirect: {
-                    permanent: false,
-                    destination: `/errorPage/${e}`
-                }
-            }
         }
-    }
 
-    if (isValidIdObject(reportId)){
-        try {
+        if (isValidIdObject(reportId)){
             report = (await axios.get('http://localhost:3000/api/report', {
                 params: {
                     reportId: reportId,
@@ -68,18 +59,8 @@ export async function getServerSideProps(context) {
                     Cookie: context.req.headers.cookie
                 }
             })).data
-        } catch (e){
-            return {
-                redirect: {
-                    permanent: false,
-                    destination: `/errorPage/${e}`
-                }
-            }
         }
-    }
 
-
-    try {
         formListData = (await axios.get('http://localhost:3000/api/form/formNamesByCreatorId', {
             params: {
                 userId: userId,
@@ -88,6 +69,16 @@ export async function getServerSideProps(context) {
                 Cookie: context.req.headers.cookie
             }
         })).data
+
+        reportListData = (await axios.get('http://localhost:3000/api/report/reportNamesByCreatorId', {
+            params: {
+                userId: userId,
+            },
+            headers: {
+                Cookie: context.req.headers.cookie
+            }
+        })).data
+
     } catch (e){
         return {
             redirect: {
@@ -97,20 +88,11 @@ export async function getServerSideProps(context) {
         }
     }
 
-    try {
-        reportListData = (await axios.get('http://localhost:3000/api/report/reportNamesByCreatorId', {
-            params: {
-                userId: userId,
-            },
-            headers: {
-                Cookie: context.req.headers.cookie
-            }
-        })).data
-    } catch (e){
+    if (report === null && answers === null) {
         return {
             redirect: {
                 permanent: false,
-                destination: `/errorPage/${e}`
+                destination: `/errorPage`
             }
         }
     }
