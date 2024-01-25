@@ -17,6 +17,7 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import axios from "axios";
 import isValidIdObject from "@/server/utils";
+import SimpleMessage from "@/components/messages/simpleMessage";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -214,11 +215,13 @@ const ReportFillPage = ({ formListData, reportListData, userId, report, answers 
             <Main>
                 <ConstructorColumn>
                     {
-                        (reportError || answersError) ? (
+                        (reportLoading || answersLoading) ? (
+                            <LoadingMessage/>
+                        ) : (reportFetching || answersFetching) ? (
+                            <SimpleMessage>Fetching data...</SimpleMessage>
+                        ) : (reportError || answersError) ? (
                             <ErrorMessage error={(reportError?.message || answersError?.message)}/>
-                        ) :
-                        (reportObject) &&
-                        (
+                        ) : (reportObject) && (
                             <>
                                 <div className={styles.container} >
                                     <div className={styles.formName}>
