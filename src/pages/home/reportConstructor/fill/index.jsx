@@ -16,7 +16,7 @@ import Header from "@/components/pageWraper/header";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import axios from "axios";
-import isValidIdObject from "@/server/utils";
+import isValidIdObject from "@/utils/utils";
 import SimpleMessage from "@/components/messages/simpleMessage";
 
 export async function getServerSideProps(context) {

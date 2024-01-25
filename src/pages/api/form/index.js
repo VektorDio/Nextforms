@@ -1,7 +1,7 @@
 import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
-import isValidIdObject from "@/server/utils";
+import isValidIdObject from "@/utils/utils";
 
 const handlers = {
     GET: getHandler,
