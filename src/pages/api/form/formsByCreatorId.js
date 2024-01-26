@@ -6,7 +6,7 @@ import isValidIdObject from "@/utils/utils";
 export default async function handler(req, res) {
     if (req.method === 'GET'){
         const session = await getServerSession(req, res, authOptions)
-        const { userId } = req.query
+        const { userId, withNames } = req.query
 
         if (!isValidIdObject(userId)) {
             return res.status(400).send({ message: "Malformed user ID."})
@@ -21,6 +21,10 @@ export default async function handler(req, res) {
             forms = await prisma.form.findMany({
                 where: {
                     userId: userId
+                },
+                select: (withNames) && {
+                    id: true,
+                    name: true,
                 }
             })
         } catch (e) {

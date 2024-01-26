@@ -11,11 +11,11 @@ const handlers = {
 }
 
 export default async function handler(req, res) {
-    handlers[req.method](req, res)
+    const session = await getServerSession(req, res, authOptions)
+    handlers[req.method](req, res, session)
 }
 
-async function postHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+async function postHandler(req, res, session) {
     const { userId } = req.body
 
     if (!isValidIdObject(userId)) {
@@ -79,9 +79,7 @@ async function getHandler(req, res) {
     return res.status(200).send({form})
 }
 
-async function patchHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
-
+async function patchHandler(req, res, session) {
     const { userId, id:formId, active, description, name, questions } = req.body
 
     if (!isValidIdObject(formId)) {
@@ -138,8 +136,7 @@ async function patchHandler(req, res) {
     return res.status(200).send({})
 }
 
-async function deleteHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+async function deleteHandler(req, res, session) {
     const {formId, userId} = req.query
 
     if (!isValidIdObject(formId)) {

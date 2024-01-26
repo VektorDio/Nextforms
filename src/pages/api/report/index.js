@@ -11,11 +11,12 @@ const handlers = {
 }
 
 export default async function handler(req, res) {
-    handlers[req.method](req, res)
+    const session = await getServerSession(req, res, authOptions)
+    handlers[req.method](req, res, session)
 }
 
-async function postHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+async function postHandler(req, res, session) {
+
     const { userId } = req.body
 
     if (!session || session.user.id !== userId) {
@@ -50,9 +51,8 @@ async function postHandler(req, res) {
     return res.status(200).send({report})
 }
 
-async function getHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
-    const {reportId, userId} = req.query
+async function getHandler(req, res, session) {
+    const { reportId, userId } = req.query
 
     if (!isValidIdObject(reportId)) {
         return res.status(400).send({ message: "Malformed report ID."})
@@ -85,8 +85,7 @@ async function getHandler(req, res) {
     return res.status(200).send({report})
 }
 
-async function patchHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+async function patchHandler(req, res, session) {
     const { id:reportId, description, name, blocks, userId } = req.body
 
     if (!isValidIdObject(reportId)) {
@@ -142,8 +141,7 @@ async function patchHandler(req, res) {
     return res.status(200).send({})
 }
 
-async function deleteHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+async function deleteHandler(req, res, session) {
     const {reportId, userId} = req.query
 
     if (!isValidIdObject(reportId)) {

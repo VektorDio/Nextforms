@@ -145,7 +145,7 @@ const ReportConstructor = ({data}) => {
 
         let buf = [...reportObject.blocks]
         buf.splice((index + 1), 0, {
-            type: "radio",
+            type: "oneLineText",
             name: "Text",
         })
         setReportObject(prev => ({

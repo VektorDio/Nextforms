@@ -10,7 +10,8 @@ const handlers = {
 }
 
 export default async function handler(req, res) {
-    handlers[req.method](req, res)
+    const session = await getServerSession(req, res, authOptions)
+    handlers[req.method](req, res, session)
 }
 
 async function postHandler(req, res) {
@@ -29,8 +30,7 @@ async function postHandler(req, res) {
     return res.status(200).send({form})
 }
 
-async function getHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+async function getHandler(req, res, session) {
     const {formId, userId} = req.query
 
     if (!isValidIdObject(formId)) {
@@ -78,8 +78,7 @@ async function getHandler(req, res) {
     }
 }
 
-async function deleteHandler(req, res) {
-    const session = await getServerSession(req, res, authOptions)
+async function deleteHandler(req, res, session) {
     const { formId, userId } = req.query
 
     if (!isValidIdObject(formId)) {

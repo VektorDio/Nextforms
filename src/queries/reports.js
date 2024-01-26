@@ -35,7 +35,7 @@ export const useGetReportsByCreatorId = (params) => {
         queryKey: ['GetReportsByCreatorId', params],
         queryFn: async () => {
             const { userId } = params
-            return (await axios.get('/api/report/reportByCreatorId', {
+            return (await axios.get('/api/report/reportsByCreatorId', {
                 params: {
                     userId: userId,
                 }
@@ -80,9 +80,10 @@ export const useGetReportNamesByCreatorId = (params) => {
         queryKey: ['GetReportNamesByCreatorId', params],
         queryFn: async () => {
             const { userId } = params
-            return (await axios.get('/api/report/reportNamesByCreatorId', {
+            return (await axios.get('/api/report/reportsByCreatorId', {
                 params: {
                     userId: userId,
+                    withNames: true
                 }
             })).data
         },

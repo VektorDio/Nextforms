@@ -105,9 +105,10 @@ export const useGetFormNamesByCreatorId = (params) => {
         queryKey: ['GetFormNamesByCreatorId', params],
         queryFn: async () => {
             const { userId } = params
-            return (await axios.get('/api/form/formNamesByCreatorId', {
+            return (await axios.get('/api/form/formsByCreatorId', {
                 params: {
                     userId: userId,
+                    withNames: true
                 }
             })).data
         },

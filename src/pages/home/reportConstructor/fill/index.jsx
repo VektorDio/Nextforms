@@ -62,18 +62,20 @@ export async function getServerSideProps(context) {
             })).data
         }
 
-        formListData = (await axios.get('http://localhost:3000/api/form/formNamesByCreatorId', {
+        formListData = (await axios.get('http://localhost:3000/api/form/formByCreatorId', {
             params: {
                 userId: userId,
+                withNames: true
             },
             headers: {
                 Cookie: context.req.headers.cookie
             }
         })).data
 
-        reportListData = (await axios.get('http://localhost:3000/api/report/reportNamesByCreatorId', {
+        reportListData = (await axios.get('http://localhost:3000/api/report/reportsByCreatorId', {
             params: {
                 userId: userId,
+                withNames: true
             },
             headers: {
                 Cookie: context.req.headers.cookie
@@ -172,7 +174,7 @@ const ReportFillPage = ({ formListData, reportListData, userId, report, answers 
     }
 
     function handleReportIdChange(reportId) {
-        if (isValidIdObject(reportId) && isValidIdObject(userId)) {
+        if (isValidIdObject(reportId)) {
             setReportId(reportId)
         }
     }
