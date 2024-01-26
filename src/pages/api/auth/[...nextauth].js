@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from "@/server";
 import {validatePassword} from "@/server/hash";
+import * as Yup from "yup";
 
 export const authOptions = {
     session: {
@@ -11,12 +12,18 @@ export const authOptions = {
     providers: [
         CredentialsProvider({
             async authorize(credentials) {
-                const {email, password} = credentials
+                const { email, password } = credentials
+                const schema = Yup.string().email()
                 let user
+
+                if (!schema.isValidSync(email)){
+                    throw Error("Invalid email")
+                }
+
                 try {
                     user = await prisma.user.findUnique({
-                        where:{
-                            email:email
+                        where: {
+                            email: email
                         }
                     })
                 } catch (e) {
@@ -28,7 +35,7 @@ export const authOptions = {
                 }
 
                 if (email !== user.email || !validatePassword(password, user.password)){
-                    throw Error ('Wrong email or password')
+                    throw Error ("Wrong email or password")
                 }
 
                 return user
@@ -42,7 +49,7 @@ export const authOptions = {
             }
             return token
         },
-        async session({session, token}) {
+        async session({ session, token }) {
             session.user.id = token.userId
             return session
         }

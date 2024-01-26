@@ -5,7 +5,7 @@ import Header from "@/components/pageWraper/header";
 import ColumnWrapper from "@/components/home/columnWraper";
 import MenuColumn from "@/components/home/menuColumn";
 import InfoColumn from "@/components/home/infoColumn";
-import Profile from "@/components/home/profileColumn";
+import ProfileColumn from "@/components/home/profileColumn";
 import {useRouter} from "next/router";
 import LogInGroup from "@/components/pageWraper/header/logInGroup";
 
@@ -34,7 +34,7 @@ const ProfilePage = () => {
                         </Header>
                         <ColumnWrapper>
                             <MenuColumn centralColumn={"profile"}/>
-                            <Profile/>
+                            <ProfileColumn/>
                             <InfoColumn/>
                         </ColumnWrapper>
                     </>

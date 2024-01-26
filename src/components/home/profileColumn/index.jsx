@@ -10,7 +10,7 @@ import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import SimpleButton from "@/components/buttons/simpleButton";
 
-const Profile = () => {
+const ProfileColumn = () => {
     const {data:session} = useSession()
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
@@ -20,7 +20,7 @@ const Profile = () => {
     const {mutateAsync:updateUser, isLoading:isUpdating} = useUpdateUser()
     const {mutateAsync:deleteUser} = useDeleteUserById()
     
-    const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$/
+    const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
     const {id} = session.user
 
@@ -56,7 +56,7 @@ const Profile = () => {
                     <Formik initialValues={{
                         firstName: firstName ? firstName : "",
                         lastName: lastName ? lastName : "",
-                        phone: phoneNumber ? phoneNumber : "",
+                        phoneNumber: phoneNumber ? phoneNumber : "",
                         organisation: organisation ? organisation : ""
                     }}
                             validationSchema={Yup.object({
@@ -64,7 +64,7 @@ const Profile = () => {
                                     .max(20),
                                 lastName: Yup.string()
                                     .max(20),
-                                phone: Yup.string()
+                                phoneNumber: Yup.string()
                                     .matches(phoneRegex, "Wrong phone number")
                                     .max(20),
                                 organisation: Yup.string()
@@ -148,8 +148,8 @@ const Profile = () => {
                                         <label>Phone</label>
                                         {(editGeneral) ? (
                                                 <MyTextInput
-                                                    name="phone"
-                                                    type="phone"
+                                                    name="phoneNumber"
+                                                    type="phoneNumber"
                                                 />
                                             ) : (
                                                 <div className={styles.centeredText}>{phoneNumber}</div>
@@ -345,4 +345,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default ProfileColumn;

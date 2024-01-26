@@ -2,11 +2,18 @@ import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import isValidIdObject from "@/utils/utils";
+import * as Yup from "yup";
 
 export default async function handler(req, res) {
     if (req.method === 'GET'){
         const session = await getServerSession(req, res, authOptions)
         const { userId, withNames } = req.query
+
+        const flagSchema = Yup.boolean()
+
+        if (!flagSchema.isValidSync(withNames)) {
+            return res.status(400).send({ message: "Malformed data."})
+        }
 
         if (!isValidIdObject(userId)) {
             return res.status(400).send({ message: "Malformed user ID."})

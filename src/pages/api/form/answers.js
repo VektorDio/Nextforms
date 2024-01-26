@@ -2,6 +2,7 @@ import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import isValidIdObject from "@/utils/utils";
+import * as Yup from "yup";
 
 const handlers = {
     GET: getHandler,
@@ -18,9 +19,19 @@ async function postHandler(req, res) {
     const { data } = req.body
     let form
 
+    const dataSchema = Yup.array().of(Yup.object({
+            questionId: Yup.mixed((value) => isValidIdObject(value)).required(),
+            answerData: Yup.array().of(Yup.string().max(300))
+        })
+    )
+
+    if (!dataSchema.isValidSync(data)) {
+        return res.status(400).send({ message: "Malformed data."})
+    }
+
     try {
         form = await prisma.answer.createMany({
-            data: data, //should validate this data
+            data: data,
         })
     } catch (e) {
         console.log({...e, message: e})
@@ -31,7 +42,7 @@ async function postHandler(req, res) {
 }
 
 async function getHandler(req, res, session) {
-    const {formId, userId} = req.query
+    const { formId, userId } = req.query
 
     if (!isValidIdObject(formId)) {
         return res.status(400).send({ message: "Malformed form ID." });
@@ -104,5 +115,5 @@ async function deleteHandler(req, res, session) {
         return res.status(500).send({message: "Error occurred while deleting answers."})
     }
 
-    return res.status(200).send()
+    return res.status(200).send({})
 }

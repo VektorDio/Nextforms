@@ -2,6 +2,7 @@ import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import isValidIdObject from "@/utils/utils";
+import * as Yup from "yup";
 
 const handlers = {
     GET: getHandler,
@@ -81,6 +82,23 @@ async function getHandler(req, res) {
 
 async function patchHandler(req, res, session) {
     const { userId, id:formId, active, description, name, questions } = req.body
+
+    const activeSchema = Yup.boolean().required()
+    const descriptionSchema = Yup.string().max(350).ensure()
+    const nameSchema = Yup.string().max(126).ensure()
+    const questionsSchema = Yup.array().of(Yup.object({
+        type: Yup.string().required(),
+        required: Yup.boolean().required(),
+        question: Yup.string().min(1).max(120).required(),
+        options: Yup.array().required()
+    }))
+
+    if (!activeSchema.isValidSync(active) ||
+        !descriptionSchema.isValidSync(description) ||
+        !nameSchema.isValidSync(name) ||
+        !questionsSchema.isValidSync(questions)) {
+        return res.status(400).send({ message: "Malformed data."})
+    }
 
     if (!isValidIdObject(formId)) {
         return res.status(400).send({ message: "Malformed form ID."})

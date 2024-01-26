@@ -3,6 +3,7 @@ import {hashPassword} from "@/server/hash";
 import {getServerSession} from "next-auth";
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import isValidIdObject from "@/utils/utils";
+import * as Yup from "yup";
 
 const handlers = {
     GET: getHandler,
@@ -18,8 +19,22 @@ export default async function handler(req, res) {
 
 async function postHandler(req, res) {
     const { email, password, organisation } = req.body
-    const hashedPassword = hashPassword(password)
+
     let user
+
+    const emailSchema = Yup.string().email().required()
+    const organisationSchema = Yup.string().max(20)
+    const passwordSchema = Yup.string().min(8)
+        .matches(/[0-9]/).matches(/[a-z]/).matches(/[A-Z]/).required()
+
+    if (!emailSchema.isValidSync(email) ||
+        !organisationSchema.isValidSync(organisation) ||
+        !passwordSchema.isValidSync(password)) {
+        return res.status(400).send({ message: "Malformed data."})
+    }
+
+    const hashedPassword = hashPassword(password)
+
     try {
         const userToSearch = await prisma.user.findUnique({
             where: {
@@ -74,6 +89,24 @@ async function getHandler(req, res, session) {
 
 async function patchHandler(req, res, session) {
     const { email, password, organisation, lastName, firstName, phoneNumber, id:userId } = req.body
+
+    const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
+
+    const emailSchema = Yup.string().email()
+    const organisationSchema = Yup.string().max(20)
+    const lastNameSchema = Yup.string().max(20)
+    const firstNameSchema = Yup.string().max(20)
+    const phoneNumberSchema = Yup.string().matches(phoneRegex, { excludeEmptyString: true }).max(20).nullable(true)
+    const passwordSchema = Yup.string().matches(/[0-9]/).matches(/[a-z]/).matches(/[A-Z]/)
+
+    if (!emailSchema.isValidSync(email) ||
+        !organisationSchema.isValidSync(organisation) ||
+        !passwordSchema.isValidSync(password) ||
+        !lastNameSchema.isValidSync(lastName) ||
+        !firstNameSchema.isValidSync(firstName) ||
+        !phoneNumberSchema.isValidSync(phoneNumber)) {
+        return res.status(400).send({ message: "Malformed data."})
+    }
 
     if (!isValidIdObject(userId)) {
         return res.status(400).send({ message: "Malformed user ID."})

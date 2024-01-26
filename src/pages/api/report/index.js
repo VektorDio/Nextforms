@@ -2,6 +2,7 @@ import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import isValidIdObject from "@/utils/utils";
+import * as Yup from "yup";
 
 const handlers = {
     GET: getHandler,
@@ -16,7 +17,6 @@ export default async function handler(req, res) {
 }
 
 async function postHandler(req, res, session) {
-
     const { userId } = req.body
 
     if (!session || session.user.id !== userId) {
@@ -88,6 +88,20 @@ async function getHandler(req, res, session) {
 async function patchHandler(req, res, session) {
     const { id:reportId, description, name, blocks, userId } = req.body
 
+    const descriptionSchema = Yup.string().max(350).ensure()
+    const nameSchema = Yup.string().max(126).ensure()
+    const blocksSchema = Yup.array().of(Yup.object({
+        type: Yup.string().required(),
+        name: Yup.string().min(1).max(120).required(),
+    }))
+
+    if (!descriptionSchema.isValidSync(description) ||
+        !nameSchema.isValidSync(name) ||
+        !blocksSchema.isValidSync(blocks)) {
+        return res.status(400).send({ message: "Malformed data."})
+    }
+
+
     if (!isValidIdObject(reportId)) {
         return res.status(400).send({ message: "Malformed report ID."})
     }
@@ -142,7 +156,7 @@ async function patchHandler(req, res, session) {
 }
 
 async function deleteHandler(req, res, session) {
-    const {reportId, userId} = req.query
+    const { reportId, userId } = req.query
 
     if (!isValidIdObject(reportId)) {
         return res.status(400).send({ message: "Malformed report ID."})
