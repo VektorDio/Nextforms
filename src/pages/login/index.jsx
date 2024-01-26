@@ -20,7 +20,7 @@ const Login = () => {
         router.push("/home")
     }
 
-    const handleSubmit = async (values) => {
+    async function handleSubmit(values) {
         const {email, password} = values
 
         const {ok, error} = await signIn('credentials', {
@@ -42,6 +42,23 @@ const Login = () => {
         }
     }, [ok, error, router])
 
+    const loginSchema = Yup.object({
+            email: Yup.string()
+                .email('Invalid email address')
+                .required('Required'),
+            password: Yup.string()
+                .min(8, 'Password must be 8 characters long')
+                .matches(/[0-9]/, 'Password requires a number')
+                .matches(/[a-z]/, 'Password requires a lowercase letter')
+                .matches(/[A-Z]/, 'Password requires an uppercase letter')
+                .required('Required'),
+        })
+
+    const loginInitialValues = {
+        email: '',
+        password: '',
+    }
+
     return (
         <>
             <Head>
@@ -59,21 +76,8 @@ const Login = () => {
                 <div className={styles.formBody}>
                     <span className={styles.signInText}>Log in to account</span>
                     <Formik
-                        initialValues={{
-                            email: '',
-                            password: '',
-                        }}
-                        validationSchema={Yup.object({
-                            email: Yup.string()
-                                .email('Invalid email address')
-                                .required('Required'),
-                            password: Yup.string()
-                                .min(8, 'Password must be 8 characters long')
-                                .matches(/[0-9]/, 'Password requires a number')
-                                .matches(/[a-z]/, 'Password requires a lowercase letter')
-                                .matches(/[A-Z]/, 'Password requires an uppercase letter')
-                                .required('Required'),
-                        })}
+                        initialValues={loginInitialValues}
+                        validationSchema={loginSchema}
                         onSubmit={async (values) => await handleSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (

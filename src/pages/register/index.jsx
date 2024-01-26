@@ -24,7 +24,8 @@ const Register = () => {
     function handleShowPassword(){
         setShowPassword(!showPassword)
     }
-    const handleSubmit = async (values) => {
+
+    async function handleSubmit(values) {
         const {email, password, organisation} = values
 
         try {
@@ -51,6 +52,30 @@ const Register = () => {
         }
     }
 
+    const registerSchema = Yup.object({
+        email: Yup.string()
+            .email('Invalid email address')
+            .required('Required'),
+        organisation: Yup.string()
+            .required('Required'),
+        password: Yup.string()
+            .min(8, 'Password must be 8 characters long')
+            .matches(/[0-9]/, 'Password requires a number')
+            .matches(/[a-z]/, 'Password requires a lowercase letter')
+            .matches(/[A-Z]/, 'Password requires an uppercase letter')
+            .required('Required'),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
+            .required('Required'),
+    })
+
+    const registerInitialValues = {
+        email: '',
+        organisation: '',
+        password: '',
+        confirmPassword: '',
+    }
+
     return (
         <>
             <Head>
@@ -68,28 +93,8 @@ const Register = () => {
                 <div className={styles.formBody}>
                     <span className={styles.signInText}>Register new account</span>
                     <Formik
-                        initialValues={{
-                            email: '',
-                            organisation: '',
-                            password: '',
-                            confirmPassword: '',
-                        }}
-                        validationSchema={Yup.object({
-                            email: Yup.string()
-                                .email('Invalid email address')
-                                .required('Required'),
-                            organisation: Yup.string()
-                                .required('Required'),
-                            password: Yup.string()
-                                .min(8, 'Password must be 8 characters long')
-                                .matches(/[0-9]/, 'Password requires a number')
-                                .matches(/[a-z]/, 'Password requires a lowercase letter')
-                                .matches(/[A-Z]/, 'Password requires an uppercase letter')
-                                .required('Required'),
-                            confirmPassword: Yup.string()
-                                .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
-                                .required('Required'),
-                        })}
+                        initialValues={registerInitialValues}
+                        validationSchema={registerSchema}
                         onSubmit={async (values) => await handleSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (

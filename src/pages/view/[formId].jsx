@@ -164,9 +164,7 @@ const FormView = ({data}) => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={Yup.object().shape(validationScheme)}
-                onSubmit={async (values) => {
-                    await handleFormSubmit(values)
-                }}
+                onSubmit={async (values) => await handleFormSubmit(values)}
             >{() => (
                 <>
                     <Header movable={true}>
