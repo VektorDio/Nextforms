@@ -45,12 +45,14 @@ const Login = () => {
     const loginSchema = Yup.object({
             email: Yup.string()
                 .email('Invalid email address')
+                .max(30)
                 .required('Required'),
             password: Yup.string()
                 .min(8, 'Password must be 8 characters long')
                 .matches(/[0-9]/, 'Password requires a number')
                 .matches(/[a-z]/, 'Password requires a lowercase letter')
                 .matches(/[A-Z]/, 'Password requires an uppercase letter')
+                .max(150)
                 .required('Required'),
         })
 
@@ -128,7 +130,7 @@ const Login = () => {
 
                 <div className={styles.footerLink}>
                     <span className={styles.footerText}>
-                      Dont have an account? <Link className={styles.signUpLink} href="/register">Register</Link>
+                      Don`t have an account? <Link className={styles.signUpLink} href="/register">Register</Link>
                     </span>
                     <div className={styles.copyRight}>
                         <span><Link href="#">©2023 TEST, Inc.</Link></span>

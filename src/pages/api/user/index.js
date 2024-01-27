@@ -22,9 +22,9 @@ async function postHandler(req, res) {
 
     let user
 
-    const emailSchema = Yup.string().email().required()
-    const organisationSchema = Yup.string().max(20)
-    const passwordSchema = Yup.string().min(8)
+    const emailSchema = Yup.string().email().max(40).required()
+    const organisationSchema = Yup.string().max(60)
+    const passwordSchema = Yup.string().min(8).max(150)
         .matches(/[0-9]/).matches(/[a-z]/).matches(/[A-Z]/).required()
 
     if (!emailSchema.isValidSync(email) ||
@@ -92,12 +92,12 @@ async function patchHandler(req, res, session) {
 
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
-    const emailSchema = Yup.string().email()
-    const organisationSchema = Yup.string().max(20)
-    const lastNameSchema = Yup.string().max(20)
-    const firstNameSchema = Yup.string().max(20)
+    const emailSchema = Yup.string().email().max(40)
+    const organisationSchema = Yup.string().max(60)
+    const lastNameSchema = Yup.string().max(30)
+    const firstNameSchema = Yup.string().max(30)
     const phoneNumberSchema = Yup.string().matches(phoneRegex, { excludeEmptyString: true }).max(20).nullable(true)
-    const passwordSchema = Yup.string().matches(/[0-9]/).matches(/[a-z]/).matches(/[A-Z]/)
+    const passwordSchema = Yup.string().matches(/[0-9]/).matches(/[a-z]/).matches(/[A-Z]/).max(150)
 
     if (!emailSchema.isValidSync(email) ||
         !organisationSchema.isValidSync(organisation) ||

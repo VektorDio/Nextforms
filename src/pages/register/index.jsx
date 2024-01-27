@@ -55,14 +55,17 @@ const Register = () => {
     const registerSchema = Yup.object({
         email: Yup.string()
             .email('Invalid email address')
-            .required('Required'),
+            .required('Required')
+            .max(40),
         organisation: Yup.string()
-            .required('Required'),
+            .required('Required')
+            .max(60),
         password: Yup.string()
             .min(8, 'Password must be 8 characters long')
             .matches(/[0-9]/, 'Password requires a number')
             .matches(/[a-z]/, 'Password requires a lowercase letter')
             .matches(/[A-Z]/, 'Password requires an uppercase letter')
+            .max(150)
             .required('Required'),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
@@ -87,7 +90,7 @@ const Register = () => {
             <div className={styles.mainContainer}>
                 <div className={styles.siteName}>
                     <Link href="/" rel="dofollow">
-                        <h1>ReportGenerator.js</h1>
+                        <h1>NextForms</h1>
                     </Link>
                 </div>
                 <div className={styles.formBody}>
