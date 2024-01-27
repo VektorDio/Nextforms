@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
     let data
 
     try {
-        data = (await axios.get('http://localhost:3000/api/report', {
+        data = (await axios.get(process.env.API_URL + '/api/report', {
             params: {
                 reportId: reportId,
                 userId: userId

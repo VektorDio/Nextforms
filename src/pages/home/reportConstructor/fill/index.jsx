@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
 
     try {
         if (isValidIdObject(formId)) {
-            answers = (await axios.get('http://localhost:3000/api/form/answers', {
+            answers = (await axios.get(process.env.API_URL + '/api/form/answers', {
                 params: {
                     formId: formId,
                     userId: userId
@@ -51,7 +51,7 @@ export async function getServerSideProps(context) {
         }
 
         if (isValidIdObject(reportId)){
-            report = (await axios.get('http://localhost:3000/api/report', {
+            report = (await axios.get(process.env.API_URL + '/api/report', {
                 params: {
                     reportId: reportId,
                     userId: userId
@@ -62,7 +62,7 @@ export async function getServerSideProps(context) {
             })).data
         }
 
-        formListData = (await axios.get('http://localhost:3000/api/form/formByCreatorId', {
+        formListData = (await axios.get(process.env.API_URL + '/api/form/formByCreatorId', {
             params: {
                 userId: userId,
                 withNames: true
@@ -72,7 +72,7 @@ export async function getServerSideProps(context) {
             }
         })).data
 
-        reportListData = (await axios.get('http://localhost:3000/api/report/reportsByCreatorId', {
+        reportListData = (await axios.get(process.env.API_URL + '/api/report/reportsByCreatorId', {
             params: {
                 userId: userId,
                 withNames: true
