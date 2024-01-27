@@ -62,7 +62,7 @@ export async function getServerSideProps(context) {
             })).data
         }
 
-        formListData = (await axios.get(process.env.API_URL + '/api/form/formByCreatorId', {
+        formListData = (await axios.get(process.env.API_URL + '/api/form/formsByCreatorId', {
             params: {
                 userId: userId,
                 withNames: true
