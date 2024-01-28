@@ -39,7 +39,7 @@ const ProfileColumn = () => {
         </div>
     )
 
-    const {firstName, lastName, phoneNumber, email, organisation, password} = data.user
+    const {firstName, lastName, phoneNumber, email, password} = data.user
     
     async function handleUserDelete() {
         router.push("/")
@@ -57,26 +57,22 @@ const ProfileColumn = () => {
         phoneNumber: Yup.string()
             .matches(phoneRegex, "Wrong phone number")
             .max(20),
-        organisation: Yup.string()
-            .max(60)
     })
 
     const generalInitialValues = {
         firstName: firstName ? firstName : "",
         lastName: lastName ? lastName : "",
         phoneNumber: phoneNumber ? phoneNumber : "",
-        organisation: organisation ? organisation : ""
     }
 
     async function onGeneralSubmit(values, setSubmitting) {
-        const {firstName, lastName, phoneNumber, organisation} = values
+        const { firstName, lastName, phoneNumber } = values
 
         await updateUser({
             id:id,
             firstName:firstName,
             lastName:lastName,
             phoneNumber:phoneNumber,
-            organisation:organisation
         })
 
         setSubmitting(false)
@@ -101,30 +97,26 @@ const ProfileColumn = () => {
         setSubmitting(false)
     }
 
+    const passwordYup = Yup.string()
+        .matches(/[^\s-]/, "No whitespaces allowed")
+        .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
+        .matches(/[0-9]/, 'Password requires a number')
+        .matches(/[a-z]/, 'Password requires a lowercase letter')
+        .matches(/[A-Z]/, 'Password requires an uppercase letter')
+        .min(8, 'Password must be 8 characters long')
+        .max(150, "Password is too long")
+        .required('Required')
+
     const passwordSchema = Yup.object({
-        currentPassword: Yup.string()
-            .matches(/[^\s-]/, "No whitespaces allowed")
-            .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
-            .matches(/[0-9]/, 'Password requires a number')
-            .matches(/[a-z]/, 'Password requires a lowercase letter')
-            .matches(/[A-Z]/, 'Password requires an uppercase letter')
-            .min(8, 'Password must be 8 characters long')
-            .max(150, "Password is too long")
-            .required('Required'),
-        newPassword: Yup.string()
-            .matches(/[^\s-]/, "No whitespaces allowed")
-            .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
-            .matches(/[0-9]/, 'Password requires a number')
-            .matches(/[a-z]/, 'Password requires a lowercase letter')
-            .matches(/[A-Z]/, 'Password requires an uppercase letter')
-            .min(8, 'Password must be 8 characters long')
-            .max(150, "Password is too long")
-            .required('Required'),
+        currentPassword: passwordYup,
+        newPassword: passwordYup,
+        confirmNewPassword: passwordYup
     })
 
     const passwordInitialValues = {
         currentPassword: '',
         newPassword: '',
+        confirmNewPassword: ''
     }
 
     async function onPasswordSubmit(values, setSubmitting) {
@@ -148,6 +140,7 @@ const ProfileColumn = () => {
                         initialValues={generalInitialValues}
                         validationSchema={generalSchema}
                         onSubmit={async (values, {setSubmitting}) => onGeneralSubmit(values, setSubmitting)}
+                        validateOnBlur={false}
                     >
                     {(formik) => (
                         <Form>
@@ -220,19 +213,6 @@ const ProfileColumn = () => {
                                 </div>
                             </div>
 
-                            <div className={styles.inputFieldsContainer}>
-                                <div className={styles.field}>
-                                    <label>Organization</label>
-                                    {(editGeneral) ? (
-                                        <MyTextInput
-                                            name="organisation"
-                                            type="organisation"
-                                        />
-                                    ) : (
-                                        <div className={styles.centeredText}>{organisation}</div>
-                                    )}
-                                </div>
-                            </div>
                         </Form>
                         )}
                     </Formik>
@@ -242,6 +222,7 @@ const ProfileColumn = () => {
                         initialValues={emailInitialValues}
                         validationSchema={emailSchema}
                         onSubmit={async (values, {setSubmitting}) => onEmailSubmit(values, setSubmitting)}
+                        validateOnBlur={false}
                     >{(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
@@ -275,7 +256,7 @@ const ProfileColumn = () => {
                             </div>
                             <div className={styles.inputFieldsContainer}>
                                 <div className={styles.field}>
-                                    <label>Email</label>
+                                    <label>Primary Email</label>
                                     {(editEmail) ? (
                                         <MyTextInput
                                             type="email"
@@ -296,6 +277,7 @@ const ProfileColumn = () => {
                         initialValues={passwordInitialValues}
                         validationSchema={passwordSchema}
                         onSubmit={async (values, {setSubmitting}) => onPasswordSubmit(values, setSubmitting)}
+                        validateOnBlur={false}
                     >{(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
@@ -349,10 +331,20 @@ const ProfileColumn = () => {
                                             />
                                         </div>
                                     </div>
+
+                                    <div className={styles.inputFieldsContainer}>
+                                        <div className={styles.field}>
+                                            <label>Confirm new password</label>
+                                            <MyTextInput
+                                                name="confirmNewPassword"
+                                                type="password"
+                                            />
+                                        </div>
+                                    </div>
                                 </>
                             ) : (
                                 <div className={styles.field}>
-                                    <div className={styles.centeredText}>Forgot your password?</div>
+                                    <div className={styles.centeredText}>Change your password</div>
                                 </div>
                             )}
                         </Form>

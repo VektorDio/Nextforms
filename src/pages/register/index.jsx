@@ -26,13 +26,12 @@ const Register = () => {
     }
 
     async function handleSubmit(values) {
-        const {email, password, organisation} = values
+        const { email, password } = values
 
         try {
             await mutateAsync({
                 email: email,
                 password: password,
-                organisation: organisation
             })
 
             const {ok, error:logInError} = await signIn('credentials', {
@@ -57,9 +56,6 @@ const Register = () => {
             .email('Invalid email address')
             .required('Required')
             .max(40),
-        organisation: Yup.string()
-            .required('Required')
-            .max(60),
         password: Yup.string()
             .matches(/[^\s-]/, "No whitespaces allowed")
             .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
@@ -76,7 +72,6 @@ const Register = () => {
 
     const registerInitialValues = {
         email: '',
-        organisation: '',
         password: '',
         confirmPassword: '',
     }
@@ -110,15 +105,6 @@ const Register = () => {
                                     name="email"
                                     type="email"
                                     placeholder="jane@formik.com"
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label htmlFor="organisation">Organization</label>
-                                <MyTextInput
-                                    name="organisation"
-                                    type="text"
-                                    placeholder="Organization"
                                 />
                             </div>
 

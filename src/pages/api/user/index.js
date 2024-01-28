@@ -18,12 +18,11 @@ export default async function handler(req, res) {
 }
 
 async function postHandler(req, res) {
-    const { email, password, organisation } = req.body
+    const { email, password } = req.body
 
     let user
 
     const emailSchema = Yup.string().email().max(40).required()
-    const organisationSchema = Yup.string().max(60)
     const passwordSchema = Yup.string().min(8).max(150)
         .matches(/[^\s-]/)
         .matches(/^[A-Za-z][A-Za-z0-9]*$/)
@@ -31,9 +30,7 @@ async function postHandler(req, res) {
         .matches(/[a-z]/)
         .matches(/[A-Z]/)
 
-    if (!emailSchema.isValidSync(email) ||
-        !organisationSchema.isValidSync(organisation) ||
-        !passwordSchema.isValidSync(password)) {
+    if (!emailSchema.isValidSync(email) || !passwordSchema.isValidSync(password)) {
         return res.status(400).send({ message: "Malformed data."})
     }
 
@@ -53,8 +50,7 @@ async function postHandler(req, res) {
         user = await prisma.user.create({
             data: {
                 email: email,
-                password: hashedPassword,
-                organisation: organisation
+                password: hashedPassword
             },
         })
     } catch (e) {
@@ -92,12 +88,11 @@ async function getHandler(req, res, session) {
 }
 
 async function patchHandler(req, res, session) {
-    const { email, password, organisation, lastName, firstName, phoneNumber, id:userId } = req.body
+    const { email, password, lastName, firstName, phoneNumber, id:userId } = req.body
 
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
     const emailSchema = Yup.string().email().max(40)
-    const organisationSchema = Yup.string().max(60)
     const lastNameSchema = Yup.string().max(30)
     const firstNameSchema = Yup.string().max(30)
     const phoneNumberSchema = Yup.string().matches(phoneRegex, { excludeEmptyString: true }).max(20).nullable(true)
@@ -109,7 +104,6 @@ async function patchHandler(req, res, session) {
         .matches(/[A-Z]/)
 
     if (!emailSchema.isValidSync(email) ||
-        !organisationSchema.isValidSync(organisation) ||
         !passwordSchema.isValidSync(password) ||
         !lastNameSchema.isValidSync(lastName) ||
         !firstNameSchema.isValidSync(firstName) ||
@@ -134,7 +128,6 @@ async function patchHandler(req, res, session) {
             data: {
                 email: email,
                 password: password,
-                organisation: organisation,
                 lastName: lastName,
                 phoneNumber: phoneNumber,
                 firstName: firstName,

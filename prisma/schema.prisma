@@ -10,24 +10,23 @@ generator client {
 }
 
 model User {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
-  email        String  @unique
-  password     String
-  organisation String?
-  firstName    String?
-  lastName     String?
-  phoneNumber  String?
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  email       String  @unique
+  password    String
+  firstName   String?
+  lastName    String?
+  phoneNumber String?
 
-  Form         Form[]
-  Report       Report[]
+  Form   Form[]
+  Report Report[]
 }
 
 model Answer {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   answerData String[]
 
-  Question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId String @db.ObjectId
+  Question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String   @db.ObjectId
 }
 
 model Question {
@@ -68,11 +67,10 @@ model Report {
 }
 
 model Block {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  type     String
-  name     String
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  type String
+  name String
 
-  Report   Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  Report   Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
   reportId String @db.ObjectId
 }
-
