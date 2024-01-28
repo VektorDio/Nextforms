@@ -38,7 +38,7 @@ async function postHandler(req, res, session) {
                 blocks: {
                     create: {
                         type: "oneLineText",
-                        name: "",
+                        name: "Text",
                     }
                 }
             },

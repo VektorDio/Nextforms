@@ -45,14 +45,16 @@ const Login = () => {
     const loginSchema = Yup.object({
             email: Yup.string()
                 .email('Invalid email address')
-                .max(30)
+                .max(30, 'This email is too long')
                 .required('Required'),
             password: Yup.string()
-                .min(8, 'Password must be 8 characters long')
+                .matches(/[^\s-]/, "No whitespaces allowed")
+                .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
                 .matches(/[0-9]/, 'Password requires a number')
                 .matches(/[a-z]/, 'Password requires a lowercase letter')
                 .matches(/[A-Z]/, 'Password requires an uppercase letter')
-                .max(150)
+                .min(8, 'Password must be 8 characters long')
+                .max(150, "Password is too long")
                 .required('Required'),
         })
 
@@ -133,7 +135,7 @@ const Login = () => {
                       Don`t have an account? <Link className={styles.signUpLink} href="/register">Register</Link>
                     </span>
                     <div className={styles.copyRight}>
-                        <span><Link href="#">©2023 TEST, Inc.</Link></span>
+                        <span><Link href="#">RDD, Inc.</Link></span>
                         <span><Link href="#">Contact</Link></span>
                         <span><Link href="#">Privacy & Terms</Link></span>
                     </div>

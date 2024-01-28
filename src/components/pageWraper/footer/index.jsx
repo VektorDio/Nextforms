@@ -3,19 +3,19 @@ export default function Footer() {
     return (
         <div className={styles.footer}>
             <div className={styles.copyrightText}>
-                ©2023 TEST, Inc.
+                ©2025 RDD, Inc.
             </div>
             <div className={styles.copyrightText}>
-                Test
+                Google
             </div>
             <div className={styles.copyrightText}>
-                Test
+                Facebook
             </div>
             <div className={styles.copyrightText}>
-                Test
+                Instagram
             </div>
             <div className={styles.copyrightText}>
-                Test
+                Twitter
             </div>
         </div>
     )

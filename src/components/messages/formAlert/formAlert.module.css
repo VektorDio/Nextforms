@@ -6,4 +6,5 @@
     padding: 25px 21px;
     overflow:hidden;
     margin-top: 25px;
+    user-select: none;
 }

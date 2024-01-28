@@ -33,6 +33,7 @@
 .outerContainerDisabled{
     display: flex;
     margin-top: 25px;
+    cursor: pointer;
 }
 
 .addButton{
@@ -68,6 +69,7 @@
     padding: 12px 0;
     width: 100%;
     min-height: 46px;
+    user-select: none;
 }
 
 .selectContainer{

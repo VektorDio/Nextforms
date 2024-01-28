@@ -61,11 +61,13 @@ const Register = () => {
             .required('Required')
             .max(60),
         password: Yup.string()
-            .min(8, 'Password must be 8 characters long')
+            .matches(/[^\s-]/, "No whitespaces allowed")
+            .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
             .matches(/[0-9]/, 'Password requires a number')
             .matches(/[a-z]/, 'Password requires a lowercase letter')
             .matches(/[A-Z]/, 'Password requires an uppercase letter')
-            .max(150)
+            .min(8, 'Password must be 8 characters long')
+            .max(150, "Password is too long")
             .required('Required'),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
@@ -168,7 +170,7 @@ const Register = () => {
                       Have an account? <Link className={styles.signUpLink} href="/login">Log In</Link>
                     </span>
                     <div className={styles.copyRight}>
-                        <span><Link href="#">©2023 TEST, Inc.</Link></span>
+                        <span><Link href="#">RDD, Inc.</Link></span>
                         <span><Link href="#">Contact</Link></span>
                         <span><Link href="#">Privacy & Terms</Link></span>
                     </div>

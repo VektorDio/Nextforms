@@ -25,7 +25,11 @@ async function postHandler(req, res) {
     const emailSchema = Yup.string().email().max(40).required()
     const organisationSchema = Yup.string().max(60)
     const passwordSchema = Yup.string().min(8).max(150)
-        .matches(/[0-9]/).matches(/[a-z]/).matches(/[A-Z]/).required()
+        .matches(/[^\s-]/)
+        .matches(/^[A-Za-z][A-Za-z0-9]*$/)
+        .matches(/[0-9]/)
+        .matches(/[a-z]/)
+        .matches(/[A-Z]/)
 
     if (!emailSchema.isValidSync(email) ||
         !organisationSchema.isValidSync(organisation) ||
@@ -97,7 +101,12 @@ async function patchHandler(req, res, session) {
     const lastNameSchema = Yup.string().max(30)
     const firstNameSchema = Yup.string().max(30)
     const phoneNumberSchema = Yup.string().matches(phoneRegex, { excludeEmptyString: true }).max(20).nullable(true)
-    const passwordSchema = Yup.string().matches(/[0-9]/).matches(/[a-z]/).matches(/[A-Z]/).max(150)
+    const passwordSchema = Yup.string().min(8).max(150)
+        .matches(/[^\s-]/)
+        .matches(/^[A-Za-z][A-Za-z0-9]*$/)
+        .matches(/[0-9]/)
+        .matches(/[a-z]/)
+        .matches(/[A-Z]/)
 
     if (!emailSchema.isValidSync(email) ||
         !organisationSchema.isValidSync(organisation) ||

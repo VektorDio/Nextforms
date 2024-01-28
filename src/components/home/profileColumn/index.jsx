@@ -51,14 +51,14 @@ const ProfileColumn = () => {
 
     const generalSchema = Yup.object({
         firstName: Yup.string()
-            .max(20),
+            .max(30),
         lastName: Yup.string()
-            .max(20),
+            .max(30),
         phoneNumber: Yup.string()
             .matches(phoneRegex, "Wrong phone number")
             .max(20),
         organisation: Yup.string()
-            .max(20)
+            .max(60)
     })
 
     const generalInitialValues = {
@@ -83,7 +83,7 @@ const ProfileColumn = () => {
     }
 
     const emailSchema = Yup.object({
-        email: Yup.string().email()
+        email: Yup.string().email('Not a valid email address')
     })
 
     const emailInitialValues = {
@@ -103,16 +103,22 @@ const ProfileColumn = () => {
 
     const passwordSchema = Yup.object({
         currentPassword: Yup.string()
-            .min(8, 'Password must be 8 characters long')
+            .matches(/[^\s-]/, "No whitespaces allowed")
+            .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
             .matches(/[0-9]/, 'Password requires a number')
             .matches(/[a-z]/, 'Password requires a lowercase letter')
             .matches(/[A-Z]/, 'Password requires an uppercase letter')
+            .min(8, 'Password must be 8 characters long')
+            .max(150, "Password is too long")
             .required('Required'),
         newPassword: Yup.string()
-            .min(8, 'Password must be 8 characters long')
+            .matches(/[^\s-]/, "No whitespaces allowed")
+            .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
             .matches(/[0-9]/, 'Password requires a number')
             .matches(/[a-z]/, 'Password requires a lowercase letter')
             .matches(/[A-Z]/, 'Password requires an uppercase letter')
+            .min(8, 'Password must be 8 characters long')
+            .max(150, "Password is too long")
             .required('Required'),
     })
 
@@ -142,7 +148,7 @@ const ProfileColumn = () => {
                         initialValues={generalInitialValues}
                         validationSchema={generalSchema}
                         onSubmit={async (values, {setSubmitting}) => onGeneralSubmit(values, setSubmitting)}
-                        validateOnBlur={false}>
+                    >
                     {(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
@@ -150,14 +156,16 @@ const ProfileColumn = () => {
                                 {(editGeneral) ? (
                                     <div className={styles.buttonGroup}>
                                         <SimpleButton onClick={() => {
-                                            formik.handleSubmit()
-                                            setEditGeneral(false)}}
+                                            if (formik.isValid) {
+                                                formik.handleSubmit()
+                                                setEditGeneral(false)
+                                            }}}
                                             iconType={"check"}
                                             bgColor={"#399412"}
                                         />
 
                                         <SimpleButton onClick={() => {
-                                            setEditGeneral(!editGeneral)
+                                            setEditGeneral(false)
                                             formik.resetForm()}}
                                             iconType={"xmark"}
                                             bgColor={"#d00c0c"}
@@ -165,7 +173,7 @@ const ProfileColumn = () => {
                                     </div>
                                 ) : (
                                     <SimpleButton onClick={() => {
-                                        setEditGeneral(!editGeneral)
+                                        setEditGeneral(true)
                                         formik.resetForm()}}
                                         iconType={"redact"}
                                         bgColor={"#3a4556"}
@@ -234,22 +242,23 @@ const ProfileColumn = () => {
                         initialValues={emailInitialValues}
                         validationSchema={emailSchema}
                         onSubmit={async (values, {setSubmitting}) => onEmailSubmit(values, setSubmitting)}
-                        validateOnBlur={false}
                     >{(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
-                                <p>Email</p>
+                                <p>Credentials</p>
                                 {(editEmail) ? (
                                     <div className={styles.buttonGroup}>
                                         <SimpleButton onClick={() => {
-                                            formik.handleSubmit()
-                                            setEditEmail(false)}}
+                                            if (formik.isValid) {
+                                                formik.handleSubmit()
+                                                setEditEmail(false)
+                                            }}}
                                             iconType={"check"}
                                             bgColor={"#399412"}
                                         />
 
                                         <SimpleButton onClick={() => {
-                                            setEditEmail(!editEmail)
+                                            setEditEmail(false)
                                             formik.resetForm()}}
                                             iconType={"xmark"}
                                             bgColor={"#d00c0c"}
@@ -257,7 +266,7 @@ const ProfileColumn = () => {
                                     </div>
                                 ) : (
                                     <SimpleButton onClick={() => {
-                                        setEditEmail(!editEmail)
+                                        setEditEmail(true)
                                         formik.resetForm()}}
                                         iconType={"redact"}
                                         bgColor={"#3a4556"}
@@ -287,22 +296,23 @@ const ProfileColumn = () => {
                         initialValues={passwordInitialValues}
                         validationSchema={passwordSchema}
                         onSubmit={async (values, {setSubmitting}) => onPasswordSubmit(values, setSubmitting)}
-                        validateOnBlur={false}
                     >{(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
                                 <p>Password</p>
                                 {(editPassword) ? (
                                     <div className={styles.buttonGroup}>
-                                        <SimpleButton onClick={()=>{
-                                            formik.handleSubmit()
-                                            setEditPassword(false)}}
+                                        <SimpleButton onClick={() => {
+                                            if (formik.isValid) {
+                                                formik.handleSubmit()
+                                                setEditPassword(false)
+                                            }}}
                                             iconType={"check"}
                                             bgColor={"#399412"}
                                         />
 
                                         <SimpleButton onClick={() => {
-                                            setEditPassword(!editPassword)
+                                            setEditPassword(false)
                                             formik.resetForm()}}
                                             iconType={"xmark"}
                                             bgColor={"#d00c0c"}
@@ -310,7 +320,7 @@ const ProfileColumn = () => {
                                     </div>
                                 ) : (
                                     <SimpleButton onClick={() => {
-                                        setEditPassword(!editPassword)
+                                        setEditPassword(true)
                                         formik.resetForm()
                                     }}
                                     iconType={"redact"}

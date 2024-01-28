@@ -10,10 +10,12 @@
     padding: 15px;
     font-size: 24px;
     font-weight: 600;
+    user-select: none;
 }
 
 .menuButton:hover{
-    background-color: #19212d
+    background-color: #19212d;
+    cursor: pointer;
 }
 
 .icons {

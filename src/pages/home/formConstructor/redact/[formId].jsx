@@ -87,19 +87,6 @@ const FormConstructor = ({data}) => {
     const [duplicateQuestionsCheck, setDuplicateQuestionsCheck] = useState(false)
     const [emptyFormNameCheck, setEmptyFormNameCheck] = useState(false)
 
-    useEffect(() => {
-        const beforeunloadHandler = (e) => {
-            e.preventDefault()
-            e.returnValue = true
-        }
-
-        window.addEventListener("beforeunload", beforeunloadHandler)
-
-        return () => {
-            window.removeEventListener("beforeunload", beforeunloadHandler)
-        }
-    }, [formObject])
-
     async function handleFormSubmit() {
 
         let emptyQuestionCheck = !formObject.questions.every((e) => e.question.length > 0)
@@ -229,6 +216,19 @@ const FormConstructor = ({data}) => {
         e.stopPropagation()
         setSelectedBlockId(id)
     }
+
+    useEffect(() => {
+        const beforeunloadHandler = (e) => {
+            e.preventDefault()
+            e.returnValue = true
+        }
+
+        window.addEventListener("beforeunload", beforeunloadHandler)
+
+        return () => {
+            window.removeEventListener("beforeunload", beforeunloadHandler)
+        }
+    }, [formObject])
 
     return (
         <>

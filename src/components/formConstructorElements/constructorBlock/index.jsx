@@ -101,17 +101,17 @@ const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange
             component = (
                 <>
                     {options.map((e, i) =>
-                            <OptionInput
-                                id={i}
-                                key={i}
-                                text={e}
-                                type={"checkbox"}
-                                deletable={options.length > 1}
-                                disabled={!isSelected}
-                                handleOptionRedacted={handleOptionRedacted}
-                                handleDeleteOption={handleDeleteOption}
-                            />
-                        )}
+                        <OptionInput
+                            id={i}
+                            key={i}
+                            text={e}
+                            type={"checkbox"}
+                            deletable={options.length > 1}
+                            disabled={!isSelected}
+                            handleOptionRedacted={handleOptionRedacted}
+                            handleDeleteOption={handleDeleteOption}
+                        />
+                    )}
                     <div style={(isSelected && options.length < maxOptions) ? null : {display:"none"}}>
                         <OptionInput type={"checkbox"}
                                      addOption={true}
