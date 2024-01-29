@@ -9,51 +9,53 @@ import {useRouter} from "next/router";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import ErrorMessage from "@/components/messages/errorMessage";
 import SimpleButton from "@/components/buttons/simpleButton";
+import DeleteAccountButton from "@/components/buttons/deleteAccountButton";
+import SimpleMessage from "@/components/messages/simpleMessage";
 
 const ProfileColumn = () => {
+    const router = useRouter()
     const {data:session} = useSession()
+    const {id: userId} = session.user
+
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
-    const router = useRouter()
+    const [editDelete, setEditDelete] = useState(false)
 
-    const {mutateAsync:updateUser, isLoading:isUpdating} = useUpdateUser()
+    const {mutateAsync:updateUser, isLoading:isUpdating, error:updatingError} = useUpdateUser()
     const {mutateAsync:deleteUser} = useDeleteUserById()
-    
-    const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
-
-    const {id} = session.user
 
     const {error, data, isLoading} = useGetUserById({
-        userId: id,
+        userId: userId,
     })
+
+    const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
     if (isLoading || isUpdating) return (
         <div className={styles.container}>
             <LoadingMessage/>
         </div>
     )
-    if (error) return (
+
+    if (error || updatingError) return (
         <div className={styles.container}>
-            <ErrorMessage error={error}/>
+            <ErrorMessage error={error?.message || updatingError?.message}/>
         </div>
     )
 
-    const {firstName, lastName, phoneNumber, email, password} = data.user
-    
-    async function handleUserDelete() {
-        router.push("/")
-        await signOut()
-        await deleteUser({
-            userId: id
-        })
-    }
+    if (data.user === null) return (
+        <div className={styles.container}>
+            <SimpleMessage>There no such user.</SimpleMessage>
+        </div>
+    )
+
+    const { firstName, lastName, phoneNumber, email } = data.user
 
     const generalSchema = Yup.object({
         firstName: Yup.string()
-            .max(30),
+            .max(30, "This name is too long"),
         lastName: Yup.string()
-            .max(30),
+            .max(30, "This name is too long"),
         phoneNumber: Yup.string()
             .matches(phoneRegex, "Wrong phone number")
             .max(20),
@@ -69,7 +71,7 @@ const ProfileColumn = () => {
         const { firstName, lastName, phoneNumber } = values
 
         await updateUser({
-            id:id,
+            id:userId,
             firstName:firstName,
             lastName:lastName,
             phoneNumber:phoneNumber,
@@ -90,7 +92,7 @@ const ProfileColumn = () => {
         const {email} = values
 
         await updateUser({
-            id: id,
+            id: userId,
             email:email,
         })
 
@@ -120,14 +122,46 @@ const ProfileColumn = () => {
     }
 
     async function onPasswordSubmit(values, setSubmitting) {
-        const {currentPassword, newPassword} = values
+        const {currentPassword, newPassword, confirmNewPassword} = values
 
-        if (password === currentPassword) { //!??
+        if (newPassword === confirmNewPassword) {
             await updateUser({
-                id: id,
-                password: newPassword,
+                id: userId,
+                password: currentPassword,
+                newPassword: newPassword
             })
         }
+
+        setSubmitting(false)
+    }
+
+    const deleteSchema = Yup.object({
+        password: passwordYup,
+        email: Yup.string().email('Not a valid email address'),
+    })
+
+    const deleteInitialValues = {
+        currentPassword: '',
+        newPassword: '',
+        confirmNewPassword: ''
+    }
+
+    async function onDeleteSubmit(values, setSubmitting) {
+        const { email, password } = values
+
+        await deleteUser({
+            userId: userId,
+            email: email,
+            password: password
+        }, {
+            onSuccess() {
+                router.push("/")
+                signOut()
+            },
+            onError(error) {
+                alert(error);
+            },
+        })
 
         setSubmitting(false)
     }
@@ -226,7 +260,7 @@ const ProfileColumn = () => {
                     >{(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
-                                <p>Credentials</p>
+                                <p>Emails</p>
                                 {(editEmail) ? (
                                     <div className={styles.buttonGroup}>
                                         <SimpleButton onClick={() => {
@@ -281,7 +315,7 @@ const ProfileColumn = () => {
                     >{(formik) => (
                         <Form>
                             <div className={styles.generalInfo}>
-                                <p>Password</p>
+                                <p>Change your password</p>
                                 {(editPassword) ? (
                                     <div className={styles.buttonGroup}>
                                         <SimpleButton onClick={() => {
@@ -342,18 +376,76 @@ const ProfileColumn = () => {
                                         </div>
                                     </div>
                                 </>
-                            ) : (
-                                <div className={styles.field}>
-                                    <div className={styles.centeredText}>Change your password</div>
-                                </div>
-                            )}
+                            ) : (<></>)}
                         </Form>
                     )}
                     </Formik>
                 </div>
 
-                <div className={styles.buttonGroup}>
-                    <SimpleButton onClick={handleUserDelete} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                <div className={styles.generalBlock}>
+                    <Formik
+                        initialValues={deleteInitialValues}
+                        validationSchema={deleteSchema}
+                        onSubmit={async (values, {setSubmitting}) => onDeleteSubmit(values, setSubmitting)}
+                        validateOnBlur={false}
+                    >{(formik) => (
+                        <Form>
+                            <div className={styles.deleteInfo}>
+                                <p>Delete account</p>
+                            </div>
+                            <div className={styles.inputFieldsContainer}>
+                                <div className={styles.field}>
+                                    <label>Once you delete your account, there is no going back. Please be certain.</label>
+                                    {
+                                        (!editDelete) && (
+                                            <DeleteAccountButton onClick={() => {
+                                                setEditDelete(true)
+                                                formik.resetForm()
+                                            }} bgColor={""}
+                                            />
+                                        )
+                                    }
+                                </div>
+                            </div>
+                                {
+                                    (editDelete) && (
+                                        <>
+                                            <div className={styles.inputFieldsContainer}>
+                                                <div className={styles.field}>
+                                                    <label>Email</label>
+                                                    <MyTextInput
+                                                        name="email"
+                                                        type="email"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className={styles.inputFieldsContainer}>
+                                                <div className={styles.field}>
+                                                    <label>Password</label>
+                                                    <MyTextInput
+                                                        name="password"
+                                                        type="password"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className={styles.inputFieldsContainer}>
+                                                <div className={styles.field}>
+                                                    <DeleteAccountButton onClick={() => {
+                                                        if (formik.isValid) {
+                                                            formik.handleSubmit()
+                                                            setEditDelete(false)
+                                                        }}} bgColor={""}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </>
+                                    )
+                                }
+                        </Form>
+                    )}
+                    </Formik>
                 </div>
             </div>
         </div>

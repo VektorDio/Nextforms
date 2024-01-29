@@ -55,7 +55,7 @@ const Register = () => {
         email: Yup.string()
             .email('Invalid email address')
             .required('Required')
-            .max(40),
+            .max(30, 'This email is too long'),
         password: Yup.string()
             .matches(/[^\s-]/, "No whitespaces allowed")
             .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")

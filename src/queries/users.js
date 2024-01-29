@@ -43,7 +43,9 @@ export const useDeleteUserById = () => {
         mutationFn: async (data) => {
             const deletedUser = await axios.delete('/api/user', {
                 params: {
-                    userId: data.userId
+                    userId: data.userId,
+                    email: data.email,
+                    password: data.password
                 }
             })
             await queryClient.invalidateQueries({ queryKey: ['GetUserById'] })

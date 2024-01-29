@@ -27,18 +27,29 @@
     justify-content: space-between;
 }
 
-.generalBlock{
-    padding-bottom: 12px;
-}
-
 .generalInfo p{
     padding: 4px 8px;
     font-weight: 600;
 }
 
+.generalBlock{
+    padding-bottom: 12px;
+}
+
 .inputFieldsContainer{
     display: flex;
     justify-content: space-between;
+}
+
+.deleteInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.deleteInfo p {
+    padding: 4px 8px;
+    font-weight: 600;
+    color: #ee4c4c;
 }
 
 .field{

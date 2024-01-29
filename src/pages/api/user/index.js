@@ -1,5 +1,5 @@
 import prisma from "@/server";
-import {hashPassword} from "@/server/hash";
+import {hashPassword, validatePassword} from "@/server/hash";
 import {getServerSession} from "next-auth";
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import isValidIdObject from "@/utils/utils";
@@ -34,8 +34,6 @@ async function postHandler(req, res) {
         return res.status(400).send({ message: "Malformed data."})
     }
 
-    const hashedPassword = hashPassword(password)
-
     try {
         const userToSearch = await prisma.user.findUnique({
             where: {
@@ -46,6 +44,8 @@ async function postHandler(req, res) {
         if (userToSearch) {
             return res.status(400).send({message: "This email is already taken"})
         }
+
+        const hashedPassword = hashPassword(password)
 
         user = await prisma.user.create({
             data: {
@@ -88,7 +88,7 @@ async function getHandler(req, res, session) {
 }
 
 async function patchHandler(req, res, session) {
-    const { email, password, lastName, firstName, phoneNumber, id:userId } = req.body
+    const { email, password, newPassword, lastName, firstName, phoneNumber, id:userId } = req.body
 
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
@@ -104,7 +104,7 @@ async function patchHandler(req, res, session) {
         .matches(/[A-Z]/)
 
     if (!emailSchema.isValidSync(email) ||
-        !passwordSchema.isValidSync(password) ||
+        !passwordSchema.isValidSync(newPassword) ||
         !lastNameSchema.isValidSync(lastName) ||
         !firstNameSchema.isValidSync(firstName) ||
         !phoneNumberSchema.isValidSync(phoneNumber)) {
@@ -119,6 +119,30 @@ async function patchHandler(req, res, session) {
         return res.status(401).send({ message: "You must be logged in." });
     }
 
+    let hashedPassword
+    if (newPassword) {
+        let user
+        try {
+            user = await prisma.user.findUnique({
+                where: {
+                    id: userId,
+                },
+                select: {
+                    password: true
+                }
+            })
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while retrieving user."})
+        }
+
+        if (!validatePassword(password, user.password)) {
+            return res.status(400).send({message: "Wrong password."})
+        } else {
+            hashedPassword = hashPassword(newPassword)
+        }
+    }
+
     let user
     try {
         user = await prisma.user.update({
@@ -127,7 +151,7 @@ async function patchHandler(req, res, session) {
             },
             data: {
                 email: email,
-                password: password,
+                password: hashedPassword,
                 lastName: lastName,
                 phoneNumber: phoneNumber,
                 firstName: firstName,
@@ -142,7 +166,7 @@ async function patchHandler(req, res, session) {
 }
 
 async function deleteHandler(req, res, session) {
-    const { userId } = req.query
+    const { userId, email, password } = req.query
 
     if (!isValidIdObject(userId)) {
         return res.status(400).send({ message: "Malformed user ID."})
@@ -153,17 +177,37 @@ async function deleteHandler(req, res, session) {
         return;
     }
 
+    let user
+
     try {
-        await prisma.user.delete({
+        user = await prisma.user.findUnique({
             where: {
-                id: userId,
+                id: userId
             },
+            select: {
+                email: true,
+                password: true,
+                id: true
+            }
         })
     } catch (e) {
         console.log({...e, message: e})
-        return res.status(500).send({message: "Error occurred while deleting user."})
-
+        return res.status(500).send({message: "Error occurred while retrieving user."})
     }
 
-    return res.status(200).send({})
+    if (user.email === email && validatePassword(password, user.password) && userId === user.id) {
+        try {
+            await prisma.user.delete({
+                where: {
+                    id: userId,
+                }
+            })
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while deleting user."})
+        }
+        return res.status(200).send({})
+    } else {
+        return res.status(400).send({message: "Wrong credentials."})
+    }
 }

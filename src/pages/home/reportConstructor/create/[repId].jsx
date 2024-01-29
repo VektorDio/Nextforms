@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
-import {useSession} from "next-auth/react";
 import Head from "next/head";
 import ConstructorHeader from "@/components/reportConstructorElements/constructorHeader";
 import Main from "@/components/pageWraper/main";
@@ -17,6 +16,15 @@ import {authOptions} from "@/pages/api/auth/[...nextauth]";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
+
+    if (!session) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: `/errorPage/You must be logged in.`
+            }
+        }
+    }
 
     const reportId = context.params.repId
     const userId = session.user.id
@@ -67,13 +75,6 @@ const ReportConstructor = ({data}) => {
     const [selectedBlockId, setSelectedBlockId] = useState("head")
 
     const {mutateAsync} = useUpdateReport()
-
-    useSession({
-        required: true,
-        onUnauthenticated() {
-            router.push("/")
-        },
-    })
 
     const [reportObject, setReportObject] = useState(data.report)
 
