@@ -23,7 +23,7 @@ const ProfileColumn = () => {
     const [editDelete, setEditDelete] = useState(false)
 
     const {mutateAsync:updateUser, isLoading:isUpdating, error:updatingError} = useUpdateUser()
-    const {mutateAsync:deleteUser} = useDeleteUserById()
+    const {mutateAsync:deleteUser, error:deleteError} = useDeleteUserById()
 
     const {error, data, isLoading} = useGetUserById({
         userId: userId,
@@ -37,9 +37,9 @@ const ProfileColumn = () => {
         </div>
     )
 
-    if (error || updatingError) return (
+    if (error || updatingError || deleteError) return (
         <div className={styles.container}>
-            <ErrorMessage error={error?.message || updatingError?.message}/>
+            <ErrorMessage error={error?.message || updatingError?.message || deleteError?.message}/>
         </div>
     )
 
@@ -157,10 +157,7 @@ const ProfileColumn = () => {
             onSuccess() {
                 router.push("/")
                 signOut()
-            },
-            onError(error) {
-                alert(error);
-            },
+            }
         })
 
         setSubmitting(false)

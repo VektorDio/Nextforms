@@ -82,19 +82,6 @@ const ReportConstructor = ({data}) => {
     const [duplicateBlockNameCheck, setDuplicateBlockNameCheck] = useState(false)
     const [emptyReportNameCheck, setEmptyReportNameCheck] = useState(false)
 
-    useEffect(() => {
-        const beforeunloadHandler = (e) => {
-            e.preventDefault()
-            e.returnValue = true
-        }
-
-        window.addEventListener("beforeunload", beforeunloadHandler)
-
-        return () => {
-            window.removeEventListener("beforeunload", beforeunloadHandler)
-        }
-    }, [reportObject])
-
     async function handleReportSubmit() {
 
         let emptyBlockCheck = !reportObject.blocks.every((e) => e.name.length > 0)
@@ -192,6 +179,19 @@ const ReportConstructor = ({data}) => {
         e.stopPropagation()
         setSelectedBlockId(id)
     }
+
+    useEffect(() => {
+        const beforeunloadHandler = (e) => {
+            e.preventDefault()
+            e.returnValue = true
+        }
+
+        window.addEventListener("beforeunload", beforeunloadHandler)
+
+        return () => {
+            window.removeEventListener("beforeunload", beforeunloadHandler)
+        }
+    }, [reportObject])
 
     return (
         <>

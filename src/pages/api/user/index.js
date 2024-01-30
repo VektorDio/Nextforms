@@ -166,7 +166,7 @@ async function patchHandler(req, res, session) {
 }
 
 async function deleteHandler(req, res, session) {
-    const { userId, email, password } = req.query
+    const { userId, email, password } = req.body.source // extracting body from DELETE request
 
     if (!isValidIdObject(userId)) {
         return res.status(400).send({ message: "Malformed user ID."})

@@ -155,7 +155,7 @@ async function patchHandler(req, res, session) {
 }
 
 async function deleteHandler(req, res, session) {
-    const {formId, userId} = req.query
+    const { formId, userId } = req.query
 
     if (!isValidIdObject(formId)) {
         return res.status(400).send({ message: "Malformed form ID."})

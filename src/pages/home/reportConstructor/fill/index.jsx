@@ -109,7 +109,7 @@ const ReportFillPage = ({ formListData, reportListData, userId, report, answers 
         required:true
     })
 
-    const {reportId:queryReportId, formId:queryFormId} = router.query
+    const {reportId:queryReportId, formId:queryFormId} = router.query //not updating
 
     const [reportId, setReportId] = useState(queryReportId)
     const [formId, setFormId] = useState(queryFormId)
