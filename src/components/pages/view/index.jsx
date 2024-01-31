@@ -14,7 +14,7 @@ import Header from "src/components/globalWrappers/header";
 const FormView = ({ formData }) => {
     const router = useRouter()
     const {mutateAsync:createAnswers} = useCreateAnswers()
-    const formObject = formData
+    const formObject = formData //IDE bug?
 
     async function handleFormSubmit(values) {
         if (formObject.active) {

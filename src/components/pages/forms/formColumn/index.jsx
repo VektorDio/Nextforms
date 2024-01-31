@@ -9,15 +9,15 @@ import SimpleMessage from "@/components/messages/simpleMessage";
 
 const FormColumn = () => {
     const {data:session} = useSession()
-    const {mutateAsync:deleteForm} = useDeleteFormById()
-    const {mutateAsync:updateForm} = useUpdateForm()
-    const [forms, setForms] = useState()
-
     const {id:userId} = session.user
 
+    const {mutateAsync:deleteForm} = useDeleteFormById()
+    const {mutateAsync:updateForm} = useUpdateForm()
     const {error, data, isLoading} = useGetFormsByCreatorId({
         userId: userId,
     })
+
+    const [forms, setForms] = useState()
 
     useEffect(() => {
         if(data) {

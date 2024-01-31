@@ -10,11 +10,11 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
     let reportOptions = []
     let formOptions = []
 
-    reportNamesData?.reports.map((e, i) => (
+    reportNamesData?.map((e, i) => (
         reportOptions.push({value: e.id, label: e.name, key: i})
     ))
 
-    formNamesData?.forms.map((e, i) => (
+    formNamesData?.map((e, i) => (
         formOptions.push({value: e.id, label: e.name, key: i})
     ))
 

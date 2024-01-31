@@ -15,7 +15,7 @@ import Header from "src/components/globalWrappers/header";
 import isValidIdObject from "@/utils/utils";
 import SimpleMessage from "@/components/messages/simpleMessage";
 
-const ReportFill = ({ formListData, reportListData, userId, report, answers }) => {
+const ReportFill = ({ formList, reportList, userId, report, answers }) => {
     const router = useRouter()
 
     const {reportId:queryReportId, formId:queryFormId} = router.query //not updating
@@ -116,8 +116,8 @@ const ReportFill = ({ formListData, reportListData, userId, report, answers }) =
             <Header movable={true}>
                 <FillHeader formId={formId}
                             reportId={reportId}
-                            formNamesData={formListData}
-                            reportNamesData={reportListData}
+                            formNamesData={formList}
+                            reportNamesData={reportList}
                             onReportIdChange={handleReportIdChange}
                             onFormIdChange={handleFormIdChange}
                             handlePrint={handlePrint}

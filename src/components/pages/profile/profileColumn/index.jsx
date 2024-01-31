@@ -15,20 +15,18 @@ import SimpleMessage from "@/components/messages/simpleMessage";
 const ProfileColumn = () => {
     const router = useRouter()
     const {data:session} = useSession()
+    const {id: userId} = session.user
+
+    const {mutateAsync:updateUser, isLoading:isUpdating, error:updatingError} = useUpdateUser()
+    const {mutateAsync:deleteUser, error:deleteError} = useDeleteUserById()
+    const {error:updateError, data, isLoading} = useGetUserById({
+        userId: userId,
+    })
 
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
     const [editPassword, setEditPassword] = useState(false)
     const [editDelete, setEditDelete] = useState(false)
-
-    const {mutateAsync:updateUser, isLoading:isUpdating, error:updatingError} = useUpdateUser()
-    const {mutateAsync:deleteUser, error:deleteError} = useDeleteUserById()
-
-    const {id: userId} = session.user
-
-    const {error, data, isLoading} = useGetUserById({
-        userId: userId,
-    })
 
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
@@ -38,9 +36,9 @@ const ProfileColumn = () => {
         </div>
     )
 
-    if (error || updatingError || deleteError) return (
+    if (updateError || updatingError || deleteError) return (
         <div className={styles.container}>
-            <ErrorMessage error={error?.message || updatingError?.message || deleteError?.message}/>
+            <ErrorMessage error={updateError?.message || updatingError?.message || deleteError?.message}/>
         </div>
     )
 

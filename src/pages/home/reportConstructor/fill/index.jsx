@@ -1,7 +1,6 @@
 import React from 'react';
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
-import isValidIdObject from "@/utils/utils";
 import axios from "axios";
 import ReportFill from "@/components/pages/reportFill";
 
@@ -19,55 +18,22 @@ export async function getServerSideProps(context) {
 
     const {formId, reportId} = context.query
     const userId = session.user.id
-    let formListData, reportListData
+
+    let formList, reportList
     let answers = null
     let report = null
 
     try {
-        if (isValidIdObject(formId)) {
-            answers = (await axios.get(process.env.API_URL + '/api/form/answers', {
-                params: {
-                    formId: formId,
-                    userId: userId
-                },
-                headers: {
-                    Cookie: context.req.headers.cookie
-                }
-            })).data
-        }
-
-        if (isValidIdObject(reportId)){
-            report = (await axios.get(process.env.API_URL + '/api/report', {
-                params: {
-                    reportId: reportId,
-                    userId: userId
-                },
-                headers: {
-                    Cookie: context.req.headers.cookie
-                }
-            })).data
-        }
-
-        formListData = (await axios.get(process.env.API_URL + '/api/form/formsByCreatorId', {
+        ({answers, report, formList, reportList} = (await axios.get(process.env.API_URL + '/api/fill', {
             params: {
+                formId: formId,
+                reportId: reportId,
                 userId: userId,
-                withNames: true
             },
             headers: {
                 Cookie: context.req.headers.cookie
             }
-        })).data
-
-        reportListData = (await axios.get(process.env.API_URL + '/api/report/reportsByCreatorId', {
-            params: {
-                userId: userId,
-                withNames: true
-            },
-            headers: {
-                Cookie: context.req.headers.cookie
-            }
-        })).data
-
+        })).data)
     } catch (e){
         return {
             redirect: {
@@ -86,7 +52,7 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { formListData, reportListData, userId, report, answers } }
+    return { props: { formList, reportList, userId, report, answers } }
 }
 
 const ReportFillPage = (props) => {
