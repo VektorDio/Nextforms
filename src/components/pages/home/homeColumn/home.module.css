@@ -3,6 +3,30 @@
     min-height: 92vh;
     width: 60%;
     display: block;
-    padding: 15px;
+    padding: 3vh 5vh;
     float: left;
 }
+
+.textContainer{
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #1a212d;
+}
+
+.welcome {
+    font-weight: 600;
+    padding-bottom: 12px;
+    font-size: 26px;
+}
+
+.headline {
+    font-weight: 600;
+    padding-top: 12px;
+    font-size: 22px;
+}
+
+.link {
+    text-decoration: underline;
+}
+

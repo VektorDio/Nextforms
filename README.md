@@ -8,7 +8,7 @@
 <h3 align="center">NextForms</h3>
 
 <p align="center">
-An application to create and manage simple forms!
+An application to create and manage custom forms!
 <br/>
 Note This Project Is Still W.I.P
 <br/>
@@ -20,7 +20,7 @@ Note This Project Is Still W.I.P
 <a href="https://github.com/VektorDio/Nextforms/issues">Request Feature</a>
 </p>
 
-![Downloads](https://img.shields.io/github/downloads/VektorDio/Nextforms/total)  ![Issues](https://img.shields.io/github/issues/VektorDio/Nextforms) ![License](https://img.shields.io/github/license/VektorDio/Nextforms) 
+![Downloads](https://img.shields.io/github/downloads/VektorDio/Nextforms/total) ![License](https://img.shields.io/github/license/VektorDio/Nextforms) 
 
 ## Table Of Contents
 
@@ -37,11 +37,10 @@ Note This Project Is Still W.I.P
 
 ![Screen Shot](images/Screenshot.png)
 
-This project is aimed to provide basic and simple form functionality, 
-including creation of forms, redacting forms, changing their settings and gathering statistics. 
-Project also includes simple report functionality.
+This is simple web-application, aimed to provide basic form and report functionality with some statistics.
+You can use this to conduct simple surveys and extract report PDFs. 
 
-This is also a training for creating and deploying projects.
+And this is a training for developing and deploying complex applications.
 
 ## Built With
 
@@ -49,6 +48,7 @@ This is also a training for creating and deploying projects.
 - [Next.js](https://nextjs.org/)
 - [React](https://react.dev/)
 - [Prisma](https://www.prisma.io/)
+- [MongoDB](https://www.mongodb.com/)
 
 ## Getting Started
 
@@ -61,19 +61,19 @@ You need server and database for this one
 ### Installation
 
 1. Clone the repo
-
 ```sh
 git clone https://github.com/VektorDio/Nextforms.git
 ```
-
 2. Install all necessary packages
-3. Config env. variables
-4. Connect to DB
-3. Run
+3. Config env. file
+4. Setup database
+3. Use package json to build app and then use
 ```sh
 next start
 ```
 3. Have fun!
+
+Alternatively you can just deploy on Vercel. 
 
 ## License
 
@@ -81,4 +81,4 @@ Distributed under the MPL-2.0 License. See [LICENSE](https://github.com/VektorDi
 
 ## Authors
 
-- **Daniel R** - _Comp Sci Student_ - [VektorDio](https://github.com/VektorDio/) - _All Work_
+- **Daniel R** - _Computer Science Student_ - [VektorDio](https://github.com/VektorDio/) - _All Work_
