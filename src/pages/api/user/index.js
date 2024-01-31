@@ -88,11 +88,12 @@ async function getHandler(req, res, session) {
 }
 
 async function patchHandler(req, res, session) {
-    const { email, password, newPassword, lastName, firstName, phoneNumber, id:userId } = req.body
+    const { email, password, newPassword, lastName, firstName, phoneNumber, secondaryEmail, id:userId } = req.body
 
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
     const emailSchema = Yup.string().email().max(40)
+    const secondaryEmailSchema = Yup.string().email().max(40)
     const lastNameSchema = Yup.string().max(30)
     const firstNameSchema = Yup.string().max(30)
     const phoneNumberSchema = Yup.string().matches(phoneRegex, { excludeEmptyString: true }).max(20).nullable(true)
@@ -107,7 +108,8 @@ async function patchHandler(req, res, session) {
         !passwordSchema.isValidSync(newPassword) ||
         !lastNameSchema.isValidSync(lastName) ||
         !firstNameSchema.isValidSync(firstName) ||
-        !phoneNumberSchema.isValidSync(phoneNumber)) {
+        !phoneNumberSchema.isValidSync(phoneNumber) ||
+        !secondaryEmailSchema.isValidSync(secondaryEmail)) {
         return res.status(400).send({ message: "Malformed data."})
     }
 
@@ -143,6 +145,29 @@ async function patchHandler(req, res, session) {
         }
     }
 
+
+    if (secondaryEmail) {
+        let userWithEmail
+        try {
+            userWithEmail = await prisma.user.findMany({
+                where: {
+                    OR: [{
+                        email: secondaryEmail
+                    }, {
+                        secondaryEmail: secondaryEmail
+                    }]
+                },
+            })
+
+            if (userWithEmail.length > 1) {
+                return res.status(400).send({message: "This email is already taken."})
+            }
+        } catch (e) {
+            console.log({...e, message: e})
+            return res.status(500).send({message: "Error occurred while retrieving user."})
+        }
+    }
+
     let user
     try {
         user = await prisma.user.update({
@@ -150,11 +175,12 @@ async function patchHandler(req, res, session) {
                 id: userId,
             },
             data: {
-                email: email,
+                //email: email,
                 password: hashedPassword,
                 lastName: lastName,
                 phoneNumber: phoneNumber,
                 firstName: firstName,
+                secondaryEmail: secondaryEmail
             },
         })
     } catch (e) {

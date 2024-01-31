@@ -10,12 +10,13 @@ generator client {
 }
 
 model User {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  email       String  @unique
-  password    String
-  firstName   String?
-  lastName    String?
-  phoneNumber String?
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  email          String  @unique
+  secondaryEmail String?
+  password       String
+  firstName      String?
+  lastName       String?
+  phoneNumber    String?
 
   Form   Form[]
   Report Report[]

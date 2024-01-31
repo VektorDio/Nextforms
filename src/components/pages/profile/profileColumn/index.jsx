@@ -48,7 +48,7 @@ const ProfileColumn = () => {
         </div>
     )
 
-    const { firstName, lastName, phoneNumber, email } = data.user
+    const { firstName, lastName, phoneNumber, email, secondaryEmail } = data.user
 
     const generalSchema = Yup.object({
         firstName: Yup.string()
@@ -80,19 +80,22 @@ const ProfileColumn = () => {
     }
 
     const emailSchema = Yup.object({
-        email: Yup.string().email('Not a valid email address')
+        email: Yup.string().email('Not a valid email address'),
+        secondaryEmail: Yup.string().email('Not a valid email address')
     })
 
     const emailInitialValues = {
         email: email ? email : "",
+        secondaryEmail: secondaryEmail ? secondaryEmail : ""
     }
 
     async function onEmailSubmit(values, setSubmitting) {
-        const {email} = values
+        const {email, secondaryEmail} = values
 
         await updateUser({
             id: userId,
             email:email,
+            secondaryEmail: secondaryEmail
         })
 
         setSubmitting(false)
@@ -287,13 +290,20 @@ const ProfileColumn = () => {
                             <div className={styles.inputFieldsContainer}>
                                 <div className={styles.field}>
                                     <label>Primary Email</label>
+                                    <div className={styles.centeredText}>{email}</div>
+                                </div>
+                            </div>
+
+                            <div className={styles.inputFieldsContainer}>
+                                <div className={styles.field}>
+                                    <label>Secondary Email</label>
                                     {(editEmail) ? (
                                         <MyTextInput
                                             type="email"
-                                            name="email"
+                                            name="secondaryEmail"
                                         />
                                     ) : (
-                                        <div className={styles.centeredText}>{email}</div>
+                                        <div className={styles.centeredText}>{secondaryEmail}</div>
                                     )}
                                 </div>
                             </div>
