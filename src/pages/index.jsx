@@ -30,7 +30,7 @@ export default function WelcomePage() {
               <link rel="icon" href="/favicon.ico"/>
           </Head>
           <Header>
-              <LogInGroup authenticated={true}/>
+              <LogInGroup authenticated={false}/>
           </Header>
           <Main>
               <div className={styles.about}>
