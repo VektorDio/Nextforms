@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Header from "@/components/pageWraper/header";
-import Main from "@/components/pageWraper/main";
+import Header from "src/components/globalWrappers/header";
+import Main from "src/components/globalWrappers/main";
 import React from "react";
 import SimpleMessage from "@/components/messages/simpleMessage";
 

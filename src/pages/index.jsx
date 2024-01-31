@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import Header from "@/components/pageWraper/header";
-import Main from "@/components/pageWraper/main";
+import Header from "src/components/globalWrappers/header";
+import Main from "src/components/globalWrappers/main";
 import Footer from "@/components/pageWraper/footer";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import React, {useEffect} from "react";
 import styles from "./welcome.module.css"
-import LogInGroup from "@/components/pageWraper/header/logInGroup";
+import LogInGroup from "@/components/globalWrappers/header/logInGroup";
 
 export default function Welcome() {
   const {status} = useSession()

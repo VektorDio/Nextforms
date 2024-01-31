@@ -1,16 +1,8 @@
-import React from "react";
-import Head from "next/head";
-import ConstructorHeader from "@/components/formConstructorElements/constructorHeader";
-import Main from "@/components/pageWraper/main";
-import StatisticBlock from "@/components/statisticElements/statisticBlock";
-import {useSession} from "next-auth/react";
-import {useRouter} from "next/router";
-import ConstructorColumn from "src/components/constructorColumn";
-import styles from "./statistics.module.css";
-import Header from "@/components/pageWraper/header";
-import axios from "axios";
+import React from 'react';
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import axios from "axios";
+import FormStatistics from "@/components/pages/formStatistics";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -59,51 +51,8 @@ export async function getServerSideProps(context) {
     return { props: { data, formId } }
 }
 
-const StatisticsConstructor = ({data, formId}) => {
-    const router = useRouter()
-
-    useSession({
-        required: true,
-        onUnauthenticated() {
-            router.push("/")
-        },
-    })
-
-    const answersCount = data.questions.reduce((acc, val) => (acc + val.answers.length), 0)
-
-    return (
-        <>
-            <Head>
-                <title>Statistics | NextForms</title>
-                <meta name="description" content="Form statistics page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <Header movable={true}>
-                <ConstructorHeader id={formId} />
-            </Header>
-            <Main>
-                <ConstructorColumn>
-                    <div className={styles.container}>
-                        <div className={styles.answersCount}>
-                            {answersCount} answers
-                        </div>
-                        <div className={styles.formDescription}>
-
-                        </div>
-                    </div>
-                    {
-                        data.questions.map((question, index) => (
-                            <StatisticBlock
-                                key={index}
-                                question={question}
-                            />
-                        ))
-                    }
-                </ConstructorColumn>
-            </Main>
-        </>
-    );
+const FormStatisticsPage = ({ data, formId }) => {
+    return <FormStatistics data={ data } formId={ formId }/>
 };
 
-export default StatisticsConstructor;
+export default FormStatisticsPage;
