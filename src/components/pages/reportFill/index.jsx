@@ -3,7 +3,6 @@ import Head from "next/head";
 import Main from "src/components/globalWrappers/main";
 import {useRouter} from "next/router";
 import {useGetAnswersByFormId} from "@/queries/forms";
-import {useSession} from "next-auth/react";
 import {useGetReportById} from "@/queries/reports";
 import FillBlock from "src/components/pages/reportFill/fillBlock";
 import LoadingMessage from "@/components/messages/loadingMessage";
@@ -18,9 +17,6 @@ import SimpleMessage from "@/components/messages/simpleMessage";
 
 const ReportFill = ({ formListData, reportListData, userId, report, answers }) => {
     const router = useRouter()
-    useSession({
-        required:true
-    })
 
     const {reportId:queryReportId, formId:queryFormId} = router.query //not updating
 

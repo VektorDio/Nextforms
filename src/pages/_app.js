@@ -11,11 +11,11 @@ const queryClient = new QueryClient()
 
 export default function App({ Component, pageProps: { session, ...pageProps }}) {
   return (
-      <SessionProvider session={session}>
-          <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+          <SessionProvider session={session}>
               <Component {...pageProps} />
               <SpeedInsights />
-          </QueryClientProvider>
-      </SessionProvider>
+          </SessionProvider>
+      </QueryClientProvider>
   )
 }

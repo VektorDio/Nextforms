@@ -12,7 +12,7 @@ export async function getServerSideProps(context) {
                 destination: `/`
             }
         }
-    } else return { props: { }}
+    } else return { props: { session }}
 }
 
 const ReportsListPage = () => {

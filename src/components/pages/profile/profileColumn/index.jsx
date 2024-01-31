@@ -15,7 +15,6 @@ import SimpleMessage from "@/components/messages/simpleMessage";
 const ProfileColumn = () => {
     const router = useRouter()
     const {data:session} = useSession()
-    const {id: userId} = session.user
 
     const [editGeneral, setEditGeneral] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
@@ -24,6 +23,8 @@ const ProfileColumn = () => {
 
     const {mutateAsync:updateUser, isLoading:isUpdating, error:updatingError} = useUpdateUser()
     const {mutateAsync:deleteUser, error:deleteError} = useDeleteUserById()
+
+    const {id: userId} = session.user
 
     const {error, data, isLoading} = useGetUserById({
         userId: userId,

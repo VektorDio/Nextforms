@@ -38,19 +38,21 @@ export const authOptions = {
                     throw Error ("Wrong email or password")
                 }
 
-                return user
+                return {id: user.id, email: user.email}
             }
         })
     ],
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.userId = user.id
+                token.user = {...user}
             }
             return token
         },
         async session({ session, token }) {
-            session.user.id = token.userId
+            if (token?.user) {
+                session.user = token.user;
+            }
             return session
         }
     },

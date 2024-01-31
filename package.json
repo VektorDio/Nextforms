@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "analyze": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.0.8",
@@ -35,6 +36,8 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
-    "prisma": "^5.7.1"
+    "prisma": "^5.7.1",
+    "cross-env": "^7.0.3",
+    "@next/bundle-analyzer": "^14.1.0"
   }
 }
