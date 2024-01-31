@@ -10,11 +10,21 @@ import OptionInput from "@/components/inputFields/optionInput";
 import DateInput from "@/components/inputFields/dateInput";
 import TimeInput from "@/components/inputFields/timeInput";
 import SimpleButton from "@/components/buttons/simpleButton";
-const ConstructorBlock = ({question, handleDelete, handleAdd, handleSelectChange, handleQuestionChange,
-                              handleRequiredToggle, selectedBlockId, setSelectedBlockId, handleOptionsChange, questionIndex, maxOptions=10}) => {
+
+const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, maxOptions=10}) => {
     const [options, setOptions] = useState(() => {
         return question.options !== undefined ? question.options : []
     })
+
+    const {
+        handleDelete,
+        handleAdd,
+        handleSelectChange,
+        handleQuestionChange,
+        handleRequiredToggle,
+        setSelectedBlockId,
+        handleOptionsChange
+    } = handlers
 
     const isSelected = selectedBlockId === questionIndex
 

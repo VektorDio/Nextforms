@@ -134,6 +134,14 @@ const ReportRedact = ({ data }) => {
         }
     }, [reportObject])
 
+    const constructorBlockHandlers = {
+        handleAdd:handleAddBlock,
+        handleDelete:handleDelete,
+        handleBlockTypeChange:handleTypeChange,
+        handleNameChange:handleBlockNameChange,
+        setSelectedBlockId:setSelectedBlock
+    }
+
     return (
         <>
             <Head>
@@ -186,14 +194,8 @@ const ReportRedact = ({ data }) => {
                                 key={index}
                                 block={block}
                                 index={index}
-
-                                handleAdd={handleAddBlock}
-                                handleDelete={handleDelete}
-                                handleBlockTypeChange={handleTypeChange}
-                                handleNameChange={handleBlockNameChange}
-
+                                handlers={constructorBlockHandlers}
                                 selectedBlockId={selectedBlockId}
-                                setSelectedBlockId={setSelectedBlock}
                             />
                         ))
                     }

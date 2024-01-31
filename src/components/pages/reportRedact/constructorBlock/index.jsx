@@ -7,8 +7,15 @@ import InlineInput from "@/components/inputFields/inlineInput";
 import TextParagraph from "@/components/inputFields/textParagraph";
 import SimpleButton from "@/components/buttons/simpleButton";
 
-const ConstructorBlock = ({block, index, handleDelete, handleAdd, handleBlockTypeChange,
-                              handleNameChange, selectedBlockId, setSelectedBlockId}) => {
+const ConstructorBlock = ({block, index, handlers, selectedBlockId}) => {
+
+    const {
+        handleDelete,
+        handleAdd,
+        handleBlockTypeChange,
+        handleNameChange,
+        setSelectedBlockId
+    } = handlers
 
     const isSelected = selectedBlockId === index
 

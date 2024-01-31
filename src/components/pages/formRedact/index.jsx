@@ -14,7 +14,7 @@ import FormAlert from "@/components/messages/formAlert";
 
 const FormRedact = ({ data }) => {
     const router = useRouter()
-    const {mutateAsync} = useUpdateForm()
+    const {mutateAsync: updateForm} = useUpdateForm()
 
     const [formObject, setFormObject] = useState(data.form)
     const [selectedBlockId, setSelectedBlockId] = useState("head")
@@ -34,7 +34,7 @@ const FormRedact = ({ data }) => {
         }
 
         try {
-            await mutateAsync({
+            await updateForm({
                 userId: formObject.userId,
                 id: formObject.id,
                 description: formObject.description,
@@ -167,6 +167,16 @@ const FormRedact = ({ data }) => {
         }
     }, [formObject])
 
+    const constructorBlockHandlers = {
+        handleAdd:handleAddQuestionBlock,
+        handleDelete:handleDelete,
+        handleQuestionChange:handleQuestionChange,
+        handleRequiredToggle:handleRequiredToggle,
+        handleOptionsChange:handleOptionsChange,
+        handleSelectChange:handleQuestionTypeChange,
+        setSelectedBlockId:setSelectedBlock
+    }
+
     return (
         <>
             <Head>
@@ -231,16 +241,8 @@ const FormRedact = ({ data }) => {
                                 key={index}
                                 question={q}
                                 questionIndex={index}
-
-                                handleAdd={handleAddQuestionBlock}
-                                handleDelete={handleDelete}
-                                handleQuestionChange={handleQuestionChange}
-                                handleRequiredToggle={handleRequiredToggle}
-                                handleOptionsChange={handleOptionsChange}
-                                handleSelectChange={handleQuestionTypeChange}
-
+                                handlers={constructorBlockHandlers}
                                 selectedBlockId={selectedBlockId}
-                                setSelectedBlockId={setSelectedBlock}
                             />
                         ))
                     }
