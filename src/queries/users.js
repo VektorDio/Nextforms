@@ -24,16 +24,17 @@ export const useUpdateUser = () => {
 }
 
 export const useGetUserById = (params) => {
+    const { userId } = params
     return useQuery({
         queryKey: ['GetUserById', params],
         queryFn: async () => {
-            const { userId } = params
             return (await axios.get('/api/user', {
                 params: {
                     userId: userId,
                 }
             })).data
-        }
+        },
+        enabled: !!userId
     })
 }
 

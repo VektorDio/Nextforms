@@ -3,6 +3,7 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import axios from "axios";
 import FormStatistics from "@/components/pages/formStatistics";
+import {useSession} from "next-auth/react";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -48,10 +49,11 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { data, formId } }
+    return { props: { data, formId, session } }
 }
 
 const FormStatisticsPage = ({ data, formId }) => {
+    useSession({required: true})
     return <FormStatistics data={ data } formId={ formId }/>
 };
 

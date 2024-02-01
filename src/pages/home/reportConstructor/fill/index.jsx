@@ -3,6 +3,7 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import axios from "axios";
 import ReportFill from "@/components/pages/reportFill";
+import {useSession} from "next-auth/react";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -52,10 +53,11 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { formList, reportList, userId, report, answers } }
+    return { props: { formList, reportList, userId, report, answers, session } }
 }
 
 const ReportFillPage = (props) => {
+    useSession({required: true})
     return <ReportFill {...props}/>
 };
 

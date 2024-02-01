@@ -9,7 +9,7 @@ import SimpleMessage from "@/components/messages/simpleMessage";
 
 const FormColumn = () => {
     const {data:session} = useSession()
-    const {id:userId} = session.user
+    const userId = session?.user.id
 
     const {mutateAsync:deleteForm} = useDeleteFormById()
     const {mutateAsync:updateForm} = useUpdateForm()

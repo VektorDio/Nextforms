@@ -10,7 +10,7 @@ const LogInGroup = ({authenticated}) => {
     return (authenticated) ? (
         <div className={styles.sideBlock}>
             {/*<SettingsButton/>*/}
-            <SimpleButton onClick={signOut} iconType={"arrowRight"} bgColor={"red"}/>
+            <SimpleButton onClick={() => signOut({ callbackUrl: "/" })} iconType={"arrowRight"} bgColor={"red"}/>
         </div>
     ):(
         <div className={styles.sideBlock}>

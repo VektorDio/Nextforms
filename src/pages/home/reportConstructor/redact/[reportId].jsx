@@ -3,6 +3,7 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import axios from "axios";
 import ReportRedact from "@/components/pages/reportRedact";
+import {useSession} from "next-auth/react";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -57,10 +58,11 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { data } }
+    return { props: { data, session } }
 }
 
 const ReportRedactPage = ({ data }) => {
+    useSession({required: true})
     return <ReportRedact data={data}/>
 };
 

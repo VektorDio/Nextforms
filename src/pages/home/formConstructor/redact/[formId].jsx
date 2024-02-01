@@ -3,6 +3,7 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import axios from "axios";
 import FormRedact from "@/components/pages/formRedact";
+import {useSession} from "next-auth/react";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -52,10 +53,11 @@ export async function getServerSideProps(context) {
         }
     }
 
-    return { props: { data } }
+    return { props: { data, session } }
 }
 
 const FormRedactPage = ({ data }) => {
+    useSession({required: true})
     return <FormRedact data={ data }/>
 };
 

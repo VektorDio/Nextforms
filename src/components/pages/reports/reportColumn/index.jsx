@@ -12,7 +12,8 @@ const ReportColumn = () => {
     const {mutateAsync:deleteReport} = useDeleteReportById()
     const [reports, setReports] = useState()
 
-    const {id:userId} = session.user
+    const userId = session?.user.id
+
     const {error, data, isLoading} = useGetReportsByCreatorId({
         userId: userId,
     })

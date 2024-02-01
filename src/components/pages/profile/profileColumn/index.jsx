@@ -16,12 +16,13 @@ import FormikObserver from "@/components/formikObserver";
 const ProfileColumn = () => {
     const router = useRouter()
     const {data:session} = useSession()
-    const {id: userId} = session.user
+
+    const id = session?.user.id
 
     const {mutateAsync:updateUser, isLoading:isUpdating, error:updatingError} = useUpdateUser()
     const {mutateAsync:deleteUser, error:deleteError} = useDeleteUserById()
     const {error:updateError, data, isLoading} = useGetUserById({
-        userId: userId,
+        userId: id,
     })
 
     const [editGeneral, setEditGeneral] = useState(false)
@@ -71,7 +72,7 @@ const ProfileColumn = () => {
         const { firstName, lastName, phoneNumber } = values
 
         await updateUser({
-            id:userId,
+            id:id,
             firstName:firstName,
             lastName:lastName,
             phoneNumber:phoneNumber,
@@ -94,7 +95,7 @@ const ProfileColumn = () => {
         const {email, secondaryEmail} = values
 
         await updateUser({
-            id: userId,
+            id: id,
             email:email,
             secondaryEmail: secondaryEmail
         })
@@ -129,7 +130,7 @@ const ProfileColumn = () => {
 
         if (newPassword === confirmNewPassword) {
             await updateUser({
-                id: userId,
+                id: id,
                 password: currentPassword,
                 newPassword: newPassword
             })
@@ -153,7 +154,7 @@ const ProfileColumn = () => {
         const { email, password } = values
 
         await deleteUser({
-            userId: userId,
+            userId: id,
             email: email,
             password: password
         }, {

@@ -2,6 +2,7 @@ import React from 'react';
 import FormsList from "@/components/pages/forms";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import {useSession} from "next-auth/react";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -16,6 +17,7 @@ export async function getServerSideProps(context) {
 }
 
 const FormsListPage = () => {
+    useSession({required: true})
     return <FormsList/>
 };
 

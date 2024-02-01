@@ -14,8 +14,8 @@ export default function App({ Component, pageProps: { session, ...pageProps }}) 
       <QueryClientProvider client={queryClient}>
           <SessionProvider session={session}>
               <Component {...pageProps} />
-              <SpeedInsights />
           </SessionProvider>
+          <SpeedInsights />
       </QueryClientProvider>
   )
 }

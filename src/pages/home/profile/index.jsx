@@ -2,6 +2,7 @@ import React from 'react';
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import Profile from "@/components/pages/profile";
+import {useSession} from "next-auth/react";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -16,6 +17,7 @@ export async function getServerSideProps(context) {
 }
 
 const ProfilePage = () => {
+    useSession({required: true})
     return <Profile/>
 };
 
