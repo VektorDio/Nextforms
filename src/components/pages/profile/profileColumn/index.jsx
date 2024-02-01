@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from './profileColumn.module.css'
-import {Form, Formik} from "formik";
+import {Form, Formik } from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/formikFields/textInput";
 import {signOut, useSession} from "next-auth/react";
@@ -11,6 +11,7 @@ import ErrorMessage from "@/components/messages/errorMessage";
 import SimpleButton from "@/components/buttons/simpleButton";
 import DeleteAccountButton from "@/components/buttons/deleteAccountButton";
 import SimpleMessage from "@/components/messages/simpleMessage";
+import FormikObserver from "@/components/formikObserver";
 
 const ProfileColumn = () => {
     const router = useRouter()
@@ -177,6 +178,7 @@ const ProfileColumn = () => {
                     >
                     {(formik) => (
                         <Form>
+                            <FormikObserver/>
                             <div className={styles.generalInfo}>
                                 <p>General info</p>
                                 {(editGeneral) ? (
@@ -258,6 +260,7 @@ const ProfileColumn = () => {
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
+                            <FormikObserver/>
                             <div className={styles.generalInfo}>
                                 <p>Emails</p>
                                 {(editEmail) ? (
@@ -320,6 +323,7 @@ const ProfileColumn = () => {
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
+                            <FormikObserver/>
                             <div className={styles.generalInfo}>
                                 <p>Change your password</p>
                                 {(editPassword) ? (
@@ -396,6 +400,7 @@ const ProfileColumn = () => {
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
+                            <FormikObserver/>
                             <div className={styles.deleteInfo}>
                                 <p>Delete account</p>
                             </div>

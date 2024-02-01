@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Head from "next/head";
 import Main from "src/components/globalWrappers/main";
 import ConstructorHeader from "src/components/pages/formRedact/constructorHeader";
@@ -11,6 +11,7 @@ import TextParagraph from "@/components/inputFields/textParagraph";
 import ToggleButton from "@/components/buttons/toggleButton";
 import Header from "src/components/globalWrappers/header";
 import FormAlert from "@/components/messages/formAlert";
+import useBeforeUnload from "@/hooks";
 
 const FormRedact = ({ data }) => {
     const router = useRouter()
@@ -23,6 +24,9 @@ const FormRedact = ({ data }) => {
     const [emptyOptionsCheck, setEmptyOptionsCheck] = useState(false)
     const [duplicateQuestionsCheck, setDuplicateQuestionsCheck] = useState(false)
     const [emptyFormNameCheck, setEmptyFormNameCheck] = useState(false)
+
+    const [isDirty, setIsDirty] = useState(false)
+    useBeforeUnload(isDirty)
 
     async function handleFormSubmit() {
 
@@ -61,6 +65,7 @@ const FormRedact = ({ data }) => {
             name: text
         }))
         setEmptyFormNameCheck(!text > 0)
+        setIsDirty(true)
     }
 
     function handleDescriptionChange(text){
@@ -68,6 +73,7 @@ const FormRedact = ({ data }) => {
             ...prev,
             description: text
         }))
+        setIsDirty(true)
     }
 
     function handleAcceptChange(status) {
@@ -75,6 +81,7 @@ const FormRedact = ({ data }) => {
             ...prev,
             active: status
         }))
+        setIsDirty(true)
     }
 
     const handleAddQuestionBlock = (index) => {
@@ -94,6 +101,7 @@ const FormRedact = ({ data }) => {
             ...prev,
             questions: [...buf]
         }))
+        setIsDirty(true)
     }
 
     const handleDelete = (index) => {
@@ -106,6 +114,7 @@ const FormRedact = ({ data }) => {
             }))
             setEmptyQuestionCheck(!formObject.questions.every((e) => e.question.length > 0))
         }
+        setIsDirty(true)
     }
 
     const handleQuestionTypeChange = (index, value) => {
@@ -115,6 +124,7 @@ const FormRedact = ({ data }) => {
             ...prev,
             questions: [...buf]
         }))
+        setIsDirty(true)
     }
 
     const handleQuestionChange = (index, text) => {
@@ -127,6 +137,7 @@ const FormRedact = ({ data }) => {
 
         setDuplicateQuestionsCheck(formObject.questions.some((question, i) => question.question === text && i !== index))
         setEmptyQuestionCheck(!formObject.questions.every((e) => e.question.length > 0))
+        setIsDirty(true)
     }
 
     const handleRequiredToggle = (index, value) => {
@@ -136,6 +147,7 @@ const FormRedact = ({ data }) => {
             ...prev,
             questions: [...buf]
         }))
+        setIsDirty(true)
     }
 
     const handleOptionsChange = (index, value) => {
@@ -147,25 +159,13 @@ const FormRedact = ({ data }) => {
         }))
 
         setEmptyOptionsCheck(!buf[index].options.every((e) => e.length > 0))
+        setIsDirty(true)
     }
 
     function setSelectedBlock(e, id){
         e.stopPropagation()
         setSelectedBlockId(id)
     }
-
-    useEffect(() => {
-        const beforeunloadHandler = (e) => {
-            e.preventDefault()
-            e.returnValue = true
-        }
-
-        window.addEventListener("beforeunload", beforeunloadHandler)
-
-        return () => {
-            window.removeEventListener("beforeunload", beforeunloadHandler)
-        }
-    }, [formObject])
 
     const constructorBlockHandlers = {
         handleAdd:handleAddQuestionBlock,

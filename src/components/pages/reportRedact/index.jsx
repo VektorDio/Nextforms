@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useRouter} from "next/router";
 import Head from "next/head";
 import ConstructorHeader from "src/components/pages/reportRedact/constructorHeader";
@@ -10,18 +10,21 @@ import styles from "./reportRedact.module.css";
 import TextParagraph from "@/components/inputFields/textParagraph";
 import Header from "src/components/globalWrappers/header";
 import FormAlert from "@/components/messages/formAlert";
+import useBeforeUnload from "@/hooks";
 
 const ReportRedact = ({ data }) => {
     const router = useRouter()
-    const [selectedBlockId, setSelectedBlockId] = useState("head")
-
-    const {mutateAsync} = useUpdateReport()
-
+    const {mutateAsync: updateReport} = useUpdateReport()
     const [reportObject, setReportObject] = useState(data.report)
 
     const [emptyBlockNameCheck, setEmptyBlockNameCheck] = useState(false)
     const [duplicateBlockNameCheck, setDuplicateBlockNameCheck] = useState(false)
     const [emptyReportNameCheck, setEmptyReportNameCheck] = useState(false)
+
+    const [isDirty, setIsDirty] = useState(false)
+    useBeforeUnload(isDirty)
+
+    const [selectedBlockId, setSelectedBlockId] = useState("head")
 
     async function handleReportSubmit() {
 
@@ -33,7 +36,7 @@ const ReportRedact = ({ data }) => {
         }
 
         try {
-            await mutateAsync({
+            await updateReport({
                 userId: reportObject.userId,
                 id: reportObject.id,
                 description: reportObject.description,
@@ -57,6 +60,7 @@ const ReportRedact = ({ data }) => {
             name: text
         }))
         setEmptyReportNameCheck(!text > 0)
+        setIsDirty(true)
     }
 
     function handleDescriptionChange(text){
@@ -64,6 +68,7 @@ const ReportRedact = ({ data }) => {
             ...prev,
             description: text
         }))
+        setIsDirty(true)
     }
 
     const handleAddBlock = (index) => {
@@ -81,6 +86,7 @@ const ReportRedact = ({ data }) => {
             ...prev,
             blocks: [...buf]
         }))
+        setIsDirty(true)
     }
 
     const handleDelete = (index) => {
@@ -92,6 +98,7 @@ const ReportRedact = ({ data }) => {
                 blocks: [...buf]
             }))
             setEmptyBlockNameCheck(!reportObject.blocks.every((e) => e.name.length > 0))
+            setIsDirty(true)
         }
     }
 
@@ -102,6 +109,7 @@ const ReportRedact = ({ data }) => {
             ...prev,
             blocks: [...buf]
         }))
+        setIsDirty(true)
     }
 
     const handleBlockNameChange = (index, text) => {
@@ -114,25 +122,14 @@ const ReportRedact = ({ data }) => {
 
         setDuplicateBlockNameCheck(reportObject.blocks.some((block, i) => block.name === text && i !== index))
         setEmptyBlockNameCheck(!reportObject.blocks.every((e) => e.name.length > 0))
+
+        setIsDirty(true)
     }
 
     function setSelectedBlock(e, id){
         e.stopPropagation()
         setSelectedBlockId(id)
     }
-
-    useEffect(() => {
-        const beforeunloadHandler = (e) => {
-            e.preventDefault()
-            e.returnValue = true
-        }
-
-        window.addEventListener("beforeunload", beforeunloadHandler)
-
-        return () => {
-            window.removeEventListener("beforeunload", beforeunloadHandler)
-        }
-    }, [reportObject])
 
     const constructorBlockHandlers = {
         handleAdd:handleAddBlock,

@@ -17,7 +17,6 @@ import SimpleMessage from "@/components/messages/simpleMessage";
 
 const ReportFill = ({ formList, reportList, userId, report, answers }) => {
     const router = useRouter()
-
     const {reportId:queryReportId, formId:queryFormId} = router.query //not updating
 
     const [reportId, setReportId] = useState(queryReportId)
@@ -88,19 +87,6 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
         }
     }
 
-    useEffect(() => {
-        const beforeunloadHandler = (e) => {
-            e.preventDefault()
-            e.returnValue = true
-        }
-
-        window.addEventListener("beforeunload", beforeunloadHandler)
-
-        return () => {
-            window.removeEventListener("beforeunload", beforeunloadHandler)
-        }
-    }, [reportObject])
-
     function handlePrint() {
         window.print()
     }
@@ -150,7 +136,7 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
                                 </div>
                                 {
                                     reportObject.blocks?.map((block , index) => (
-                                        <FillBlock key={index} block={block} answers={answersObject || []}/>
+                                        <FillBlock key={index} block={block} answers={answersObject || []} />
                                     ))
                                 }
                             </>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Head from "next/head";
 import Main from "src/components/globalWrappers/main";
 import ViewHeader from "src/components/pages/view/viewHeader";
@@ -10,6 +10,7 @@ import {useCreateAnswers} from "@/queries/forms";
 import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
 import styles from "./formView.module.css";
 import Header from "src/components/globalWrappers/header";
+import FormikObserver from "@/components/formikObserver";
 
 const FormView = ({ formData }) => {
     const router = useRouter()
@@ -97,19 +98,6 @@ const FormView = ({ formData }) => {
          initialValues[e.id] = (e.type === "checkbox") ? [] : ""
     })
 
-    useEffect(() => {
-        const beforeunloadHandler = (e) => {
-            e.preventDefault()
-            e.returnValue = true
-        }
-
-        window.addEventListener("beforeunload", beforeunloadHandler)
-
-        return () => {
-            window.removeEventListener("beforeunload", beforeunloadHandler)
-        }
-    }, [])
-
     return (
         <>
             <Head>
@@ -138,14 +126,15 @@ const FormView = ({ formData }) => {
                                 </div>
                             </div>
                             <Form>
-                            {
-                                formObject.questions.map((question , index) => (
-                                    <ViewBlock
-                                        key={index}
-                                        question={question}
-                                    />
-                                ))
-                            }
+                                <FormikObserver/>
+                                {
+                                    formObject.questions.map((question , index) => (
+                                        <ViewBlock
+                                            key={index}
+                                            question={question}
+                                        />
+                                    ))
+                                }
                             </Form>
                         </ConstructorColumn>
                     </Main>
