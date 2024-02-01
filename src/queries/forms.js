@@ -85,10 +85,11 @@ export const useCreateAnswers = () => {
 }
 
 export const useGetAnswersByFormId = (params) => {
+    const { formId, userId } = params
+
     return useQuery({
         queryKey: ['GetAnswersByFormId', params],
         queryFn: async () => {
-            const { formId, userId } = params
             return (await axios.get('/api/form/answers', {
                 params: {
                     formId: formId,
@@ -96,7 +97,7 @@ export const useGetAnswersByFormId = (params) => {
                 }
             })).data
         },
-        enabled: false
+        enabled: !!formId
     })
 }
 

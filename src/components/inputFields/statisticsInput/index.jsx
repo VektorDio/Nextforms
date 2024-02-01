@@ -4,7 +4,7 @@ import SelectInput from "@/components/inputFields/selectInput";
 import CheckboxInput from "@/components/inputFields/checkboxInput";
 
 const StatisticsInput = ({answers}) => {
-    const [answer, setAnswer] = useState(answers[0])
+    const [question, setQuestion] = useState()
     const [options, setOptions] = useState({
         amountOfAnswers: false,
         amountByOptions: false,
@@ -19,11 +19,17 @@ const StatisticsInput = ({answers}) => {
     return (
         <div>
             <div className={styles.selectContainer}>
-                <SelectInput placeholder={"Select questions"} instanceId={"select-questions"} options={optionsArray} onChange={(choice)=> setAnswer(answers[choice.value])}/>
+                <SelectInput
+                    placeholder={"Select questions"}
+                    instanceId={"select-questions"}
+                    options={optionsArray}
+                    onChange={(choice)=> setQuestion(answers[choice.value])}
+                    isSearchable={false}
+                />
             </div>
             <div className={styles.checkboxContainer}>
                 {
-                    (answer) && (
+                    (question) && (
                         <>
                             <CheckboxInput
                                 text={"Amount of answers"}
@@ -40,27 +46,23 @@ const StatisticsInput = ({answers}) => {
             <div className={styles.statisticsContainer}>
                 {
                     (options.amountOfAnswers) && (
-                        <div>
-                            Answers given: {answer.answers.length}
-                        </div>
+                        <div> Answers given: {question.answers.length} </div>
                     )
                 }
+                <div>
                 {
                     (options.amountByOptions) && (
-                        <div>
-                            {
-                                answer?.options.map((e, i) => {
-                                    let counter = answer.answers.flat().reduce((acc, el) => ((el === e)) ? acc + 1 : acc, 0)
-                                    return (
-                                        <div key={i}>
-                                            {e} - {counter}
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
+                        question.options.map((e, i) => {
+                            let counter = question.answers.flat().reduce((acc, el) => ((el === e)) ? acc + 1 : acc, 0)
+                            return (
+                                <div key={i}>
+                                    {e} - {counter}
+                                </div>
+                            )
+                        })
                     )
                 }
+                </div>
             </div>
         </div>
     );

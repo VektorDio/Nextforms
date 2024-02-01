@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
         }
     }
 
-    const {formId, reportId} = context.query
+    const { formId, reportId } = context.query
     const userId = session.user.id
 
     let formList, reportList

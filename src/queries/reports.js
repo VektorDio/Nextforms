@@ -15,10 +15,11 @@ export const useAddReport = () => {
 }
 
 export const useGetReportById = (params) => {
+    const { reportId, userId } = params
+
     return useQuery({
         queryKey: ['GetReportById', params],
         queryFn: async () => {
-            const { reportId, userId } = params
             return (await axios.get('/api/report', {
                 params: {
                     reportId: reportId,
@@ -26,7 +27,7 @@ export const useGetReportById = (params) => {
                 }
             })).data
         },
-        enabled: false
+        enabled: !!reportId
     })
 }
 

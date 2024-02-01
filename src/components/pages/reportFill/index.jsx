@@ -13,7 +13,6 @@ import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
 import FillHeader from "src/components/pages/reportFill/fillHeader";
 import Header from "src/components/globalWrappers/header";
 import isValidIdObject from "@/utils/utils";
-import SimpleMessage from "@/components/messages/simpleMessage";
 
 const ReportFill = ({ formList, reportList, userId, report, answers }) => {
     const router = useRouter()
@@ -23,18 +22,17 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
     const [formId, setFormId] = useState(queryFormId)
 
     const [reportObject, setReportObject] = useState(() => {
-        return report ? {...report.report} : null
+        return report ? {...report} : null
     })
+
     const [answersObject, setAnswersObject] = useState(() => {
-        return answers ? [...answers.questions] : null
+        return answers ? {...answers} : null
     })
 
     const {
         error: reportError,
         data: reportData,
         isInitialLoading: reportLoading,
-        refetch: refetchReport,
-        isFetching: reportFetching
     } = useGetReportById({
         reportId: reportId,
         userId: userId
@@ -44,8 +42,6 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
         error: answersError,
         data: answersData,
         isInitialLoading: answersLoading,
-        refetch: refetchAnswers,
-        isFetching: answersFetching
     } = useGetAnswersByFormId({
         formId: formId,
         userId: userId
@@ -62,18 +58,6 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
             setAnswersObject([...answersData.questions])
         }
     }, [answersData])
-
-    useEffect(() => {
-        if (isValidIdObject(formId)) {
-            refetchAnswers()
-        }
-    }, [formId])
-
-    useEffect(() => {
-        if (isValidIdObject(reportId)) {
-            refetchReport()
-        }
-    }, [reportId])
 
     function handleFormIdChange(formId) {
         if (isValidIdObject(formId)) {
@@ -114,8 +98,6 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
                     {
                         (reportLoading || answersLoading) ? (
                             <LoadingMessage/>
-                        ) : (reportFetching || answersFetching) ? (
-                            <SimpleMessage>Fetching data...</SimpleMessage>
                         ) : (reportError || answersError) ? (
                             <ErrorMessage error={(reportError?.message || answersError?.message)}/>
                         ) : (reportObject) && (
@@ -136,7 +118,7 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
                                 </div>
                                 {
                                     reportObject.blocks?.map((block , index) => (
-                                        <FillBlock key={index} block={block} answers={answersObject || []} />
+                                        <FillBlock key={index} block={block} answers={answersObject} />
                                     ))
                                 }
                             </>
