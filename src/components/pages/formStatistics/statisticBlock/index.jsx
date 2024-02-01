@@ -1,18 +1,17 @@
 import React from 'react';
 import styles from './constructorBlock.module.css'
 import {Bar, Pie} from "react-chartjs-2";
-import {ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
+import {Chart as ChartJS, ArcElement, BarElement, CategoryScale, Legend, LinearScale, Tooltip} from "chart.js";
 
 ChartJS.register(
     CategoryScale,
     LinearScale,
     BarElement,
-    Title,
+    ArcElement,
     Tooltip,
     Legend
 );
 
-ChartJS.register(ArcElement, Tooltip, Legend);
 export const options = {
     responsive: true,
     plugins: {
@@ -21,6 +20,7 @@ export const options = {
         },
     },
 };
+
 const StatisticBlock = ({question}) => {
 
     const colors = [

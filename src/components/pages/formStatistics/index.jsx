@@ -2,10 +2,11 @@ import React from "react";
 import Head from "next/head";
 import ConstructorHeader from "@/components/pages/formRedact/constructorHeader";
 import Main from "src/components/globalWrappers/main";
-import StatisticBlock from "src/components/pages/formStatistics/statisticBlock";
 import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
 import styles from "./statistics.module.css";
 import Header from "src/components/globalWrappers/header";
+import dynamic from "next/dynamic";
+import LoadingMessage from "@/components/messages/loadingMessage";
 
 const FormStatistics = ({data, formId}) => {
     const answersCount = data.questions.reduce((acc, val) => (acc + val.answers.length), 0)
@@ -32,7 +33,7 @@ const FormStatistics = ({data, formId}) => {
                     </div>
                     {
                         data.questions.map((question, index) => (
-                            <StatisticBlock
+                            <DynamicStatisticBlock
                                 key={index}
                                 question={question}
                             />
@@ -43,5 +44,9 @@ const FormStatistics = ({data, formId}) => {
         </>
     );
 };
+
+const DynamicStatisticBlock = dynamic(() => import('src/components/pages/formStatistics/statisticBlock'), {
+    loading: () => <LoadingMessage/>,
+})
 
 export default FormStatistics;

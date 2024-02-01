@@ -11,7 +11,7 @@ import TextParagraph from "@/components/inputFields/textParagraph";
 import ToggleButton from "@/components/buttons/toggleButton";
 import Header from "src/components/globalWrappers/header";
 import FormAlert from "@/components/messages/formAlert";
-import useBeforeUnload from "@/hooks";
+import useBeforeUnload from "@/hooks/useBeforeUnload";
 
 const FormRedact = ({ data }) => {
     const router = useRouter()

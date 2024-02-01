@@ -10,7 +10,7 @@ import styles from "./reportRedact.module.css";
 import TextParagraph from "@/components/inputFields/textParagraph";
 import Header from "src/components/globalWrappers/header";
 import FormAlert from "@/components/messages/formAlert";
-import useBeforeUnload from "@/hooks";
+import useBeforeUnload from "@/hooks/useBeforeUnload";
 
 const ReportRedact = ({ data }) => {
     const router = useRouter()
