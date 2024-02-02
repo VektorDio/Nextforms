@@ -1,11 +1,11 @@
 .button{
     background-color: #3a4556;
     border: none;
-    margin: 4px 8px;
+    margin: 4px 0;
     border-radius: 8px;
     transition: 0.3s;
 
-    width: 50px;
+    width: 100%;
     height: 50px;
 }
 

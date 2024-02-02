@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const HomeColumn = () => {
     return (
-        <div className={styles.mainColumn}>
+        <div className={styles.homeColumn}>
             <div className={styles.textContainer}>
                 <p className={styles.welcome}> Welcome to Nextforms! </p>
                 <p> This app allows you to create and edit simple surveys online.

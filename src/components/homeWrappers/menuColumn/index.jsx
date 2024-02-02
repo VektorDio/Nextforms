@@ -35,49 +35,56 @@ const MenuColumn = ({centralColumn}) => {
     }
 
     return (
-        <div className={styles.mainColumn}>
+        <div className={styles.menuColumn}>
 
             <Link href={`/home/profile/`}>
-                <div
-                    className={styles.menuButton}
+                <div className={styles.menuButton}
                     style={{backgroundColor: (centralColumn === "profile") ? "#365688" : null}}
                 >
                     <FontAwesomeIcon className={styles.icons} icon={faUser} />
-                    Profile
+                    <div className={styles.iconTextContainer}>
+                        Profile
+                    </div>
                 </div>
             </Link>
 
             <Link href={`/home/forms/`}>
-                <div
-                    className={styles.menuButton}
+                <div className={styles.menuButton}
                     style={{backgroundColor: (centralColumn === "form") ? "#365688" : null}}
                 >
                     <FontAwesomeIcon className={styles.icons} icon={faWindowRestore} />
-                    Forms
+                    <div className={styles.iconTextContainer}>
+                        Forms
+                    </div>
                 </div>
             </Link>
 
             <Link href={`/home/reports/`}>
-                <div
-                    className={styles.menuButton}
+                <div className={styles.menuButton}
                     style={{backgroundColor: (centralColumn === "report") ? "#365688" : null}}
                 >
                     <FontAwesomeIcon className={styles.icons} icon={faWindowMaximize} />
-                    Reports
+                    <div className={styles.iconTextContainer}>
+                        Reports
+                    </div>
                 </div>
             </Link>
 
             <div onClick={handleFormCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
-                    New form
+                    <div className={styles.iconTextContainer}>
+                        New form
+                    </div>
                 </div>
             </div>
 
             <div onClick={handleReportCreation} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
-                    New report
+                    <div className={styles.iconTextContainer}>
+                        New report
+                    </div>
                 </div>
             </div>
 

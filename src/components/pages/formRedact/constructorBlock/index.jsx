@@ -10,8 +10,9 @@ import OptionInput from "@/components/inputFields/optionInput";
 import DateInput from "@/components/inputFields/dateInput";
 import TimeInput from "@/components/inputFields/timeInput";
 import SimpleButton from "@/components/buttons/simpleButton";
+import classNames from "classnames";
 
-const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, maxOptions=10}) => {
+const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, maxOptions=10, maxQuestionLength=120}) => {
     const [options, setOptions] = useState(() => {
         return question.options !== undefined ? question.options : []
     })
@@ -181,7 +182,7 @@ const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, m
 
     return (
         <div
-            className={isSelected ? styles.outerContainer : styles.outerContainerDisabled}
+            className={(isSelected) ? styles.outerContainer : styles.outerContainerDisabled}
             onClick={(e) => setSelectedBlockId(e, questionIndex)}
         >
             <div className={styles.container}>
@@ -193,7 +194,7 @@ const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, m
                                 placeholder="Questions"
                                 onBlur={(e) => handleQuestionChange(questionIndex, e.currentTarget.textContent)}
                                 defaultValue={question.question}
-                                maxLength={120}
+                                maxLength={maxQuestionLength}
                                 />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
@@ -204,7 +205,7 @@ const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, m
                                 </div>
                             </>
                         ) : (
-                            <div className={(question.question.length > 0) ? styles.unselectedText : styles.unselectedPlaceholder}>
+                            <div className={classNames(styles.unselectedText, (question.question.length > 0) && styles.unselectedPlaceholder)}>
                                 {question.question || "Empty question"}
                             </div>
                         )
@@ -219,8 +220,10 @@ const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, m
                     <SimpleButton onClick={() => handleDelete(questionIndex)} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
-            <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>
-                <AddButton onClick={()=> handleAdd(questionIndex)}/>
+            <div className={styles.addButtonColumn} style={(isSelected) ? null : {display:"none"}}>
+                <div className={styles.addButton}>
+                    <AddButton onClick={()=> handleAdd(questionIndex)}/>
+                </div>
             </div>
         </div>
     );

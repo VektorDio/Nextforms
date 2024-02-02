@@ -10,14 +10,6 @@
 }
 
 .movableHeader{
-    background-color: #161b22;
-    font-size: 14px;
-    width: 100%;
-    padding: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 8vh;
     top: 0;
     z-index: 2;
     position: fixed;
@@ -30,7 +22,18 @@
 
 .iconBlock{
     display: inherit;
-    width: 40%;
+    min-width: 40%;
+}
+
+@media screen and (max-width: 430px) {
+    .iconBlock{
+        padding-bottom: 10px;
+    }
+
+    .header{
+        flex-direction: column;
+        min-width: 250px;
+    }
 }
 
 

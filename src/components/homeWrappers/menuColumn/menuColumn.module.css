@@ -1,12 +1,13 @@
-.mainColumn{
+.menuColumn{
     background-color: #0d1117;
     min-height: 92vh;
-    width: 15%;
+    width: 17%;
     display: block;
     float: left;
 }
 
 .menuButton{
+    display: flex;
     padding: 15px;
     font-size: 24px;
     font-weight: 600;
@@ -19,6 +20,35 @@
 }
 
 .icons {
-    width: 27px;
-    padding-right: 10px;
+    width: 20px;
+}
+
+.iconTextContainer{
+    padding-left: 10px;
+}
+
+@media screen and (max-width: 960px) {
+    .menuColumn {
+        display: flex;
+        width: 100%;
+        min-height: auto;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .menuButton {
+        height: 100%;
+        width: 20vw;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .iconTextContainer{
+        display: none;
+    }
+
+    .icons {
+        width: 25px;
+    }
 }

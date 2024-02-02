@@ -13,3 +13,11 @@
     transition: 0.3s;
 }
 .signUpBtn:hover {background-color: #14335e;}
+
+@media screen and (max-width: 430px) {
+    .signUpBtn {
+        width: 100%;
+        min-width: 170px;
+        margin: 4px 0;
+    }
+}

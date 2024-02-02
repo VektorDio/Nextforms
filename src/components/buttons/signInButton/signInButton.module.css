@@ -13,4 +13,13 @@
     font-weight: 600;
     color: white;
 }
+
 .signInBtn:hover {background-color: #272e3a;}
+
+@media screen and (max-width: 430px) {
+    .signInBtn {
+        width: 100%;
+        min-width: 170px;
+        margin: 4px 0;
+    }
+}

@@ -33,19 +33,19 @@ const ProfileColumn = () => {
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
     if (isLoading || isUpdating) return (
-        <div className={styles.container}>
+        <div className={styles.profileColumn}>
             <LoadingMessage/>
         </div>
     )
 
     if (updateError || updatingError || deleteError) return (
-        <div className={styles.container}>
+        <div className={styles.profileColumn}>
             <ErrorMessage error={updateError?.message || updatingError?.message || deleteError?.message}/>
         </div>
     )
 
     if (data.user === null) return (
-        <div className={styles.container}>
+        <div className={styles.profileColumn}>
             <SimpleMessage>There no such user.</SimpleMessage>
         </div>
     )
@@ -163,7 +163,7 @@ const ProfileColumn = () => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.profileColumn}>
             <div className={styles.profileContainer}>
                 <div className={styles.generalBlock}>
                     <Formik

@@ -1,5 +1,11 @@
 .columnWrapper{
-    background-color: #0d1117;
+    background-color: #010409;
     display: flex;
 }
 
+@media screen and (max-width: 960px) {
+    .columnWrapper {
+        display: flex;
+        flex-direction: column;
+    }
+}

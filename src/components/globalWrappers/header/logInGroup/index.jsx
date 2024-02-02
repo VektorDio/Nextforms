@@ -13,14 +13,16 @@ const LogInGroup = ({authenticated}) => {
             <SimpleButton onClick={() => signOut({ callbackUrl: "/" })} iconType={"arrowRight"} bgColor={"red"}/>
         </div>
     ):(
-        <div className={styles.sideBlock}>
-            <Link href={"/login"}>
-                <SignInButton/>
-            </Link>
-            <Link href={"/register"}>
-                <SignUpButton/>
-            </Link>
-        </div>
+        <>
+            <div className={styles.sideBlock}>
+                <Link href={"/login"}>
+                    <SignInButton/>
+                </Link>
+                <Link href={"/register"}>
+                    <SignUpButton/>
+                </Link>
+            </div>
+        </>
     )
 };
 

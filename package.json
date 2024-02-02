@@ -21,6 +21,7 @@
     "axios": "1.6.0",
     "bson-objectid": "^2.0.4",
     "chart.js": "^4.4.1",
+    "classnames": "^2.5.1",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "formik": "^2.2.9",

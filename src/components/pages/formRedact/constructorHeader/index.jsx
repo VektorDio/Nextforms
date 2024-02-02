@@ -9,23 +9,12 @@ export default function ConstructorHeader({id, onFormSubmit}) {
     return (
         <>
             <div className={styles.centerBlock}>
-                {
-                    (id) ? (
-                        <>
-                            <Link href={`/home/formConstructor/redact/${id}`} replace={true}>
-                                <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
-                            </Link>
-                            <Link href={`/home/formConstructor/statistics/${id}`} replace={true}>
-                                <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
-                            <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
-                        </>
-                    )
-                }
+                <Link href={(id) ? `/home/formConstructor/redact/${id}` : "#"} replace={true}>
+                    <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
+                </Link>
+                <Link href={(id) ? `/home/formConstructor/statistics/${id}` : "#"} replace={true}>
+                    <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
+                </Link>
             </div>
 
             <div className={styles.sideBlock}>

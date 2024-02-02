@@ -1,4 +1,4 @@
-.container{
+.profileColumn{
     background-color: #010409;
     min-height: 92vh;
     width: 60%;
@@ -74,4 +74,11 @@
     align-items: center;
     padding: 8px 0;
     font-size: 18px;
+}
+
+@media screen and (max-width: 960px) {
+    .profileColumn {
+        align-self: center;
+        width: 100%;
+    }
 }

@@ -1,4 +1,4 @@
-.mainColumn{
+.homeColumn{
     background-color: #010409;
     min-height: 92vh;
     width: 60%;
@@ -28,5 +28,12 @@
 
 .link {
     text-decoration: underline;
+}
+
+@media screen and (max-width: 960px) {
+    .homeColumn {
+        align-self: center;
+        width: 100%;
+    }
 }
 

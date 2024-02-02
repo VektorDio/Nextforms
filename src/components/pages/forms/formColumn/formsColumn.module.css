@@ -6,3 +6,10 @@
     padding: 3vh 5vh;
     float: left;
 }
+
+@media screen and (max-width: 960px) {
+    .container {
+        align-self: center;
+        width: 100%;
+    }
+}
