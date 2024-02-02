@@ -20,8 +20,6 @@ export default async function handler(req, res) {
 async function postHandler(req, res) {
     const { email, password } = req.body
 
-    let user
-
     const emailSchema = Yup.string().email().max(40).required()
     const passwordSchema = Yup.string().min(8).max(150)
         .matches(/[^\s-]/)
@@ -33,6 +31,8 @@ async function postHandler(req, res) {
     if (!emailSchema.isValidSync(email) || !passwordSchema.isValidSync(password)) {
         return res.status(400).send({ message: "Malformed data."})
     }
+
+    let user
 
     try {
         const userToSearch = await prisma.user.findUnique({
@@ -93,9 +93,7 @@ async function patchHandler(req, res, session) {
     const phoneRegex = /^[\\+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/
 
     const emailSchema = Yup.string().email().max(40)
-    const secondaryEmailSchema = Yup.string().email().max(40)
-    const lastNameSchema = Yup.string().max(30)
-    const firstNameSchema = Yup.string().max(30)
+    const nameSchema = Yup.string().max(30)
     const phoneNumberSchema = Yup.string().matches(phoneRegex, { excludeEmptyString: true }).max(20).nullable(true)
     const passwordSchema = Yup.string().min(8).max(150)
         .matches(/[^\s-]/)
@@ -106,10 +104,10 @@ async function patchHandler(req, res, session) {
 
     if (!emailSchema.isValidSync(email) ||
         !passwordSchema.isValidSync(newPassword) ||
-        !lastNameSchema.isValidSync(lastName) ||
-        !firstNameSchema.isValidSync(firstName) ||
+        !nameSchema.isValidSync(lastName) ||
+        !nameSchema.isValidSync(firstName) ||
         !phoneNumberSchema.isValidSync(phoneNumber) ||
-        !secondaryEmailSchema.isValidSync(secondaryEmail)) {
+        !emailSchema.isValidSync(secondaryEmail)) {
         return res.status(400).send({ message: "Malformed data."})
     }
 

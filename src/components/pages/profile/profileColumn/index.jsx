@@ -68,7 +68,7 @@ const ProfileColumn = () => {
         phoneNumber: phoneNumber ? phoneNumber : "",
     }
 
-    async function onGeneralSubmit(values, setSubmitting) {
+    async function onGeneralSubmit(values) {
         const { firstName, lastName, phoneNumber } = values
 
         await updateUser({
@@ -78,7 +78,6 @@ const ProfileColumn = () => {
             phoneNumber:phoneNumber,
         })
 
-        setSubmitting(false)
     }
 
     const emailSchema = Yup.object({
@@ -125,7 +124,7 @@ const ProfileColumn = () => {
         confirmNewPassword: ''
     }
 
-    async function onPasswordSubmit(values, setSubmitting) {
+    async function onPasswordSubmit(values) {
         const {currentPassword, newPassword, confirmNewPassword} = values
 
         if (newPassword === confirmNewPassword) {
@@ -135,8 +134,6 @@ const ProfileColumn = () => {
                 newPassword: newPassword
             })
         }
-
-        setSubmitting(false)
     }
 
     const deleteSchema = Yup.object({
@@ -150,7 +147,7 @@ const ProfileColumn = () => {
         confirmNewPassword: ''
     }
 
-    async function onDeleteSubmit(values, setSubmitting) {
+    async function onDeleteSubmit(values) {
         const { email, password } = values
 
         await deleteUser({
@@ -163,8 +160,6 @@ const ProfileColumn = () => {
                 signOut()
             }
         })
-
-        setSubmitting(false)
     }
 
     return (
@@ -174,7 +169,7 @@ const ProfileColumn = () => {
                     <Formik
                         initialValues={generalInitialValues}
                         validationSchema={generalSchema}
-                        onSubmit={async (values, {setSubmitting}) => onGeneralSubmit(values, setSubmitting)}
+                        onSubmit={async (values) => onGeneralSubmit(values)}
                         validateOnBlur={false}
                     >
                     {(formik) => (
@@ -257,7 +252,7 @@ const ProfileColumn = () => {
                     <Formik
                         initialValues={emailInitialValues}
                         validationSchema={emailSchema}
-                        onSubmit={async (values, {setSubmitting}) => onEmailSubmit(values, setSubmitting)}
+                        onSubmit={async (values) => onEmailSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
@@ -320,7 +315,7 @@ const ProfileColumn = () => {
                     <Formik
                         initialValues={passwordInitialValues}
                         validationSchema={passwordSchema}
-                        onSubmit={async (values, {setSubmitting}) => onPasswordSubmit(values, setSubmitting)}
+                        onSubmit={async (values) => onPasswordSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>
@@ -397,7 +392,7 @@ const ProfileColumn = () => {
                     <Formik
                         initialValues={deleteInitialValues}
                         validationSchema={deleteSchema}
-                        onSubmit={async (values, {setSubmitting}) => onDeleteSubmit(values, setSubmitting)}
+                        onSubmit={async (values) => onDeleteSubmit(values)}
                         validateOnBlur={false}
                     >{(formik) => (
                         <Form>

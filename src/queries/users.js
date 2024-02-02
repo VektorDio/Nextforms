@@ -38,6 +38,16 @@ export const useGetUserById = (params) => {
     })
 }
 
+export const useResetPassword = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data) => {
+            await axios.post('/api/user/passwordReset', data)
+            await queryClient.invalidateQueries({ queryKey: ['GetUserById'] })
+        }
+    })
+}
+
 export const useDeleteUserById = () => {
     const queryClient = useQueryClient()
     return useMutation({

@@ -86,7 +86,7 @@ const Login = () => {
                                 <div className={styles.passwordGrid}>
                                     <label htmlFor="password">Password</label>
                                     <div className={styles.resetPassText}>
-                                        <Link href="/src/pages">Forgot your password?</Link>
+                                        <Link href="/forgotPassword">Forgot your password?</Link>
                                     </div>
                                 </div>
                                 <MyTextInput
