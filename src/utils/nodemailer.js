@@ -25,7 +25,7 @@ export async function sendMail(subject, toEmail, otpText) {
     await new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                reject(throw new Error(error, info))
+                reject(new Error(error, info))
             } else {
                 console.log("Email Sent")
                 resolve(true)
