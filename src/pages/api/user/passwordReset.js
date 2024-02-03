@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import prisma from "@/server";
-import {sendMail} from "@/utils/nodemailer";
+import {sendMail} from "@/server/nodemailer";
 
 
 export default async function handler(req, res) {

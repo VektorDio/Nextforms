@@ -8,10 +8,10 @@ export async function sendMail(subject, toEmail, otpText) {
         auth: {
             type: 'OAuth2',
             user: "nextformsNoreply@gmail.com",
-            clientId: local_settings.my_oauth_client_id,
-            clientSecret: local_settings.my_oauth_client_secret,
-            refreshToken: local_settings.my_oauth_refresh_token,
-            accessToken: local_settings.my_oauth_access_token
+            clientId: process.env.NODEMAILER_CLIENT_ID,
+            clientSecret: process.env.NODEMAILER_CLIENT_SECRET,
+            refreshToken: process.env.NODEMAILER_REFRESH_TOKEN,
+            accessToken: process.env.NODEMAILER_ACCESS_TOKEN
         }
     });
 
