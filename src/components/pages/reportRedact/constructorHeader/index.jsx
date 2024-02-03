@@ -7,9 +7,9 @@ export default function ConstructorHeader({onReportSubmit}) {
     return (
         <div className={styles.sideBlock}>
             {
-                (onReportSubmit) && <SimpleButton onClick={onReportSubmit} iconType={"check"} bgColor={"#399412"}/>
+                (onReportSubmit) && <SimpleButton onClick={onReportSubmit} iconType={"check"} bgColor={"#399412"} adaptive={true}/>
             }
-            <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"}/>
+            <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} adaptive={true}/>
         </div>
     )
 }

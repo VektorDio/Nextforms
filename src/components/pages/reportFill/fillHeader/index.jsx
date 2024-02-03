@@ -43,8 +43,8 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
             </div>
 
             <div className={styles.sideBlock}>
-                <SimpleButton onClick={handlePrint} iconType={"print"} bgColor={"#399412"}/>
-                <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} />
+                <SimpleButton onClick={handlePrint} iconType={"print"} bgColor={"#399412"} adaptive={true}/>
+                <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} adaptive={true}/>
             </div>
         </>
     );

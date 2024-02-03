@@ -9,19 +9,20 @@
     border-radius: 4px;
 }
 
-.formEntry:hover{
-    background-color: #1f2a3a;
+.formName{
+    display: flex;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    word-wrap: anywhere;
 }
 
 .buttons{
     display: flex;
 }
 
-.formName{
-    display: flex;
-    width: 100%;
-    height: 48px;
-    align-items: center;
+.formEntry:hover{
+    background-color: #1f2a3a;
 }
 
 .copyMessage{
@@ -46,4 +47,25 @@
 
 .copyMessageContainer{
     position: relative;
+}
+
+@media screen and (max-width: 760px) {
+    .formEntry {
+        flex-direction: column;
+    }
+
+    .formName {
+        justify-content: center;
+    }
+
+    .buttons {
+        min-width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .buttons{
+        flex-wrap: wrap;
+    }
 }

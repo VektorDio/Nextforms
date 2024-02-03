@@ -1,10 +1,12 @@
 .container{
     background-color: #272e3a;
     height:1%;
-    width: 80vh;
+    max-width: 80vh;
+    width: 100%;
     border-radius: 12px;
     padding: 29px;
     overflow:hidden;
+    margin: 0 auto;
 }
 
 .formName{
@@ -14,4 +16,10 @@
 
 .formDescription{
     font-size: 16px;
+}
+
+@media screen and (max-width: 430px) {
+    .container {
+        margin: 12vh auto 0 auto;
+    }
 }

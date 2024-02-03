@@ -17,13 +17,15 @@ const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
             <div className={styles.formName}>{formEntry.name}</div>
             <div className={styles.buttons}>
                 <ActivityButton toggled={formEntry.active} onClick={() => onActivityToggle(formEntry.id, !formEntry.active)}/>
+
                 <div className={styles.copyMessageContainer} onMouseLeave={() => setIsMessageCopied(false)}>
                     <div className={styles.copyMessage}
                          style={{opacity: (isMessageCopied) ? 100 : 0,
                              visibility: (isMessageCopied) ? "visible" : "hidden"}}
                     > Copied to clipboard </div>
-                    <SimpleButton onClick={handleGenerateLink} iconType={"link"} bgColor={"#3a4556"}/>
+                    <SimpleButton onClick={handleGenerateLink} iconType={"link"} bgColor={"#3a4556"} />
                 </div>
+
                 <Link href={`/home/formConstructor/redact/${formEntry.id}`}>
                     <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
                 </Link>

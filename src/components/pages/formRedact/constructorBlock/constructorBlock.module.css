@@ -54,6 +54,10 @@
     }
 }
 
+.btnContainer{
+    width: 50px;
+}
+
 .blockHeader{
     width: 100%;
     display: flex;

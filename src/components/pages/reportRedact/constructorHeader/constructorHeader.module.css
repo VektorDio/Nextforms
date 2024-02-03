@@ -1,5 +1,18 @@
 .sideBlock{
     display: flex;
     justify-content: right;
-    width: 40%;
+    width: 30%;
+}
+
+@media screen and (max-width: 430px) {
+    .sideBlock {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sideBlock a {
+        width: 100%;
+    }
+
 }

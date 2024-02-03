@@ -89,7 +89,7 @@ async function patchHandler(req, res, session) {
     const { id:reportId, description, name, blocks, userId } = req.body
 
     const descriptionSchema = Yup.string().max(350).ensure()
-    const nameSchema = Yup.string().max(126).ensure()
+    const nameSchema = Yup.string().max(80).ensure()
     const blocksSchema = Yup.array().of(Yup.object({
         type: Yup.string().required(),
         name: Yup.string().min(1).max(120).required(),

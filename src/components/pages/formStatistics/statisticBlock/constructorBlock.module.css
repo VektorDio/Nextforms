@@ -1,11 +1,12 @@
 .container{
     background-color: #272e3a;
     height: 2%;
-    width: 80vh;
+    max-width: 80vh;
+    width: 100%;
     border-radius: 12px;
     padding: 25px 21px;
     overflow:hidden;
-    margin-top: 25px;
+    margin: 25px auto 0 auto;
 }
 
 .blockHeader{
@@ -37,7 +38,7 @@
 .diagramContainer{
     display: flex;
     justify-content: center;
-    max-height: 400px;
+    min-height: 50vh;
 }
 
 .textContainer{

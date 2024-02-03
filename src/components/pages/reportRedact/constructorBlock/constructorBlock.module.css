@@ -1,11 +1,61 @@
 .container{
     background-color: #272e3a;
     height: 2%;
-    width: 80vh;
+    max-width: 80vh;
+    width: 100%;
     border-radius: 12px;
     padding: 25px 21px;
     overflow:hidden;
+}
 
+.outerContainer{
+    max-width: 90vh;
+    width: 100%;
+    display: flex;
+    margin: 25px auto 0 auto;
+    position:relative;
+    left: 5vh;
+}
+
+.outerContainerDisabled{
+    max-width: 80vh;
+    width: 100%;
+    display: flex;
+    margin: 25px auto 0 auto;
+    cursor: pointer;
+}
+
+.addButtonColumn{
+    width: 10vh;
+    display: block;
+}
+
+.addButton{
+    width: 50px;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 760px) {
+    .outerContainer {
+        max-width: 80vh;
+        flex-direction: column;
+        left: 0;
+    }
+
+    .addButtonColumn {
+        max-width: 80vh;
+        width: 100%;
+        padding-top: 10px;
+    }
+
+    .addButton {
+        max-width: 80vh;
+        width: 100%;
+    }
+}
+
+.addButtonDisabled{
+    display: none;
 }
 
 .blockHeader{
@@ -24,27 +74,6 @@
     align-items: center;
 }
 
-.outerContainer{
-    display: flex;
-    margin-top: 25px;
-    margin-left: 74px;
-}
-
-.outerContainerDisabled{
-    display: flex;
-    margin-top: 25px;
-    cursor: pointer;
-}
-
-.addButton{
-    padding-left: 8px;
-    display: block;
-}
-
-.addButtonDisabled{
-    display: none;
-}
-
 .blockInput{
     padding: 10px 8px;
 }
@@ -57,10 +86,10 @@
     width: 45%;
 }
 
-.oneLineSelect {
+.selectContainer{
     width: 45%;
-
 }
+
 
 .unselectedText{
     font-size: 24px;
@@ -72,9 +101,14 @@
     user-select: none;
 }
 
-.selectContainer{
-    width: 45%;
+@media screen and (max-width: 450px) {
+    .oneLineText{
+        width: 100%;
+        align-self: center;
+    }
 }
+
+
 
 
 

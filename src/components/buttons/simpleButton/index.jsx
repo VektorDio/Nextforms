@@ -28,14 +28,13 @@ const icons = {
     settings: faGear,
 }
 
-const SimpleButton = ({onClick, type, iconType, bgColor}) => {
+const SimpleButton = ({onClick, type, iconType, bgColor, adaptive=false}) => {
     return (
-        <div>
-            <button className={styles.button} onClick={onClick} type={type} style={{backgroundColor: bgColor}}>
-                <FontAwesomeIcon className={styles.icon} icon={icons[iconType]}/>
-            </button>
-        </div>
-    );
-};
+        <button className={styles.button} onClick={onClick} type={type}
+                style={{backgroundColor: bgColor, width: (adaptive) ? null : "40px", minWidth: (adaptive) ? null : "0"}}>
+            <FontAwesomeIcon className={styles.icon} icon={icons[iconType]}/>
+        </button>
+    )
+}
 
 export default SimpleButton;

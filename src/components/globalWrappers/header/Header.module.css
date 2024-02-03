@@ -22,8 +22,20 @@
 
 .iconBlock{
     display: inherit;
-    min-width: 40%;
+    min-width: 30%;
 }
+
+@media screen and (max-width: 730px) {
+    .iconBlockEarly{
+        padding-bottom: 10px;
+    }
+
+    .headerEarly{
+        flex-direction: column;
+        min-width: 250px;
+    }
+}
+
 
 @media screen and (max-width: 430px) {
     .iconBlock{
@@ -35,5 +47,7 @@
         min-width: 250px;
     }
 }
+
+
 
 

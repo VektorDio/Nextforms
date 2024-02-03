@@ -1,7 +1,7 @@
 .sideBlock{
     display: flex;
     justify-content: right;
-    width: 40%;
+    width: 30%;
 }
 
 .centerBlock{
@@ -20,5 +20,34 @@
 @media print {
     .header {
         display: none;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .centerBlock {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sideBlock {
+        justify-content: center;
+    }
+
+    .selectContainer {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .sideBlock {
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .sideBlock a {
+        width: 100%;
     }
 }

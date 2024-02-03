@@ -38,14 +38,14 @@ const FillBlock = ({block, answers}) => {
     }
 
     return (
-            <div className={styles.container}>
-                <div className={styles.blockHeader}>
-                    <div className={styles.unselectedText}>{block.name || "Text"}</div>
-                </div>
-                <div className={styles.blockInput}>
-                    {component}
-                </div>
+        <div className={styles.container}>
+            <div className={styles.blockHeader}>
+                <div className={styles.unselectedText}>{block.name || "Text"}</div>
             </div>
+            <div className={styles.blockInput}>
+                {component}
+            </div>
+        </div>
     );
 };
 

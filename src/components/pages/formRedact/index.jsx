@@ -196,7 +196,7 @@ const FormRedact = ({ data }) => {
                                 onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
                                 placeholder={"New form"}
                                 defaultValue={formObject.name}
-                                maxLength={126}
+                                maxLength={80}
                             />
                         </div>
                         <div className={styles.formDescription}>

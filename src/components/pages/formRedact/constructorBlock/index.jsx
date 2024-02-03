@@ -217,7 +217,9 @@ const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, m
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
                     <ToggleButton onClick={(e) => handleRequiredToggle(questionIndex, e.target.checked)} text={"Required"} checked={question.required}/>
-                    <SimpleButton onClick={() => handleDelete(questionIndex)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                    <div className={styles.btnContainer}>
+                        <SimpleButton onClick={() => handleDelete(questionIndex)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                    </div>
                 </div>
             </div>
             <div className={styles.addButtonColumn} style={(isSelected) ? null : {display:"none"}}>

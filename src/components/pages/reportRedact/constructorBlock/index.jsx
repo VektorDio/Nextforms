@@ -7,7 +7,7 @@ import InlineInput from "@/components/inputFields/inlineInput";
 import TextParagraph from "@/components/inputFields/textParagraph";
 import SimpleButton from "@/components/buttons/simpleButton";
 
-const ConstructorBlock = ({block, index, handlers, selectedBlockId}) => {
+const ConstructorBlock = ({block, index, handlers, selectedBlockId, maxBlockName=120}) => {
 
     const {
         handleDelete,
@@ -73,7 +73,7 @@ const ConstructorBlock = ({block, index, handlers, selectedBlockId}) => {
                                 placeholder="Text"
                                 defaultValue={block.name}
                                 onBlur={(e) => handleNameChange(index, e.currentTarget.textContent)}
-                                maxLength={120}
+                                maxLength={maxBlockName}
                             />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
@@ -87,7 +87,6 @@ const ConstructorBlock = ({block, index, handlers, selectedBlockId}) => {
                             <div className={styles.unselectedText}>{block.name || "Text"}</div>
                         )
                     }
-
                 </div>
                 <div className={styles.blockInput}>
                     {component}
@@ -96,8 +95,10 @@ const ConstructorBlock = ({block, index, handlers, selectedBlockId}) => {
                     <SimpleButton onClick={() => handleDelete(index)} iconType={"xmark"} bgColor={"#d00c0c"}/>
                 </div>
             </div>
-            <div className={styles.addButton} style={(isSelected) ? null : {display:"none"}}>
-                <AddButton onClick={()=> handleAdd(index)}/>
+            <div className={styles.addButtonColumn} style={(isSelected) ? null : {display:"none"}}>
+                <div className={styles.addButton}>
+                    <AddButton onClick={()=> handleAdd(index)}/>
+                </div>
             </div>
         </div>
     );

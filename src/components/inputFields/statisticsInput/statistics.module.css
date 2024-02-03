@@ -21,3 +21,10 @@
         display: none;
     }
 }
+
+@media screen and (max-width: 450px) {
+    .selectContainer{
+        width: 100%;
+        align-self: center;
+    }
+}

@@ -14,9 +14,15 @@ ChartJS.register(
 
 export const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: {
             position: 'top',
+            labels: {
+                font: {
+                    size: 22
+                }
+            }
         },
     },
 };
@@ -43,11 +49,12 @@ const StatisticBlock = ({question}) => {
     }, {});
 
     const labels = question.options
+
     const data = {
         labels,
         datasets: [
             {
-                label: '',
+                label: labels.map(() => ""),
                 data: labels.map((e) => dataValue[e]),
                 backgroundColor: (question.type === "checkbox") ? 'rgba(84, 105, 212, 0.8)'
                     : labels.map((e, i) => (i > colors.length) ? "rgba(84, 105, 212, 0.8)" : colors[i]),

@@ -85,7 +85,7 @@ async function patchHandler(req, res, session) {
 
     const activeSchema = Yup.boolean().required()
     const descriptionSchema = Yup.string().max(350).ensure()
-    const nameSchema = Yup.string().max(126).ensure()
+    const nameSchema = Yup.string().max(80).ensure()
     const questionsSchema = Yup.array().of(Yup.object({
         type: Yup.string().required(),
         required: Yup.boolean().required(),

@@ -20,6 +20,23 @@
 .reportName{
     display: flex;
     width: 100%;
-    height: 48px;
+    height: auto;
     align-items: center;
+    word-wrap: anywhere;
+}
+
+@media screen and (max-width: 760px) {
+    .reportEntry {
+        flex-direction: column;
+    }
+
+    .reportName {
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .buttons{
+        flex-wrap: wrap;
+    }
 }

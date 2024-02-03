@@ -158,7 +158,7 @@ const ReportRedact = ({ data }) => {
                                 onBlur={(e) => handleNameChange(e.currentTarget.textContent || "")}
                                 placeholder={"Report name"}
                                 defaultValue={reportObject.name}
-                                maxLength={126}
+                                maxLength={80}
                             />
                         </div>
                         <div className={styles.formDescription}>
