@@ -1,26 +1,12 @@
 import Head from 'next/head'
-import Header from "src/components/globalWrappers/header";
-import Main from "src/components/globalWrappers/main";
+import Header from "@/components/globalWrappers/header";
+import Main from "@/components/globalWrappers/main";
 import Footer from "@/components/globalWrappers/footer";
 import React from "react";
 import styles from "./welcome.module.css"
 import LogInGroup from "@/components/globalWrappers/header/logInGroup";
-import {getServerSession} from "next-auth";
-import {authOptions} from "@/pages/api/auth/[...nextauth]";
 
-export async function getServerSideProps(context) {
-    const session = await getServerSession(context.req, context.res, authOptions)
-    if (session) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: `/home`
-            }
-        }
-    } else return { props: { }}
-}
-
-export default function WelcomePage() {
+export default function Welcome() {
   return (
       <>
           <Head>
@@ -28,6 +14,8 @@ export default function WelcomePage() {
               <meta name="description" content="Info page"/>
               <meta name="viewport" content="width=device-width, initial-scale=1"/>
               <link rel="icon" href="/favicon.ico"/>
+              <link rel="manifest" href="/manifest.json" />
+              <meta name="theme-color" content="#272e3a"/>
           </Head>
           <Header>
               <LogInGroup authenticated={false}/>

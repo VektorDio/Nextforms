@@ -1,0 +1,29 @@
+{
+    "name": "Nextforms",
+    "short_name": "Nextforms",
+    "description": "Nextforms is an application for simple surveys, forms and statistics.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#272e3a",
+    "theme_color": "#000000",
+    "icons": [
+        {
+            "src": "favicon.ico",
+            "sizes": "256x256",
+            "type": "image/x-icon",
+            "purpose": "maskable"
+        },
+        {
+            "src": "favicon.svg",
+            "sizes": "256x256",
+            "type": "image/svg",
+            "purpose": "any"
+        },
+        {
+            "src": "favicon512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

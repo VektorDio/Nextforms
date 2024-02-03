@@ -184,6 +184,8 @@ const FormRedact = ({ data }) => {
                 <meta name="description" content="Form redacting page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+                <meta name="theme-color" content="#272e3a"/>
             </Head>
             <Header movable={true}>
                 <ConstructorHeader id={formObject.id} onFormSubmit={formObject && handleFormSubmit}/>

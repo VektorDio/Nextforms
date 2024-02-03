@@ -73,6 +73,8 @@ const Register = () => {
                 <meta name="description" content="Sign up page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
+                <link rel="manifest" href="/manifest.json" />
+                <meta name="theme-color" content="#272e3a"/>
             </Head>
             <div className={styles.mainContainer}>
                 <div className={styles.siteName}>

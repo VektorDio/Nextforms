@@ -33,7 +33,7 @@ a {
 
 @media print {
   * {
-    color: black;
+    color: #000000;
   }
   body {
     padding-left: 2cm;
