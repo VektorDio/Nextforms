@@ -31,7 +31,7 @@
     }
 
     .headerEarly{
-        flex-direction: column;
+        flex-wrap: wrap;
         min-width: 250px;
     }
 }
@@ -43,7 +43,7 @@
     }
 
     .header{
-        flex-direction: column;
+        flex-wrap: wrap;
         min-width: 250px;
     }
 }

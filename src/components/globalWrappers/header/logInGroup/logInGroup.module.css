@@ -3,6 +3,12 @@
     align-items: center;
 }
 
+.singleSideBlock {
+    display: flex;
+    align-items: center;
+}
+
+
 @media screen and (max-width: 430px) {
     .sideBlock{
         flex-direction: column;

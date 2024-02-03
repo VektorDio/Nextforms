@@ -22,7 +22,7 @@
 @media screen and (max-width: 430px) {
     .button {
         width: 100%;
-        min-width: 170px;
+        min-width: 85px;
         margin: 4px 4px 8px 0;
     }
 }

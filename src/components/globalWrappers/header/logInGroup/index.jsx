@@ -8,7 +8,7 @@ import SignUpButton from "@/components/buttons/signUpButton";
 
 const LogInGroup = ({authenticated}) => {
     return (authenticated) ? (
-        <div className={styles.sideBlock}>
+        <div className={styles.singleSideBlock}>
             {/*<SettingsButton/>*/}
             <SimpleButton onClick={() => signOut({ callbackUrl: "/" })} iconType={"arrowRight"} bgColor={"red"}/>
         </div>

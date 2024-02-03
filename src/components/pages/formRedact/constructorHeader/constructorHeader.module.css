@@ -11,21 +11,12 @@
 @media screen and (max-width: 430px) {
     .sideBlock {
         width: 100%;
+        justify-content: space-evenly;
         flex-direction: column;
-        justify-content: center;
-    }
-
-    .sideBlock a {
-        width: 100%;
     }
 
     .centerBlock {
         width: 100%;
         flex-direction: column;
     }
-
-    .centerBlock a {
-        width: 100%;
-    }
-
 }

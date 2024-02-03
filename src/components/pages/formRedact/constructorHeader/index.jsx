@@ -21,6 +21,7 @@ export default function ConstructorHeader({id, onFormSubmit}) {
                 {
                     (onFormSubmit) && <SimpleButton onClick={onFormSubmit} iconType={"check"} bgColor={"#399412"} adaptive={true}/>
                 }
+
                 <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} adaptive={true}/>
             </div>
         </>
