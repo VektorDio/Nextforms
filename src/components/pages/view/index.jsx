@@ -40,7 +40,7 @@ const FormView = ({ formData }) => {
                     data: data
                 })
             } catch (e) {
-                await router.push(`/errorPage/${e}`)
+                await router.push(`/errorPage/${e.response.data.message}`)
                 return
             }
 

@@ -46,7 +46,7 @@ const FormColumn = () => {
                 (isLoading) ? (
                     <LoadingMessage/>
                 ) : (error) ? (
-                    <ErrorMessage error={error}/>
+                    <ErrorMessage error={error.response.data.message}/>
                 ) : (forms?.length > 0) ? (
                     forms?.map((entry,index) =>
                         <FormEntry

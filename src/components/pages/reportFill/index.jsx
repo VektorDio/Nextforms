@@ -101,7 +101,7 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
                         (reportLoading || answersLoading) ? (
                             <LoadingMessage/>
                         ) : (reportError || answersError) ? (
-                            <ErrorMessage error={(reportError?.message || answersError?.message)}/>
+                            <ErrorMessage error={(reportError?.response.data.message || answersError?.response.data.message)}/>
                         ) : (reportObject) && (
                             <>
                                 <div className={styles.container} >

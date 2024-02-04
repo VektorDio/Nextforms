@@ -25,7 +25,7 @@ const Register = () => {
                 password: password,
             })
         } catch (e){
-            setSubmissionError(e.message)
+            setSubmissionError(e.response.data.message)
         }
 
         const { ok, error } = await signIn('credentials', {

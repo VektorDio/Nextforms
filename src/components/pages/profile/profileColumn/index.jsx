@@ -40,7 +40,13 @@ const ProfileColumn = () => {
 
     if (updateError || updatingError || deleteError) return (
         <div className={styles.profileColumn}>
-            <ErrorMessage error={updateError?.message || updatingError?.message || deleteError?.message}/>
+            <ErrorMessage
+                error = {
+                    updateError?.response.data.message ||
+                    updatingError?.response.data.message ||
+                    deleteError?.response.data.message
+                }
+            />
         </div>
     )
 

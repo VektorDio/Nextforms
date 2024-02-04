@@ -37,7 +37,7 @@ const ReportColumn = () => {
                 (isLoading) ? (
                     <LoadingMessage/>
                 ) : (error) ? (
-                    <ErrorMessage error={error.message}/>
+                    <ErrorMessage error={error.response.data.message}/>
                 ) : (reports?.length > 0) ? (
                     reports?.map((entry,index) =>
                         <ReportEntry
