@@ -186,6 +186,7 @@ const ProfileColumn = () => {
                                             }}}
                                             iconType={"check"}
                                             bgColor={"#399412"}
+                                            ariaLabel={"Confirm"}
                                         />
 
                                         <SimpleButton onClick={() => {
@@ -193,6 +194,7 @@ const ProfileColumn = () => {
                                             formik.resetForm()}}
                                             iconType={"xmark"}
                                             bgColor={"#d00c0c"}
+                                            ariaLabel={"Cancel"}
                                         />
                                     </div>
                                 ) : (
@@ -201,6 +203,7 @@ const ProfileColumn = () => {
                                         formik.resetForm()}}
                                         iconType={"redact"}
                                         bgColor={"#3a4556"}
+                                        ariaLabel={"Redact"}
                                     />
                                 )}
                             </div>
@@ -268,6 +271,7 @@ const ProfileColumn = () => {
                                             }}}
                                             iconType={"check"}
                                             bgColor={"#399412"}
+                                            ariaLabel={"Confirm"}
                                         />
 
                                         <SimpleButton onClick={() => {
@@ -275,6 +279,7 @@ const ProfileColumn = () => {
                                             formik.resetForm()}}
                                             iconType={"xmark"}
                                             bgColor={"#d00c0c"}
+                                            ariaLabel={"Cancel"}
                                         />
                                     </div>
                                 ) : (
@@ -283,6 +288,7 @@ const ProfileColumn = () => {
                                         formik.resetForm()}}
                                         iconType={"redact"}
                                         bgColor={"#3a4556"}
+                                        ariaLabel={"Redact"}
                                     />
                                 )}
                             </div>
@@ -331,6 +337,7 @@ const ProfileColumn = () => {
                                             }}}
                                             iconType={"check"}
                                             bgColor={"#399412"}
+                                            ariaLabel={"Confirm"}
                                         />
 
                                         <SimpleButton onClick={() => {
@@ -338,6 +345,7 @@ const ProfileColumn = () => {
                                             formik.resetForm()}}
                                             iconType={"xmark"}
                                             bgColor={"#d00c0c"}
+                                            ariaLabel={"Cancel"}
                                         />
                                     </div>
                                 ) : (
@@ -347,6 +355,7 @@ const ProfileColumn = () => {
                                     }}
                                     iconType={"redact"}
                                     bgColor={"#3a4556"}
+                                    ariaLabel={"Redact"}
                                     />
                                 )}
                             </div>
@@ -409,6 +418,7 @@ const ProfileColumn = () => {
                                                 setEditDelete(true)
                                                 formik.resetForm()
                                             }} bgColor={""}
+                                            ariaLabel={"Delete account"}
                                             />
                                         )
                                     }
@@ -444,6 +454,7 @@ const ProfileColumn = () => {
                                                             formik.handleSubmit()
                                                             setEditDelete(false)
                                                         }}} bgColor={""}
+                                                        ariaLabel={"Delete account"}
                                                     />
                                                 </div>
                                             </div>

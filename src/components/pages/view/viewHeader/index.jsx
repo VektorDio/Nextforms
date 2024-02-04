@@ -13,9 +13,9 @@ export default function ViewHeader() {
     return (
         <>
             <div className={styles.sideBlock}>
-                <SimpleButton onClick={onSubmit} iconType={"check"} bgColor={"#399412"}/>
+                <SimpleButton onClick={onSubmit} iconType={"check"} bgColor={"#399412"} adaptive={true} ariaLabel={"Confirm answer"}/>
                 <Link href={"/home"}>
-                    <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"}/>
+                    <SimpleButton iconType={"xmark"} bgColor={"#d00c0c"} adaptive={true} ariaLabel={"Cancel"}/>
                 </Link>
             </div>
         </>

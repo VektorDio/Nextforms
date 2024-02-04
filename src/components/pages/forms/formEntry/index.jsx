@@ -16,26 +16,39 @@ const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
         <div className={styles.formEntry} >
             <div className={styles.formName}>{formEntry.name}</div>
             <div className={styles.buttons}>
-                <ActivityButton toggled={formEntry.active} onClick={() => onActivityToggle(formEntry.id, !formEntry.active)}/>
+                <ActivityButton
+                    toggled={formEntry.active}
+                    onClick={() => onActivityToggle(formEntry.id, !formEntry.active)}
+                />
 
                 <div className={styles.copyMessageContainer} onMouseLeave={() => setIsMessageCopied(false)}>
                     <div className={styles.copyMessage}
                          style={{opacity: (isMessageCopied) ? 100 : 0,
                              visibility: (isMessageCopied) ? "visible" : "hidden"}}
                     > Copied to clipboard </div>
-                    <SimpleButton onClick={handleGenerateLink} iconType={"link"} bgColor={"#3a4556"} />
+                    <SimpleButton
+                        onClick={handleGenerateLink}
+                        iconType={"link"}
+                        bgColor={"#3a4556"}
+                        ariaLabel={"Generate form link"}
+                    />
                 </div>
 
                 <Link href={`/home/formConstructor/redact/${formEntry.id}`}>
-                    <SimpleButton iconType={"redact"} bgColor={"#3a4556"}/>
+                    <SimpleButton iconType={"redact"} bgColor={"#3a4556"} ariaLabel={"Redact form"}/>
                 </Link>
                 <Link href={`/home/formConstructor/statistics/${formEntry.id}`}>
-                    <SimpleButton iconType={"report"} bgColor={"#3a4556"}/>
+                    <SimpleButton iconType={"report"} bgColor={"#3a4556"} ariaLabel={"Form statistics"}/>
                 </Link>
                 <Link href={{ pathname: '/home/reportConstructor/fill', query: { reportId: null, formId: formEntry.id }}}>
-                    <SimpleButton iconType={"window"} bgColor={"#3a4556"}/>
+                    <SimpleButton iconType={"window"} bgColor={"#3a4556"} ariaLabel={"Fill report with this form"}/>
                 </Link>
-                <SimpleButton onClick={() => onDelete(formEntry.id)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+
+                <SimpleButton
+                    onClick={() => onDelete(formEntry.id)}
+                    iconType={"xmark"} bgColor={"#d00c0c"}
+                    ariaLabel={"Delete form"}
+                />
             </div>
         </div>
     );

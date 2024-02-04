@@ -7,6 +7,8 @@ import styles from "./statistics.module.css";
 import Header from "src/components/globalWrappers/header";
 import dynamic from "next/dynamic";
 import LoadingMessage from "@/components/messages/loadingMessage";
+import SimpleButton from "@/components/buttons/simpleButton";
+import Link from "next/link";
 
 const FormStatistics = ({data, formId}) => {
     const answersCount = data.questions.reduce((acc, val) => (acc + val.answers.length), 0)
@@ -21,7 +23,11 @@ const FormStatistics = ({data, formId}) => {
                 <meta name="theme-color" content="#272e3a"/>
             </Head>
             <Header movable={true}>
-                <ConstructorHeader id={formId} />
+                <ConstructorHeader>
+                    <Link href={`/home/formConstructor/redact/${formId}`} replace={true}>
+                        <SimpleButton iconType={"redact"} bgColor={"#3a4556"} adaptive={true} ariaLabel={"Redact form"}/>
+                    </Link>
+                </ConstructorHeader>
             </Header>
             <Main>
                 <ConstructorColumn>

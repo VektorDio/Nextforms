@@ -198,6 +198,7 @@ const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, m
                                 />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
+                                        ariaLabel={"Select question type"}
                                         defaultValue={questionTypeOptions.find((e) => e.value === question.type)}
                                         onChange={(choice) => handleSelectChange(questionIndex, choice.value)}
                                         options={questionTypeOptions}
@@ -218,13 +219,13 @@ const ConstructorBlock = ({question, handlers, questionIndex, selectedBlockId, m
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
                     <ToggleButton onClick={(e) => handleRequiredToggle(questionIndex, e.target.checked)} text={"Required"} checked={question.required}/>
                     <div className={styles.btnContainer}>
-                        <SimpleButton onClick={() => handleDelete(questionIndex)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                        <SimpleButton onClick={() => handleDelete(questionIndex)} iconType={"xmark"} bgColor={"#d00c0c"} ariaLabel={"Delete question"}/>
                     </div>
                 </div>
             </div>
             <div className={styles.addButtonColumn} style={(isSelected) ? null : {display:"none"}}>
                 <div className={styles.addButton}>
-                    <AddButton onClick={()=> handleAdd(questionIndex)}/>
+                    <AddButton onClick={()=> handleAdd(questionIndex)} />
                 </div>
             </div>
         </div>

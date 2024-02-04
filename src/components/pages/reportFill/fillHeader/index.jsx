@@ -28,6 +28,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
                                  placeholder={"Select report"}
                                  isSearchable={false}
                                  instanceId={"select-report"}
+                                 ariaLabel={"Select report"}
                     />
                 </div>
                 <div className={styles.selectContainer}>
@@ -37,14 +38,15 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
                                  placeholder={"Select form"}
                                  isSearchable={false}
                                  instanceId={"select-form"}
+                                 ariaLabel={"Select report"}
                     />
 
                 </div>
             </div>
 
             <div className={styles.sideBlock}>
-                <SimpleButton onClick={handlePrint} iconType={"print"} bgColor={"#399412"} adaptive={true}/>
-                <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} adaptive={true}/>
+                <SimpleButton onClick={handlePrint} iconType={"print"} bgColor={"#399412"} adaptive={true} ariaLabel={"Print report"}/>
+                <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} adaptive={true} ariaLabel={"Cancel"}/>
             </div>
         </>
     );

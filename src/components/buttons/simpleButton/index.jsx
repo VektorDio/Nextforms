@@ -28,9 +28,9 @@ const icons = {
     settings: faGear,
 }
 
-const SimpleButton = ({onClick, type, iconType, bgColor, adaptive=false}) => {
+const SimpleButton = ({onClick, type, iconType, bgColor, adaptive=false, ariaLabel}) => {
     return (
-        <button className={styles.button} onClick={onClick} type={type}
+        <button className={styles.button} onClick={onClick} type={type} aria-label={ariaLabel}
                 style={{backgroundColor: bgColor, width: (adaptive) ? null : "40px", minWidth: (adaptive) ? null : "0"}}>
             <FontAwesomeIcon className={styles.icon} icon={icons[iconType]}/>
         </button>

@@ -5,10 +5,11 @@ const ToggleButton = ({onClick, text, checked}) => {
     function handleChange(){
         setChecked(!checkedState)
     }
+
     return (
         <div className={styles.toggleContainer}>
             <label className={styles.toggleSwitch}>
-                <input type="checkbox" onClick={onClick} onChange={handleChange} checked={checkedState}/>
+                <input aria-label={text} type="checkbox" onClick={onClick} onChange={handleChange} checked={checkedState}/>
                 <span className={styles.slider}/>
             </label>
             <div className={styles.text}>{text}</div>

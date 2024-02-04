@@ -5,8 +5,8 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 const AddButton = ({onClick, type}) => {
     return (
-        <button className={styles.button} onClick={onClick} type={type}>
-                <FontAwesomeIcon className={styles.icon} icon={faPlus}/>
+        <button className={styles.button} onClick={onClick} type={type} aria-label={"Add block"}>
+                <FontAwesomeIcon className={styles.icon} icon={faPlus} />
         </button>
     );
 };

@@ -10,16 +10,16 @@ const LogInGroup = ({authenticated}) => {
     return (authenticated) ? (
         <div className={styles.singleSideBlock}>
             {/*<SettingsButton/>*/}
-            <SimpleButton onClick={() => signOut({ callbackUrl: "/" })} iconType={"arrowRight"} bgColor={"red"}/>
+            <SimpleButton onClick={() => signOut({ callbackUrl: "/" })} iconType={"arrowRight"} bgColor={"red"} ariaLabel={"Sign Out"}/>
         </div>
     ):(
         <>
             <div className={styles.sideBlock}>
                 <Link href={"/login"}>
-                    <SignInButton/>
+                    <SignInButton ariaLabel={"Sign In"}/>
                 </Link>
                 <Link href={"/register"}>
-                    <SignUpButton/>
+                    <SignUpButton ariaLabel={"Sign Up"}/>
                 </Link>
             </div>
         </>

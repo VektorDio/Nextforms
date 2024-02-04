@@ -77,6 +77,7 @@ const ConstructorBlock = ({block, index, handlers, selectedBlockId, maxBlockName
                             />
                                 <div className={styles.selectContainer}>
                                     <SelectInput
+                                        ariaLabel={"Select block type"}
                                         defaultValue={blockTypeOptions.find((e) => e.value === block.type)}
                                         options={blockTypeOptions}
                                         onChange={(choice) => handleBlockTypeChange(index, choice.value)}
@@ -92,7 +93,7 @@ const ConstructorBlock = ({block, index, handlers, selectedBlockId, maxBlockName
                     {component}
                 </div>
                 <div className={styles.blockFooter} style={(isSelected) ? null : {display:"none"}}>
-                    <SimpleButton onClick={() => handleDelete(index)} iconType={"xmark"} bgColor={"#d00c0c"}/>
+                    <SimpleButton onClick={() => handleDelete(index)} iconType={"xmark"} bgColor={"#d00c0c"} ariaLabel={"Delete block"}/>
                 </div>
             </div>
             <div className={styles.addButtonColumn} style={(isSelected) ? null : {display:"none"}}>

@@ -83,7 +83,7 @@
 }
 
 .footerLink span {
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
 }
 
@@ -99,10 +99,12 @@
 }
 
 .signUpLink {
-    color: #3564ad !important;
+    font-weight: 600;
+    color: #3473d5 !important;
 }
 .signUpLink:hover {
-    color: #0f64e8 !important;
+    font-weight: 600;
+    color: #0f6af6 !important;
 }
 
 .error{

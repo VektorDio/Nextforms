@@ -12,6 +12,8 @@ import ToggleButton from "@/components/buttons/toggleButton";
 import Header from "src/components/globalWrappers/header";
 import FormAlert from "@/components/messages/formAlert";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
+import SimpleButton from "@/components/buttons/simpleButton";
+import Link from "next/link";
 
 const FormRedact = ({ data }) => {
     const router = useRouter()
@@ -188,7 +190,11 @@ const FormRedact = ({ data }) => {
                 <meta name="theme-color" content="#272e3a"/>
             </Head>
             <Header movable={true}>
-                <ConstructorHeader id={formObject.id} onFormSubmit={formObject && handleFormSubmit}/>
+                <ConstructorHeader onFormSubmit={formObject && handleFormSubmit}>
+                    <Link href={`/home/formConstructor/statistics/${formObject.id}`} replace={true}>
+                        <SimpleButton iconType={"report"} bgColor={"#3a4556"} adaptive={true} ariaLabel={"Form statistics"}/>
+                    </Link>
+                </ConstructorHeader>
             </Header>
             <Main onClick={(e) => setSelectedBlock(e, 'head')} >
                 <ConstructorColumn>
