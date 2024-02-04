@@ -3,8 +3,8 @@ import {useFormikContext} from "formik";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
 
 const FormikObserver = () => {
-    const { dirty } = useFormikContext();
-    useBeforeUnload(dirty)
+    const { dirty, isSubmitting } = useFormikContext();
+    useBeforeUnload(dirty && !isSubmitting)
     return null
 };
 

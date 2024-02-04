@@ -28,6 +28,8 @@ const ReportRedact = ({ data }) => {
 
     async function handleReportSubmit() {
 
+        setIsDirty(false)
+
         let emptyBlockCheck = !reportObject.blocks.every((e) => e.name.length > 0)
         setEmptyBlockNameCheck(emptyBlockCheck) //just to make sure
 

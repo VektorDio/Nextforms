@@ -32,6 +32,8 @@ const FormRedact = ({ data }) => {
 
     async function handleFormSubmit() {
 
+        setIsDirty(false)
+
         let emptyQuestionCheck = !formObject.questions.every((e) => e.question.length > 0)
         setEmptyQuestionCheck(emptyQuestionCheck) //just to make sure
 
