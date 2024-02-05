@@ -1,51 +1,53 @@
 import React, {useState} from 'react';
 import * as Yup from "yup";
 import Head from "next/head";
-import styles from "./forgotPassword.module.css";
+import styles from "./resetPassword.module.css";
 import Link from "next/link";
 import {Form, Formik} from "formik";
 import MyTextInput from "@/components/formikFields/textInput";
 import SubmitButton from "@/components/inputFields/submitButton";
-import {useResetPasswordRequest} from "@/queries/users";
+import {useResetPassword} from "@/queries/users";
 
-const ForgotPassword = () => {
+const ResetPassword = ({token}) => {
     const [submissionError, setSubmissionError] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
+    const [showPassword, setShowPassword] = useState(true)
 
-    const {mutateAsync:passwordRequest} = useResetPasswordRequest()
+    const {mutateAsync:passwordReset} = useResetPassword()
+
+    const passwordString = Yup.string()
+        .matches(/[^\s-]/, "No whitespaces allowed")
+        .matches(/^[A-Za-z][A-Za-z0-9]*$/, "Only english letters allowed")
+        .matches(/[0-9]/, 'Password requires a number')
+        .matches(/[a-z]/, 'Password requires a lowercase letter')
+        .matches(/[A-Z]/, 'Password requires an uppercase letter')
+        .min(8, 'Password must be 8 characters long')
+        .max(150, "Password is too long")
+        .required('Required')
+
+    const passwordConfirmString = Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
+        .required('Required')
 
     const resetSchema = Yup.object({
-        email: Yup.string()
-            .email('Invalid email address')
-            .required('Required')
-            .max(30, 'This email is too long'),
-        secondaryEmail: Yup.string()
-            .email('Invalid email address')
-            .max(30, 'This email is too long'),
-        firstName: Yup.string()
-            .max(30, "This name is too long"),
-        lastName: Yup.string()
-            .max(30, "This name is too long"),
+        newPassword: passwordString,
+        newPasswordConfirm: passwordConfirmString
     })
 
     const resetInitialValues = {
-        email: '',
-        secondaryEmail: '',
-        firstName: '',
-        lastName: '',
+        newPassword: '',
+        newPasswordConfirm: ''
     }
 
     async function handleSubmit(values) {
-        const { email, secondaryEmail, firstName, lastName } = values
+        const { newPassword, newPasswordConfirm } = values
 
-        await passwordRequest({
-            email: email,
-            secondaryEmail: secondaryEmail,
-            firstName: firstName,
-            lastName: lastName
+        await passwordReset({
+            newPassword: newPassword,
+            newPasswordConfirm: newPasswordConfirm
         }, {
             onSuccess() {
-                setSuccessMessage("Success. Check your email.")
+                setSuccessMessage("Success. Log in with new password.")
                 setSubmissionError(null)
             },
             onError(error) {
@@ -59,8 +61,8 @@ const ForgotPassword = () => {
     return (
         <>
             <Head>
-                <title>Restore | NextForms</title>
-                <meta name="description" content="Forgot password page" />
+                <title>Reset password | NextForms</title>
+                <meta name="description" content="Reset password page" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="manifest" href="/manifest.json" />
@@ -73,7 +75,7 @@ const ForgotPassword = () => {
                     </Link>
                 </div>
                 <div className={styles.formBody}>
-                    <span className={styles.signInText}>Password recovery request</span>
+                    <span className={styles.signInText}>Password reset</span>
                     <Formik
                         initialValues={resetInitialValues}
                         validationSchema={resetSchema}
@@ -82,38 +84,25 @@ const ForgotPassword = () => {
                     >{(formik) => (
                         <Form>
                             <div className={styles.field}>
-                                <label htmlFor="email">Email</label>
+                                <div className={styles.passwordGrid}>
+                                    <label htmlFor="new password">New password</label>
+                                    <div className={styles.showText} onClick={() => setShowPassword(!showPassword)}>
+                                        {(showPassword) ? "Show password" : "Hide password"}
+                                    </div>
+                                </div>
                                 <MyTextInput
-                                    name="email"
-                                    type="email"
-                                    placeholder="jane@formik.com"
+                                    name="newPassword"
+                                    type={(showPassword) ? "password" : "text"}
+                                    placeholder="********"
                                 />
                             </div>
 
                             <div className={styles.field}>
-                                <label htmlFor="email">Secondary email (optional)</label>
+                                <label htmlFor="new password confirm">New password confirmation</label>
                                 <MyTextInput
-                                    name="secondaryEmail"
-                                    type="email"
-                                    placeholder="janeSecond@formik.com"
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label htmlFor="email">First Name (optional)</label>
-                                <MyTextInput
-                                    name="firstName"
-                                    type="text"
-                                    placeholder="Jane"
-                                />
-                            </div>
-
-                            <div className={styles.field}>
-                                <label htmlFor="email">Last name (optional)</label>
-                                <MyTextInput
-                                    name="lastName"
-                                    type="text"
-                                    placeholder="Smith"
+                                    name="newPasswordConfirm"
+                                    type={(showPassword) ? "password" : "text"}
+                                    placeholder="********"
                                 />
                             </div>
 
@@ -148,4 +137,4 @@ const ForgotPassword = () => {
     )
 }
 
-export default ForgotPassword;
+export default ResetPassword;

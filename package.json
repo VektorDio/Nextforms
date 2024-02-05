@@ -25,6 +25,7 @@
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "formik": "^2.2.9",
+    "jsonwebtoken": "^9.0.2",
     "next": "^13.5.6",
     "next-auth": "^4.22.1",
     "nodemailer": "^6.9.9",
