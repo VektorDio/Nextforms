@@ -36,12 +36,12 @@
 
 @media screen and (max-width: 730px) {
     .container {
-        margin: 18vh auto 0 auto;
+        margin: 16vh auto 0 auto;
     }
 }
 
 @media screen and (max-width: 430px) {
     .container {
-        margin: 25vh auto 0 auto;
+        margin: 23vh auto 0 auto;
     }
 }
