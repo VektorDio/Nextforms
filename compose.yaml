@@ -2,7 +2,9 @@ services:
   app:
     build:
       context: .
-    environment:
-      NODE_ENV: production
+    env_file:
+      - .envapp
     ports:
       - 3000:3000
+    depends_on:
+      - db
