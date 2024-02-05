@@ -26,7 +26,7 @@ const ResetPassword = ({token}) => {
         .required('Required')
 
     const passwordConfirmString = Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Must match "Password" field value')
+        .oneOf([Yup.ref('newPassword'), null], 'Must match "Password" field value')
         .required('Required')
 
     const resetSchema = Yup.object({
@@ -44,7 +44,8 @@ const ResetPassword = ({token}) => {
 
         await passwordReset({
             newPassword: newPassword,
-            newPasswordConfirm: newPasswordConfirm
+            newPasswordConfirm: newPasswordConfirm,
+            token: token
         }, {
             onSuccess() {
                 setSuccessMessage("Success. Log in with new password.")

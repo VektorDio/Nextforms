@@ -33,3 +33,9 @@ export async function sendMail(subject, toEmail, otpText) {
         })
     })
 }
+
+export async function sendPasswordResetMail(toEmail, token) {
+    const subject = 'Nextforms password confirmation request'
+    const otpText = 'Use this form to reset your password: http://localhost:3000/resetPassword/' + token
+    await sendMail(subject, toEmail, otpText)
+}

@@ -1,7 +1,8 @@
 import * as Yup from "yup";
 import prisma from "@/server";
-import {sendMail} from "@/server/nodemailer";
+import {sendPasswordResetMail} from "@/server/nodemailer";
 import jwt from "jsonwebtoken";
+import {hashPassword} from "@/server/hash";
 
 const handlers = {
     POST: postHandler,
@@ -54,23 +55,45 @@ async function postHandler(req, res) {
         return res.status(400).send({message: "No such user."})
     }
 
-    //await sendMail("Success", "vektordiod@gmail.com", 'YES')
-
     const resetToken = jwt.sign({ email: email }, user.password, { expiresIn: '30min' })
 
-    jwt.verify(resetToken, user.password, function(err, decoded) {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log(decoded)
-        }
-    });
+    await sendPasswordResetMail("vektordiod@gmail.com", resetToken)
 
     return res.status(200).send({})
 }
 
 async function patchHandler(req, res) {
     const { newPassword, newPasswordConfirm, token } = req.body
+
+    let decodedPayload = jwt.decode(token)
+
+    if (decodedPayload === null) {
+        return res.status(400).send({ message: "Malformed token."})
+    }
+
+    let userEmail = decodedPayload.email
+    let userPassword
+
+    try {
+        userPassword = (await prisma.user.findUnique({
+            where: {
+                email: userEmail
+            },
+            select: {
+                password: true
+            }
+        })).password
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({message: "Error occurred while retrieving user."})
+    }
+
+    jwt.verify(token, userPassword, function(err) {
+        if (err) {
+            console.log({err})
+            return res.status(400).send({ message: "Invalid token."})
+        }
+    });
 
     const passwordSchema = Yup.string()
         .matches(/[^\s-]/, "No whitespaces allowed")
@@ -86,5 +109,19 @@ async function patchHandler(req, res) {
         return res.status(400).send({ message: "Malformed data."})
     }
 
+    try {
+        await prisma.user.update({
+            where: {
+                email: userEmail,
+            },
+            data: {
+                password: hashPassword(newPassword),
+            },
+        })
+    } catch (e) {
+        console.log({...e, message: e})
+        return res.status(500).send({message: "Error occurred while updating user."})
+    }
 
+    return res.status(200).send({})
 }
