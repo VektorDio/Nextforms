@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useRouter} from "next/router";
-import Head from "next/head";
 import ConstructorHeader from "src/components/pages/reportRedact/constructorHeader";
 import Main from "src/components/globalWrappers/main";
 import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
@@ -11,6 +10,7 @@ import TextParagraph from "@/components/inputFields/textParagraph";
 import Header from "src/components/globalWrappers/header";
 import FormAlert from "@/components/messages/formAlert";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
+import MetaHead from "@/components/metaHead";
 
 const ReportRedact = ({ data }) => {
     const router = useRouter()
@@ -143,14 +143,7 @@ const ReportRedact = ({ data }) => {
 
     return (
         <>
-            <Head>
-                <title>{`${reportObject.name || "Report"} | NextForms`}</title>
-                <meta name="description" content="Report create page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
+            <MetaHead title={`${reportObject.name || "Report"} | NextForms`} description={"Report create page"}/>
             <Header movable={true}>
                 <ConstructorHeader onReportSubmit={handleReportSubmit}/>
             </Header>

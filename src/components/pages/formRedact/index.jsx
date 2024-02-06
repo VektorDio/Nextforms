@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Head from "next/head";
 import Main from "src/components/globalWrappers/main";
 import ConstructorHeader from "src/components/pages/formRedact/constructorHeader";
 import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
@@ -14,6 +13,7 @@ import FormAlert from "@/components/messages/formAlert";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
 import SimpleButton from "@/components/buttons/simpleButton";
 import Link from "next/link";
+import MetaHead from "@/components/metaHead";
 
 const FormRedact = ({ data }) => {
     const router = useRouter()
@@ -183,14 +183,7 @@ const FormRedact = ({ data }) => {
 
     return (
         <>
-            <Head>
-                <title>{`${formObject.name || "Form"} | NextForms`}</title>
-                <meta name="description" content="Form redacting page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
+            <MetaHead title={`${formObject.name || "Form"} | NextForms`} description={"Form redacting page"}/>
             <Header movable={true}>
                 <ConstructorHeader onFormSubmit={formObject && handleFormSubmit}>
                     <Link href={`/home/formConstructor/statistics/${formObject.id}`} replace={true}>
@@ -259,7 +252,7 @@ const FormRedact = ({ data }) => {
                 </ConstructorColumn>
             </Main>
         </>
-    );
-};
+    )
+}
 
-export default FormRedact;
+export default FormRedact

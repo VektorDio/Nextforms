@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Head from "next/head";
 import Main from "src/components/globalWrappers/main";
 import {useRouter} from "next/router";
 import {useGetAnswersByFormId} from "@/queries/forms";
@@ -13,6 +12,7 @@ import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
 import FillHeader from "src/components/pages/reportFill/fillHeader";
 import Header from "src/components/globalWrappers/header";
 import isValidIdObject from "@/utils/utils";
+import MetaHead from "@/components/metaHead";
 
 const ReportFill = ({ formList, reportList, userId, report, answers }) => {
     const router = useRouter()
@@ -77,14 +77,7 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
 
     return (
         <>
-            <Head>
-                <title>Report Fill | NextForms</title>
-                <meta name="description" content="Report fill page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
+            <MetaHead title={"Report Fill | NextForms"} description={"Report fill page"}/>
             <Header movable={true} early={true}>
                 <FillHeader formId={formId}
                             reportId={reportId}

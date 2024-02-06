@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import ConstructorHeader from "@/components/pages/formRedact/constructorHeader";
 import Main from "src/components/globalWrappers/main";
 import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
@@ -9,19 +8,13 @@ import dynamic from "next/dynamic";
 import LoadingMessage from "@/components/messages/loadingMessage";
 import SimpleButton from "@/components/buttons/simpleButton";
 import Link from "next/link";
+import MetaHead from "@/components/metaHead";
 
 const FormStatistics = ({data, formId}) => {
     const answersCount = data.questions.reduce((acc, val) => (acc + val.answers.length), 0)
     return (
         <>
-            <Head>
-                <title>Statistics | NextForms</title>
-                <meta name="description" content="Form statistics page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
+            <MetaHead title={"Statistics | NextForms"} description={"Form statistics page"}/>
             <Header movable={true}>
                 <ConstructorHeader>
                     <Link href={`/home/formConstructor/redact/${formId}`} replace={true}>

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Head from "next/head";
 import {signIn} from "next-auth/react";
 import {useRouter} from "next/router";
 import styles from "./registerForm.module.css";
@@ -9,6 +8,12 @@ import * as Yup from "yup";
 import MyTextInput from "@/components/formikFields/textInput";
 import SubmitButton from "@/components/inputFields/submitButton";
 import {useAddUser} from "@/queries/users";
+import FooterLinks from "@/components/formPageElements/footerLinks";
+import FormContainer from "@/components/formPageElements/containerWithSiteName";
+import ErrorMessage from "@/components/formPageElements/errorMessage";
+import FormBody from "@/components/formPageElements/formBody";
+import FormName from "@/components/formPageElements/formName";
+import MetaHead from "@/components/metaHead";
 
 const Register = () => {
     const router = useRouter()
@@ -68,22 +73,10 @@ const Register = () => {
 
     return (
         <>
-            <Head>
-                <title>Sign up | NextForms</title>
-                <meta name="description" content="Sign up page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
-            <div className={styles.mainContainer}>
-                <div className={styles.siteName}>
-                    <Link href="/" rel="dofollow">
-                        <h1>NextForms</h1>
-                    </Link>
-                </div>
-                <div className={styles.formBody}>
-                    <span className={styles.signInText}>Register new account</span>
+            <MetaHead title={"Sign up | NextForms"} description={"Sign up page"}></MetaHead>
+            <FormContainer>
+                <FormBody>
+                    <FormName>Register new account</FormName>
                     <Formik
                         initialValues={registerInitialValues}
                         validationSchema={registerSchema}
@@ -115,7 +108,7 @@ const Register = () => {
                             </div>
 
                             <div className={styles.field}>
-                                <label htmlFor="password">Password confirmation</label>
+                                <label htmlFor="password confirmation">Password confirmation</label>
                                 <MyTextInput
                                     name="confirmPassword"
                                     type={(showPassword) ? "password" : "text"}
@@ -132,26 +125,21 @@ const Register = () => {
                                 />
                             </div>
 
-                            <div className={styles.error}>
+                            <ErrorMessage>
                                 {submissionError}
-                            </div>
+                            </ErrorMessage>
                         </Form>
                     )}
                     </Formik>
-                </div>
-                <div className={styles.footerLink}>
-                <span className={styles.footerText}>
+                </FormBody>
+                <FooterLinks>
+                    <span className={styles.footerText}>
                       Have an account? <Link className={styles.signUpLink} href="/login">Log In</Link>
                     </span>
-                    <div className={styles.copyRight}>
-                        <span><Link href="#">RDD, Inc.</Link></span>
-                        <span><Link href="#">Contact</Link></span>
-                        <span><Link href="#">Privacy & Terms</Link></span>
-                    </div>
-                </div>
-            </div>
+                </FooterLinks>
+            </FormContainer>
         </>
-    );
-};
+    )
+}
 
-export default Register;
+export default Register

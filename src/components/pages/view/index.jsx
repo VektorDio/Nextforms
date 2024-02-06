@@ -1,5 +1,4 @@
 import React from 'react';
-import Head from "next/head";
 import Main from "src/components/globalWrappers/main";
 import ViewHeader from "src/components/pages/view/viewHeader";
 import ViewBlock from "src/components/pages/view/viewBlock";
@@ -11,6 +10,7 @@ import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
 import styles from "./formView.module.css";
 import Header from "src/components/globalWrappers/header";
 import FormikObserver from "@/components/formikObserver";
+import MetaHead from "@/components/metaHead";
 
 const FormView = ({ formData }) => {
     const router = useRouter()
@@ -100,14 +100,7 @@ const FormView = ({ formData }) => {
 
     return (
         <>
-            <Head>
-                <title>{`${formObject.name || 'Form Name'} | NextForms`}</title>
-                <meta name="description" content="Form view page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
+            <MetaHead title={`${formObject.name || 'Form Name'} | NextForms`} description={"Form view page"}/>
             <Formik
                 initialValues={initialValues}
                 validationSchema={Yup.object().shape(validationScheme)}

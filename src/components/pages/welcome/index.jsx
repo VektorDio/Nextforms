@@ -1,22 +1,15 @@
-import Head from 'next/head'
 import Header from "@/components/globalWrappers/header";
 import Main from "@/components/globalWrappers/main";
 import Footer from "@/components/globalWrappers/footer";
 import React from "react";
 import styles from "./welcome.module.css"
 import LogInGroup from "@/components/globalWrappers/header/logInGroup";
+import MetaHead from "@/components/metaHead";
 
 export default function Welcome() {
   return (
       <>
-          <Head>
-              <title>Info | NextForms</title>
-              <meta name="description" content="Info page"/>
-              <meta name="viewport" content="width=device-width, initial-scale=1"/>
-              <link rel="icon" href="/favicon.ico"/>
-              <link rel="manifest" href="/manifest.json" />
-              <meta name="theme-color" content="#272e3a"/>
-          </Head>
+          <MetaHead title={"Info | NextForms"} description={"Info page"}/>
           <Header>
               <LogInGroup authenticated={false}/>
           </Header>

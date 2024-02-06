@@ -1,0 +1,18 @@
+.footerLink span {
+    font-size: 16px !important;
+    text-align: center;
+}
+
+.copyRight{
+    padding-top: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copyRight a {
+    color: #7d8590;
+    margin: 0 10px;
+    font-weight: 600;
+}

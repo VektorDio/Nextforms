@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Head from "next/head";
 import {signIn} from "next-auth/react";
 import {useRouter} from "next/router";
 import styles from "./loginForm.module.css";
@@ -8,6 +7,12 @@ import {Form, Formik} from "formik";
 import * as Yup from "yup";
 import MyTextInput from "@/components/formikFields/textInput";
 import SubmitButton from "@/components/inputFields/submitButton";
+import FooterLinks from "@/components/formPageElements/footerLinks";
+import FormName from "@/components/formPageElements/formName";
+import FormBody from "@/components/formPageElements/formBody";
+import FormContainer from "@/components/formPageElements/containerWithSiteName";
+import MetaHead from "@/components/metaHead";
+import ErrorMessage from "@/components/formPageElements/errorMessage";
 
 const Login = () => {
     const router = useRouter()
@@ -52,22 +57,10 @@ const Login = () => {
 
     return (
         <>
-            <Head>
-                <title>Sign in | NextForms</title>
-                <meta name="description" content="Sign in page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
-            <div className={styles.mainContainer}>
-                <div className={styles.siteName}>
-                    <Link href="/" rel="dofollow">
-                        <h1> NextForms </h1>
-                    </Link>
-                </div>
-                <div className={styles.formBody}>
-                    <span className={styles.signInText}>Log in to account</span>
+            <MetaHead title={"Sign in | NextForms"} description={"Sign in page"}></MetaHead>
+            <FormContainer>
+                <FormBody>
+                    <FormName>Log in to account</FormName>
                     <Formik
                         initialValues={loginInitialValues}
                         validationSchema={loginSchema}
@@ -76,7 +69,7 @@ const Login = () => {
                     >{(formik) => (
                         <Form>
                             <div className={styles.field}>
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="Email">Email</label>
                                 <MyTextInput
                                     name="email"
                                     type="email"
@@ -98,12 +91,6 @@ const Login = () => {
                                 />
                             </div>
 
-
-                            <div className={styles.error}>
-                                {submissionError}
-                            </div>
-
-
                             <div className={styles.field}>
                                 <SubmitButton
                                     type="submit"
@@ -112,22 +99,20 @@ const Login = () => {
                                     disabled={!(formik.isValid && formik.dirty) || formik.isSubmitting}
                                 />
                             </div>
+
+                            <ErrorMessage>
+                                {submissionError}
+                            </ErrorMessage>
                         </Form>
                     )}
                     </Formik>
-                </div>
-
-                <div className={styles.footerLink}>
+                </FormBody>
+                <FooterLinks>
                     <span className={styles.footerText}>
                       Don`t have an account? <Link className={styles.signUpLink} href="/register">Register</Link>
                     </span>
-                    <div className={styles.copyRight}>
-                        <span><Link href="#">RDD, Inc.</Link></span>
-                        <span><Link href="#">Contact</Link></span>
-                        <span><Link href="#">Privacy & Terms</Link></span>
-                    </div>
-                </div>
-            </div>
+                </FooterLinks>
+            </FormContainer>
         </>
     );
 };

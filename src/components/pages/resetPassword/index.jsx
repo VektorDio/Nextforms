@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
 import * as Yup from "yup";
-import Head from "next/head";
 import styles from "./resetPassword.module.css";
-import Link from "next/link";
 import {Form, Formik} from "formik";
 import MyTextInput from "@/components/formikFields/textInput";
 import SubmitButton from "@/components/inputFields/submitButton";
 import {useResetPassword} from "@/queries/users";
+import FooterLinks from "@/components/formPageElements/footerLinks";
+import MetaHead from "@/components/metaHead";
+import FormContainer from "@/components/formPageElements/containerWithSiteName";
+import FormBody from "@/components/formPageElements/formBody";
+import ErrorMessage from "@/components/formPageElements/errorMessage";
+import SuccessMessage from "@/components/formPageElements/successMessage";
+import FormName from "@/components/formPageElements/formName";
 
 const ResetPassword = ({token}) => {
     const [submissionError, setSubmissionError] = useState(null)
@@ -61,22 +66,10 @@ const ResetPassword = ({token}) => {
 
     return (
         <>
-            <Head>
-                <title>Reset password | NextForms</title>
-                <meta name="description" content="Reset password page" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <meta name="theme-color" content="#272e3a"/>
-            </Head>
-            <div className={styles.mainContainer}>
-                <div className={styles.siteName}>
-                    <Link href="/" rel="dofollow">
-                        <h1>NextForms</h1>
-                    </Link>
-                </div>
-                <div className={styles.formBody}>
-                    <span className={styles.signInText}>Password reset</span>
+            <MetaHead title={"Reset password | NextForms"} description={"Reset password page"}/>
+            <FormContainer>
+                <FormBody>
+                    <FormName>Password reset</FormName>
                     <Formik
                         initialValues={resetInitialValues}
                         validationSchema={resetSchema}
@@ -116,24 +109,18 @@ const ResetPassword = ({token}) => {
                                 />
                             </div>
 
-                            <div className={styles.error}>
+                            <ErrorMessage>
                                 {submissionError}
-                            </div>
-                            <div className={styles.success}>
+                            </ErrorMessage>
+                            <SuccessMessage>
                                 {successMessage}
-                            </div>
+                            </SuccessMessage>
                         </Form>
                     )}
                     </Formik>
-                </div>
-                <div className={styles.footerLink}>
-                    <div className={styles.copyRight}>
-                        <span><Link href="#">RDD, Inc.</Link></span>
-                        <span><Link href="#">Contact</Link></span>
-                        <span><Link href="#">Privacy & Terms</Link></span>
-                    </div>
-                </div>
-            </div>
+                </FormBody>
+                <FooterLinks/>
+            </FormContainer>
         </>
     )
 }

@@ -54,9 +54,9 @@
 }
 
 .formBody{
+    margin: 0 auto;
     width: 100%;
     max-width: 50vh;
-    align-self: center;
     background-color: #161b22;
     border-radius: 8px;
     padding: 24px 48px;
