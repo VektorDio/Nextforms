@@ -17,9 +17,3 @@
 .formDescription{
     font-size: 16px;
 }
-
-@media screen and (max-width: 430px) {
-    .container {
-        margin: 12vh auto 0 auto;
-    }
-}
