@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer"
+import ResetEmail from "@/components/passwordResetEmail";
+import {render} from "@react-email/render";
 
-export async function sendMail(subject, toEmail, otpText) {
+export async function sendMail(subject, toEmail, emailHtml) {
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
@@ -19,7 +21,7 @@ export async function sendMail(subject, toEmail, otpText) {
         from: "nextformsNoreply@gmail.com",
         to: toEmail,
         subject: subject,
-        text: otpText,
+        html: emailHtml,
     };
 
     await new Promise((resolve, reject) => {
@@ -34,8 +36,8 @@ export async function sendMail(subject, toEmail, otpText) {
     })
 }
 
-export async function sendPasswordResetMail(toEmail, token) {
+export async function sendPasswordResetMail(toEmail, userName, token) {
     const subject = 'Nextforms password confirmation request'
-    const otpText = 'Use this form to reset your password: http://localhost:3000/resetPassword/' + token
-    await sendMail(subject, toEmail, otpText)
+    const emailHtml = render(<ResetEmail userFirstname={userName} resetPasswordToken={token} />)
+    await sendMail(subject, toEmail, emailHtml)
 }

@@ -57,7 +57,7 @@ async function postHandler(req, res) {
 
     const resetToken = jwt.sign({ email: email }, user.password, { expiresIn: '30min' })
 
-    await sendPasswordResetMail("vektordiod@gmail.com", resetToken)
+    await sendPasswordResetMail(user.email, user.firstName || "User", resetToken)
 
     return res.status(200).send({})
 }
