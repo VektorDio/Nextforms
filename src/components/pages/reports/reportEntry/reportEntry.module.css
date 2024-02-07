@@ -23,6 +23,7 @@
     height: auto;
     align-items: center;
     word-wrap: anywhere;
+    padding-right: 2vh;
 }
 
 @media screen and (max-width: 760px) {
@@ -32,6 +33,7 @@
 
     .reportName {
         justify-content: center;
+        padding: 0;
     }
 }
 
