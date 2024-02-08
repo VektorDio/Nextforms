@@ -3,3 +3,78 @@
     padding-bottom: 1rem;
     font-size: 1.6rem;
 }
+
+.container {
+    padding: 3vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.column {
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1vh;
+}
+
+.block {
+    border-radius: 4px;
+    background-color: #2a313d;
+    max-width: 29rem;
+    width: 100%;
+    height: 50vh;
+    padding: 1vh;
+    margin: 1vh;
+}
+
+.textUpper {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.textUnder {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 1350px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .block {
+        height: 60vh;
+        max-width: 35rem;
+    }
+
+    .column {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        padding: 1vh;
+    }
+
+    .block {
+        height: 33vh;
+        max-width: 42rem;
+    }
+
+    .column {
+        width: 90%;
+    }
+}
