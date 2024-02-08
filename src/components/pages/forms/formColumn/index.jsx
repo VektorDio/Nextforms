@@ -17,19 +17,20 @@ const FormColumn = () => {
     const pageParam = parseInt(router.query.page)
     const pageSize = 10
 
+    const [page, setPage] = useState(pageParam !== null ? pageParam : 1)
     const [forms, setForms] = useState()
     const [formsCount, setFormsCount] = useState(0)
-    const [page, setPage] = useState(pageParam !== null ? pageParam : 1)
 
-    const {mutateAsync:deleteForm} = useDeleteFormById()
-    const {mutateAsync:updateForm} = useUpdateForm()
+    const maxPages = Math.ceil(formsCount / pageSize)
+
     const {error, data, isLoading} = useGetFormsByCreatorId({
         userId: userId,
         pageSize: pageSize,
         currentPage: page
     })
 
-    const maxPages = Math.ceil(formsCount /10)
+    const {mutateAsync:deleteForm} = useDeleteFormById()
+    const {mutateAsync:updateForm} = useUpdateForm()
 
     useEffect(() => {
         if(data) {
@@ -38,8 +39,8 @@ const FormColumn = () => {
         }
     }, [data])
 
-    function handlePageChange(value) {
-        router.push(`/home/forms/${value}` )
+    async function handlePageChange(value) {
+        await router.push(`/home/forms/${value}`)
         setPage(value)
     }
 
@@ -47,6 +48,12 @@ const FormColumn = () => {
         await deleteForm({
             formId: id,
             userId: userId
+        }, {
+            onSuccess: () => {
+                if (Math.ceil((formsCount - 1) /10) < page) {
+                    handlePageChange(page - 1)
+                }
+            }
         })
     }
 
@@ -66,21 +73,25 @@ const FormColumn = () => {
                 ) : (error) ? (
                     <ErrorMessage error={error.response.data.message}/>
                 ) : (forms?.length > 0) ? (
-                    forms?.map((entry,index) =>
-                        <FormEntry
-                            key={index}
-                            formEntry={entry}
-                            onDelete={handleEntryDelete}
-                            onActivityToggle={handleActivityToggle}
-                        />
-                    )
+                    <>
+                        {
+                            forms?.map((entry,index) =>
+                                <FormEntry
+                                    key={index}
+                                    formEntry={entry}
+                                    onDelete={handleEntryDelete}
+                                    onActivityToggle={handleActivityToggle}
+                                />
+                            )
+                        }
+                        <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
+                    </>
                 ) : (
                     <SimpleMessage>
                         There no forms yet
                     </SimpleMessage>
                 )
             }
-            <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
         </div>
     )
 }

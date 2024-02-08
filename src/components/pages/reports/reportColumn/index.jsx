@@ -28,7 +28,7 @@ const ReportColumn = () => {
         currentPage: page
     })
 
-    const maxPages = Math.ceil(reportsCount /10)
+    const maxPages = Math.ceil(reportsCount / pageSize)
 
     useEffect(() => {
         if(data) {
@@ -46,6 +46,12 @@ const ReportColumn = () => {
         await deleteReport({
             reportId: id,
             userId: userId
+        }, {
+            onSuccess: () => {
+                if (Math.ceil((reportsCount - 1) /10) < page) {
+                    handlePageChange(page - 1)
+                }
+            }
         })
     }
 
@@ -57,20 +63,24 @@ const ReportColumn = () => {
                 ) : (error) ? (
                     <ErrorMessage error={error.response.data.message}/>
                 ) : (reports?.length > 0) ? (
-                    reports?.map((entry,index) =>
-                        <ReportEntry
-                            key={index}
-                            reportEntry={entry}
-                            onDelete={handleEntryDelete}
-                        />
-                    )
+                    <>
+                        {
+                            reports?.map((entry,index) =>
+                                <ReportEntry
+                                    key={index}
+                                    reportEntry={entry}
+                                    onDelete={handleEntryDelete}
+                                />
+                            )
+                        }
+                        <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
+                    </>
                 ) : (
                     <SimpleMessage>
                         There no reports yet
                     </SimpleMessage>
                 )
             }
-            <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
         </div>
     );
 };
