@@ -17,12 +17,6 @@
     margin-right: 2vh;
 }
 
-@media print {
-    .header {
-        display: none;
-    }
-}
-
 @media screen and (max-width: 730px) {
     .centerBlock {
         width: 100%;
