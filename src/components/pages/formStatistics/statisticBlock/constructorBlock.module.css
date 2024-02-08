@@ -38,7 +38,7 @@
 .diagramContainer{
     display: flex;
     justify-content: center;
-    min-height: 50vh;
+    min-height: 40vh;
 }
 
 .textContainer{
