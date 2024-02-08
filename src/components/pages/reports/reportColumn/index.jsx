@@ -55,34 +55,42 @@ const ReportColumn = () => {
         })
     }
 
+    let content
+
+    if (isLoading) {
+        content = (
+            <LoadingMessage/>
+        )
+    } else if (error) {
+        content = (
+            <ErrorMessage error={error.response.data.message}/>
+        )
+    } else if (reports?.length > 0) {
+        content = (
+            <>
+                {
+                    reports?.map((entry,index) =>
+                        <ReportEntry
+                            key={index}
+                            reportEntry={entry}
+                            onDelete={handleEntryDelete}
+                        />
+                    )
+                }
+                <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
+            </>
+        )
+    } else content = (
+        <SimpleMessage>
+            There no reports yet
+        </SimpleMessage>
+    )
+
     return (
         <div className={styles.container}>
-            {
-                (isLoading) ? (
-                    <LoadingMessage/>
-                ) : (error) ? (
-                    <ErrorMessage error={error.response.data.message}/>
-                ) : (reports?.length > 0) ? (
-                    <>
-                        {
-                            reports?.map((entry,index) =>
-                                <ReportEntry
-                                    key={index}
-                                    reportEntry={entry}
-                                    onDelete={handleEntryDelete}
-                                />
-                            )
-                        }
-                        <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
-                    </>
-                ) : (
-                    <SimpleMessage>
-                        There no reports yet
-                    </SimpleMessage>
-                )
-            }
+            { content }
         </div>
-    );
-};
+    )
+}
 
-export default ReportColumn;
+export default ReportColumn

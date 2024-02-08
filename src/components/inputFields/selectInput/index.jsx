@@ -22,7 +22,7 @@ const SelectInput = (props) => {
         }}
                 menuPosition={"fixed"}
         />
-    );
-};
+    )
+}
 
 export default SelectInput;

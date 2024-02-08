@@ -7,13 +7,9 @@ const MyDate = ({children, ...props}) => {
     return (
         <>
             <Date error={(meta.touched && meta.error)} {...field} {...props} />
-            {
-                meta.touched && meta.error ? (
-                <div className={styles.error}>{meta.error}</div>
-                ) : null
-            }
+            { meta.touched && meta.error ? ( <div className={styles.error}>{meta.error}</div>) : null }
         </>
-    );
-};
+    )
+}
 
 export default MyDate

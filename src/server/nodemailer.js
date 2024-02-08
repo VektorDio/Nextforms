@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer"
-import ResetEmail from "@/components/passwordResetEmail";
-import {render} from "@react-email/render";
+import ResetEmail from "@/components/passwordResetEmail"
+import {render} from "@react-email/render"
 
 export async function sendMail(subject, toEmail, emailHtml) {
     let transporter = nodemailer.createTransport({

@@ -6,7 +6,7 @@ const ColumnWrapper = ({children}) => {
         <div className={styles.columnWrapper}>
             {children}
         </div>
-    );
-};
+    )
+}
 
 export default ColumnWrapper;

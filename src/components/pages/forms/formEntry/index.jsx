@@ -51,7 +51,7 @@ const FormEntry = ({formEntry, onActivityToggle, onDelete}) => {
                 />
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default FormEntry;
+export default FormEntry

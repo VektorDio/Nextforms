@@ -43,11 +43,11 @@ const FormStatistics = ({data, formId}) => {
                 </ConstructorColumn>
             </Main>
         </>
-    );
-};
+    )
+}
 
 const DynamicStatisticBlock = dynamic(() => import('src/components/pages/formStatistics/statisticBlock'), {
     loading: () => <LoadingMessage/>,
 })
 
-export default FormStatistics;
+export default FormStatistics

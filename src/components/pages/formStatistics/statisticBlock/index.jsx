@@ -143,7 +143,7 @@ const StatisticBlock = ({question}) => {
                 {component}
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default StatisticBlock;

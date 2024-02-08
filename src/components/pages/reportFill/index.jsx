@@ -75,6 +75,42 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
         window.print()
     }
 
+    let content
+
+    if (reportLoading || answersLoading) {
+        content = (
+            <LoadingMessage/>
+        )
+    } else if (reportError || answersError) {
+        content = (
+            <ErrorMessage error={reportError?.response.data.message || answersError?.response.data.message}/>
+        )
+    } else if (reportObject) {
+        content = (
+            <>
+                <div className={styles.container} >
+                    <div className={styles.formName}>
+                        <TextParagraph
+                            placeholder={"New report"}
+                            defaultValue={reportObject.name}
+                        />
+                    </div>
+                    <div className={styles.formDescription}>
+                        <TextParagraph
+                            placeholder={"Description"}
+                            defaultValue={reportObject.description}
+                        />
+                    </div>
+                </div>
+                {
+                    reportObject.blocks?.map((block , index) => (
+                        <FillBlock key={index} block={block} answers={answersObject} />
+                    ))
+                }
+            </>
+        )
+    }
+
     return (
         <>
             <MetaHead title={"Report Fill | NextForms"} description={"Report fill page"}/>
@@ -90,39 +126,11 @@ const ReportFill = ({ formList, reportList, userId, report, answers }) => {
             </Header>
             <Main>
                 <ConstructorColumn>
-                    {
-                        (reportLoading || answersLoading) ? (
-                            <LoadingMessage/>
-                        ) : (reportError || answersError) ? (
-                            <ErrorMessage error={reportError?.response.data.message || answersError?.response.data.message}/>
-                        ) : (reportObject) && (
-                            <>
-                                <div className={styles.container} >
-                                    <div className={styles.formName}>
-                                        <TextParagraph
-                                            placeholder={"New report"}
-                                            defaultValue={reportObject.name}
-                                        />
-                                    </div>
-                                    <div className={styles.formDescription}>
-                                        <TextParagraph
-                                            placeholder={"Description"}
-                                            defaultValue={reportObject.description}
-                                        />
-                                    </div>
-                                </div>
-                                {
-                                    reportObject.blocks?.map((block , index) => (
-                                        <FillBlock key={index} block={block} answers={answersObject} />
-                                    ))
-                                }
-                            </>
-                        )
-                    }
+                    { content }
                 </ConstructorColumn>
             </Main>
         </>
-    );
-};
+    )
+}
 
 export default ReportFill;

@@ -20,7 +20,7 @@ const Profile = () => {
                 <InfoColumn/>
             </ColumnWrapper>
         </>
-    );
-};
+    )
+}
 
 export default Profile;

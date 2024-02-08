@@ -95,7 +95,7 @@ const MenuColumn = ({centralColumn}) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default MenuColumn;

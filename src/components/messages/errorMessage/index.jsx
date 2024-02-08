@@ -5,7 +5,7 @@ const ErrorMessage = ({error}) => {
         <div className={styles.container}>
             {error}
         </div>
-    );
-};
+    )
+}
 
 export default ErrorMessage;

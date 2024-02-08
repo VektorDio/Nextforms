@@ -18,6 +18,6 @@ export async function getServerSideProps(context) {
 
 const ResetPasswordPage = ({token}) => {
     return <ResetPassword token={token}/>
-};
+}
 
 export default ResetPasswordPage;

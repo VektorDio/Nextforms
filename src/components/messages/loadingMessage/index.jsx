@@ -6,7 +6,7 @@ const LoadingMessage = () => {
         <div className={styles.container}>
             Loading...
         </div>
-    );
-};
+    )
+}
 
 export default LoadingMessage;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './time.module.css'
+
 const TimeInput = ({disabled, defaultValue, field, error, ...props}) => {
     return (
             <input
@@ -10,7 +11,7 @@ const TimeInput = ({disabled, defaultValue, field, error, ...props}) => {
                 {...field}
                 {...props}
             />
-    );
-};
+    )
+}
 
 export default TimeInput;

@@ -6,7 +6,7 @@ const SimpleMessage = ({children}) => {
         <div className={styles.container}>
             {children}
         </div>
-    );
-};
+    )
+}
 
 export default SimpleMessage;

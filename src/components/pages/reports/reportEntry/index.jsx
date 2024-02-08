@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './reportEntry.module.css'
 import Link from "next/link";
 import SimpleButton from "@/components/buttons/simpleButton";
+
 const ReportEntry = ({reportEntry, onDelete}) => {
 
     return (
@@ -22,7 +23,7 @@ const ReportEntry = ({reportEntry, onDelete}) => {
                 />
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default ReportEntry;

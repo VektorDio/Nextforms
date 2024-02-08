@@ -6,7 +6,7 @@ const FormAlert = ({children}) => {
         <div className={styles.container}>
             {children}
         </div>
-    );
-};
+    )
+}
 
 export default FormAlert;

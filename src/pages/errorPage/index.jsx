@@ -7,6 +7,6 @@ const ErrorPage = () => {
     const { error } = router.query
 
     return <Error error={error}/>
-};
+}
 
 export default ErrorPage;

@@ -473,7 +473,7 @@ const ProfileColumn = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default ProfileColumn;

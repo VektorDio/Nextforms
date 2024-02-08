@@ -17,6 +17,6 @@ export async function getServerSideProps(context) {
 
 const LoginPage = () => {
     return <Login/>
-};
+}
 
 export default LoginPage;

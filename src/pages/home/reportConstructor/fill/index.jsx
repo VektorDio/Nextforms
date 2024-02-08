@@ -57,6 +57,6 @@ export async function getServerSideProps(context) {
 const ReportFillPage = (props) => {
     useSession({required: true})
     return <ReportFill {...props}/>
-};
+}
 
 export default ReportFillPage;

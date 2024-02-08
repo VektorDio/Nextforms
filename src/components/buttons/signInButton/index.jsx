@@ -6,7 +6,7 @@ const SignInButton = ({onClick}) => {
         <button className={styles.signInBtn} onClick={onClick}>
             Log In
         </button>
-    );
-};
+    )
+}
 
 export default SignInButton;

@@ -20,7 +20,7 @@ const FormsList = () => {
                 <InfoColumn/>
             </ColumnWrapper>
         </>
-    );
-};
+    )
+}
 
 export default FormsList;

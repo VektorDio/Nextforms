@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import styles from './blockInput.module.css'
-const BlockInput = ({placeholder, onBlur, defaultValue, maxLength}) => {
 
+const BlockInput = ({placeholder, onBlur, defaultValue, maxLength}) => {
     let inputRef = useRef('')
 
     const keyPressEvent = (e) => {
@@ -17,13 +17,12 @@ const BlockInput = ({placeholder, onBlur, defaultValue, maxLength}) => {
              onChange={onBlur}
              onBlur={onBlur}
              suppressContentEditableWarning={true}
-
              ref={inputRef}
              onKeyDown={keyPressEvent}
         >
             {defaultValue}
         </div>
-    );
-};
+    )
+}
 
 export default BlockInput;

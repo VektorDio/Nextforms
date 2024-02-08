@@ -65,7 +65,7 @@ const StatisticsInput = ({answers}) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default StatisticsInput;

@@ -20,6 +20,6 @@ export async function getServerSideProps(context) {
 const HomePage = () => {
     useSession({required: true})
     return <Home/>
-};
+}
 
 export default HomePage;

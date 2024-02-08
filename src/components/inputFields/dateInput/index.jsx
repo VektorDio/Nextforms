@@ -11,7 +11,7 @@ const Date = ({name, disabled, defaultValue, field, error, ...props}) => {
                 {...field}
                 {...props}
         />
-    );
-};
+    )
+}
 
 export default Date;

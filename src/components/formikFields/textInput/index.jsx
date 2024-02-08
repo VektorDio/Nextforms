@@ -8,11 +8,9 @@ const MyTextInput = ({children, ...props }) => {
     return (
         <div>
             <InlineInput {...field} {...props} error={(meta.touched && meta.error)}/>
-            {(meta.touched && meta.error) ? (
-                <div className={styles.error}>{meta.error}</div>
-            ) : null}
+            { (meta.touched && meta.error) ? ( <div className={styles.error}>{meta.error}</div> ) : null }
         </div>
-    );
-};
+    )
+}
 
 export default MyTextInput

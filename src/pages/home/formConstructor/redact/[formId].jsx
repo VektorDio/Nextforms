@@ -56,6 +56,6 @@ export async function getServerSideProps(context) {
 const FormRedactPage = ({ data }) => {
     useSession({required: true})
     return <FormRedact data={ data }/>
-};
+}
 
 export default FormRedactPage;

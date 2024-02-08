@@ -20,7 +20,7 @@ const Home = () => {
                 <InfoColumn/>
             </ColumnWrapper>
         </>
-    );
-};
+    )
+}
 
 export default Home;

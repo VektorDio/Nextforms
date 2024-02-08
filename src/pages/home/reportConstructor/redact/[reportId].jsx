@@ -61,6 +61,6 @@ export async function getServerSideProps(context) {
 const ReportRedactPage = ({ data }) => {
     useSession({required: true})
     return <ReportRedact data={data}/>
-};
+}
 
 export default ReportRedactPage;

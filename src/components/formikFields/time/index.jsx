@@ -7,11 +7,9 @@ const MyTime = ({children, ...props}) => {
     return (
         <>
             <TimeInput {...field} {...props} error={(meta.touched && meta.error)}/>
-            {meta.touched && meta.error ? (
-                <div className={styles.error}>{meta.error}</div>
-            ) : null}
+            { meta.touched && meta.error ? ( <div className={styles.error}>{meta.error}</div> ) : null }
         </>
-    );
-};
+    )
+}
 
 export default MyTime

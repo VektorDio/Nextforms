@@ -15,7 +15,7 @@ const ClosedForm = () => {
                 </SimpleMessage>
             </Main>
         </>
-    );
-};
+    )
+}
 
 export default ClosedForm;

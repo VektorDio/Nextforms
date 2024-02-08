@@ -20,7 +20,7 @@ const Custom404 = () => {
                 </SimpleMessage>
             </Main>
         </>
-    );
-};
+    )
+}
 
 export default Custom404;

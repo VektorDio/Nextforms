@@ -6,7 +6,7 @@ const ConstructorColumn = ({children}) => {
         <div className={styles.container}>
             {children}
         </div>
-    );
-};
+    )
+}
 
 export default ConstructorColumn;

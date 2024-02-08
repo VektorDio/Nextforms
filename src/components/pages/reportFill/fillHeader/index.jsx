@@ -49,7 +49,7 @@ const FillHeader = ({reportId, onReportIdChange, reportNamesData, onFormIdChange
                 <SimpleButton onClick={() => router.back()} iconType={"xmark"} bgColor={"#d00c0c"} adaptive={true} ariaLabel={"Cancel"}/>
             </div>
         </>
-    );
-};
+    )
+}
 
 export default FillHeader;

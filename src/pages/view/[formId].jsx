@@ -42,6 +42,6 @@ export async function getServerSideProps(context) {
 
 const ViewPage = ({ formData }) => {
     return <FormView formData={ formData }/>
-};
+}
 
 export default ViewPage;

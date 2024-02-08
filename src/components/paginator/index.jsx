@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './paginator.module.css'
-
 import {
     faArrowRight,
     faArrowLeft

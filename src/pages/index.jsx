@@ -17,6 +17,6 @@ export async function getServerSideProps(context) {
 
 const WelcomePage = () => {
     return <Welcome/>
-};
+}
 
 export default WelcomePage;

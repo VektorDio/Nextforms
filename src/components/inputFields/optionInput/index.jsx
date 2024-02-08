@@ -24,23 +24,25 @@ const OptionInput = ({id, text, type, deletable, index, addOption, handleOptionR
         <label className={styles.radioContainer}>
             {checkmark}
             <div className={styles.text}>
-                {(addOption) ? (
-                    <div className={styles.addOptionText} onClick={handleAddOption}> Add option </div>
-                ) : (
-                    <TextParagraph
-                        onBlur={(e) => handleOptionRedacted(id, e.currentTarget.textContent)}
-                        placeholder={"Empty option"}
-                        defaultValue={text}
-                        disabled={disabled}
-                        maxLength={100}
-                    />
-                )}
+                {
+                    (addOption) ? (
+                        <div className={styles.addOptionText} onClick={handleAddOption}> Add option </div>
+                    ) : (
+                        <TextParagraph
+                            onBlur={(e) => handleOptionRedacted(id, e.currentTarget.textContent)}
+                            placeholder={"Empty option"}
+                            defaultValue={text}
+                            disabled={disabled}
+                            maxLength={100}
+                        />
+                    )
+                }
             </div>
             <div className={(!deletable || addOption || disabled) ? styles.disabled : styles.enabled} onClick={()=> handleDeleteOption(id)}>
                 <FontAwesomeIcon icon={faXmark}/>
             </div>
         </label>
-    );
-};
+    )
+}
 
 export default OptionInput;

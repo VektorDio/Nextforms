@@ -34,6 +34,6 @@ export async function getServerSideProps(context) {
 const FormsListPage = () => {
     useSession({required: true})
     return <FormsList/>
-};
+}
 
 export default FormsListPage;

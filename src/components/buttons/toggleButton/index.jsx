@@ -14,7 +14,7 @@ const ToggleButton = ({onClick, text, checked}) => {
             </label>
             <div className={styles.text}>{text}</div>
         </div>
-    );
-};
+    )
+}
 
 export default ToggleButton;

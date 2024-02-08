@@ -25,7 +25,7 @@ const TextParagraph = ({placeholder, defaultValue, onBlur, disabled, error, maxL
                 {defaultValue}
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default TextParagraph;

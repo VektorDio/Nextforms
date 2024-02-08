@@ -1,7 +1,7 @@
 export default function debounce(fn, delay) {
-    let timeoutId;
+    let timeoutId
     return () => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(fn, delay);
-    };
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(fn, delay)
+    }
 }

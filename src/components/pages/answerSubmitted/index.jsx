@@ -15,7 +15,7 @@ const AnswerSubmit = () => {
                 </SimpleMessage>
             </Main>
         </>
-    );
-};
+    )
+}
 
 export default AnswerSubmit;

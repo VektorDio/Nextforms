@@ -66,33 +66,35 @@ const FormColumn = () => {
         })
     }
 
+    let content
+
+    if (isLoading) {
+        content = ( <LoadingMessage/> )
+    } else if (error) {
+        content = ( <ErrorMessage error={error.response.data.message}/> )
+    } else if (forms?.length > 0) {
+        content = (
+            <>
+                {
+                    forms?.map((entry,index) =>
+                        <FormEntry
+                            key={index}
+                            formEntry={entry}
+                            onDelete={handleEntryDelete}
+                            onActivityToggle={handleActivityToggle}
+                        />
+                    )
+                }
+                <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
+            </>
+        )
+    } else {
+        content = ( <SimpleMessage> There no forms yet </SimpleMessage> )
+    }
+
     return (
         <div className={styles.container}>
-            {
-                (isLoading) ? (
-                    <LoadingMessage/>
-                ) : (error) ? (
-                    <ErrorMessage error={error.response.data.message}/>
-                ) : (forms?.length > 0) ? (
-                    <>
-                        {
-                            forms?.map((entry,index) =>
-                                <FormEntry
-                                    key={index}
-                                    formEntry={entry}
-                                    onDelete={handleEntryDelete}
-                                    onActivityToggle={handleActivityToggle}
-                                />
-                            )
-                        }
-                        <Paginator currentPage={page} setCurrentPage={handlePageChange} maxPages={maxPages}/>
-                    </>
-                ) : (
-                    <SimpleMessage>
-                        There no forms yet
-                    </SimpleMessage>
-                )
-            }
+            { content }
         </div>
     )
 }

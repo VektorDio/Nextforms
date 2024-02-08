@@ -168,19 +168,13 @@ const ReportRedact = ({ data }) => {
                         </div>
                     </div>
                     {
-                        (emptyBlockNameCheck) && (
-                            <FormAlert>Report has empty block names!</FormAlert>
-                        )
+                        (emptyBlockNameCheck) && ( <FormAlert>Report has empty block names!</FormAlert> )
                     }
                     {
-                        (duplicateBlockNameCheck) && (
-                            <FormAlert>Report has duplicated blocks!</FormAlert>
-                        )
+                        (duplicateBlockNameCheck) && ( <FormAlert>Report has duplicated blocks!</FormAlert> )
                     }
                     {
-                        (emptyReportNameCheck) && (
-                            <FormAlert>Report has empty name!</FormAlert>
-                        )
+                        (emptyReportNameCheck) && ( <FormAlert>Report has empty name!</FormAlert> )
                     }
                     {
                         reportObject.blocks.map((block, index) => (
@@ -196,7 +190,7 @@ const ReportRedact = ({ data }) => {
                 </ConstructorColumn>
             </Main>
         </>
-    );
-};
+    )
+}
 
 export default ReportRedact;

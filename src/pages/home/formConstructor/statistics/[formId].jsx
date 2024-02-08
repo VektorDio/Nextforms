@@ -55,6 +55,6 @@ export async function getServerSideProps(context) {
 const FormStatisticsPage = ({ data, formId }) => {
     useSession({required: true})
     return <FormStatistics data={ data } formId={ formId }/>
-};
+}
 
 export default FormStatisticsPage;

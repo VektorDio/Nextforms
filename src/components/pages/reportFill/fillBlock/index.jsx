@@ -46,7 +46,7 @@ const FillBlock = ({block, answers}) => {
                 {component}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default FillBlock;
+export default FillBlock

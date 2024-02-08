@@ -9,7 +9,7 @@ const SubmitButton = ({field, ...props}) => {
             {...field}
             {...props}
         />
-    );
-};
+    )
+}
 
 export default SubmitButton;

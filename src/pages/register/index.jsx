@@ -17,6 +17,6 @@ export async function getServerSideProps(context) {
 
 const RegisterPage = () => {
     return <Register/>
-};
+}
 
 export default RegisterPage;

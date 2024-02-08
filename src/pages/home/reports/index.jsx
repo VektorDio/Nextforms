@@ -34,6 +34,6 @@ export async function getServerSideProps(context) {
 const ReportsListPage = () => {
     useSession({required: true})
     return <ReportsList/>
-};
+}
 
 export default ReportsListPage;

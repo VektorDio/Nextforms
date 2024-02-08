@@ -19,6 +19,6 @@ export async function getServerSideProps(context) {
 const ProfilePage = () => {
     useSession({required: true})
     return <Profile/>
-};
+}
 
 export default ProfilePage;

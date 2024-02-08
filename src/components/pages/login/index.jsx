@@ -114,7 +114,7 @@ const Login = () => {
                 </FooterLinks>
             </FormContainer>
         </>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login

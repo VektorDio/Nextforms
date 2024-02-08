@@ -16,7 +16,7 @@ const Error = ({error}) => {
                 </SimpleMessage>
             </Main>
         </>
-    );
-};
+    )
+}
 
 export default Error;

@@ -20,7 +20,7 @@ const ReportsList = () => {
                 <InfoColumn/>
             </ColumnWrapper>
         </>
-    );
-};
+    )
+}
 
 export default ReportsList;

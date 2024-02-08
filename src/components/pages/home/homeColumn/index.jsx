@@ -29,7 +29,7 @@ const HomeColumn = () => {
                 </p>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default HomeColumn;

@@ -5,7 +5,7 @@ const InfoColumn = () => {
         <div className={styles.infoColumn}>
 
         </div>
-    );
-};
+    )
+}
 
 export default InfoColumn;

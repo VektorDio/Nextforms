@@ -137,7 +137,7 @@ const FormView = ({ formData }) => {
             )}
         </Formik>
         </>
-    );
-};
+    )
+}
 
-export default FormView;
+export default FormView

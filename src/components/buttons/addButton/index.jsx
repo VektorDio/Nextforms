@@ -8,7 +8,7 @@ const AddButton = ({onClick, type}) => {
         <button className={styles.button} onClick={onClick} type={type} aria-label={"Add block"}>
                 <FontAwesomeIcon className={styles.icon} icon={faPlus} />
         </button>
-    );
-};
+    )
+}
 
 export default AddButton;

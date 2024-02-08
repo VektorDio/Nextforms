@@ -219,24 +219,16 @@ const FormRedact = ({ data }) => {
                         </div>
                     </div>
                     {
-                        (emptyQuestionCheck) && (
-                            <FormAlert>Form has empty questions!</FormAlert>
-                        )
+                        (emptyQuestionCheck) && ( <FormAlert>Form has empty questions!</FormAlert> )
                     }
                     {
-                        (emptyOptionsCheck) && (
-                            <FormAlert>Form has empty options!</FormAlert>
-                        )
+                        (emptyOptionsCheck) && ( <FormAlert>Form has empty options!</FormAlert> )
                     }
                     {
-                        (duplicateQuestionsCheck) && (
-                            <FormAlert>Form has duplicated questions!</FormAlert>
-                        )
+                        (duplicateQuestionsCheck) && ( <FormAlert>Form has duplicated questions!</FormAlert> )
                     }
                     {
-                        (emptyFormNameCheck) && (
-                            <FormAlert>Form has empty name!</FormAlert>
-                        )
+                        (emptyFormNameCheck) && ( <FormAlert>Form has empty name!</FormAlert> )
                     }
                     {
                         formObject.questions.map((q, index) => (
