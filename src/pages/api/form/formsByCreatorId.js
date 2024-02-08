@@ -1,7 +1,7 @@
 import prisma from "@/server";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
-import isValidIdObject from "@/utils/utils";
+import isValidIdObject from "@/utils/isValidIdObject";
 import * as Yup from "yup";
 
 export default async function handler(req, res) {

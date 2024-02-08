@@ -39,9 +39,9 @@ const FormColumn = () => {
         }
     }, [data])
 
-    async function handlePageChange(value) {
-        await router.push(`/home/forms/${value}`)
+    function handlePageChange(value) {
         setPage(value)
+        router.push(`/home/forms/${page}`, null, { shallow: true})
     }
 
     async function handleEntryDelete(id) {

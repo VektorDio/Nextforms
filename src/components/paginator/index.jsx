@@ -8,17 +8,16 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 
-const Paginator = ({currentPage=1, setCurrentPage, maxPages}) => {
-
+const Paginator = ({currentPage, setCurrentPage, maxPages}) => {
     function handleNextPage() {
         if (currentPage < maxPages) {
-            setCurrentPage(currentPage + 1)
+            setCurrentPage(parseInt(currentPage + 1))
         }
     }
 
     function handlePreviousPage() {
         if (currentPage > 1) {
-            setCurrentPage(currentPage - 1)
+            setCurrentPage(parseInt(currentPage - 1))
         }
     }
 

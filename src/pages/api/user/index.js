@@ -2,7 +2,7 @@ import prisma from "@/server";
 import {hashPassword, validatePassword} from "@/server/hash";
 import {getServerSession} from "next-auth";
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import isValidIdObject from "@/utils/utils";
+import isValidIdObject from "@/utils/isValidIdObject";
 import * as Yup from "yup";
 
 const handlers = {

@@ -11,7 +11,7 @@ import TextParagraph from "@/components/inputFields/textParagraph";
 import ConstructorColumn from "src/components/globalWrappers/constructorColumn";
 import FillHeader from "src/components/pages/reportFill/fillHeader";
 import Header from "src/components/globalWrappers/header";
-import isValidIdObject from "@/utils/utils";
+import isValidIdObject from "@/utils/isValidIdObject";
 import MetaHead from "@/components/metaHead";
 
 const ReportFill = ({ formList, reportList, userId, report, answers }) => {

@@ -10,33 +10,40 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {useAddForm} from "@/queries/forms";
 import {useSession} from "next-auth/react";
-import {useRouter} from "next/router";
 import {useAddReport} from "@/queries/reports";
 import Link from "next/link";
+import debounce from "@/utils/debounce";
+
 const MenuColumn = ({centralColumn}) => {
     const {data:session} = useSession()
-    const router = useRouter()
 
-    const {mutateAsync: addForm} = useAddForm()
-    const {mutateAsync: addReport} = useAddReport()
+    const {mutateAsync: addForm, isLoading: formLoading} = useAddForm()
+    const {mutateAsync: addReport, isLoading: reportLoading} = useAddReport()
+
+    const debouncedFormCreate = debounce(handleFormCreation, 100)
+    const debouncedReportCreate = debounce(handleReportCreation, 100)
 
     async function handleFormCreation() {
-        const {data} = await addForm({
-            userId: session.user.id,
-        })
-        router.push(`/home/formConstructor/redact/${data.form.id}`)
+        if (!formLoading) {
+            await addForm({
+                userId: session.user.id,
+            })
+        }
+        //await router.push(`/home/formConstructor/redact/${data.form.id}`)
     }
 
     async function handleReportCreation() {
-        const {data} = await addReport({
-            userId: session.user.id,
-        })
-        router.push(`/home/reportConstructor/redact/${data.report.id}`)
+
+        if (!reportLoading) {
+            await addReport({
+                userId: session.user.id,
+            })
+        }
+        //await router.push(`/home/reportConstructor/redact/${data.report.id}`)
     }
 
     return (
         <div className={styles.menuColumn}>
-
             <Link href={`/home/profile/`}>
                 <div className={styles.menuButton}
                     style={{backgroundColor: (centralColumn === "profile") ? "#365688" : null}}
@@ -70,7 +77,7 @@ const MenuColumn = ({centralColumn}) => {
                 </div>
             </Link>
 
-            <div onClick={handleFormCreation} >
+            <div onClick={debouncedFormCreate} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileCode} />
                     <div className={styles.iconTextContainer}>
@@ -79,7 +86,7 @@ const MenuColumn = ({centralColumn}) => {
                 </div>
             </div>
 
-            <div onClick={handleReportCreation} >
+            <div onClick={debouncedReportCreate} >
                 <div className={styles.menuButton}>
                     <FontAwesomeIcon className={styles.icons} icon={faFileLines} />
                     <div className={styles.iconTextContainer}>
@@ -87,7 +94,6 @@ const MenuColumn = ({centralColumn}) => {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
