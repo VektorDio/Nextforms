@@ -50,10 +50,12 @@ export const useGetFormsByCreatorId = (params) => {
     return useQuery({
         queryKey: ['GetFormsByCreatorId', params],
         queryFn: async () => {
-            const { userId } = params
+            const { userId, pageSize, currentPage } = params
             return (await axios.get('/api/form/formsByCreatorId', {
                 params: {
                     userId: userId,
+                    pageSize: pageSize,
+                    currentPage: currentPage
                 }
             })).data
         },

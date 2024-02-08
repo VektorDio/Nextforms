@@ -8,7 +8,6 @@ export async function getServerSideProps(context) {
     if (jwt.decode(token) === null) {
         return {
             redirect: {
-                permanent: false,
                 destination: `/404`
             }
         }

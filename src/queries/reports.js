@@ -35,10 +35,12 @@ export const useGetReportsByCreatorId = (params) => {
     return useQuery({
         queryKey: ['GetReportsByCreatorId', params],
         queryFn: async () => {
-            const { userId } = params
+            const { userId, pageSize, currentPage } = params
             return (await axios.get('/api/report/reportsByCreatorId', {
                 params: {
                     userId: userId,
+                    pageSize: pageSize,
+                    currentPage: currentPage
                 }
             })).data
         },

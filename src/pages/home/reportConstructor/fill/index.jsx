@@ -38,7 +38,6 @@ export async function getServerSideProps(context) {
     } catch (e){
         return {
             redirect: {
-                permanent: false,
                 destination: `/errorPage/${e}`
             }
         }
@@ -47,7 +46,6 @@ export async function getServerSideProps(context) {
     if (report === null && answers === null) {
         return {
             redirect: {
-                permanent: false,
                 destination: `/errorPage`
             }
         }

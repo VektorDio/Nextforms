@@ -48,7 +48,7 @@ const MenuColumn = ({centralColumn}) => {
                 </div>
             </Link>
 
-            <Link href={`/home/forms/`}>
+            <Link href={`/home/forms/1`}>
                 <div className={styles.menuButton}
                     style={{backgroundColor: (centralColumn === "form") ? "#365688" : null}}
                 >
@@ -59,7 +59,7 @@ const MenuColumn = ({centralColumn}) => {
                 </div>
             </Link>
 
-            <Link href={`/home/reports/`}>
+            <Link href={`/home/reports/1`}>
                 <div className={styles.menuButton}
                     style={{backgroundColor: (centralColumn === "report") ? "#365688" : null}}
                 >

@@ -1,8 +1,9 @@
 import React from 'react';
-import FormsList from "@/components/pages/forms";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
+import ReportsList from "@/components/pages/reports";
 import {useSession} from "next-auth/react";
+import * as Yup from "yup";
 
 export async function getServerSideProps(context) {
     const session = await getServerSession(context.req, context.res, authOptions)
@@ -13,12 +14,26 @@ export async function getServerSideProps(context) {
                 destination: `/`
             }
         }
-    } else return { props: { session }}
+    }
+
+    const paramSchema = Yup.number().min(1).required()
+
+    try {
+        paramSchema.validateSync(context.query.page)
+    } catch (e) {
+        return {
+            redirect: {
+                destination: `/404`
+            }
+        }
+    }
+
+    return { props: { session }}
 }
 
-const FormsListPage = () => {
+const ReportsListPage = () => {
     useSession({required: true})
-    return <FormsList/>
+    return <ReportsList/>
 };
 
-export default FormsListPage;
+export default ReportsListPage;

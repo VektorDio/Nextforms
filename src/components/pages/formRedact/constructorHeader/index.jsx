@@ -20,7 +20,7 @@ export default function ConstructorHeader({onFormSubmit, children}) {
                                                     ariaLabel={"Confirm changes"}
                     />
                 }
-                <SimpleButton onClick={() => router.push("/home/forms")}
+                <SimpleButton onClick={() => router.push("/home/forms/1")}
                               iconType={"xmark"}
                               bgColor={"#d00c0c"}
                               adaptive={true}

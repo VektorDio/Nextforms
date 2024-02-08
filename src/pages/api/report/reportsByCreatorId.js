@@ -7,11 +7,15 @@ import * as Yup from "yup";
 export default async function handler(req, res) {
     if (req.method === 'GET'){
         const session = await getServerSession(req, res, authOptions)
-        const { userId, withNames } = req.query
+        const { userId, pageSize, currentPage, withNames } = req.query
 
         const flagSchema = Yup.boolean()
+        const pageSizeSchema = Yup.number().max(100)
+        const currentPageSchema = Yup.number().max(100)
 
-        if (!flagSchema.isValidSync(withNames)) {
+        if (!flagSchema.isValidSync(withNames) ||
+            !pageSizeSchema.isValidSync(pageSize) ||
+            !currentPageSchema.isValidSync(currentPage)) {
             return res.status(400).send({ message: "Malformed data."})
         }
 
@@ -24,8 +28,12 @@ export default async function handler(req, res) {
         }
 
         let reports
+        let count
+
         try {
             reports = await prisma.report.findMany({
+                take: parseInt(pageSize),
+                skip: parseInt((currentPage - 1) * pageSize),
                 where: {
                     userId: userId
                 },
@@ -34,11 +42,17 @@ export default async function handler(req, res) {
                     name: true,
                 }
             })
+
+            count = await prisma.report.count({
+                where: {
+                    userId: userId
+                }
+            })
         } catch (e) {
             console.log({...e, message: e})
             return res.status(500).send({message: "Error occurred while retrieving reports."})
         }
 
-        return res.status(200).send({reports})
+        return res.status(200).send({reports, count})
     }
 }

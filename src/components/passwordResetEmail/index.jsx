@@ -21,7 +21,7 @@ export const ResetEmail = ({ userFirstname, resetPasswordToken }) => {
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${baseUrl}/public/favicon.png`}
+            src={'/favicon512x512.png'}
             width="40"
             height="40"
             alt="Nextforms"

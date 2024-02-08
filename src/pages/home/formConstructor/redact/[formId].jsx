@@ -29,7 +29,6 @@ export async function getServerSideProps(context) {
     } catch (e){
         return {
             redirect: {
-                permanent: false,
                 destination: `/errorPage/${e}`
             }
         }
@@ -38,7 +37,6 @@ export async function getServerSideProps(context) {
     if (data.form === null) {
         return {
             redirect: {
-                permanent: false,
                 destination: `/errorPage`
             }
         }
@@ -47,7 +45,6 @@ export async function getServerSideProps(context) {
     if (data.form.userId !== session.user.id){
         return {
             redirect: {
-                permanent: false,
                 destination: `/404`
             }
         }
