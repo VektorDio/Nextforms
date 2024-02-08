@@ -21,27 +21,27 @@ const FormColumn = () => {
     const [forms, setForms] = useState()
     const [formsCount, setFormsCount] = useState(0)
 
-    const maxPages = Math.ceil(formsCount / pageSize)
-
-    const {error, data, isLoading} = useGetFormsByCreatorId({
+    const {mutateAsync:deleteForm} = useDeleteFormById()
+    const { error, data, isLoading, isFetching } = useGetFormsByCreatorId({
         userId: userId,
         pageSize: pageSize,
         currentPage: page
     })
 
-    const {mutateAsync:deleteForm} = useDeleteFormById()
+    const maxPages = Math.ceil(formsCount / pageSize)
+
     const {mutateAsync:updateForm} = useUpdateForm()
 
     useEffect(() => {
-        if(data) {
+        if(data && !isFetching) {
             setForms(data.forms)
             setFormsCount(data.count)
         }
-    }, [data])
+    }, [data, isFetching])
 
     function handlePageChange(value) {
         setPage(value)
-        router.push(`/home/forms/${page}`, null, { shallow: true})
+        router.push(`/home/forms?page=${value}` , null, { shallow: true })
     }
 
     async function handleEntryDelete(id) {
@@ -50,7 +50,8 @@ const FormColumn = () => {
             userId: userId
         }, {
             onSuccess: () => {
-                if (Math.ceil((formsCount - 1) /10) < page) {
+
+                if (Math.ceil((formsCount - 1) / pageSize) < page) {
                     handlePageChange(page - 1)
                 }
             }

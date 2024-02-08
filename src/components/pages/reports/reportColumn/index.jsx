@@ -17,12 +17,12 @@ const ReportColumn = () => {
     const pageParam = parseInt(router.query.page)
     const pageSize = 10
 
+    const [page, setPage] = useState(pageParam !== null ? pageParam : 1)
     const [reports, setReports] = useState()
     const [reportsCount, setReportsCount] = useState(0)
-    const [page, setPage] = useState(pageParam !== null ? pageParam : 1)
 
     const {mutateAsync:deleteReport} = useDeleteReportById()
-    const {error, data, isLoading} = useGetReportsByCreatorId({
+    const {error, data, isLoading, isFetching} = useGetReportsByCreatorId({
         userId: userId,
         pageSize: pageSize,
         currentPage: page
@@ -31,15 +31,15 @@ const ReportColumn = () => {
     const maxPages = Math.ceil(reportsCount / pageSize)
 
     useEffect(() => {
-        if(data) {
+        if(data && !isFetching) {
             setReports(data.reports)
             setReportsCount(data.count)
         }
-    }, [data])
+    }, [data, isFetching])
 
     function handlePageChange(value) {
-        router.push(`/home/reports/${value}` )
         setPage(value)
+        router.push(`/home/reports?page=${value}`, null, { shallow: true } )
     }
 
     async function handleEntryDelete(id) {

@@ -148,4 +148,4 @@ const Paginator = ({currentPage, setCurrentPage, maxPages}) => {
     } else return null
 }
 
-export default Paginator;
+export default Paginator
