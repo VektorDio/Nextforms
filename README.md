@@ -1,7 +1,7 @@
 
 <br/>
 <p align="center">
-  <a href="https://github.com/ShaanCoding/ReadME-Generator">
+  <a href="https://github.com/VektorDio/Nextforms">
     <img src="public/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
@@ -77,7 +77,7 @@ Alternatively you can just deploy on Vercel.
 
 ## License
 
-Distributed under the MPL-2.0 License. See [LICENSE](https://github.com/VektorDio/Nextforms/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/VektorDio/Nextforms/blob/master/LICENSE.md) for more information.
 
 ## Authors
 
