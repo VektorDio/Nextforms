@@ -20,7 +20,7 @@ Note This Project Is Still W.I.P
 <a href="https://github.com/VektorDio/Nextforms/issues">Request Feature</a>
 </p>
 
-![Downloads](https://img.shields.io/github/downloads/VektorDio/Nextforms/total) ![License](https://img.shields.io/github/license/VektorDio/Nextforms) 
+![Downloads](https://img.shields.io/github/downloads/VektorDio/Nextforms/total) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Table Of Contents
 
